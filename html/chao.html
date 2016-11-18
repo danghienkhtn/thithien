@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <style type="text/css">
+    #myModal {
+      //opacity: 0.5;
+    }  
+    .modal-body-img {
+      max-width: 100%;
+      height: auto;            
+    }
+    .close-button {
+      transition: background .2s,color .2s;
+      border: 3px solid #fff;
+      color: #fff;
+      background-color: #303030;
+      border-radius: 50%;
+      cursor: pointer;
+      width: 26px;
+      height: 26px;
+      position: absolute;
+      z-index: 10000;
+      right: -20px;
+      top: -20px;
+      box-shadow: -2px 2px 10px rgba(0,0,0,.5);
+    }
+    .modal-open {
+      background-color: rgba(39, 34, 34, 0.65);
+    }
+    h3.modal-title,
+    h4.modal-title {
+      color: white;
+    }
+
+
+  .modal-header-login, 
+  .modal-header-login h4, 
+  .modal-header-login close {
+      background-color: #5cb85c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer-login {
+      background-color: #f9f9f9;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Large Modal</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalLogin">Open Large Modal</button>
+
+  <!-- Modal Chao -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">      
+      <div class="modal-body text-center">
+        <h3 class="modal-title">CHÀO BUỔI SÁNG</h3>
+        <h4 id="curdateTxt" class="modal-title text-right"></h6>
+        <img src="./images/chao/chao2.JPG" class="modal-body-img" />        
+      </div>        
+    </div>
+  </div>
+  <!-- End Modal Chao -->
+  
+  <!-- Modal Login-->
+  <div class="modal fade" id="myModalLogin" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header modal-header-login" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked>Remember me</label>
+            </div>
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+          </form>
+        </div>
+        <div class="modal-footer modal-footer-login">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          <p>Not a member? <a href="#">Sign Up</a></p>
+          <p>Forgot <a href="#">Password?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <!-- End Modal Login -->  
+</div>
+<script type="text/javascript">
+
+  function getDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    } 
+
+    if(mm<10) {
+        mm='0'+mm
+    } 
+
+    today = dd + '/' + mm + '/' + yyyy;
+    return today;
+  }
+    
+  window.onload = function() {
+    $('#myModal').modal({show:true});
+    $('#curdateTxt').text(getDate());
+  }
+
+  $(document).ready(function(){
+    $("#myBtn").click(function(){
+        $("#myModalLogin").modal();
+    });
+  });
+
+</script>
+</body>
+</html>
+
