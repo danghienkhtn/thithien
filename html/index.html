@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
@@ -38,12 +40,14 @@
         padding: 15px;
       }
       .row.content {height:auto;}
-    }
+    }    
+
   </style>
 </head>
 <body>
+
 <!-- Start Navibar -->
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -55,10 +59,22 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
+        <li class="active"><a href="#">Home</a></li>        
+      </ul>
+      <ul class="nav navbar-nav">      
+        <form class="navbar-form navbar-left" role="search">
+          <!-- search tinh thanh -->
+          <div class="form-group">
+            <select id="pref-orderby" class="form-control">
+                <option>Descendent</option>
+            </select>
+          </div>
+          <!-- search tinh thanh -->
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>        
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -67,14 +83,81 @@
   </div>
 </nav>
 <!-- End Navibar -->  
+
 <!-- Start Body Contentner -->
 <div class="container-fluid text-center">
+  <!-- Start search bar -->  
+  <div class="mbn-search clearfix hidden-xs row" id="topSearch" data-bind="addOnEnter: GotoSearch">
+    <form class="navbar-center" role="search">
+    <div class="container container-top-seach">
+        <div class="col-md-3 col-sm-3 col-xs-3 top-search-location">
+            <i id="mbn-top-search-city-icon" class="fa fa-map-marker marker"></i>
+            <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown"
+                    data-bind="chosen: { source: Cities, selectedValue: CityId, displayProp: 'Name', valueProp: 'CityId', styleProp: 'Style', chosenOption: { disable_search: true } }" class="hide chosen-select">
+                      <option>Aksj</option>
+            </select>
+            <div class="chosen-container chosen-container-single chosen-container-single-nosearch" style="width: 100%;height: 34px;" title="">
+              <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown" class="chosen-single" tabindex="-1">                
+                  <span class="drop-cat">                    
+                    <span class="cat-name">Tất cả chuyên mục<span></span></span>
+                  </span>
+                
+                <div><b></b></div>
+              </a>
+              <div class="chosen-drop">
+                <div class="chosen-search">
+                  <input type="text" autocomplete="off" readonly="">
+                </div>
+                <ul class="chosen-results"></ul>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4 top-search-category">
+          <i class="fa fa-th-large" style="color:#ccc;position: absolute;left: 10px;top:8px;z-index:5;"></i>
+          <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown"
+                  data-bind="chosen: { source: Categories, selectedValue: CategoryId, displayProp: 'CategoryName', valueProp: 'CategoryId', chosenOption: { disable_search: true } }" class="hide">
+                    <option>Aksj</option>
+          </select>
+          <div class="chosen-container chosen-container-single" style="width: 100%;height: 34px;" title="">
+            <div class="dropdown chosen-single">
+              <span class="dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+              <span class="caret"></span></span>
+              <ul class="dropdown-menu">
+                <li><a href="#">HTML</a></li>
+                <li><a href="#">CSS</a></li>
+                <li><a href="#">JavaScript</a></li>
+              </ul>
+            </div>            
+            <div class="chosen-drop">
+              <div class="chosen-search">
+                <input type="text" autocomplete="off" readonly="" class="hide">
+              </div>
+              <ul class="chosen-results"></ul>
+            </div>
+          </div>        
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-5 top-search-keyword">
+            <div class="input-group">
+                <input type="text" class="form-control input-keyword" data-bind="value: Keyword, attr:{placeholder: KeywordPlaceholder}" maxlength="50">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="simple-search" class="input-group-addon btn-search" data-bind="click:GotoSearch" href="#"> <i class="fa fa-search"></i> &nbsp;Tìm</a>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+  
+  <!-- END search bar -->
+
+
   <div class="row content">
+    <!-- Start Col Left -->
     <div class="col-sm-2 sidenav">
       <p><a href="#">Link</a></p>
       <p><a href="#">Link</a></p>
       <p><a href="#">Link</a></p>
     </div>
+    <!-- End Col Left -->
+    <!-- Start Col Middle -->
     <div class="col-sm-8 text-left">
       <h1>Welcome</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -82,6 +165,8 @@
       <h3>Test</h3>
       <p>Lorem ipsum...</p>
     </div>
+    <!-- End Col Middle -->
+    <!-- Start Col Right -->
     <div class="col-sm-2 sidenav">
       <div class="well">
         <p>ADS</p>
@@ -90,6 +175,7 @@
         <p>ADS</p>
       </div>
     </div>
+    <!-- End Col Right -->
   </div>
 </div>
 <!-- End Body Contentner -->
