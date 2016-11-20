@@ -4,98 +4,172 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="./css/thithien.css">
+  <link rel="stylesheet" href="./css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;}
-    }
-  </style>
+  <script src="./js/thithien.js"></script>
 </head>
 <body>
+<!-- navbar -->
+<div class="navbar-tt clearfix" id="navbar-tt">
+  <nav class="navbar navbar-tt navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <!-- menu mobile -->
+        <div class="visible-xs text-right">
+          <div class="navbar-dropdown-mobile">
+            <a onclick="openNav();" href="javascript:void(0)">
+            <span class="fa fa-bars fa-2x"></span></a>            
+          </div>  
+          <span class="logo-w">
+            <a href="/">              
+              <img src="./images/logo-w.gif" width="140" height="24" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" />
+            </a>
+          </span>
+          <span class="top-search-mobile">
+                <a href="/tim-kiem-di-dong"><i class="fa fa-search fa-2x"></i></a>
+          </span>          
+        </div>
+        <!-- end menu mobile -->
+        <div class="logo-tt">
+          <a class="logo hidden-xs" href="/">
+            <h1><img src="./images/logo.png" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" width="210" height="32" /></h1>
+          </a>
+          <a href="https://muaban.net/app?source=mbn-banner-top" class="banner-top-qc visible-lg">
+              <img src="./images/banner/top.gif" />
+          </a>          
+        </div>        
+      </div>
+      <ul class="nav navbar-nav navbar-right hidden-xs">
+        <li class="active"><a href="#">Dang Nhap</a></li>
+        <li class="dropdown navbar-dropdown-right">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <span class="fa fa-bars fa-2x"></span></a>
+          <ul class="dropdown-menu dropdown-menu-tt " style="left:0px;top:45px">
+            <li><a href="#">Page 1-1</a></li>
+            <li><a href="#">Page 1-2</a></li>
+            <li><a href="#">Page 1-3</a></li> 
+          </ul>
+        </li>
+        <li>
+          <a href="/dang-tin"><span class="nav-post-news text"><i class="fa fa-newspaper-o" style="color:#ffffff;"></i>&nbsp;ĐĂNG TIN MIỄN PHÍ</span></a>
+        </li> 
+      </ul>
+    </div>
+  </nav>
+</div>  
+<!-- end header decktop -->
+<!-- start header mobile -->
+<div id="slidemenumobile" class="visible-sm visible-xs">
+  <ul class="nav navbar-nav navbar-right">
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/">
+            <i class="fa fa-home"></i> Trang chủ
+        </a>
+    </li>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/tim-kiem-di-dong">
+            <i class="fa fa-search"></i> Tìm kiếm
+        </a>
+    </li>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/dang-tin">
+            <i class="icon icon-laptop60"></i> Đăng tin miễn phí
+        </a>
+    </li>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Logo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-  
-<div class="container-fluid text-center">
-  <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
-    <div class="col-sm-8 text-left">
-      <h1>Welcome</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <hr>
-      <h3>Test</h3>
-      <p>Lorem ipsum...</p>
-    </div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
-  </div>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/trang-ca-nhan/MyFavorite">
+            <i class="icon icon-common_star_favorite_bookmark_" style="font-size:18px;"></i> Tin yêu thích
+        </a>
+    </li>
+    <li class="menu-line"></li>
+    <li class="col-sm-12 col-xm-12">
+      <a href="/trang-ca-nhan/SignIn">Đăng nhập</a></li>
+    <li class="col-sm-12 col-xm-12">
+      <a href="/trang-ca-nhan/SignUp">Đăng ký</a></li>
+  </ul>
 </div>
+<!-- End header mobile -->
+<!-- end navbar -->
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
+<!-- Start Body Contentner -->
+  <div class="main-container">            
+    <!-- Start page_content clearfix -->
+    <div id="page-content" class="clearfix">
+      <!-- Start TOP Search -->
+      <div data-bind="with: TopSearch">
+        <div class="mbn-search clearfix hidden-xs" id="topSearch">
+          <div class="container-top-seach row">
+            <div class="col-md-3 col-sm-3 col-xs-3 top-search-location">
+              <i id="mbn-top-search-city-icon" class="fa fa-map-marker fa-2x marker"></i>
+              <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown"
+                    data-bind="chosen: { source: Cities, selectedValue: CityId, displayProp: 'Name', valueProp: 'CityId', styleProp: 'Style', chosenOption: { disable_search: true } }" class="hide"></select>
+              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown" class="chosen-single" tabindex="-1">
+                  <span class="drop-cat">                    
+                    <span class="cat-name-tt">Toan quoc</span>
+                  </span>
+                  <div><span class="caret"></span></div>
+                </a>
+                <!-- chosen drop -->  
+                <div class="chosen-drop">
+                  <div class="chosen-search">
+                    <input type="text" autocomplete="off" readonly="">
+                  </div>
+                  <ul class="chosen-results">
+                    <li class="active-result result-selected" style="font-weight: bold;" data-option-array-index="0">Toàn quốc</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="1">TP.HCM</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="2">Hà Nội</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="3">Đà Nẵng</li>
+                    <li class="active-result" style="" data-option-array-index="61">Vĩnh Long</li>
+                    <li class="active-result" style="" data-option-array-index="62">Vĩnh Phúc</li>
+                    <li class="active-result" style="" data-option-array-index="63">Yên Bái</li>
+                    <li class="active-result" style="" data-option-array-index="64">Nước Ngoài</li>
+                  </ul>
+                </div>
+                <!-- END chosen drop -->
+              </div>      
+            </div>
+            <!-- col giua -->
+            <div class="col-md-4 col-sm-4 col-xs-4 top-search-category">
+              <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown"
+                    data-bind="chosen: { source: Categories, selectedValue: CategoryId, displayProp: 'CategoryName', valueProp: 'CategoryId', chosenOption: { disable_search: true } }" class="hide"></select>
+              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-with-drop chosen-container-active" style="width: 100%;" title="">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown" class="chosen-single" tabindex="-1">
+                  <span class="drop-cat">
+                      <span class="cat-icon"><i class="fa fa-th-large fa-2x" style="color:#ccc"></i></span>
+                      <span class="cat-name">Tất cả chuyên mục<span></span></span>
+                    </span>
+                  <div><span class="caret"></span></div>
+                </a>
+              </div>      
+            </div>
+            <!-- col phai -->
+            <div class="col-md-5 col-sm-5 col-xs-5 top-search-keyword">
+              <div class="input-group">
+                <input type="text" class="form-control input-keyword" data-bind="value: Keyword, attr:{placeholder: KeywordPlaceholder}" maxlength="50">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="simple-search" class="input-group-addon btn-search" data-bind="click:GotoSearch" href="#"> <i class="fa fa-search"></i> &nbsp;Tìm</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+      <!-- End TOP Search -->
+    </div>
+    <!-- End Page Content -->
+</div>    
 
+<script>
+function openNav() {
+    document.getElementById("slidemenumobile").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("slidemenumobile").style.width = "0";
+}
+</script>
 </body>
 </html>
-

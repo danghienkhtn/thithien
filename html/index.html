@@ -6,184 +6,463 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/thithien.css">
   <link rel="stylesheet" href="./css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    /*.row.content {height: 450px}*/
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;}
-    }    
-
-  </style>
+  <script src="./js/thithien.js"></script>
 </head>
 <body>
-
-<!-- Start Navibar -->
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Logo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>        
-      </ul>
-      <ul class="nav navbar-nav">      
-        <form class="navbar-form navbar-left" role="search">
-          <!-- search tinh thanh -->
-          <div class="form-group">
-            <select id="pref-orderby" class="form-control">
-                <option>Descendent</option>
-            </select>
+<div class="page-wrap" id="page-wrap">
+  <!-- Start Navibar -->
+  <div class="mbn-navbar clearfix" id="mbn-navbar">
+    
+    <div class="navbar navbar-fixed-top mbn-navbar" role="navigation" id="slide-nav">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-toggle visible-xs">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-arrow"><i class="fa fa-long-arrow-left fa-2x"></i></span>
+          </a>
+          <div class="mbn-logo">
+            <a class="logo hidden-xs" href="/">
+              <h1><img src="./images/logo.gif" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" width="210" height="32" /></h1>
+            </a>
+            <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-home" data-gtm-action="mbn-banner-top"
+               href="https://muaban.net/app?source=mbn-banner-top" class="banner-top-qc visible-lg">
+                <img src="./images/banner/top.gif" />
+            </a>
+            <a href="/" class="logo-w visible-xs">              
+              <h1 class="float-left">
+                  <img src="./images/logo-w.gif" class="logo-w" width="140" height="24" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" />
+              </h1>
+            </a>
           </div>
-          <!-- search tinh thanh -->
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
+          <div class="mbn-navbar-right visible-xs">
+              <ul class="nav-right">
+                  <li>
+                    <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mobile-search"
+                         href="/tim-kiem-di-dong" class="btn-top-search"><i class="fa fa-search"></i></a>
+                  </li>
+              </ul>       
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>        
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<!-- End Navibar -->  
-
-<!-- Start Body Contentner -->
-<div class="container-fluid text-center">
-  <!-- Start search bar -->  
-  <div class="mbn-search clearfix hidden-xs row" id="topSearch" data-bind="addOnEnter: GotoSearch">
-    <form class="navbar-center" role="search">
-    <div class="container container-top-seach">
-        <div class="col-md-3 col-sm-3 col-xs-3 top-search-location">
-            <i id="mbn-top-search-city-icon" class="fa fa-map-marker marker"></i>
-            <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown"
-                    data-bind="chosen: { source: Cities, selectedValue: CityId, displayProp: 'Name', valueProp: 'CityId', styleProp: 'Style', chosenOption: { disable_search: true } }" class="hide chosen-select">
-                      <option>Aksj</option>
-            </select>
-            <div class="chosen-container chosen-container-single chosen-container-single-nosearch" style="width: 100%;height: 34px;" title="">
-              <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown" class="chosen-single" tabindex="-1">                
-                  <span class="drop-cat">                    
-                    <span class="cat-name">Tất cả chuyên mục<span></span></span>
-                  </span>
-                
-                <div><b></b></div>
+        </div>
+        <!-- Start Menu Desktop - Profile-->
+        <ul class="nav navbar-nav navbar-right mbn-navbar-nav hidden-xs">
+          <li><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile" data-gtm-action="user-signin" 
+                        title="Đăng nhập" href="/trang-ca-nhan/SignIn"><span>Đăng nhập</span></a></li>
+          <li class="mbn-navbar-icon-search" data-bind="style:{display: HasIconSearch()?'block':''}">
+              <a href="#" data-bind="click: ShowTopSearch"><span><i class="icon icon-search-mb"></i></span></a>
+          </li>
+          <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  <span><i class="fa fa-bars fa-2" aria-hidden="true"></i></span>
               </a>
-              <div class="chosen-drop">
-                <div class="chosen-search">
-                  <input type="text" autocomplete="off" readonly="">
-                </div>
-                <ul class="chosen-results"></ul>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-4 col-xs-4 top-search-category">
-          <i class="fa fa-th-large" style="color:#ccc;position: absolute;left: 10px;top:8px;z-index:5;"></i>
-          <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown"
-                  data-bind="chosen: { source: Categories, selectedValue: CategoryId, displayProp: 'CategoryName', valueProp: 'CategoryId', chosenOption: { disable_search: true } }" class="hide">
-                    <option>Aksj</option>
-          </select>
-          <div class="chosen-container chosen-container-single" style="width: 100%;height: 34px;" title="">
-            <div class="dropdown chosen-single">
-              <span class="dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-              <span class="caret"></span></span>
-              <ul class="dropdown-menu">
-                <li><a href="#">HTML</a></li>
-                <li><a href="#">CSS</a></li>
-                <li><a href="#">JavaScript</a></li>
+              <ul class="dropdown-menu mbn-dropdown-menu" role="menu" style="left:0px;">
+                  <li><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile" data-gtm-action="menu-favorite" href="/trang-ca-nhan/MyFavorite"><i class="icon icon-common_star_favorite_bookmark_"></i> Tin yêu thích</a></li>
+                  <li><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile" data-gtm-action="menu-posting-online" href="/trang-ca-nhan#/tin-dang-web"><i class="icon icon-laptop60"></i> Tin đăng web</a></li>
+                  <li><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile" data-gtm-action="menu-posting-newspaper" href="/trang-ca-nhan#/tin-dang-bao-giay"><i class="icon icon-paper"></i> Tin đăng báo giấy</a></li>
+                  <li><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile" data-gtm-action="menu-deposit" href="/trang-ca-nhan#/nap-tien"><i class="icon icon-dollar-mb"></i> Nạp tiền</a></li>
+
+                  <li><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile" data-gtm-action="menu-my-info" href="/trang-ca-nhan#/thong-tin-ca-nhan" rel="nofollow"><i class="icon icon-users"></i> Thông tin cá nhân</a></li>
+                      <li><a href="/trang-ca-nhan/SignUp"><i class="icon icon-sign-in"></i> Đăng ký</a></li>
               </ul>
-            </div>            
-            <div class="chosen-drop">
-              <div class="chosen-search">
-                <input type="text" autocomplete="off" readonly="" class="hide">
-              </div>
-              <ul class="chosen-results"></ul>
+          </li>
+          <li><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-posting" data-gtm-action="add-posting" 
+                 href="/dang-tin"><span class="mbn-nav-posting text"><i class="fa fa-newspaper-o" style="color:#ffffff;"></i>&nbsp;ĐĂNG TIN MIỄN PHÍ</span></a></li>
+        </ul>
+        <!-- End menu Desktop -->
+      </div>
+    </div>
+    <!-- Menu mobile -->
+    <div id="slidemenu" class="visible-sm visible-xs">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="col-sm-12 col-xm-12 menu-home">
+            <a data-gtm-event="mbn-event-all" data-gtm-category="mbn-profile-mobile" data-gtm-action="menu-nav-home"
+               href="/">
+                <i class="fa fa-home"></i> Trang chủ
+            </a>
+        </li>
+        <li class="col-sm-12 col-xm-12 menu-home">
+            <a data-gtm-event="mbn-event-all" data-gtm-category="mbn-profile-mobile" data-gtm-action="menu-nav-search"
+               href="/tim-kiem-di-dong">
+                <i class="fa fa-search"></i> Tìm kiếm
+            </a>
+        </li>
+        <li class="col-sm-12 col-xm-12 menu-home">
+            <a data-gtm-event="mbn-event-all" data-gtm-category="mbn-posting-mobile" data-gtm-action="add-posting"
+               href="/dang-tin">
+                <i class="icon icon-laptop60"></i> Đăng tin miễn phí
+            </a>
+        </li>
+
+        <li class="col-sm-12 col-xm-12 menu-home">
+            <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile-mobile" data-gtm-action="menu-favorite"
+               href="/trang-ca-nhan/MyFavorite">
+                <i class="icon icon-common_star_favorite_bookmark_" style="font-size:18px;"></i> Tin yêu thích
+            </a>
+        </li>
+        <li class="menu-line"></li>
+        <li class="col-sm-12 col-xm-12"><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile-mobile" data-gtm-action="menu-signin"
+  href="/trang-ca-nhan/SignIn">Đăng nhập</a></li>
+        <li class="col-sm-12 col-xm-12"><a data-gtm-event="mbn-event-link" data-gtm-category="mbn-profile-mobile" data-gtm-action="menu-signup"
+  href="/trang-ca-nhan/SignUp">Đăng ký</a></li>
+      </ul>
+    </div>
+    <!-- End menu mobile -->
+    <div id="navbar-height-col"></div>
+  </div>
+  <!-- End Navibar -->  
+
+  <!-- Start Body Contentner -->
+  <div class="main-container">            
+    <!-- Start page_content clearfix -->
+    <div id="page-content" class="clearfix">
+      <!--Khu vực tìm kiếm-->
+      <div data-bind="with: TopSearch">
+        <div class="mbn-search clearfix hidden-xs" id="topSearch" data-bind="addOnEnter: GotoSearch">
+          <div class="container container-top-seach row">
+            <div class="col-md-3 col-sm-3 col-xs-3 top-search-location">
+              <i id="mbn-top-search-city-icon" class="fa fa-map-marker fa-2 marker"></i>
+              <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown"
+                    data-bind="chosen: { source: Cities, selectedValue: CityId, displayProp: 'Name', valueProp: 'CityId', styleProp: 'Style', chosenOption: { disable_search: true } }" class="hide"></select>
+              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown" class="chosen-single" tabindex="-1">
+                  <span class="drop-cat">
+                      <span>&nbsp;</span>
+                      <span class="cat-name">Toan quoc<span></span></span>
+                    </span>
+                  <div><b></b></div>
+                </a>
+                <!-- chosen drop -->  
+                <div class="chosen-drop">
+                  <div class="chosen-search">
+                    <input type="text" autocomplete="off" readonly="">
+                  </div>
+                  <ul class="chosen-results">
+                    <li class="active-result result-selected" style="font-weight: bold;" data-option-array-index="0">Toàn quốc</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="1">TP.HCM</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="2">Hà Nội</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="3">Đà Nẵng</li>
+                    <li class="active-result" style="" data-option-array-index="61">Vĩnh Long</li>
+                    <li class="active-result" style="" data-option-array-index="62">Vĩnh Phúc</li>
+                    <li class="active-result" style="" data-option-array-index="63">Yên Bái</li>
+                    <li class="active-result" style="" data-option-array-index="64">Nước Ngoài</li>
+                  </ul>
+                </div>
+                <!-- END chosen drop -->
+              </div>      
             </div>
-          </div>        
-        </div>
-        <div class="col-md-5 col-sm-5 col-xs-5 top-search-keyword">
-            <div class="input-group">
+            <!-- col giua -->
+            <div class="col-md-4 col-sm-4 col-xs-4 top-search-category">
+              <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown"
+                    data-bind="chosen: { source: Categories, selectedValue: CategoryId, displayProp: 'CategoryName', valueProp: 'CategoryId', chosenOption: { disable_search: true } }" class="hide"></select>
+              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-with-drop chosen-container-active" style="width: 100%;" title="">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown" class="chosen-single" tabindex="-1">
+                  <span class="drop-cat">
+                      <span class="cat-icon"><i class="fa fa-th-large" style="color:#ccc"></i></span>
+                      <span class="cat-name">Tất cả chuyên mục<span></span></span>
+                    </span>
+                  <div><b></b></div>
+                </a>
+              </div>      
+            </div>
+            <!-- col phai -->
+            <div class="col-md-5 col-sm-5 col-xs-5 top-search-keyword">
+              <div class="input-group">
                 <input type="text" class="form-control input-keyword" data-bind="value: Keyword, attr:{placeholder: KeywordPlaceholder}" maxlength="50">
                 <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="simple-search" class="input-group-addon btn-search" data-bind="click:GotoSearch" href="#"> <i class="fa fa-search"></i> &nbsp;Tìm</a>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-    </form>
-</div>
-  
-  <!-- END search bar -->
-
-
-  <div class="row content">
-    <!-- Start Col Left -->
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
-    <!-- End Col Left -->
-    <!-- Start Col Middle -->
-    <div class="col-sm-8 text-left">
-      <h1>Welcome</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <hr>
-      <h3>Test</h3>
-      <p>Lorem ipsum...</p>
-    </div>
-    <!-- End Col Middle -->
-    <!-- Start Col Right -->
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
       </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
-    <!-- End Col Right -->
-  </div>
-</div>
-<!-- End Body Contentner -->
+      <!--End Khu vực tìm kiếm-->
 
-<!-- Start Body -->
-<footer class="container-success text-center">
-  <p>Footer Text</p>
-</footer>
+      <!-- Banner top -->
+      <div id="bannerTop" class="panel panel-banner">
+        <div class="panel-heading text-right">          
+          <button id="closeBannerTop" type="button" class="close">&times;</button>
+        </div>
+        <div class="panel-body bodyBannerTop">
+          <ul>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li><li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+          </ul>  
+        </div>
+      </div>
+      <!-- Banner top -->
+      <!-- tin VIP -->
+      <div id="NewsVIP" class="panel panel-default">
+        <div class="panel-heading text-center">
+          <span>TIN DANG VIP</span>
+        </div>
+        <div class="panel-body bodyPanelVip">
+          <!-- start news vip -->
+
+
+
+
+
+          <!-- start row 1 news vip -->
+          <div class="row rowNewsVip">
+            <!-- start col left -->            
+            <div class="col-md-6 col-sm-6 col-xs-12 vip-news-cell">
+              <!-- start row 1 col left -->
+              <div class="row vip-bottom">
+                <!-- news col 1 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 vip-news-col-1">
+                  <div class="vip-news-thumbs-image"> 
+                    <div class="vip-news-thumbs-image-extra">                 
+                      <a href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm">
+                        <img class="thumbnail" src="https://static.chotot.com.vn/listing_thumbs/16/xe-may-xe-vespa-lx-125-trang-chinh-chu-59t2-733-75-1600149568.jpg" border="0" alt="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh" title="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh">
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <!-- end news col 1 -->
+                <!-- news col 2 -->
+                <div class="col-md-8 col-sm-6 col-xs-6 vip-news-col-2">
+                  <div nowrap="nowrap" class="vip-thumbs-subject">
+                    <h5><a itemprop="name" title="Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7" href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm" class="ad-subject"> Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 </a><span class="fa fa-check-square"></span></h5>
+                                        
+                    <span class="vip-news-address">Quận 12, TP.HCM</span>                    
+                    <span class="vip-news-price">4.500.000 đ</span>                    
+                  </div>
+                </div>  
+                <!-- end col 2 -->
+                <!-- news col 3 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 text-center">
+                  <span class="vip-news-date">19/11/2016</span>
+                  <p>&nbsp; <span class="vip-news-number-up">(19)</span></p>
+                  <span><a href="#" onclick=""><img src="./images/up_sm.png" /></a></span>
+                </div>
+              </div>
+              <!-- End row 1 col left -->
+              <!-- start row 1 col left -->
+              <div class="row vip-bottom">
+              <!-- news col 1 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 vip-news-col-1">
+                  <div class="vip-news-thumbs-image"> 
+                    <div class="vip-news-thumbs-image-extra">                 
+                      <a href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm">
+                        <img class="thumbnail" src="https://static.chotot.com.vn/listing_thumbs/16/xe-may-xe-vespa-lx-125-trang-chinh-chu-59t2-733-75-1600149568.jpg" border="0" alt="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh" title="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh">
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <!-- end news col 1 -->
+                <!-- news col 2 -->
+                <div class="col-md-8 col-sm-6 col-xs-6 vip-news-col-2">
+                  <div nowrap="nowrap" class="vip-thumbs-subject">
+                    <h5><a itemprop="name" title="Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7" href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm" class="ad-subject"> Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 </a><span class="fa fa-check-square"></span></h5>
+                                        
+                    <span class="vip-news-address">Quận 12, TP.HCM</span>                    
+                    <span class="vip-news-price">4.500.000 đ</span>                    
+                  </div>
+                </div>  
+                <!-- end col 2 -->
+                <!-- news col 3 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 text-center">
+                  <span class="vip-news-date">19/11/2016</span>
+                  <p>&nbsp; <span class="vip-news-number-up">(11)</span></p>
+                  <span><a href="#" onclick=""><img src="./images/up_sm.png" /></a></span>
+                </div>
+              </div>
+              <!-- End row 1 col left -->
+
+              <!-- start row 3 col left -->
+              <div class="row vip-bottom">
+              <!-- news col 1 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 vip-news-col-1">
+                  <div class="vip-news-thumbs-image"> 
+                    <div class="vip-news-thumbs-image-extra">                 
+                      <a href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm">
+                        <img class="thumbnail" src="https://static.chotot.com.vn/listing_thumbs/16/xe-may-xe-vespa-lx-125-trang-chinh-chu-59t2-733-75-1600149568.jpg" border="0" alt="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh" title="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh">
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <!-- end news col 1 -->
+                <!-- news col 2 -->
+                <div class="col-md-8 col-sm-6 col-xs-6 vip-news-col-2">
+                  <div nowrap="nowrap" class="vip-thumbs-subject">
+                    <h5><a itemprop="name" title="Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7" href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm" class="ad-subject"> Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 </a><span class="fa fa-check-square"></span></h5>
+                                        
+                    <span class="vip-news-address">Quận 12, TP.HCM</span>                    
+                    <span class="vip-news-price">4.500.000 đ</span>                    
+                  </div>
+                </div>  
+                <!-- end col 2 -->
+                <!-- news col 3 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 text-center">
+                  <span class="vip-news-date">19/11/2016</span>
+                  <p>&nbsp; <span class="vip-news-number-up">(19)</span></p>
+                  <span><a href="#" onclick=""><img src="./images/up_sm.png" /></a></span>
+                </div>
+              </div>
+              <!-- End row 3 col left -->
+            </div>
+            <!-- end col left -->
+            <!-- start col right -->
+            <div class="col-md-6 col-sm-6 col-xs-12 vip-news-cell">
+              <!-- Start row 1 col right -->
+              <div class="row vip-bottom">
+                <!-- news col 1 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 vip-news-col-1">
+                  <div class="vip-news-thumbs-image"> 
+                    <div class="vip-news-thumbs-image-extra">                 
+                      <a href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm">
+                        <img class="thumbnail" src="https://static.chotot.com.vn/listing_thumbs/24/dat-5lo-dat-shr-100-duong-so-4-p-binh-trung-dong-q2-2416575637.jpg" border="0" alt="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh" title="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh">
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <!-- end news col 1 -->
+                <!-- news col 2 -->
+                <div class="col-md-8 col-sm-6 col-xs-6 vip-news-col-2">
+                  <div nowrap="nowrap" class="vip-thumbs-subject">
+                    <h5><a itemprop="name" title="Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7" href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm" class="ad-subject"> Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 </a><span class="fa fa-check-square"></span></h5>
+                                        
+                    <span class="vip-news-address">Quận 12, TP.HCM</span>                    
+                    <span class="vip-news-price">4.500.000 đ</span>                    
+                  </div>
+                </div>  
+                <!-- end col 2 -->
+                <!-- news col 3 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 text-center">
+                  <span class="vip-news-date">19/11/2016</span>
+                  <p>&nbsp; <span class="vip-news-number-up">(19)</span></p>
+                  <span><a href="#" onclick=""><img src="./images/up_sm.png" /></a></span>
+                </div>
+              </div>
+              <!-- End row 1 col right -->
+              <!-- Start row 1 col right -->
+              <div class="row vip-bottom">
+                <!-- news col 1 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 vip-news-col-1">
+                  <div class="vip-news-thumbs-image"> 
+                    <div class="vip-news-thumbs-image-extra">                 
+                      <a href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm">
+                        <img class="thumbnail" src="https://static.chotot.com.vn/listing_thumbs/24/dat-5lo-dat-shr-100-duong-so-4-p-binh-trung-dong-q2-2416575637.jpg" border="0" alt="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh" title="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh">
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <!-- end news col 1 -->
+                <!-- news col 2 -->
+                <div class="col-md-8 col-sm-6 col-xs-6 vip-news-col-2">
+                  <div nowrap="nowrap" class="vip-thumbs-subject">
+                    <h5><a itemprop="name" title="Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7" href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm" class="ad-subject"> Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 </a><span class="fa fa-check-square"></span></h5>
+                                        
+                    <span class="vip-news-address">Quận 12, TP.HCM</span>                    
+                    <span class="vip-news-price">4.500.000 đ</span>                    
+                  </div>
+                </div>  
+                <!-- end col 2 -->
+                <!-- news col 3 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 text-center">
+                  <span class="vip-news-date">19/11/2016</span>
+                  <p>&nbsp; <span class="vip-news-number-up">(19)</span></p>
+                  <span><a href="#" onclick=""><img src="./images/up_sm.png" /></a></span>
+                </div>
+              </div>
+              <!-- End row 2 col right -->
+              <!-- Start row 1 col right -->
+              <div class="row vip-bottom">
+                <!-- news col 1 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 vip-news-col-1">
+                  <div class="vip-news-thumbs-image"> 
+                    <div class="vip-news-thumbs-image-extra">                 
+                      <a href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm">
+                        <img class="thumbnail" src="https://static.chotot.com.vn/listing_thumbs/24/dat-5lo-dat-shr-100-duong-so-4-p-binh-trung-dong-q2-2416575637.jpg" border="0" alt="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh" title="Mua bán Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 tại Tp Hồ Chí Minh">
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <!-- end news col 1 -->
+                <!-- news col 2 -->
+                <div class="col-md-8 col-sm-6 col-xs-6 vip-news-col-2">
+                  <div nowrap="nowrap" class="vip-thumbs-subject">
+                    <h5><a itemprop="name" title="Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7" href="https://www.chotot.com/quan-thu-duc/mua-ban-do-the-thao-da-ngoai/tron-bo-2-khuc-sieu-ben-1m8-2m1-2m4-2m7-20191420.htm" class="ad-subject"> Trọn bộ 2 khúc siêu bền 1m8 - 2m1 - 2m4 - 2m7 </a><span class="fa fa-check-square"></span></h5>
+                                        
+                    <span class="vip-news-address">Quận 12, TP.HCM</span>                    
+                    <span class="vip-news-price">4.500.000 đ</span>                    
+                  </div>
+                </div>  
+                <!-- end col 2 -->
+                <!-- news col 3 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 text-center">
+                  <span class="vip-news-date">19/11/2016</span>
+                  <p>&nbsp; <span class="vip-news-number-up">(19)</span></p>
+                  <span><a href="#" onclick=""><img src="./images/up_sm.png" /></a></span>
+                </div>
+              </div>
+              <!-- End row 1 col right -->
+            </div>
+            <!-- end col right -->            
+          </div>
+          <!-- end row 1 news vip -->
+
+
+
+
+          <!-- end news vip -->
+        </div>
+      </div>  
+      <!-- End Tin VIP -->
+    </div>
+    <!-- End page_content clearfix -->
+
+  <!-- End Body Content -->
+
+</div>
+
 <!-- End body -->
 </body>
 </html>
