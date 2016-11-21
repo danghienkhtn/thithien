@@ -18,13 +18,24 @@
 	margin: 0px 0px;
 	overflow: hidden;
 }
+.bodyBannerTop	ul {
+	padding: 0px 0px;
+}
 .bodyBannerTop	ul	li {
-				    display: block;				    
+					display: block;
+				    float: left;
+				    text-align: center;
+				    overflow-x: hidden;
+				    overflow-y: hidden;
+				    background: rgb(255, 255, 255);
+				    /*margin: 2px 1px 0px 0px;*/
+				    /*display: block;				    
 				    float: left;
 				    margin: 2px 2px 0 0;
 				    background: #e4e4e4;				    
 				    text-align: center;
-				    overflow: hidden;
+				    overflow: hidden;*/
+				    width: 280px;
 			}
 				img {
 					max-width: 270px;
@@ -38,6 +49,7 @@
 	.panel-heading {
 		height:30px;
 		padding: 5px 5px;
+		background-color: #46F20D;
 	}
 	.bodyPanelVip {
 		margin: 0px;
@@ -113,6 +125,179 @@
 
 
 
+
+#PageNewsDetail
+	.panel-heading {
+		height:30px;
+		padding: 5px 5px;
+		background-color: #46F20D;
+		color: #ffffff;
+	}		
+	.news-detail-title h1 {
+		font-size: 18px;
+	}
+	.news-detail-price {
+	    margin-top: 5px;
+	    font-size: 11px;
+	    color: #888;
+	    font-family: Verdana;
+	}
+	.news-detail-price span {
+		margin-right: 15px;
+    	padding: 0!important;
+	}
+	.bodyPanelNewsDetail {		
+		padding: 5px;
+	}
+
+#NewsDetail {
+	width: 692px;		
+	padding: 0px;
+}	
+	.news-detail-image {
+	    margin-top: 15px;
+	    min-height: 420px;
+	    padding-bottom: 50px;
+	}
+	.news-detail-image .carousel-indicators {
+		position: relative;
+		bottom: -10px;
+        left: 0;
+        margin-left: 5px;
+        width: 100%;
+	}
+
+	.news-detail-image .carousel-indicators li {
+        border: medium none;
+        border-radius: 0;
+        float: left;
+        height: 54px;
+        margin-bottom: 5px;
+        margin-left: 0;
+        margin-right: 5px !important;
+        margin-top: 0;
+        width: 100px;
+    }
+    /* Indicators images style */
+    .news-detail-image .carousel-indicators img {
+        border: 2px solid #FFFFFF;
+        float: left;
+        height: 54px;
+        left: 0;
+        width: 100px;
+    }
+    /* Indicators active image style */
+    .news-detail-image .carousel-indicators .active img {
+        border: 2px solid #428BCA;
+        opacity: 0.7;
+    }
+
+    .news-detail-image .carousel-inner img {
+	  margin: auto;
+	  max-height: 420px;
+	}
+	.arrow-slide {
+		background-image: none !important;
+	}
+	.news-detail-approved {
+		text-align: right;
+    	color: #888;
+	}
+	.news-detail-price {
+		line-height: 30px;
+	}
+	.news-detail-price .price-name {
+	    color: #888;
+	    font-size: 13px;
+	    padding: 0;
+	}
+	.news-detail-price .price-value {
+	    color: #f57301;
+	    font-size: 20px;
+	    font-weight: bold;
+	}
+	.news-detail-contact {
+	    line-height: 22px;
+	    border-top: 1px solid #e5e5e5;
+	    border-bottom: 1px solid #e5e5e5;
+	    margin-top: 5px;
+	    padding: 10px 0 10px 0;
+	}
+	.news-detail-contact .price-name {
+	    color: #888;
+	    font-size: 13px;
+	    padding: 0;
+	}
+	.news-detail-contact .contact-name {
+	    color: #333;
+	}
+	.news-detail-contact .contact-mobile {
+	    color: #1c60a7;
+	    font-size: 16px;
+	    font-weight: bold;
+	    height: 28px;
+	    line-height: 24px;
+	}
+	.news-detail-body {
+	    margin-top: 10px;
+	    color: #333;
+	    font-size: 16px;
+	    line-height: 22px;
+	}
+	.news-detail-technic {
+	    margin-top: 15px;
+	    padding-bottom: 10px;
+	    padding-top: 15px;
+	    border-bottom: 1px solid #e5e5e5;
+	    border-top: 1px solid #e5e5e5;
+	}
+	.news-detail-technic .technic-title {
+	    font-weight: bold;
+	    color: #333;
+	}
+	.news-detail-technic>ul {
+	    list-style: none;
+	    padding: 0;
+	    margin: 10px 0 0 0;
+	}
+	.news-detail-technic>ul>li {
+	    float: left;
+	    margin: 5px 0 5px 0;
+	    padding: 0;
+	}
+	.news-detail-technic>ul>li .item-name {
+	    color: #888;
+	    padding: 0;
+	    margin: 0;
+	}
+	.news-detail-technic>ul>li .item-value {
+	    color: #333;
+	    margin: 0;
+	    padding: 0;
+	}
+
+	.news-detail-social {
+	    margin-top: 20px;
+	}
+	.news-detail-social .favorite>span {
+	    margin-right: 10px;
+	    padding: 0;
+	}
+	.news-detail-social .social>span {
+	    margin-right: 10px;
+	    padding: 0;
+	    float: left;
+	}
+
+
+.container {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.carousel-control {
+	width: 5%;
+}
 
 /********* Navbar ***************/
 @media (max-width: 767px) {
@@ -354,7 +539,7 @@ body {
 .mbn-search .container-top-seach .btn-search {
     border-radius: 3px!important;
     border: 0;
-    background: #006fb6;
+    background: #F57301;
     color: #fff;
     cursor: pointer
 }

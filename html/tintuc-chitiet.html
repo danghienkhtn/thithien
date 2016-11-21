@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="./css/thithien.css">
+  <link rel="stylesheet" href="./css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./js/thithien.js"></script>
+</head>
+<body>
+<!-- navbar -->
+<div class="navbar-tt clearfix" id="navbar-tt">
+  <nav class="navbar navbar-tt navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <!-- menu mobile -->
+        <div class="visible-xs text-right">
+          <div class="navbar-dropdown-mobile">
+            <a onclick="openNav();" href="javascript:void(0)">
+            <span class="fa fa-bars fa-2x"></span></a>            
+          </div>  
+          <span class="logo-w">
+            <a href="/">              
+              <img src="./images/logo-w.gif" width="140" height="24" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" />
+            </a>
+          </span>
+          <span class="top-search-mobile">
+                <a href="/tim-kiem-di-dong"><i class="fa fa-search fa-2x"></i></a>
+          </span>          
+        </div>
+        <!-- end menu mobile -->
+        <div class="logo-tt">
+          <a class="logo hidden-xs" href="/">
+            <h1><img src="./images/logo.png" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" width="210" height="32" /></h1>
+          </a>
+          <a href="https://muaban.net/app?source=mbn-banner-top" class="banner-top-qc visible-lg">
+              <img src="./images/banner/top.gif" />
+          </a>          
+        </div>        
+      </div>
+      <ul class="nav navbar-nav navbar-right hidden-xs">
+        <li class="active"><a href="#">Dang Nhap</a></li>
+        <li class="dropdown navbar-dropdown-right">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <span class="fa fa-bars fa-2x"></span></a>
+          <ul class="dropdown-menu dropdown-menu-tt " style="left:0px;top:45px">
+            <li><a href="#">Page 1-1</a></li>
+            <li><a href="#">Page 1-2</a></li>
+            <li><a href="#">Page 1-3</a></li> 
+          </ul>
+        </li>
+        <li>
+          <a href="/dang-tin"><span class="nav-post-news text"><i class="fa fa-newspaper-o" style="color:#ffffff;"></i>&nbsp;ĐĂNG TIN MIỄN PHÍ</span></a>
+        </li> 
+      </ul>
+    </div>
+  </nav>
+</div>  
+<!-- end header decktop -->
+<!-- start header mobile -->
+<div id="slidemenumobile" class="visible-sm visible-xs">
+  <ul class="nav navbar-nav navbar-right">
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/">
+            <i class="fa fa-home"></i> Trang chủ
+        </a>
+    </li>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/tim-kiem-di-dong">
+            <i class="fa fa-search"></i> Tìm kiếm
+        </a>
+    </li>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/dang-tin">
+            <i class="icon icon-laptop60"></i> Đăng tin miễn phí
+        </a>
+    </li>
+
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/trang-ca-nhan/MyFavorite">
+            <i class="icon icon-common_star_favorite_bookmark_" style="font-size:18px;"></i> Tin yêu thích
+        </a>
+    </li>
+    <li class="menu-line"></li>
+    <li class="col-sm-12 col-xm-12">
+      <a href="/trang-ca-nhan/SignIn">Đăng nhập</a></li>
+    <li class="col-sm-12 col-xm-12">
+      <a href="/trang-ca-nhan/SignUp">Đăng ký</a></li>
+  </ul>
+</div>
+<!-- End header mobile -->
+<!-- end navbar -->
+
+<!-- Start Body Contentner -->
+  <div class="main-container">            
+    <!-- Start page_content clearfix -->
+    <div id="page-content" class="clearfix">
+      <!-- Start TOP Search -->
+      <div data-bind="with: TopSearch" class="container clearfix">
+        <div class="mbn-search clearfix hidden-xs" id="topSearch">
+          <div class="container-top-seach row">
+            <div class="col-md-3 col-sm-3 col-xs-3 top-search-location">
+              <i id="mbn-top-search-city-icon" class="fa fa-map-marker fa-2x marker"></i>
+              <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown"
+                    data-bind="chosen: { source: Cities, selectedValue: CityId, displayProp: 'Name', valueProp: 'CityId', styleProp: 'Style', chosenOption: { disable_search: true } }" class="hide"></select>
+              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown" class="chosen-single" tabindex="-1">
+                  <span class="drop-cat">                    
+                    <span class="cat-name-tt">Toan quoc</span>
+                  </span>
+                  <div><span class="caret"></span></div>
+                </a>
+                <!-- chosen drop -->  
+                <div class="chosen-drop">
+                  <div class="chosen-search">
+                    <input type="text" autocomplete="off" readonly="">
+                  </div>
+                  <ul class="chosen-results">
+                    <li class="active-result result-selected" style="font-weight: bold;" data-option-array-index="0">Toàn quốc</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="1">TP.HCM</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="2">Hà Nội</li>
+                    <li class="active-result" style="font-weight: bold;" data-option-array-index="3">Đà Nẵng</li>
+                    <li class="active-result" style="" data-option-array-index="61">Vĩnh Long</li>
+                    <li class="active-result" style="" data-option-array-index="62">Vĩnh Phúc</li>
+                    <li class="active-result" style="" data-option-array-index="63">Yên Bái</li>
+                    <li class="active-result" style="" data-option-array-index="64">Nước Ngoài</li>
+                  </ul>
+                </div>
+                <!-- END chosen drop -->
+              </div>      
+            </div>
+            <!-- col giua -->
+            <div class="col-md-4 col-sm-4 col-xs-4 top-search-category">
+              <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown"
+                    data-bind="chosen: { source: Categories, selectedValue: CategoryId, displayProp: 'CategoryName', valueProp: 'CategoryId', chosenOption: { disable_search: true } }" class="hide"></select>
+              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-with-drop chosen-container-active" style="width: 100%;" title="">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown" class="chosen-single" tabindex="-1">
+                  <span class="drop-cat">
+                      <span class="cat-icon"><i class="fa fa-th-large fa-2x" style="color:#ccc"></i></span>
+                      <span class="cat-name">Tất cả chuyên mục<span></span></span>
+                    </span>
+                  <div><span class="caret"></span></div>
+                </a>
+              </div>      
+            </div>
+            <!-- col phai -->
+            <div class="col-md-5 col-sm-5 col-xs-5 top-search-keyword">
+              <div class="input-group">
+                <input type="text" class="form-control input-keyword" data-bind="value: Keyword, attr:{placeholder: KeywordPlaceholder}" maxlength="50">
+                <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="simple-search" class="input-group-addon btn-search" data-bind="click:GotoSearch" href="#"> <i class="fa fa-search"></i> &nbsp;Tìm</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+      <!-- End TOP Search -->
+
+
+
+            <!-- Banner top -->
+      <div id="bannerTop" class="panel panel-banner container clearfix">
+        <div class="panel-heading text-right">          
+          <button id="closeBannerTop" type="button" class="close">&times;</button>
+        </div>
+        <div class="panel-body bodyBannerTop">
+          <ul>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li><li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+            <li>
+              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
+            </li>
+          </ul>  
+        </div>
+      </div>
+      <!-- Banner top -->
+
+
+      <div id="PageNewsDetail" class="container clearfix panel panel-default">
+
+        <div class="panel-heading text-left title-news-url">
+          <span><a href="">Trang chủ</a></span>
+          <span class="fa fa-arrow-right"></span>
+          <span><a href="">TP.HCM</a></span>
+          <span class="fa fa-arrow-right"></span>
+          <span><a href="">Việc làm - Tuyển sinh</a></span>
+          <span class="fa fa-arrow-right"></span>
+          <span><a href="">Việc tìm người</a></span>
+          <span class="fa fa-arrow-right"></span>
+          <span><a href="">Giáo viên - gia sư</a></span>          
+        </div>
+
+
+        <div class="panel-body bodyPanelNewsDetail">
+          <div id="NewsDetail" class="col-md-12 col-sm-12 col-xs-12">
+            <div class="news-detail-title">
+              <h1>Cần Sinh viên dạy Toán Lý Hoá lớp 8, Bình Thạnh</h1>
+            </div>
+            <div class="news-detail-price clearfix">
+              <span class="float-left">
+                  <i class="fa fa-dollar"></i>&nbsp;
+                  2.000.000 đ
+              </span>
+              <span class="float-left"><i class="fa fa-map-marker"></i>&nbsp;Quận Bình Thạnh - TP.HCM</span>
+              <span class="float-left"><i class="fa fa-clock-o"></i>&nbsp;Ngày 21/11/2016</span>
+              <span class="float-left"><i class="fa fa-id-badge"></i>&nbsp;Mã tin: 35706295</span>
+            </div>
+
+            <!-- slide hinh -->
+            <div id="myCarousel" class="carousel slide news-detail-image" data-ride="carousel">              
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                  <img src="./images/slide/hinh1.jpg" alt="hinh 1">
+                </div>
+
+                <div class="item">
+                  <img src="./images/slide/hinh2.jpg" alt="hinh 2">
+                </div>
+
+                <div class="item">
+                  <img src="./images/slide/hinh3.jpg" alt="hinh 3">
+                </div>
+
+                <div class="item">
+                  <img src="./images/slide/hinh4.jpg" alt="hinh 4">
+                </div>
+
+                <div class="item">
+                  <img src="./images/slide/hinh5.jpg" alt="hinh 5">
+                </div>
+              </div>
+
+              <!-- Left and right controls -->
+              <a class="left carousel-control arrow-slide" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control arrow-slide" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active">
+                  <img alt="" src="./images/slide/hinh1.jpg">
+                </li>
+                <li data-target="#myCarousel" data-slide-to="1">
+                  <img alt="" src="./images/slide/hinh2.jpg">
+                </li>
+                <li data-target="#myCarousel" data-slide-to="2">
+                  <img alt="" src="./images/slide/hinh3.jpg">
+                </li>
+                <li data-target="#myCarousel" data-slide-to="3">
+                  <img alt="" src="./images/slide/hinh4.jpg">
+                </li>
+                <li data-target="#myCarousel" data-slide-to="4">
+                  <img alt="" src="./images/slide/hinh5.jpg">
+                </li>
+              </ol>
+            </div>
+            <!-- end slide hinh -->
+            <!-- more info -->
+            <div id="news-detail-approved" class="news-detail-approved clearfix">
+              <span>
+                <span style="display:inline-block">
+                    <i class="fa fa-check" style="color:#46F20D;"></i>
+                    &nbsp;Duyệt tin bởi&nbsp;<strong> Dang Hien</strong>
+                    &nbsp;<img width="30" height="30" alt="avatar" class="approved-avatar" src="#">
+                </span>
+              </span>
+            </div>
+
+
+            <div class="news-detail-price clearfix">
+              <div class="col-md-2 col-sm-2 col-xs-3 price-name">Mức lương:</div>
+              <div class="col-md-10 col-sm-10 col-xs-9 price-value">
+                  2.000.000 đ
+              </div>
+            </div>
+
+            <div class="news-detail-contact clearfix">
+              <div class="clearfix">
+                <div class="col-md-2 col-sm-2 col-xs-3 price-name">Liên hệ:</div>
+                <div class="col-md-10 col-sm-10 col-xs-9 contact-name">thầy Sơn</div>
+              </div>
+              <div class="clearfix">
+                <div class="col-md-2 col-sm-2 col-xs-3 price-name">Điện thoại:</div>
+                <div class="col-md-10 col-sm-10 col-xs-9 contact-mobile">
+                  <span data-bind="visible:ShowMobile()==false">0902675969</span>                    
+                </div>
+              </div>
+            </div>  
+            <!-- news detail -->
+            <div class="news-detail-body overflow clearfix">
+                Cần Sinh viên dạy Toán Lý Hoá lớp 8 tại Chu Văn An, Bình Thạnh, 5 buổi/tuần, 2tr/tháng, website: www.giasuductai.com. Gia sư vui lòng liên hệ: 135/6 Tân Kỳ Tân Quý, P Tân Sơn Nhì, Tân Phú, Tel: 0905.35.49.48 -0902.67.59.69.
+            </div>
+            <!-- detail technic -->
+            <div class="news-detail-technic clearfix">
+              <div class="technic-title clearfix">Thông tin nhà tuyển dụng</div>
+              <div class="clearfix" style="margin-top:15px;">                 
+                <div class="col-md-12 col-sm-12 col-xs-12 item-value technic-title" style="padding:0px"></div>
+              </div>
+              <ul class="clearfix">       
+                <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+                  <div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 item-name">Loại hình công việc:</div>
+                    <div class="col-md-7 col-sm-7 col-xs-7 item-value">Bán thời gian cố định</div>
+                  </div>
+                </li>
+                <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+                  <div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 item-name">Tuổi:</div>
+                    <div class="col-md-7 col-sm-7 col-xs-7 item-value">- - -</div>
+                  </div>
+                </li>
+                <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+                  <div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 item-name">Giới tính:</div>
+                    <div class="col-md-7 col-sm-7 col-xs-7 item-value">-</div>
+                  </div>
+                </li>
+                <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+                  <div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 item-name">Bằng cấp:</div>
+                    <div class="col-md-7 col-sm-7 col-xs-7 item-value">-</div>
+                  </div>
+                </li>
+                <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+                  <div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 item-name">Ngoại ngữ:</div>
+                    <div class="col-md-7 col-sm-7 col-xs-7 item-value">-</div>
+                  </div>
+                </li>
+                <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+                  <div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 item-name">Vị trí:</div>
+                    <div class="col-md-7 col-sm-7 col-xs-7 item-value">-</div>
+                  </div>
+                </li>
+                <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+                  <div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 item-name">Kinh nghiệm:</div>
+                    <div class="col-md-7 col-sm-7 col-xs-7 item-value">-</div>
+                  </div>
+                </li>
+                <li class="col-md-6 col-sm-12 col-xs-12 technic-item" style="display:none">
+                  <div>
+                    <div class="col-md-5 col-sm-5 col-xs-5 item-name">Mức lương:</div>
+                    <div class="col-md-7 col-sm-7 col-xs-7 item-value">2.000.000 đ - -</div>
+                  </div>
+                </li>
+              </ul>    
+            </div>
+            <!-- end more info -->
+
+            <!-- social info -->
+            <div class="news-detail-social clearfix" id="dvEditClassified">
+              <div class="col-md-7 col-sm-7 col-xs-12 favorite" style="padding:0px">
+                <span>
+                  <a title="Bỏ thích/Thích">
+                    <i class="fa fa-star-o fa-2x" style="font-size:18px;" data-bind="style:{color:IsFavorite()==false? '#23527c':'#eda703'}"></i>
+                    <span data-bind="text:IsFavorite()?'Bỏ thích':'Thích'">Thich</span>
+                  </a>
+                </span>
+                <span data-bind="click: ValidPass.ViewEdit">
+                  <a href="#"><i class="fa fa-edit"></i>&nbsp;Sửa tin</a>
+                </span>
+                <span>
+                  <a title="Báo vi phạm" data-bind="click:ShowFeedBack"><i class="fa fa-warning fa-2x" style="font-size:18px;"></i>&nbsp;Báo vi phạm</a>
+                </span>
+                <span data-bind="click:PrintDetail, visible: ShowPrint">
+                  <a title="In tin"><i class="fa fa-print fa-2x" style="font-size:18px"></i>&nbsp;In nội dung tin</a>
+                </span>
+              </div>
+              <div class="col-md-5 col-sm-5 col-xs-12 social">
+                <span class="fb-like" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></span>
+                <span>
+                  <span class="g-plusone" data-size="medium" data-annotation="none"></span>
+                </span>
+                <span>
+                  <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                </span>
+              </div>
+            </div>
+            <!-- end socical info -->
+
+          </div>
+        </div>  
+      </div>  
+
+
+
+    </div>
+    <!-- End Page Content -->
+  </div>
+
+<script>
+function openNav() {
+    document.getElementById("slidemenumobile").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("slidemenumobile").style.width = "0";
+}
+</script>
+
+</body>
+</html>      
+
