@@ -13,7 +13,7 @@
 	padding: 1px 5px;	
 }
 .bodyBannerTop {
-	height: 313px;
+	height: auto;
 	padding: 0px 0px;
 	margin: 0px 0px;
 	overflow: hidden;
@@ -123,12 +123,15 @@
     clear: both
 }
 
-
-
+#pageContent .container .row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
 
 #PageNewsDetail
 	.panel-heading {
-		height:30px;
+		min-height:30px;
+        height: auto;
 		padding: 5px 5px;
 		background-color: #46F20D;
 		color: #ffffff;
@@ -147,12 +150,12 @@
     	padding: 0!important;
 	}
 	.bodyPanelNewsDetail {		
-		padding: 5px;
+		padding: 0px;
 	}
 
 #NewsDetail {
 	width: 692px;		
-	padding: 0px;
+	padding: 0px 5px;
 }	
 	.news-detail-image {
 	    margin-top: 15px;
@@ -311,6 +314,9 @@
 	    max-height: 45px!important;
 	    margin-top: 5px;
 	}
+    #NewsDetail {
+        max-width: 100%;
+    }
 }
 @media (min-width: 768px)
 #navbar-tt.smaller .navbar-fixed-top {
@@ -341,6 +347,12 @@
 @media (min-width: 992px)
 .navbar {
     border-radius: 4px;
+}
+
+@media (max-width: 480px) {
+    .col-menu {
+        display: none !important;
+    }
 }
 
 #navbar-tt .navbar-fixed-top {
@@ -508,10 +520,6 @@ body {
 .main-container {
     margin-top: 55px;
 }
-
-
-
-
 
 
 .mbn-search {
@@ -736,6 +744,56 @@ body {
 }
 
 
+/************** side navbar******************************/
+html, body {
+   height: 100%;
+}
+
+#colMenu {
+    background-color: #eee;
+    padding-left: 0;
+    float: left;
+    min-height: 100%;
+    width:45px;
+    overflow: hidden;
+}
+
+#colContent {
+    padding: 15px;
+    left: 0;
+}
+
+
+.col-content {    
+    padding: 0 0;
+    transition: width 1s;
+}
+
+.menu-item {
+    width: 100%;
+    border-color: #C5B8B8;
+    border: 1px solid transparent;
+    padding-left: 0px;    
+    margin-bottom: 0px !important;
+}
+.menu-item li {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    padding: 4px;    
+    border-bottom: 1px solid;
+}
+.menu-item li a {
+    text-decoration: none;       
+}
+.menu-item li a i {    
+    color: #46F20D;
+}
+.menu-item li a span {
+    padding-left: 10px;
+}
+    
+/**************end side navbar******************************/
 
 @media (min-width: 992px)
 .container {
