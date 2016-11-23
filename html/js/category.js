@@ -222,7 +222,22 @@ var app = angular.module('TTApp',[]);
 app.controller('TTCtrl', function($scope) {
 	$scope.danhmuc = DanhMuc;
 	$scope.tinhthanh = TinhThanh;
-	$scope.bannertop = BannerTop;
+	$scope.bannertop = BannerTop;	
+	$scope.changeColor = function(e){
+		// console.log(e);
+		// console.log(el);
+		$(e.currentTarget).toggleClass("highlighted");
+	}
+	$scope.chosenDM = function(item) {
+		// console.log(e.target.parentNode.parentNode.parentNode.parentNode);
+		// console.log(e);
+		$(".cat-name-dm").text(item.name);		
+		$scope.cbDanhMuc = item.id;
+	}
+	$scope.chosenTT = function(item) {
+		$(".cat-name-tt").text(item.name);		
+		$scope.cbTinhThanh = item.id;
+	}
 });
 
 /*var appNewsDat = angular.module('TTApp',[]);
