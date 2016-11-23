@@ -11,8 +11,13 @@
   <script src="./js/jquery.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
   <script src="./js/thithien.js"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+  <script src="./js/banners.js"></script>
+  <script src="./js/category.js"></script>
 </head>
-<body>
+<body ng-app="TTApp" ng-controller="TTCtrl">
 <!-- navbar -->
 <div class="navbar-tt clearfix" id="navbar-tt">
   <nav class="navbar navbar-tt navbar-fixed-top">
@@ -49,9 +54,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           <span class="fa fa-bars fa-2x"></span></a>
           <ul class="dropdown-menu dropdown-menu-tt " style="left:0px;top:45px">
-            <li><a href="#">Page 1-1</a></li>
-            <li><a href="#">Page 1-2</a></li>
-            <li><a href="#">Page 1-3</a></li> 
+            <li ng-repeat="item in danhmuc"><a href="#">{{item.name}}</a></li>
           </ul>
         </li>
         <li>
@@ -108,8 +111,8 @@
           <div class="container-top-seach row">
             <div class="col-md-3 col-sm-3 col-xs-3 top-search-location">
               <i id="mbn-top-search-city-icon" class="fa fa-map-marker fa-2x marker"></i>
-              <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown"
-                    data-bind="chosen: { source: Cities, selectedValue: CityId, displayProp: 'Name', valueProp: 'CityId', styleProp: 'Style', chosenOption: { disable_search: true } }" class="hide"></select>
+              <select ng-model="cbTinhThanh" ng-options="x.name for x in tinhthanh" class="hide">                
+              </select>
               <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
                 <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown" class="chosen-single" tabindex="-1">
                   <span class="drop-cat">                    
@@ -122,15 +125,8 @@
                   <div class="chosen-search">
                     <input type="text" autocomplete="off" readonly="">
                   </div>
-                  <ul class="chosen-results">
-                    <li class="active-result result-selected" style="font-weight: bold;" data-option-array-index="0">Toàn quốc</li>
-                    <li class="active-result" style="font-weight: bold;" data-option-array-index="1">TP.HCM</li>
-                    <li class="active-result" style="font-weight: bold;" data-option-array-index="2">Hà Nội</li>
-                    <li class="active-result" style="font-weight: bold;" data-option-array-index="3">Đà Nẵng</li>
-                    <li class="active-result" style="" data-option-array-index="61">Vĩnh Long</li>
-                    <li class="active-result" style="" data-option-array-index="62">Vĩnh Phúc</li>
-                    <li class="active-result" style="" data-option-array-index="63">Yên Bái</li>
-                    <li class="active-result" style="" data-option-array-index="64">Nước Ngoài</li>
+                  <ul class="chosen-results">                    
+                    <li class="active-result" style="font-weight: bold;" ng-repeat="x in tinhthanh" >{{x.name}}</li>                   
                   </ul>
                 </div>
                 <!-- END chosen drop -->
@@ -138,9 +134,8 @@
             </div>
             <!-- col giua -->
             <div class="col-md-4 col-sm-4 col-xs-4 top-search-category">
-              <select data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown"
-                    data-bind="chosen: { source: Categories, selectedValue: CategoryId, displayProp: 'CategoryName', valueProp: 'CategoryId', chosenOption: { disable_search: true } }" class="hide"></select>
-              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-with-drop chosen-container-active" style="width: 100%;" title="">
+              <select class="hide"></select>
+              <div class="chosen-container chosen-container-single chosen-container-single-nosearch" style="width: 100%;" title="">
                 <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown" class="chosen-single" tabindex="-1">
                   <span class="drop-cat">
                       <span class="cat-icon"><i class="fa fa-th-large fa-2x" style="color:#ccc"></i></span>
@@ -148,6 +143,16 @@
                     </span>
                   <div><span class="caret"></span></div>
                 </a>
+                <!-- chosen drop -->  
+                <div class="chosen-drop">
+                  <div class="chosen-search">
+                    <input type="text" autocomplete="off" readonly="">
+                  </div>
+                  <ul class="chosen-results">                    
+                    <li class="active-result" style="font-weight: bold;" ng-repeat="x in danhmuc" >{{x.name}}</li>                   
+                  </ul>
+                </div>
+                <!-- END chosen drop -->
               </div>      
             </div>
             <!-- col phai -->
@@ -171,50 +176,9 @@
         </div>
         <div class="panel-body bodyBannerTop">
           <ul>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li><li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
-            <li>
-              <a href="#"><img class="img-thumbnail" src="./images/banner/bannerTop/sample_3.jpg" /></a>
-            </li>
+            <li ng-repeat="qc in bannertop">
+              <a href="{{qc.url}}"><img class="img-thumbnail" src="{{qc.src}}" /></a>
+            </li>            
           </ul>  
         </div>
       </div>

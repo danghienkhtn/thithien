@@ -3,8 +3,25 @@ $(document).ready(function(){
         $("#bannerTop").hide();
     });
 
+    $(".top-search-location").click(function(){    	
+        $(".top-search-location .chosen-container").toggleClass("chosen-with-drop");
+    });
+    $(".top-search-location .chosen-container .chosen-drop .chosen-results li").mouseenter(function(){    	
+    	alert("sdsd");
+        $(this).toggleClass("highlighted");
+    });
     
+    $(".top-search-category").click(function(){
+    	console.log("sdd");
+        $(".top-search-category .chosen-container").toggleClass("chosen-with-drop");
+    });
 
+    $(".active-results").hover(function(){
+    	console.log("sdd");
+        $(".active-results").toggleClass("highlighted");
+    });
+    
+    
     /*$("#colMenu").mouseenter(function(){
     	var wcolmenu = $("#colMenu").width();
     	var wcolcontent = $("#colContent").width();
