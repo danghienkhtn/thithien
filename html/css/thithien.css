@@ -1121,9 +1121,14 @@ html, body {
     padding: 5px 10px 5px 0;
     cursor: pointer;
 }
+.se-category .category .cat-list>li:hover {
+    color: #fff;
+    background-color:#428bca;
+}
 .se-category .category .cat-list .active {
     color: #000;
     background: #feffe6;
+    text-decoration: none;
 }
 .se-category .category .cat-item {
     display: block;
@@ -1147,6 +1152,47 @@ html, body {
 .se-category .category .category-name i {
     line-height: 30px;
     font-size: 16px;
+}
+.se-category .category .cat-list>li>a {
+    color: #000;
+}
+.se-category .category .cat-list>li>a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+.se-category .category .category-name-level2 {
+    width: 100%;
+    display: block;
+    line-height: 28px;
+}
+.se-category .category .cat-list>li>a:focus {    
+    text-decoration: none;
+}
+.po-content {
+    margin-top: 40px;
+    padding: 0;
+    position: relative;
+}
+.po-content .po-cat-name {
+    color: #555;
+    font-weight: bold;
+    line-height: 25px;
+}
+.form-horizontal .form-group {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+@media (min-width: 768px) {
+	.form-horizontal .control-label {
+	    padding-top: 7px;
+	    margin-bottom: 0;
+	    text-align: right;
+	}
+	.col-sm-10 {
+	    width: 83.33333333%;
+	}
+
 }
 /*************************/
 @media (min-width: 992px)

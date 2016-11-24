@@ -129,7 +129,7 @@
                 </div>
                 <ul class="cat-list clearfix">
                     <!-- ko foreach:{data: Categories, as: 'item'} -->
-                    <li ng-repeat="x in danhmuc">
+                    <li ng-repeat="x in danhmuc" ng-click="choseCatItem($event, x)">
                         <a href="#">
                             <span class="cat-item">
                                 <span class="category-icon">
@@ -148,23 +148,671 @@
                 <div class="cat-se-title">
                     <div data-bind="visible:VisiblePCat">
                         <span class="icon-se">2</span> Chọn chuyên mục đăng tiếp theo
+                        <input ng-model="CatItemSelected" value="{{CatItemSelected.id}}" class="hide" />
+                        <input ng-model="SubCatItemSelected" value="{{SubCatItemSelected.id}}" class="hide" />
                     </div>
                     <div class="visible-xs">
-                        <i style="font-size:25px"></i> <span data-bind="text: SelectCat().Name()"></span> | <a href="#" data-bind="click:ChangeParentCat">Sửa</a>
+                        <i style="font-size:25px"></i> <span>{{CatId}}</span> | <a href="#" ng-click="ChangeParentCategory()">Sửa</a>
                     </div>
                 </div>
-                <ul class="cat-list clearfix">
-                    <!-- ko foreach:{data: SubCategories, as: 'item'} -->
-                    <li data-bind="attr:{class:item.Id()==$parent.SubCategoryId()?'active':''}, click: $parent.SelectSubCategory">
-                        <a href="#" class="category-name-level2" data-bind="text:item.Name"></a>
-                    </li>
-                    <!-- /ko -->
+                <ul class="cat-list clearfix">                    
+                    <li ng-repeat="x in CatItemSelected.danhmuccon" ng-click="chosenSubCatItem(x)" >
+                        <a href="#" class="category-name-level2">{{x.name}}</a>
+                    </li>                    
                 </ul>
             </div>
         </div>
+        <!-- form đăng tin -->
+        <form class="form-horizontal" id="frmPosting">
+          <div class="po-content clearfix" style="display:none">
+            <div class="po-cat-name form-group clearfix">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <i style="font-size:25px; position:relative; top:5px"></i> <span>{{CatItemSelected.name}}</span> <i class="fa fa-angle-right" style="position: relative; top: 3px; font-size:20px;"></i> <span>{{SubCatItemSelected.name}}</span>
+                <span> | <a href="#" ng-click="ChangeCat"><span>Thay đổi</span></a></span>
+              </div>
+            </div>
+
+            <!-- Tinh thanh -->
+            <div class="form-group clearfix">
+              <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Tỉnh thành</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+              <div class="col-md-5 col-sm-10 col-xs-12">
+                <input ng-model="cbTinhThanh" value="{{cbTinhThanh.id}}" class="hide" />
+                <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                  <a class="chosen-single" tabindex="-1">
+                    <span class="drop-cat">                    
+                      <span class="cat-name-tt">Toan quoc</span>
+                    </span>
+                    <div><span class="caret"></span></div>
+                  </a>
+                  <!-- chosen drop -->  
+                  <div class="chosen-drop">
+                    <div class="chosen-search">
+                      <input type="text" autocomplete="off" readonly="">
+                    </div>
+                    <ul class="chosen-results">                    
+                      <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenTT(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in tinhthanh" >{{x.name}}</li>                   
+                    </ul>
+                  </div>
+                  <!-- END chosen drop -->
+                </div>
+                <div class="clearfix"><span class="validationMessage"></span></div>
+              </div>
+            </div>
 
 
-      </div>  
+            <!-- quan huyen -->
+            <div class="form-group clearfix">
+              <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Quận/Huyện<span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+              <div class="col-md-5 col-sm-10 col-xs-12">
+                <input ng-model="cbQuanHuyen" value="{{cbQuanHuyen.id}}" class="hide" />
+                <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                  <a class="chosen-single" tabindex="-1">
+                    <span class="drop-cat">                    
+                      <span class="cat-name-tt">Quận huyện</span>
+                    </span>
+                    <div><span class="caret"></span></div>
+                  </a>
+                  <!-- chosen drop -->  
+                  <div class="chosen-drop">
+                    <div class="chosen-search">
+                      <input type="text" autocomplete="off" readonly="">
+                    </div>
+                    <ul class="chosen-results">                    
+                      <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenTT(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in quanhuyen" >{{x.name}}</li>                   
+                    </ul>
+                  </div>
+                  <!-- END chosen drop -->
+                </div>
+                <div class="clearfix"><span class="validationMessage"></span></div>
+              </div>
+            </div>
+
+
+            <!-- hang san xuat -->
+            <div class="form-group clearfix">
+              <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Hãng sản xuất</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+              <div class="col-md-5 col-sm-10 col-xs-12">
+                <input ng-model="cbHangSX" value="{{cbHangSX.id}}" class="hide" />
+                <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                  <a class="chosen-single" tabindex="-1">
+                    <span class="drop-cat">                    
+                      <span class="cat-name-tt">Chọn hãng sản xuất</span>
+                    </span>
+                    <div><span class="caret"></span></div>
+                  </a>
+                  <!-- chosen drop -->  
+                  <div class="chosen-drop">
+                    <div class="chosen-search">
+                      <input type="text" autocomplete="off" readonly="">
+                    </div>
+                    <ul class="chosen-results">                    
+                      <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenTT(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in HangSX" >{{x.name}}</li>                   
+                    </ul>
+                  </div>
+                  <!-- END chosen drop -->
+                </div>
+                <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+              </div>
+            </div>
+
+
+            <!-- ten san pham -->
+            <div class="form-group clearfix">
+              <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Tên sản phẩm</span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+              <div class="col-md-5 col-sm-10 col-xs-12">
+                <input ng-model="cbTenSP" value="{{cbTenSP.id}}" class="hide" />
+                <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                  <a class="chosen-single" tabindex="-1">
+                    <span class="drop-cat">                    
+                      <span class="cat-name-tt">Toan quoc</span>
+                    </span>
+                    <div><span class="caret"></span></div>
+                  </a>
+                  <!-- chosen drop -->  
+                  <div class="chosen-drop">
+                    <div class="chosen-search">
+                      <input type="text" autocomplete="off" readonly="">
+                    </div>
+                    <ul class="chosen-results">                    
+                      <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenTT(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in tinhthanh" >{{x.name}}</li>                   
+                    </ul>
+                  </div>
+                  <!-- END chosen drop -->
+                </div>
+                <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+              </div>
+            </div>
+
+
+            <!--Đăng tin xe-->
+            <div class="clearfix">
+              <div class="form-group clearfix">
+                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-5 col-sm-10 col-xs-12">
+                  <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Hãng xe"></select>
+                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: Models, visible: Models.Visible">
+                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-5 col-sm-10 col-xs-12">
+                  <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:false, allow_single_deselect: true } }" data-placeholder="Tên xe"></select>
+                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: BodyStyles">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Dòng xe"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: CarYears">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Năm sản xuất"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: Origins">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Xuất xứ"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: NewPercen">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <input type="text" data-bind="value: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="3" />
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: Transmissions">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Hộp số"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: Drivertypes">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Kiểu dẫn động"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: FuelTypes">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Nhiên liệu"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: Colors">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Màu xe"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: Safeties">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-10 col-sm-12">
+                      <!-- ko foreach:{data: DataOption, as: 'item'} -->
+                      <div class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
+                          <label style="width:100%; font-weight:normal">
+                              <input type="checkbox" data-bind="checked: item.Selected">
+                              <span data-bind="text: item.Name" style="position:relative; top:-2px"></span>
+                          </label>
+                      </div>
+                      <!-- /ko -->
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: Features">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-10 col-sm-12">
+                      <!-- ko foreach:{data: DataOption, as: 'item'} -->
+                      <div class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
+                          <label style="width:100%; font-weight:normal">
+                              <input type="checkbox" data-bind="checked: item.Selected">
+                              <span data-bind="text: item.Name" style="position:relative; top:-2px"></span>
+                          </label>
+                      </div>
+                      <!-- /ko -->
+                  </div>
+              </div>
+            </div>
+            <!--Kết thúc đăng tin xe-->
+
+
+            <!--Đăng tin bds-->
+            <div class="clearfix" data-bind="with:RealEstate, visible:VisibleRe">
+              <div class="form-group clearfix" data-bind="with: WardId">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Phường/Xã&nbsp;</label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Phường/Xã"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text:StreetId.Label"></span>&nbsp;</label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <div class="col-md-3 col-sm-3 col-xs-4" style="padding:0px" data-bind="with: Address">
+                          <input type="text" class="form-control" data-bind="value: Data" placeholder="Số nhà"/>
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+                      
+                      <div class="col-md-9 col-sm-9 col-xs-8 " data-bind="with: StreetId" style="padding-right:0px">
+                          <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Đường"></select>
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+                  </div>
+              </div>                    
+              <div class="form-group clearfix" data-bind="with: ProjectId">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Thuộc dự án&nbsp;</label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+
+                      <!-- ko if: ($parent.VisibleProject() > 0) -->
+                      <div>
+                          <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Thuộc dự án"></select>
+                      </div>
+                      <!-- /ko -->
+                      <!-- ko if: ($parent.VisibleProject() == 0) -->
+                      <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;">
+                          <a class="chosen-single chosen-default" style="color:#ccc!important"><span>Thuộc dự án</span><div><b></b></div></a>
+                      </div>
+                      <!-- /ko -->
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with: PropertyTypes">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Loại bất động sản&nbsp;(<span class="requiredMessage">*</span>)</label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Loại bất động sản"></select>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" style="height:200px; display:none">
+                  <div id="bds-property-location-sm" style="width: 100%; height: 100%; z-index: 3"></div>
+              </div>
+              <div class="clearfix" data-bind="with: TotalArea">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" />
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="clearfix" data-bind="with: LivingArea">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" />
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="clearfix" data-bind="with: LegalId">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Pháp lý"></select>
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="clearfix" data-bind="with: Floor">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class=" col-md-2 col-sm-2 col-xm-12 control-label contact-label">
+                          <span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span>
+                      </label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="3" />
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="visible: ShowCollap">
+                  <span class="col-md-7 col-sm-12 col-xs-12">
+                      <a href="#" class="float-right mbn-bold" data-bind="click: function(data,e){ data.VisibleExpandRe(!data.VisibleExpandRe());}">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
+                  </span>
+              </div>
+              <!--khu vục collspan-->
+              <div data-bind="visible: ShowExpand">                        
+                  <div class="clearfix" data-bind="with: BedRooms">
+                      <div data-bind="visible:Visible" class="form-group">
+                          <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                          <div class="col-md-5 col-sm-10 col-xs-12">
+                              <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="2" />
+                              <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                          </div>
+
+                      </div>
+                  </div>
+                  <div class="clearfix" data-bind="with: BathRooms">
+                      <div data-bind="visible:Visible" class="form-group">
+                          <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                          <div class="col-md-5 col-sm-10 col-xs-12">
+                              <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="2" />
+                              <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                          </div>
+
+                      </div>
+                  </div>
+                  <div class="clearfix" data-bind="with: Direction">
+                      <div data-bind="visible:Visible" class="form-group">
+                          <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                          <div class="col-md-5 col-sm-10 col-xs-12">
+                              <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Hướng"></select>
+                              <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                          </div>
+
+                      </div>
+                  </div>
+                </div>
+                <!--End khu vục collspan-->
+            </div>
+            <!--ket thuc dang bds-->
+
+
+            <!--Đăng tin việc làm-->
+            <div class="clearfix" data-bind="with:Job, visible:VisibleJob">
+              <div class="clearfix" data-bind="with: JobType">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <select class="chosen-select" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Hình thức làm việc"></select>
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="clearfix" data-bind="with:Categories">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Ngành nghề"></select>
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="clearfix" data-bind="with: Name">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <input type="text" data-bind="value: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="140" />
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="clearfix" data-bind="with: SalaryFrom">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label" data-bind="text: Label">
+                      </label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <input type="text" data-bind="inputNumber: Data" placeholder="Nhập mức lương tối thiểu, chỉ nhập số" class="form-control" maxlength="12" />
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="clearfix" data-bind="with: SalaryTo">
+                  <div data-bind="visible:Visible" class="form-group">
+                      <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label" data-bind="text: Label">
+                      </label>
+                      <div class="col-md-5 col-sm-10 col-xs-12">
+                          <input type="text" data-bind="inputNumber: Data" placeholder="Nhập mức lương tối đa, chỉ nhập số" class="form-control" maxlength="12" />
+                          <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="form-group clearfix">
+                  <span class="col-md-7 col-sm-12 col-xs-12">
+                      <a href="#" class="float-right mbn-bold" data-bind="click: function(data,e){ data.VisibleExpandRe(!data.VisibleExpandRe());}">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
+                  </span>
+              </div>
+              <!--Khu vuc thong tin mo rong-->
+              <div data-bind="visible:VisibleExpandRe">
+                  <div class="clearfix" data-bind="with:Gender">
+                      <div data-bind="visible:Visible" class="form-group">
+                          <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                          <div class="col-md-5 col-sm-10 col-xs-12">
+                              <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Giới tính"></select>
+                              <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                          </div>
+
+                      </div>
+                  </div>
+                  <div class="clearfix" data-bind="with:Birthday">
+                      <div data-bind="visible:Visible" class="form-group">
+                          <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                          <div class="col-md-5 col-sm-10 col-xs-12">
+                              <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Năm sinh"></select>
+                              <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                          </div>
+
+                      </div>
+                  </div>
+
+                  <div class="clearfix" data-bind="visible:BirthYearFrom.Visible">
+                      <div class="form-group">
+                          <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Độ tuổi </label>
+                          <div class="col-md-5 col-sm-10 col-xs-12 age">
+                              <div data-bind="with: BirthYearFrom, visible:BirthYearFrom.Visible" class="from-age">
+                                  <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Tuổi từ"></select>
+                                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+
+                              </div>
+
+                              <div data-bind="with: BirthYearTo, visible:BirthYearTo.Visible" class="to-age">
+                                  <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Tuổi đến"></select>
+                                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+                  <div class="clearfix" data-bind="with: Experience">
+                      <div data-bind="visible:Visible" class="form-group">
+                          <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label" data-bind="text: Label">
+                          </label>
+                          <div class="col-md-5 col-sm-10 col-xs-12">
+                              <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="2" />
+                              <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <!--Kết thúc Đăng tin việc làm-->
+
+
+            <!--Tiêu đề, Nội dung, giá-->
+            <div class="form-group clearfix" data-bind="with:Price, visible:Price.Visible">
+              <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Giá:<span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+              <div class="col-md-5 col-sm-10 col-xs-12">
+                  <input type="text" data-bind="inputNumber: Data, valueUpdate:'afterkeydown'" class="form-control" placeholder="Giá" maxlength="19" />
+                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  <div style="font-size:12px; font-style:italic; margin-top:5px;">
+                      <span data-bind="text: $parent.PriceToText"></span>
+                  </div>
+              </div>
+            </div>
+            <div class="form-group clearfix" data-bind="with:Title">
+              <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+              <div class="col-md-5 col-sm-10 col-xs-12">
+                  <input type="text" data-bind="value: Data, valueUpdate:'afterkeydown', attr:{placeholder: Placeholder}" class="form-control" placeholder="Vui lòng nhập Tiếng Việt có dấu" maxlength="70" />
+                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  <div style="font-size:12px; margin-top:5px; font-style:italic">
+                      Đã nhập: <span data-bind="text: $parent.CountCharTitle" style="color:blue"></span> ký tự
+                  </div>
+              </div>
+            </div>
+            <div class="form-group clearfix" data-bind="with:Body">                    
+              <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+              <div class="col-md-5 col-sm-10 col-xs-12">
+                  <textarea type="text" data-bind="value: Data, valueUpdate:'afterkeydown', attr:{placeholder: Placeholder}" class="form-control" rows="8" maxlength="2010"></textarea>
+                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  <div >
+                      <span style="font-size:12px; font-style:italic">Đã nhập: <span data-bind="text: $parent.CountChar" style="color:blue"></span> ký tự</span> 
+                      <span style="float:right; color: #f47100; cursor:pointer;" class="visible-lg"> 
+                          <span data-bind="visible:$parent.Hints().length>0, click: $parent.OpenHint">
+                              <i class="icon icon-light-bulb"></i>Gợi ý
+                          </span>                                
+                      </span>
+                  </div>
+              </div>
+            </div>
+            <!--Kết thúc, tiêu đề, nội dung, giá-->
+
+
+            <!--Hình ảnh-->
+            <div class="form-group clearfix">
+              <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Đăng hình ảnh: </label>
+              <div class="col-md-5 col-sm-10 col-xs-12">
+                  <div class="image-wapper">
+                      <div class="image-wapper-label">
+                          ĐĂNG ẢNH THẬT ĐỂ ĐƯỢC HIỆU QUẢ NHẤT!
+                      </div>
+                      <div class="image-wapper-take">
+                          <input type="file" multiple class="input-file" accept="image/*" data-bind="uploader: UploadOptions">
+                      </div>
+                      <div class="image-wapper-des">
+                          <div>Click vào dấu cộng ở trên để up hình,</div>
+                          <div>bạn có thể up tối đa 30 hình, mỗi hình tối đa 6MB</div>
+                      </div>
+                  </div>
+                  <ul id="post-img-list" class="img-list" data-bind="sortable: Images">
+
+                      <li class="item" data-bind="attr: { id: 'image-item-' + ImageId()}, visible:IsDeleted()==false">
+                          <div class="image-wrapper">
+                              <img style="display: block; width:100%; height:100%" data-bind="attr: { src: ThumbPost }" />
+                              <span class="img-cmd ">
+                                  <span data-bind="click: $parent.PreviewMedia" class=""><i class="fa fa-pencil"></i></span>
+                                  <span data-bind="click: $parent.RemoveImage, clickBubble: false"><i class="fa fa-trash-o"></i></span>
+                              </span>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              <div class=" col-md-5 col-sm-12 col-xs-12 view-image">                        
+              </div>
+            </div>
+            <!--Kết thúc đăng hình-->
+
+            <div class="po-contact clearfix">
+              <div>
+                  <h4 class="title">Thông tin liên hệ</h4>
+              </div>
+              <div class="form-group clearfix" data-bind="with:ContactName" style="margin-top:20px;">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <input type="text" data-bind="value: Data, attr:{placeholder: Placeholder}" class="form-control" maxlength="99" />
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with:ContactMobile">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <div class="input-group">
+                          <input type="text" data-bind="value: Data, attr:{placeholder: Placeholder}" class="form-control" maxlength="15" />
+                          <span class="input-group-addon">
+                              <label style="font-weight:normal; font-size:12px"><input type="checkbox" id="chkShowMobile" checked="checked" style="position:absolute; top:8px" /> <span style="padding-left:20px; ">Hiển thị số ĐT</span></label>
+                          </span>
+                      </div>
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="form-group clearfix" data-bind="with:ContactAddress">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <input type="text" data-bind="value: Data, attr:{placeholder: Placeholder}" class="form-control" maxlength="256" />
+                      <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  </div>
+              </div>
+              <div class="row form-group" data-bind="visible: ShowCaptcha">
+                  <div class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">
+                      Mã an toàn:
+                  </div>
+                  <div class="col-md-5 col-sm-10 col-xs-12">
+                      <div style="vertical-align:middle;">
+                          <input type="text" class="form-control" style="width:120px; float:left;" id="ConfirmCaptcha" name="ConfirmCaptcha" data-bind="value: ConfirmCaptcha" autocomplete="off" placeholder="Mã an toàn" maxlength="5" />
+                          <div style="display:inline-block;width:160px;padding-left:10px;">
+                              <input type="hidden" id="Captcha" name="Captcha" value="9b4edb7e-e8c2-4bce-ba27-f2e1ac94d4b8" />
+                              <img id="ImgCaptcha" src="/captcha.ashx?guid=9b4edb7e-e8c2-4bce-ba27-f2e1ac94d4b8" alt="Captcha" width="100" height="30" />
+                              <button type="button" class="btn btn-default" data-bind="click: RefreshCaptcha" title="Làm mới mã an toàn">
+                                  <i class="fa fa-refresh"></i>
+                              </button>
+                          </div>
+                          <div class="clearfix"></div>
+                          <div>
+                              <p data-bind="validationMessage: ConfirmCaptcha" class="validationMessage"></p>                                
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"> </label>
+                  <div class="col-md-5 col-sm-8 group-cmd">
+                      <button class="btn btn-primary cmd-next" data-bind="click:SubmitForm, activity: IsExecuting">Tiếp tục <i class="fa fa-angle-right"></i></button>
+                  </div>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12 summary-valid clearfix" data-bind="visible:(Errors().length>0 ||(VisibleRe()==true && RealEstate().Errors().length>0 ) || (VisibleCar()==true && Car().Errors().length>0 && ValidInputCar()==false) || (VisibleJob()==true && Job().Errors().length>0)) && ShowSummaryError()==true">
+                  <ul class="error">
+                      <!-- ko foreach:{data: Errors, as: 'error'} -->
+                      <li data-bind="text: error"></li>
+                      <!-- /ko -->
+                      <!-- ko if: VisibleRe()==true -->
+                      <!-- ko foreach:{data: RealEstate().Errors, as: 'error'} -->
+                      <li data-bind="text: error"></li>
+                      <!-- /ko -->
+                      <!-- /ko -->
+                      <!-- ko if: VisibleCar()==true && ValidInputCar()==false-->
+                      <!-- ko foreach:{data: Car().Errors(), as: 'error'} -->
+                      <li data-bind="html: error"></li>
+                      <!-- /ko -->
+                      <!-- /ko -->
+                      <!-- ko if: VisibleJob()==true -->
+                      <!-- ko foreach:{data: Job().Errors, as: 'error'} -->
+                      <li data-bind="text: error"></li>
+                      <!-- /ko -->
+                      <!-- /ko -->
+                  </ul>
+              </div>
+            </div>
+
+
+            <div class="visible-lg">
+              <div class="map-wrapper" style="height:300px" >
+                  <div id="bds-property-location" style="width: 100%; height: 100%; z-index: 3; border-bottom:1px dashed; margin-bottom:15px;" data-bind="visible: VisibleRe()==true && ShowMapNotMozilla()==true"></div>
+                  <div class="post-example" data-bind="visible:PostExamplesItems().length>0">
+                      <div class="title">Tin đăng mẫu</div>
+                      <ul class="examples">                          
+                          <li>
+                              <div>
+                                  <span class="ex-title">Tiêu đề: <span data-bind="text: item.Title" class="title-content"></span></span>
+                              </div>
+                              <div data-bind="html: item.Content" class="ex-content"></div>
+                          </li>                          
+                      </ul>
+                  </div>
+              </div>                   
+            </div>
+
+
+
+          </div>
+        </form>
+        <!-- end form đang tin -->
+    </div>  
     <!-- end step 1 -->
 
   </div>

@@ -589,7 +589,7 @@ var DanhMuc = {
 	}
 };
 
-console.log(DanhMuc["1"]["danhmuccon"]["1.3"]);
+/*console.log(DanhMuc["1"]["danhmuccon"]["1.3"]);*/
 
 
 var TinhThanh = [
@@ -688,9 +688,9 @@ DanhMuc.vieclamtuyensinh.danhmuccon = {
 
 var app = angular.module('TTApp',[]);
 app.controller('TTCtrl', function($scope) {
-	a="1";
-	b="danhmuccon";
-	$scope.danhmuc = DanhMuc[a][b];
+	// a="1";
+	// b="danhmuccon";
+	$scope.danhmuc = DanhMuc;
 	$scope.tinhthanh = TinhThanh;
 	$scope.bannertop = BannerTop;	
 	$scope.changeColor = function(e){
@@ -707,6 +707,21 @@ app.controller('TTCtrl', function($scope) {
 	$scope.chosenTT = function(item) {
 		$(".cat-name-tt").text(item.name);		
 		$scope.cbTinhThanh = item.id;
+	}
+	$scope.choseCatItem = function(e, item) {
+		$scope.CatItemSelected = item;
+		// console.log(item);
+		// $scope.danhmuccon = item.danhmuccon;
+		console.log(e);
+		$(".cat-list .active").removeClass("active");
+		$(e.currentTarget).toggleClass("active");
+		$(".category").css('display','block');
+	}
+	$scope.chosenSubCatItem = function(item) {
+		$scope.SubCatItemSelected = item;
+		console.log(item);
+		$(".se-category").hide();
+		$(".po-content").show();
 	}
 });
 
