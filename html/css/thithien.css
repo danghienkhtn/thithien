@@ -154,7 +154,7 @@
 	}
 
 #NewsDetail {
-	width: 692px;		
+	width: 100%;		
 	padding: 0px 5px;
 }	
 	.news-detail-image {
@@ -436,17 +436,24 @@
     list-style: none;
 }
 .home-viewed .home-viewed-content .home-viewed-list>li:last-child {
-    border-right: none!important;
+    /*border-right: none!important;*/
     margin-right: 0!important;
     padding-right: 0;
 }
 .home-viewed .home-viewed-content .home-viewed-list>li {
     float: left;
-    width: 198px;
-    border-right: 1px dotted #ccc;
-    padding: 0 15px 0 15px;
+    width: 198px;    
+    padding: 10px 15px 0 15px;
     line-height: 20px;
 }
+.home-viewed .home-viewed-content .home-viewed-list>li:hover {
+    background-color:#feffe6;
+    border: 1px dotted #ccc;
+}    
+.home-viewed .home-viewed-content .home-viewed-list>li>a:hover {
+    text-decoration: none;    
+}
+
 .home-viewed .home-viewed-content .home-viewed-list>li .viewed-item .viewed-item-img {
     width: 166px;
     height: 90px;
@@ -474,6 +481,8 @@
 }
 .news-detail-col-right {
 	width: 375px;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 /********* Navbar ***************/
 @media (max-width: 767px) {
@@ -995,6 +1004,32 @@ html, body {
 }
     
 /**************end side navbar******************************/
+/********start reminder ****/
+.tips_main {
+    padding-left: 10px;
+    font-size: 12px!important;
+    margin-top: 20px;
+    width: 266px;
+    text-align: justify;
+}
+.tips_title {
+    color: #555;
+    font-weight: bold;
+}
+.tips_main ul {
+    list-style: none;
+    color: #999;
+    padding-left: 0;
+    margin-left: 0;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.tips_main ul li {
+    list-style: none;
+    padding-left: 0;
+}
+/********end reminder ****/
+
 .tt-bottom {
     border: 1px solid transparent;
     background: #46F20D;
@@ -1013,6 +1048,107 @@ html, body {
     display: none;
 }
 
+/***********POSt NEWS**************/
+.float-right {
+    float: right;
+}
+.post-step {
+    padding-top: 25px;
+}
+.post-step .post-step-item {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    position: relative;
+    width: 33.3333333333333333%!important;
+    float: left;
+    border-bottom: 4px solid #e2e2e2;
+}
+.post-step .post-step-item .line-active {
+    width: 50%;
+    border-bottom: 4px solid #f57301;
+    position: absolute;
+    left: 0;
+}
+.post-step .post-step-item .active {
+    background: #f57301 !important;
+    color: #fff !important;
+}
+.post-step .post-step-item .title {
+    color: #000;
+    top: 38px;
+    position: absolute;
+    left: 0;
+    width: 100%;
+}
+.post-step .post-step-item .icon {
+    background: #ccc;
+    text-align: center;
+    top: -15px;
+    position: relative;
+    color: #b8babd;
+    font-weight: bold;
+    top: 10px;
+    border-radius: 50%;
+    padding: 8px 11px 8px 11px;
+}
+.se-category {
+    margin-top: 70px;
+    padding: 0;
+}
+.se-category .category {
+    padding: 0;
+    margin: 0;
+}
+.se-category .category .cat-se-title {
+    padding: 0;
+    margin: 0;
+    color: #555;
+    font-weight: bold;
+}
+.se-category .category .cat-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 20px;
+    margin-right: 40px;
+}
+.se-category .category .cat-list>li:first-child {
+    border-top: 1px solid #ccc;
+}
+.se-category .category .cat-list>li {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px 5px 0;
+    cursor: pointer;
+}
+.se-category .category .cat-list .active {
+    color: #000;
+    background: #feffe6;
+}
+.se-category .category .cat-item {
+    display: block;
+    width: 100%;
+    height: 28px;
+    position: relative;
+}
+.se-category .category .category-icon {
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+    position: absolute;
+    left: 0;
+}
+.se-category .category .category-name {
+    width: 100%;
+    display: block;
+    padding-left: 32px;
+    line-height: 30px;
+}
+.se-category .category .category-name i {
+    line-height: 30px;
+    font-size: 16px;
+}
+/*************************/
 @media (min-width: 992px)
 .container {
     width: 992px!important;

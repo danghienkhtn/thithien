@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">  
+  <link rel="stylesheet" href="./css/navbar-fixed-sides.css">  
+  <link rel="stylesheet" href="./css/thithien.css">
+  <link rel="stylesheet" href="./css/font-awesome.min.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/thithien.js"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+  <script src="./js/banners.js"></script>
+  <script src="./js/category.js"></script>
+</head>
+<body ng-app="TTApp" ng-controller="TTCtrl">
+<!-- navbar -->
+<div class="navbar-tt clearfix" id="navbar-tt">
+  <nav class="navbar navbar-tt navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <!-- menu mobile -->
+        <div class="visible-xs text-right">
+          <div class="navbar-dropdown-mobile">
+            <a onclick="openNav();" href="javascript:void(0)">
+            <span class="fa fa-bars fa-2x"></span></a>            
+          </div>  
+          <span class="logo-w">
+            <a href="/">              
+              <img src="./images/logo.png" width="140" height="30" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" />
+            </a>
+          </span>
+          <span class="top-search-mobile">
+                <a href="/tim-kiem-di-dong"><i class="fa fa-search fa-2x"></i></a>
+          </span>          
+        </div>
+        <!-- end menu mobile -->
+        <div class="logo-tt">
+          <a class="logo hidden-xs" href="/">
+            <h1><img src="./images/logo.pnga" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" width="190" height="43" /></h1>
+          </a>
+          <a href="https://muaban.net/app?source=mbn-banner-top" class="banner-top-qc visible-lg">
+              <img src="./images/banner/top.gif" />
+          </a>          
+        </div>        
+      </div>
+      <ul class="nav navbar-nav navbar-right hidden-xs">
+        <li class="active"><a href="#">Dang Nhap</a></li>
+        <li class="dropdown navbar-dropdown-right">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <span class="fa fa-bars fa-2x"></span></a>
+          <ul class="dropdown-menu dropdown-menu-tt " style="left:0px;top:45px">
+            <li ng-repeat="item in danhmuc"><a href="#">{{item.name}}</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="/dang-tin"><span class="nav-post-news text"><i class="fa fa-newspaper-o" style="color:#ffffff;"></i>&nbsp;ĐĂNG TIN MIỄN PHÍ</span></a>
+        </li> 
+      </ul>
+    </div>
+  </nav>
+</div>  
+<!-- end header decktop -->
+<!-- start header mobile -->
+<div id="slidemenumobile" class="visible-sm visible-xs">
+  <ul class="nav navbar-nav navbar-right">
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/">
+            <i class="fa fa-home"></i> Trang chủ
+        </a>
+    </li>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/tim-kiem-di-dong">
+            <i class="fa fa-search"></i> Tìm kiếm
+        </a>
+    </li>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/dang-tin">
+            <i class="icon icon-laptop60"></i> Đăng tin miễn phí
+        </a>
+    </li>
+
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/trang-ca-nhan/MyFavorite">
+            <i class="icon icon-common_star_favorite_bookmark_" style="font-size:18px;"></i> Tin yêu thích
+        </a>
+    </li>
+    <li class="menu-line"></li>
+    <li class="col-sm-12 col-xm-12">
+      <a href="/trang-ca-nhan/SignIn">Đăng nhập</a></li>
+    <li class="col-sm-12 col-xm-12">
+      <a href="/trang-ca-nhan/SignUp">Đăng ký</a></li>
+  </ul>
+</div>
+<!-- End header mobile -->
+<!-- end navbar -->
+
+<!-- Start Body Contentner -->
+<div class="main-container">            
+  <!-- Start page_content clearfix -->
+  <div id="pageContent" class="container clearfix">
+    <div class="post-step clearfix">
+      <div class="col-md-4 col-sm-4 col-xs-4 post-step-item">
+        <span class="line-active">&nbsp;</span>
+        <span class="icon active">1</span>
+        <span class="title">Tạo tin</span>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-4 post-step-item"">
+        <span>&nbsp;</span>
+        <span class="icon">2</span>
+        <span class="title">Kiểm tra lại</span>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-4 post-step-item"">
+        <span>&nbsp;</span>
+        <span class="icon">3</span>
+        <span class="title">Hoàn tất</span>
+      </div>
+    </div>
+    <!-- start step 1 -->
+    <div class="post-step-1">
+        <div class="se-category clearfix">
+            <div class="col-md-4 col-sm-5 col-xs-12 category">
+                <div class="cat-se-title">
+                    <span class="icon-se">1</span> Chọn chuyên mục đăng
+                </div>
+                <ul class="cat-list clearfix">
+                    <!-- ko foreach:{data: Categories, as: 'item'} -->
+                    <li ng-repeat="x in danhmuc">
+                        <a href="#">
+                            <span class="cat-item">
+                                <span class="category-icon">
+                                    <span data-bind="attr:{class: item.IconCss()}"></span>
+                                </span>
+                                <span class="category-name">
+                                    <span>{{x.name}}</span><i class="fa fa-angle-right float-right"></i>
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <!-- /ko -->
+                </ul>
+            </div>
+            <div class="col-md-4 col-sm-5 col-xs-12 category" style="display:none">
+                <div class="cat-se-title">
+                    <div data-bind="visible:VisiblePCat">
+                        <span class="icon-se">2</span> Chọn chuyên mục đăng tiếp theo
+                    </div>
+                    <div class="visible-xs">
+                        <i style="font-size:25px"></i> <span data-bind="text: SelectCat().Name()"></span> | <a href="#" data-bind="click:ChangeParentCat">Sửa</a>
+                    </div>
+                </div>
+                <ul class="cat-list clearfix">
+                    <!-- ko foreach:{data: SubCategories, as: 'item'} -->
+                    <li data-bind="attr:{class:item.Id()==$parent.SubCategoryId()?'active':''}, click: $parent.SelectSubCategory">
+                        <a href="#" class="category-name-level2" data-bind="text:item.Name"></a>
+                    </li>
+                    <!-- /ko -->
+                </ul>
+            </div>
+        </div>
+
+
+      </div>  
+    <!-- end step 1 -->
+
+  </div>
+</div>
+
+
+<!-- Start Body bottom -->
+<div class="tt-bottom">
+  <div class="tt-bottom-contact text-center">
+    <div class="container">
+      <div class="contact-info col-md-12 col-sm-12 col-xs-12">
+        <div class="social-icon">
+          <a href="https://www.facebook.com/thithien"><span class="fa fa-facebook fa-x2"></span></a>
+          <a href="http://youtube.com/c/thithien"><span class="fa fa-youtube fa-x2"></span></a>
+          <a href="https://twitter.com/thithien"><span class="fa  fa-twitter fa-x2"></span></a>
+          <div class="clearfix"></div>
+        </div>
+        <div> <span style="font-weight:bold"> CTY TNHH TM DV THI THIÊN SHALOM</span>. MST: 0313684679. SĐT: 08-xxxxxxxx</div>
+        <div><span style="font-weight:bold">10 Lê Quốc Trinh, Phú Thọ Hòa, Tân Phú, Hcm</div>
+        <div><span style="font-weight:bold">Giấy phép hoạt động số</span> XX/GXN-TTĐT do Bộ VHTT cấp xx/xx/xxxx.</div>
+        <div>thithien.com có trách nhiệm chuyển tải thông tin. Không chịu bất kỳ trách nhiệm nào từ các tin này. <a href="#"> xem chi tiết</a> </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end body bottom -->
+
+<script>
+
+function openNav() {
+    document.getElementById("slidemenumobile").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("slidemenumobile").style.width = "0";
+}
+</script>
+</body>
+</html>  
