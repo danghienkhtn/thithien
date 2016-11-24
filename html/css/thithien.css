@@ -863,6 +863,7 @@ body {
     width: 0;
     height: 0;
     margin-left: 2px;
+    margin-right: 0px;
     vertical-align: middle;
     border-top: 4px dashed;
     border-top: 4px solid\9;
@@ -1182,6 +1183,7 @@ html, body {
     margin-right: -15px;
     margin-left: -15px;
 }
+
 
 @media (min-width: 768px) {
 	.form-horizontal .control-label {
