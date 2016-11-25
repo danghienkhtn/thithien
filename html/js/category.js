@@ -74,7 +74,7 @@ var blockDisplay = {
 	"4.4":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
 	"4.5":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"block"},
 	"4.6":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
-	"2.1":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"block","gia":"none"},
+	"2.1":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"block","gia":"none","dotuoi":"block"},
 	"2.2":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"block","gia":"none"},
 	"2.3":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
 	"2.4":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
@@ -813,8 +813,76 @@ var HangSXDienTu = {
 	}*/
 } 
 
+var HinhThucLV = {
+	"1": {"id":"1","name":"Toàn thời gian cố định","icon":"","vitri":"1"},
+	"2": {"id":"2","name":"Toàn thời gian tạm thời","icon":"","vitri":"2"},
+	"3": {"id":"3","name":"Bán thời gian cố định","icon":"","vitri":"3"},
+	"4": {"id":"4","name":"Bán thời gian tạm thời","icon":"","vitri":"4"},
+	"5": {"id":"5","name":"Theo hợp đồng/Tư vấn","icon":"","vitri":"5"},
+	"6": {"id":"6","name":"Thực tập","icon":"","vitri":"6"},
+	"7": {"id":"7","name":"Khác","icon":"","vitri":"7"}
+}
 
+var NganhNghe = {
+	"1": {"id":"1","name":"An ninh, Bảo vệ","icon":"","vitri":"1"},
+	"2": {"id":"2","name":"Bán hàng","icon":"","vitri":"2"},
+	"3": {"id":"3","name":"Bếp, Pha chế","icon":"","vitri":"3"},
+	"4": {"id":"4","name":"Cắt tóc, Gội đầu, Làm móng","icon":"","vitri":"4"},
+	"5": {"id":"5","name":"Giám đốc, Quản lý, Trưởng phòng","icon":"","vitri":"5"},
+	"6": {"id":"6","name":"Giao chở hàng","icon":"","vitri":"6"},
+	"7": {"id":"7","name":"Giáo viên, gia sư","icon":"","vitri":"7"},
+	"8": {"id":"8","name":"Kế toán, Thu Ngân","icon":"","vitri":"8"},
+	"9": {"id":"9","name":"Kinh doanh","icon":"","vitri":"9"},
+	"10": {"id":"10","name":"Kỹ sư điện, Điện tử, CNTT","icon":"","vitri":"10"},
+	"11": {"id":"11","name":"Kỹ sư xây dựng, Cơ khí, Mỹ thuật, In","icon":"","vitri":"11"},
+	"12": {"id":"12","name":"Tài xế - Lái xe","icon":"","vitri":"12"},
+	"13": {"id":"13","name":"Lao động phổ thông","icon":"","vitri":"13"},
+	"14": {"id":"14","name":"Massage, Thẩm mỹ","icon":"","vitri":"14"},
+	"15": {"id":"15","name":"May mặc, Giày da","icon":"","vitri":"15"},
+	"16": {"id":"16","name":"NV văn phòng, Hành chính, Nhân sự","icon":"","vitri":"16"},
+	"17": {"id":"17","name":"Người giúp việc, Tạp vụ","icon":"","vitri":"17"},
+	"18": {"id":"18","name":"Nhân viên nhà hàng, KS, Tiệm quán","icon":"","vitri":"18"},
+	"19": {"id":"19","name":"Ngành nghề khác","icon":"","vitri":"19"},	
+}
 
+var GioiTinh = {
+	"0": {"id":"0","name":"Nam","icon":"","vitri":"1"},
+	"1": {"id":"1","name":"Nữ","icon":"","vitri":"2"},
+}
+
+var NamSinh = new function(){
+	var Tmp1 = {};
+	for(var i=1930; i <= 2012; i++){
+		var Tmp2 = {};
+		Tmp2.id = i;
+		Tmp2.name = i; 
+		Tmp1[i]=Tmp2;
+	}
+	return Tmp1;
+}	
+var DoTuoi = new function(){
+	var Tmp1 = {};
+	for(var i=18; i <= 60; i++){
+		var Tmp2 = {};
+		Tmp2.id = i;
+		Tmp2.name = i; 
+		Tmp1[i]=Tmp2;
+	}
+	return Tmp1;
+}
+
+var DenDoTuoi = function(x){
+	var startAge = parseInt(x) + 1;
+	var Tmp1 = {};	
+	for(var i=startAge; i <= 60; i++){
+		var Tmp2 = {};
+		Tmp2.id = i;
+		Tmp2.name = i; 
+		Tmp1[i]=Tmp2;
+	}
+	console.log(Tmp1);	
+	return Tmp1;	
+}
 
 /*DanhMuc.batdongsan.danhmuccon = {
 	bandat: {id:"1.1", name:"Bán đất", icon:"", vitri:"1"},

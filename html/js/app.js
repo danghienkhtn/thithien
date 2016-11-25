@@ -54,6 +54,60 @@ app.controller('TTCtrl', function($scope) {
 		$scope.quanhuyen = item.quanhuyen;
 		console.log(item.quanhuyen);
 	}
+	$scope.hinhthuclvClick = function(e){
+		$scope.hinhthuclv = HinhThucLV;
+		$(e.target.parentNode).toggleClass("chosen-with-drop");
+	}
+	$scope.chosenHinhThucLV = function(item){		
+		$scope.cbHinhThucLV = item;
+		$(".chosen-hinhthuclv .cat-name-tt").text(item.name);
+		$(".chosen-hinhthuclv .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.nganhngheClick = function(e){
+		$scope.nganhnghe = NganhNghe;
+		$(e.target.parentNode).toggleClass("chosen-with-drop");
+	}
+	$scope.chosenNganhNghe = function(item){		
+		$scope.cbNganhNghe = item;
+		$(".chosen-nganhnghe .cat-name-tt").text(item.name);
+		$(".chosen-nganhnghe .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.gioitinhClick = function(e){
+		$scope.gioitinh = GioiTinh;
+		$(e.target.parentNode).toggleClass("chosen-with-drop");
+	}
+	$scope.chosenGioiTinh = function(item){		
+		$scope.cbGioiTinh = item;
+		$(".chosen-gioitinh .cat-name-tt").text(item.name);
+		$(".chosen-gioitinh .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.namsinhClick = function(e){
+		$scope.namsinh = NamSinh;
+		$(e.target.parentNode).toggleClass("chosen-with-drop");
+	}
+	$scope.chosenNamSinh = function(item){		
+		$scope.cbNamSinh = item;
+		$(".chosen-namsinh .cat-name-tt").text(item.name);
+		$(".chosen-namsinh .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.tuoituClick = function(e){
+		$scope.dotuoi = DoTuoi;
+		$(e.target.parentNode).toggleClass("chosen-with-drop");
+	}
+	$scope.chosenTuoiTu = function(item){		
+		$scope.cbTuoiTu = item;
+		$(".from-age .cat-name-tt").text(item.name);
+		$(".from-age .chosen-container").toggleClass("chosen-with-drop");
+		$scope.dendotuoi = DenDoTuoi(item.id);		
+	}
+	$scope.tuoidenClick = function(e){		
+		$(e.target.parentNode).toggleClass("chosen-with-drop");
+	}
+	$scope.chosenTuoiDen = function(item){		
+		$scope.cbTuoiDen = item;
+		$(".to-age .cat-name-tt").text(item.name);
+		$(".to-age .chosen-container").toggleClass("chosen-with-drop");		
+	}
 	$scope.districtClick = function(e){
 		// console.log(e);
 		// console.log(el);
@@ -81,6 +135,9 @@ app.controller('TTCtrl', function($scope) {
 			// $scope.
 		}
 	}
+	$scope.thongtinmorongClick = function(){
+		$(".thong-tin-mo-rong").toggle();
+	}
 });
 
 var showHangSanXuat = function($scope, hangSXId){
@@ -103,6 +160,10 @@ var showRelateBlock = function(subCatId) {
 		console.log(blockDisplay[subCatId]["dang-tin-viec-lam"]);
 		if(typeof(blockDisplay[subCatId]["gia"]) !== 'undefined'){
 			$(".gia").css("display",blockDisplay[subCatId]["gia"]);
+		}
+		//chi danh cho viec tim nguoi
+		if(typeof(blockDisplay[subCatId]["dotuoi"]) !== 'undefined'){
+			$(".dotuoi").css("display",blockDisplay[subCatId]["dotuoi"]);
 		}	
 	}	
 }

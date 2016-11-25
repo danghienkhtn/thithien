@@ -1097,6 +1097,21 @@ html, body {
     border-radius: 50%;
     padding: 8px 11px 8px 11px;
 }
+.post-step-1 .age {
+    padding-left: 0;
+    padding-right: 0;
+}
+.post-step-1 .age .from-age {
+    width: 50%;
+    float: left;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.post-step-1 .age .to-age {
+    width: 50%;
+    float: left;
+    padding-right: 15px;
+}
 .se-category {
     margin-top: 70px;
     padding: 0;
@@ -1318,6 +1333,15 @@ label {
     top: 45px;
     right: 0;
     width: 400px;
+}
+.thong-tin-mo-rong .active {
+	display: block;
+}
+.tt-bold {
+    font-weight: bold;
+}
+.form-group a:hover,a:focus {
+	text-decoration: none;
 }
 /*a, span {
     text-rendering: optimizeLegibility;

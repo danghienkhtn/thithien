@@ -12,8 +12,8 @@
   <script src="./js/bootstrap.min.js"></script>
   <script src="./js/thithien.js"></script>
   
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
   <script src="./js/banners.js"></script>
   <script src="./js/category.js"></script>
   <script src="./js/app.js"></script>
@@ -234,7 +234,7 @@
               <!-- hang san xuat -->
               <div class="form-group clearfix hang-san-xuat">
                 <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Hãng sản xuất</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                <div class="col-md-5 col-sm-10 col-xs-12">
+                <div class="col-md-5 col-sm-10 col-xs-12 chosen-hangsx">
                   <input ng-model="cbHangSX" value="{{cbHangSX.id}}" class="hide" />
                   <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
                     <a class="chosen-single" tabindex="-1" ng-click="hangSXClick()">
@@ -260,14 +260,14 @@
 
 
               <!-- ten san pham -->
-              <div class="form-group clearfix ten-san-pham">
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Tên sản phẩm</span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+              <div class="form-group clearfix ten-san-pham" style="display:none;">
+                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Tên sản phẩm</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                 <div class="col-md-5 col-sm-10 col-xs-12">
                   <input ng-model="cbTenSP" value="{{cbTenSP.id}}" class="hide" />
                   <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
                     <a class="chosen-single" tabindex="-1">
                       <span class="drop-cat">                    
-                        <span class="cat-name-tt">Toan quoc</span>
+                        <span class="cat-name-tt">Tên sản phẩm</span>
                       </span>
                       <div><span class="caret"></span></div>
                     </a>
@@ -526,95 +526,194 @@
               <div class="clearfix dang-tin-viec-lam" style="display:none;">
                 <div class="clearfix" data-bind="with: JobType">
                     <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
-                            <select class="chosen-select" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Hình thức làm việc"></select>
+                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Hình thức làm việc</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                        <div class="col-md-5 col-sm-10 col-xs-12 chosen-hinhthuclv">
+                            <input ng-model="cbHinhThucLV" name="cbHinhThucLV" value="{{cbHinhThucLv.id}}" class="hide" />
+                            <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                              <a class="chosen-single" tabindex="-1" ng-click="hinhthuclvClick($event)">
+                                <span class="drop-cat">                    
+                                  <span class="cat-name-tt">Chọn hình thức làm việc</span>
+                                </span>
+                                <div><span class="caret"></span></div>
+                              </a>
+                              <!-- chosen drop -->  
+                              <div class="chosen-drop">
+                                <div class="chosen-search">
+                                  <input type="text" autocomplete="off" readonly="">
+                                </div>
+                                <ul class="chosen-results">                    
+                                  <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenHinhThucLV(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in hinhthuclv" >{{x.name}}</li>                   
+                                </ul>
+                              </div>
+                              <!-- END chosen drop -->
+                            </div>
                             <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
                         </div>
 
                     </div>
                 </div>
-                <div class="clearfix" data-bind="with:Categories">
+                <div class="clearfix">
                     <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
-                            <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Ngành nghề"></select>
+                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Ngành nghề</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                        <div class="col-md-5 col-sm-10 col-xs-12 chosen-nganhnghe">
+                            <input ng-model="cbNganhNghe" name="cbNganhNghe" value="{{cbNganhNghe.id}}" class="hide" />
+                            <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                              <a class="chosen-single" tabindex="-1" ng-click="nganhngheClick($event)">
+                                <span class="drop-cat">                    
+                                  <span class="cat-name-tt">Chọn ngành nghề</span>
+                                </span>
+                                <div><span class="caret"></span></div>
+                              </a>
+                              <!-- chosen drop -->  
+                              <div class="chosen-drop">
+                                <div class="chosen-search">
+                                  <input type="text" autocomplete="off" readonly="">
+                                </div>
+                                <ul class="chosen-results">                    
+                                  <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenNganhNghe(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in nganhnghe" >{{x.name}}</li>                   
+                                </ul>
+                              </div>
+                              <!-- END chosen drop -->
+                            </div>
                             <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
                         </div>
 
                     </div>
-                </div>
-                <div class="clearfix" data-bind="with: Name">
-                    <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
-                            <input type="text" data-bind="value: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="140" />
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix" data-bind="with: SalaryFrom">
-                    <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label" data-bind="text: Label">
+                </div>                
+                <div class="clearfix">
+                    <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Mức lương từ
                         </label>
                         <div class="col-md-5 col-sm-10 col-xs-12">
-                            <input type="text" data-bind="inputNumber: Data" placeholder="Nhập mức lương tối thiểu, chỉ nhập số" class="form-control" maxlength="12" />
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                            <input ng-model="MucLuongTu" name="MucLuongTu" type="text" placeholder="Nhập mức lương tối thiểu, chỉ nhập số" class="form-control" maxlength="12" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
 
                     </div>
                 </div>
-                <div class="clearfix" data-bind="with: SalaryTo">
-                    <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label" data-bind="text: Label">
+                <div class="clearfix">
+                    <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">
+                          Mức lương đến
                         </label>
                         <div class="col-md-5 col-sm-10 col-xs-12">
-                            <input type="text" data-bind="inputNumber: Data" placeholder="Nhập mức lương tối đa, chỉ nhập số" class="form-control" maxlength="12" />
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                            <input ng-model="MucLuongDen" name="MucLuongDen" type="text" placeholder="Nhập mức lương tối đa, chỉ nhập số" class="form-control" maxlength="12" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
 
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <span class="col-md-7 col-sm-12 col-xs-12">
-                        <a href="#" class="float-right mbn-bold" data-bind="click: function(data,e){ data.VisibleExpandRe(!data.VisibleExpandRe());}">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
+                    <span class="col-md-12 col-sm-12 col-xs-12">
+                        <a href="#s" class="float-right tt-bold" ng-click="thongtinmorongClick()">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
                     </span>
                 </div>
                 <!--Khu vuc thong tin mo rong-->
-                <div data-bind="visible:VisibleExpandRe">
-                    <div class="clearfix" data-bind="with:Gender">
-                        <div data-bind="visible:Visible" class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                            <div class="col-md-5 col-sm-10 col-xs-12">
-                                <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Giới tính"></select>
-                                <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="thong-tin-mo-rong" style="display:none;">
+                    <div class="clearfix">
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Giới tính</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                            <div class="col-md-5 col-sm-10 col-xs-12 chosen-gioitinh">
+                              <input ng-model="cbGioiTinh" name="cbGioiTinh" value="{{cbGioiTinh.id}}" class="hide" />
+                              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                                  <a class="chosen-single" tabindex="-1" ng-click="gioitinhClick($event)">
+                                  <span class="drop-cat">                    
+                                    <span class="cat-name-tt">Chọn giới tính</span>
+                                  </span>
+                                  <div><span class="caret"></span></div>
+                                </a>
+                                <!-- chosen drop -->  
+                                <div class="chosen-drop">
+                                  <div class="chosen-search">
+                                    <input type="text" autocomplete="off" readonly="">
+                                  </div>
+                                  <ul class="chosen-results">                    
+                                    <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" class="active-result" style="font-weight: bold;" ng-click="chosenGioiTinh(x)" ng-repeat="x in gioitinh">{{x.name}}</li>
+                                  </ul>
+                                </div>
+                                <!-- END chosen drop -->
+                              </div>
+                              <div class="clearfix"><span class="validationMessage"></span></div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="clearfix" data-bind="with:Birthday">
-                        <div data-bind="visible:Visible" class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                            <div class="col-md-5 col-sm-10 col-xs-12">
-                                <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Năm sinh"></select>
-                                <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                    <div class="clearfix">
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Năm sinh</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                            <div class="col-md-5 col-sm-10 col-xs-12 chosen-namsinh">
+                              <input ng-model="cbNamSinh" name="cbNamSinh" value="{{cbNamSinh.id}}" class="hide" />
+                              <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                                  <a class="chosen-single" tabindex="-1" ng-click="namsinhClick($event)">
+                                  <span class="drop-cat">                    
+                                    <span class="cat-name-tt">Chọn năm sinh</span>
+                                  </span>
+                                  <div><span class="caret"></span></div>
+                                </a>
+                                <!-- chosen drop -->  
+                                <div class="chosen-drop">
+                                  <div class="chosen-search">
+                                    <input type="text" autocomplete="off" readonly="">
+                                  </div>
+                                  <ul class="chosen-results">                    
+                                    <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" class="active-result" style="font-weight: bold;" ng-click="chosenNamSinh(x)" ng-repeat="x in namsinh">{{x.name}}</li>
+                                  </ul>
+                                </div>
+                                <!-- END chosen drop -->
+                              </div>  
+                              <div class="clearfix"><span class="validationMessage"></span></div>
                             </div>
-
                         </div>
                     </div>
 
-                    <div class="clearfix" data-bind="visible:BirthYearFrom.Visible">
+                    <div class="clearfix dotuoi" style="display:none;">
                         <div class="form-group">
                             <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Độ tuổi </label>
                             <div class="col-md-5 col-sm-10 col-xs-12 age">
-                                <div data-bind="with: BirthYearFrom, visible:BirthYearFrom.Visible" class="from-age">
-                                    <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Tuổi từ"></select>
-                                    <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                                <div class="from-age">
+                                    <input ng-model="cbTuoiTu" name="cbTuoiTu" value="{{cbTuoiTu.id}}" class="hide" />
+                                    <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                                        <a class="chosen-single" tabindex="-1" ng-click="tuoituClick($event)">
+                                        <span class="drop-cat">                    
+                                          <span class="cat-name-tt">tuổi từ</span>
+                                        </span>
+                                        <div><span class="caret"></span></div>
+                                      </a>
+                                      <!-- chosen drop -->  
+                                      <div class="chosen-drop">
+                                        <div class="chosen-search">
+                                          <input type="text" autocomplete="off" readonly="">
+                                        </div>
+                                        <ul class="chosen-results">                    
+                                          <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" class="active-result" style="font-weight: bold;" ng-click="chosenTuoiTu(x)" ng-repeat="x in dotuoi">{{x.name}}</li>
+                                        </ul>
+                                      </div>
+                                      <!-- END chosen drop -->
+                                    </div>
+                                    <div class="clearfix"><span class="validationMessage"></span></div>
 
                                 </div>
 
-                                <div data-bind="with: BirthYearTo, visible:BirthYearTo.Visible" class="to-age">
-                                    <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Tuổi đến"></select>
+                                <div class="to-age">
+                                    <input ng-model="cbTuoiDen" name="cbTuoiDen" value="{{cbTuoiDen.id}}" class="hide" />
+                                    <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                                        <a class="chosen-single" tabindex="-1" ng-click="tuoidenClick($event)">
+                                        <span class="drop-cat">                    
+                                          <span class="cat-name-tt">đến tuổi</span>
+                                        </span>
+                                        <div><span class="caret"></span></div>
+                                      </a>
+                                      <!-- chosen drop -->  
+                                      <div class="chosen-drop">
+                                        <div class="chosen-search">
+                                          <input type="text" autocomplete="off" readonly="">
+                                        </div>
+                                        <ul class="chosen-results">                    
+                                          <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" class="active-result" style="font-weight: bold;" ng-click="chosenTuoiDen(x)" ng-repeat="x in dendotuoi">{{x.name}}</li>
+                                        </ul>
+                                      </div>
+                                      <!-- END chosen drop -->
+                                    </div>
                                     <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
 
                                 </div>
@@ -622,13 +721,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix" data-bind="with: Experience">
-                        <div data-bind="visible:Visible" class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label" data-bind="text: Label">
+                    <div class="clearfix">
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">
+                              Số năm kinh nghiệm
                             </label>
                             <div class="col-md-5 col-sm-10 col-xs-12">
-                                <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="2" />
-                                <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                                <input ng-model="NamKinhNghiem" type="text" class="form-control" maxlength="2" />
+                                <div class="clearfix"><span class="validationMessage"></span></div>
                             </div>
 
                         </div>
@@ -642,7 +742,7 @@
               <div class="form-group clearfix gia" style="display: none;">
                 <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Giá:<span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                 <div class="col-md-5 col-sm-10 col-xs-12">
-                    <input ng-model="gia" type="text" class="form-control gia-ban" placeholder="Giá" maxlength="12" ng-keydown="checkLength($event, 12)" />
+                    <input ng-model="gia" name="gia" type="text" class="form-control gia-ban" placeholder="Giá" maxlength="12" ng-keydown="checkLength($event, 12)" />
                     <div class="clearfix"><span class="validationMessage"></span></div>
                     <div style="font-size:12px; font-style:italic; margin-top:5px;">
                         <span></span>
@@ -652,7 +752,7 @@
               <div class="form-group clearfix">
                 <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Tiêu đề</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                 <div class="col-md-5 col-sm-10 col-xs-12">
-                    <input ng-model="tieude" type="text" class="form-control tieu-de" placeholder="Vui lòng nhập Tiếng Việt có dấu" value={{tieude}} maxlength="70" ng-keydown="checkLength($event, 70)" />
+                    <input ng-model="tieude" name="tieude" type="text" class="form-control tieu-de" placeholder="Vui lòng nhập Tiếng Việt có dấu" value={{tieude}} maxlength="70" ng-keydown="checkLength($event, 70)" />
                     <div class="clearfix"><span class="validationMessage"></span></div>
                     <div style="font-size:12px; margin-top:5px; font-style:italic">
                         Đã nhập: <span style="color:blue;">0</span> ký tự
@@ -662,7 +762,7 @@
               <div class="form-group clearfix" data-bind="with:Body">                    
                 <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Nội dung</span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                 <div class="col-md-5 col-sm-10 col-xs-12">
-                    <textarea ng-model="noidung" type="text" class="form-control noi-dung" rows="8" maxlength="2010" ng-keydown="checkLength($event, 2010)" placeholder="Vui lòng nhập tiếng Việt có dấu"></textarea>
+                    <textarea ng-model="noidung" name="noidung" type="text" class="form-control noi-dung" rows="8" maxlength="2010" ng-keydown="checkLength($event, 2010)" placeholder="Vui lòng nhập tiếng Việt có dấu"></textarea>
                     <div class="clearfix"><span class="validationMessage"></span></div>
                     <div style="font-size:12px; margin-top:5px; font-style:italic">
                         Đã nhập: <span style="color:blue">0</span> ký tự 
