@@ -75,16 +75,16 @@ var blockDisplay = {
 	"4.5":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"block"},
 	"4.6":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
 	"2.1":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"block","gia":"none","dotuoi":"block"},
-	"2.2":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"block","gia":"none"},
+	"2.2":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"block","gia":"none","dotuoi":"none"},
 	"2.3":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
 	"2.4":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
-	"1.1":{"dang-tin-xe":"none","dang-tin-bds":"block","dang-tin-viec-lam":"none","gia":"block"},
-	"1.2":{"dang-tin-xe":"none","dang-tin-bds":"block","dang-tin-viec-lam":"none","gia":"block"},
-	"1.3":{"dang-tin-xe":"none","dang-tin-bds":"block","dang-tin-viec-lam":"none","gia":"block"},
-	"1.4":{"dang-tin-xe":"none","dang-tin-bds":"block","dang-tin-viec-lam":"none","gia":"block"},
-	"1.5":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
-	"1.6":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
-	"1.7":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none"},
+	"1.1":{"dang-tin-xe":"none","dang-tin-bds":"block","dang-tin-viec-lam":"none","gia":"block","loaibds":"block"},
+	"1.2":{"dang-tin-xe":"none","dang-tin-bds":"block","dang-tin-viec-lam":"none","gia":"block","loaibds":"block"},
+	"1.3":{"dang-tin-xe":"none","dang-tin-bds":"block","dang-tin-viec-lam":"none","gia":"block","loaibds":"block"},
+	"1.4":{"dang-tin-xe":"none","dang-tin-bds":"block","dang-tin-viec-lam":"none","gia":"block","loaibds":"block"},
+	"1.5":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none","loaibds":"none"},
+	"1.6":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none","loaibds":"none"},
+	"1.7":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none","loaibds":"none"},
 	"6.1":{"gia":"block"},
 	"6.2":{"gia":"block"},
 	"6.3":{"gia":"block"},
@@ -845,6 +845,142 @@ var NganhNghe = {
 	"19": {"id":"19","name":"Ngành nghề khác","icon":"","vitri":"19"},	
 }
 
+var HangXe = {
+	"1": {"id":"1","name":"Chevrolet","icon":"","vitri":"1"},
+	"2": {"id":"2","name":"Daewoo","icon":"","vitri":"2"},
+	"3": {"id":"3","name":"Ford","icon":"","vitri":"3"},
+	"4": {"id":"4","name":"Honda","icon":"","vitri":"4"},
+	"5": {"id":"5","name":"Huyndai","icon":"","vitri":"5"},
+	"6": {"id":"6","name":"KIA","icon":"","vitri":"6"},
+	"7": {"id":"7","name":"Mercedes","icon":"","vitri":"7"},
+	"8": {"id":"8","name":"Mitsubishi","icon":"","vitri":"8"},
+	"9": {"id":"9","name":"Suzuki","icon":"","vitri":"9"},
+	"10": {"id":"10","name":"Toyota","icon":"","vitri":"10"},
+	"11": {"id":"11","name":"Acura","icon":"","vitri":"11"},
+	"12": {"id":"12","name":"Asia","icon":"","vitri":"12"},
+	"13": {"id":"13","name":"AUDI","icon":"","vitri":"13"},
+	"14": {"id":"4","name":"BMW","icon":"","vitri":"14"},
+	"15": {"id":"15","name":"DAIHATSU","icon":"","vitri":"15"},
+	"16": {"id":"16","name":"FIAT","icon":"","vitri":"16"},
+	"17": {"id":"17","name":"ISUZU","icon":"","vitri":"17"},
+	"18": {"id":"18","name":"Land Rover","icon":"","vitri":"18"},
+	"19": {"id":"19","name":"Lexus","icon":"","vitri":"19"},
+	"20": {"id":"20","name":"Mazda","icon":"","vitri":"20"},
+	"21": {"id":"21","name":"Nissan","icon":"","vitri":"21"},
+	"22": {"id":"22","name":"Ssangyong","icon":"","vitri":"22"},
+	"23": {"id":"23","name":"Volkswagen","icon":"","vitri":"23"},
+	"24": {"id":"24","name":"Xe tải, đầu kéo","icon":"","vitri":"24"},
+	"25": {"id":"25","name":"Các hãng khác","icon":"","vitri":"25"},
+}
+
+var DongXe = {
+	"1":{"id":"1","name":"Bus","icon":"","vitri":"1"},
+	"2":{"id":"6.2.2","name":"Convertible","icon":"","vitri":"2"},
+	"3":{"id":"3","name":"Couple","icon":"","vitri":"3"},
+	"4":{"id":"4","name":"Hatchback","icon":"","vitri":"4"},
+	"5":{"id":"5","name":"Pick up","icon":"","vitri":"5"},
+	"6":{"id":"6","name":"Sedan","icon":"","vitri":"6"},
+	"7":{"id":"7","name":"SUV/Crossover","icon":"","vitri":"7"},
+	"8":{"id":"8","name":"Truck","icon":"","vitri":"8"},
+	"9":{"id":"9","name":"Van/Mini Van","icon":"","vitri":"9"},
+	"10":{"id":"10","name":"Wagon","icon":"","vitri":"10"},
+	"11":{"id":"11","name":"Universal","icon":"","vitri":"11"},
+	"12":{"id":"12","name":"Sport","icon":"","vitri":"12"},
+	"13":{"id":"13","name":"Cabriolet","icon":"","vitri":"13"},
+	"14":{"id":"14","name":"Khác","icon":"","vitri":"14"},	
+}
+
+var NamSanXuat = new function(){
+	var Tmp1 = {};
+	for(var i=2016; i >= 1970; i--){
+		var Tmp2 = {};
+		Tmp2.id = i;
+		Tmp2.name = i; 
+		Tmp1[i]=Tmp2;
+	}
+	return Tmp1;
+}
+
+var HopSo = {
+	"0": {"id":"0","name":"Số tự động","icon":"","vitri":"1"},
+	"1": {"id":"1","name":"Số sàn","icon":"","vitri":"2"},
+	"2": {"id":"2","name":"Số bán tự động","icon":"","vitri":"3"},
+}
+
+var XuatXu = {
+	"0": {"id":"0","name":"Việt Nam","icon":"","vitri":"1"},
+	"1": {"id":"1","name":"Nhập khẩu","icon":"","vitri":"2"},
+}
+
+var KieuDanDong = {
+	"1": {"id":"1","name":"Dẫn động cầu trước(FWD)","icon":"","vitri":"1"},
+	"2": {"id":"2","name":"Dẫn động cầu sau(RFD)","icon":"","vitri":"2"},
+	"3": {"id":"3","name":"Dẫn động 4 bánh(4FD)","icon":"","vitri":"3"},
+	"4": {"id":"4","name":"Bốn bánh toàn thời gian(AWD)","icon":"","vitri":"4"},
+	"5": {"id":"5","name":"Kiểu khác","icon":"","vitri":"5"},
+}
+
+var NhienLieu = {
+	"1":{"id":"1","name":"Dầu","icon":"","vitri":"1"},
+	"2":{"id":"2","name":"Xăng","icon":"","vitri":"2"},
+	"3":{"id":"3","name":"Hybrid","icon":"","vitri":"3"},
+	"4":{"id":"4","name":"Gas","icon":"","vitri":"4"},
+	"5":{"id":"5","name":"Xăng + ga","icon":"","vitri":"5"},
+	"6":{"id":"6","name":"Xăng + Điện","icon":"","vitri":"6"},
+	"7":{"id":"7","name":"Điện","icon":"","vitri":"7"},
+	"8":{"id":"8","name":"Khác","icon":"","vitri":"8"},	
+}
+
+var MauXe = {
+	"1":{"id":"1","name":"Bạc","icon":"","vitri":"1"},
+	"2":{"id":"2","name":"Be","icon":"","vitri":"2"},
+	"3":{"id":"3","name":"Cam","icon":"","vitri":"3"},
+	"4":{"id":"4","name":"Đen","icon":"","vitri":"4"},
+	"5":{"id":"5","name":"Đỏ","icon":"","vitri":"5"},
+	"6":{"id":"6","name":"Ghi xám","icon":"","vitri":"6"},
+	"7":{"id":"7","name":"Hoàng kim","icon":"","vitri":"7"},
+	"8":{"id":"8","name":"Hồng","icon":"","vitri":"8"},
+	"9":{"id":"9","name":"Nâu","icon":"","vitri":"9"},
+	"10":{"id":"10","name":"Tím","icon":"","vitri":"10"},
+	"11":{"id":"11","name":"Vàng","icon":"","vitri":"11"},
+	"12":{"id":"12","name":"Trắng","icon":"","vitri":"12"},
+	"13":{"id":"13","name":"Xanh da trời","icon":"","vitri":"13"},
+	"14":{"id":"14","name":"Xanh dương","icon":"","vitri":"14"},
+	"15":{"id":"15","name":"Xang lá","icon":"","vitri":"15"},
+	"16":{"id":"16","name":"Xang ngọc","icon":"","vitri":"16"}
+}
+
+var ThietBiAnToan = {
+	"1":{"id":"1","name":"Túi khí an toàn","icon":"","vitri":"1"},
+    "2":{"id":"2","name":"Chốt cửa an toàn","icon":"","vitri":"2"},
+    "3":{"id":"3","name":"Khóa cửa tự động","icon":"","vitri":"3"},
+    "4":{"id":"4","name":"Khóa cửa điện điều khiển từ xa","icon":"","vitri":"4"},
+    "5":{"id":"5","name":"Khóa động cơ","icon":"","vitri":"5"},
+    "6":{"id":"6","name":"Hệ thống báo trộm ngoại vi","icon":"","vitri":"6"},
+    "7":{"id":"7","name":"Chống bó cứng phanh(ABS)","icon":"","vitri":"7"},
+    "8":{"id":"8","name":"Phân bố lực phanh điện tử(EBD)","icon":"","vitri":"8"},
+    "9":{"id":"9","name":"Trợ lực phanh khẩn cấp(EBA)","icon":"","vitri":"9"},
+    "10":{"id":"10","name":"Tự động cân bằng điện tử","icon":"","vitri":"10"}
+}
+
+var TienNghi = {
+	"1":{"id":"1","name":"Thiết bị định vị","icon":"","vitri":"1"},
+    "2":{"id":"2","name":"Kính chỉnh điện","icon":"","vitri":"2"},
+    "3":{"id":"3","name":"Hỗ trợ đỗ xe tự động","icon":"","vitri":"3"},
+    "4":{"id":"4","name":"Sấy kính sau","icon":"","vitri":"4"},
+    "5":{"id":"5","name":"Gạt kính phía sau","icon":"","vitri":"5"},
+    "6":{"id":"6","name":"Kính màu","icon":"","vitri":"6"},
+    "7":{"id":"7","name":"Cửa sổ nóc","icon":"","vitri":"7"},
+    "8":{"id":"8","name":"Tay lái trợ lực","icon":"","vitri":"8"},
+    "9":{"id":"9","name":"Điều hòa trước","icon":"","vitri":"9"},
+    "10":{"id":"10","name":"Điều hòa sau","icon":"","vitri":"10"},
+    "11":{"id":"11","name":"Giá để đồ trên cao","icon":"","vitri":"11"},
+    "12":{"id":"12","name":"Màn hình LCD","icon":"","vitri":"12"},
+    "13":{"id":"13","name":"CD/MP3 Player","icon":"","vitri":"13"},
+    "14":{"id":"14","name":"DVD Player","icon":"","vitri":"14"},
+    "15":{"id":"15","name":"Ghế bọc da","icon":"","vitri":"15"},
+}
+
 var GioiTinh = {
 	"0": {"id":"0","name":"Nam","icon":"","vitri":"1"},
 	"1": {"id":"1","name":"Nữ","icon":"","vitri":"2"},
@@ -880,9 +1016,179 @@ var DenDoTuoi = function(x){
 		Tmp2.name = i; 
 		Tmp1[i]=Tmp2;
 	}
-	console.log(Tmp1);	
+	// console.log(Tmp1);	
 	return Tmp1;	
 }
+
+var PhuongXa = {
+	"0": {"id":"0","name":"Phuong A","icon":"","vitri":"1"},
+	"1": {"id":"1","name":"Phuong B","icon":"","vitri":"2"},
+}
+var Huong = {
+	"bac": {"id":"bac","name":"Bắc","icon":"","vitri":"1"},
+	"dong": {"id":"dong","name":"Đông","icon":"","vitri":"2"},
+	"dongbac": {"id":"dongbac","name":"Đông Bắc","icon":"","vitri":"3"},
+	"dongnam": {"id":"dongnam","name":"Đông Nam","icon":"","vitri":"4"},
+	"nam": {"id":"nam","name":"Bắc","icon":"","vitri":"5"},
+	"tay": {"id":"tay","name":"Tây","icon":"","vitri":"6"},
+	"taynam": {"id":"taynam","name":"Tây Nam","icon":"","vitri":"7"},
+	"khongxacdinh": {"id":"khongxacdinh","name":"Không xác định","icon":"","vitri":"8"}
+}
+
+var ChiTietBDS = {
+	"1.1.1": {
+		"ct1":{"id":"ct1","name":"Diện tích đất", "label":"Diện tích đất","icon":"","vitri":"1"},
+		"ct4":{"id":"ct4","name":"Pháp lý","label":"Chưa xác định","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng đất","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"block"},		
+	},
+	"1.1.2": {
+		"ct1":{"id":"ct1","name":"Diện tích đất", "label":"Diện tích đất","icon":"","vitri":"1"},
+		"ct4":{"id":"ct4","name":"Pháp lý","label":"Chưa xác định","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng đất","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"block"},		
+	},
+	"1.1.3": {
+		"ct1":{"id":"ct1","name":"Diện tích đất", "label":"Diện tích đất","icon":"","vitri":"1"},
+		"ct4":{"id":"ct4","name":"Pháp lý","label":"Chưa xác định","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng đất","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"block"},		
+	},
+	"1.2.1": {
+		"ct1":{"id":"ct1","name":"Diện tích đất","label":"Diện tích đất","icon":"","vitri":"1"},
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng nhà","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ct4":{"id":"ct4","name":"Pháp lý","label":"Chưa xác định","icon":"","vitri":"4"},
+		"ct5":{"id":"ct5","name":"Tầng/lầu","label":"tầng/lầu","icon":"","vitri":"5"},
+		"ct6":{"id":"ct6","name":"Số phòng ngủ","label":"phòng ngủ","icon":"","vitri":"6"},
+		"ct7":{"id":"ct7","name":"Số toilet","label":"số toilet","icon":"","vitri":"7"},
+		"ttmr":{"ttmr_text":"block","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.2.2": {
+		"ct2":{"id":"ct1","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"1"},		
+		"ct3":{"id":"ct3","name":"Hướng nhà","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ct4":{"id":"ct4","name":"Pháp lý","label":"Chưa xác định","icon":"","vitri":"4"},
+		"ct5":{"id":"ct5","name":"Tầng/lầu","label":"Tầng/lầu","icon":"","vitri":"5"},
+		"ct6":{"id":"ct6","name":"Số phòng ngủ","label":"số phòng ngủ","icon":"","vitri":"6"},
+		"ct7":{"id":"ct7","name":"Số toilet","label":"số toilet","icon":"","vitri":"7"},
+		"ttmr":{"ttmr_text":"block","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.2.3": {
+		"ct1":{"id":"ct1","name":"Diện tích đất","label":"Diện tích đất","icon":"","vitri":"1"},
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng nhà","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ct4":{"id":"ct4","name":"Pháp lý","label":"Chưa xác định","icon":"","vitri":"4"},
+		"ct5":{"id":"ct5","name":"Tầng/lầu","label":"tầng/lầu","icon":"","vitri":"5"},
+		"ct6":{"id":"ct6","name":"Số phòng ngủ","label":"phòng ngủ","icon":"","vitri":"6"},
+		"ct7":{"id":"ct7","name":"Số toilet","label":"số toilet","icon":"","vitri":"7"},
+		"ttmr":{"ttmr_text":"block","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.2.4": {
+		"ct1":{"id":"ct1","name":"Diện tích đất","label":"Diện tích đất","icon":"","vitri":"1"},
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng nhà","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ct4":{"id":"ct4","name":"Pháp lý","label":"Chưa xác định","icon":"","vitri":"4"},
+		"ct5":{"id":"ct5","name":"Tầng/lầu","label":"tầng/lầu","icon":"","vitri":"5"},
+		"ct6":{"id":"ct6","name":"Số phòng ngủ","label":"phòng ngủ","icon":"","vitri":"6"},
+		"ct7":{"id":"ct7","name":"Số toilet","label":"số toilet","icon":"","vitri":"7"},
+		"ttmr":{"ttmr_text":"block","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.3.1": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.3.2": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.3.3": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.3.4": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.3.5": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.4.1": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng nhà","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ct5":{"id":"ct5","name":"Tầng/lầu","label":"tầng/lầu","icon":"","vitri":"5"},
+		"ct6":{"id":"ct6","name":"Số phòng ngủ","label":"phòng ngủ","icon":"","vitri":"6"},
+		"ct7":{"id":"ct7","name":"Số toilet","label":"số toilet","icon":"","vitri":"7"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"block"},
+	},
+	"1.4.2": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng nhà","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ct5":{"id":"ct5","name":"Tầng/lầu","label":"tầng/lầu","icon":"","vitri":"5"},
+		"ct6":{"id":"ct6","name":"Số phòng ngủ","label":"phòng ngủ","icon":"","vitri":"6"},
+		"ct7":{"id":"ct7","name":"Số toilet","label":"số toilet","icon":"","vitri":"7"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"block"},
+	},
+	"1.4.3": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.4.4": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.4.5": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.4.6": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ct3":{"id":"ct3","name":"Hướng nhà","label":"Chọn hướng","icon":"","vitri":"3"},
+		"ct5":{"id":"ct5","name":"Tầng/lầu","label":"tầng/lầu","icon":"","vitri":"5"},
+		"ct6":{"id":"ct6","name":"Số phòng ngủ","label":"phòng ngủ","icon":"","vitri":"6"},
+		"ct7":{"id":"ct7","name":"Số toilet","label":"số toilet","icon":"","vitri":"7"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"block"},
+	},
+	"1.4.7": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	},
+	"1.4.8": {
+		"ct2":{"id":"ct2","name":"Diện tích sử dụng","label":"Diện tích sử dụng","icon":"","vitri":"2"},
+		"ttmr":{"ttmr_text":"none","thong_tin_mo_rong_bds":"none"},
+	}
+}
+var LoaiBDS = {
+	"1.1": {
+		"1.1.1":{"id":"1.1.1","name":"Đất dự án, Khu sân cư","icon":"","vitri":"1"},
+		"1.1.2":{"id":"1.1.2","name":"Đất nông nghiệp, kho bãi","icon":"","vitri":"2"},
+		"1.1.3":{"id":"1.1.3","name":"Đất thổ cư","icon":"","vitri":"2"},
+	},
+	"1.2": {
+		"1.2.1":{"id":"1.2.1","name":"Biệt thự, Villa, Penthouse","icon":"","vitri":"1"},
+		"1.2.2":{"id":"1.2.2","name":"Căn hộ, chung cư, tập thể","icon":"","vitri":"2"},
+		"1.2.3":{"id":"1.2.3","name":"Nhà hẻm/ngõ","icon":"","vitri":"3"},
+		"1.2.4":{"id":"1.2.4","name":"Nhà mặt tiền/phố","icon":"","vitri":"4"},
+	},
+	"1.3": {
+		"1.3.1":{"id":"1.3.1","name":"Kiốt, Sạp chợ","icon":"","vitri":"1"},
+		"1.3.2":{"id":"1.3.2","name":"Quán ăn, Nhà hàng, Khách sạn","icon":"","vitri":"2"},
+		"1.3.3":{"id":"1.3.3","name":"Quán cà phê, Giải khát","icon":"","vitri":"3"},
+		"1.3.4":{"id":"1.3.4","name":"Shop thời trang, Tiệm tóc, Spa","icon":"","vitri":"4"},
+		"1.3.5":{"id":"1.3.5","name":"Sang nhượng khác","icon":"","vitri":"5"},
+	},
+	"1.4": {
+		"1.4.1":{"id":"1.4.1","name":"Nhà mặt tiền/phố","icon":"","vitri":"1"},
+		"1.4.2":{"id":"1.4.2","name":"Căn hộ chung cư, tập thể","icon":"","vitri":"2"},
+		"1.4.3":{"id":"1.4.3","name":"Đất, Kho, Xưởng","icon":"","vitri":"3"},
+		"1.4.4":{"id":"1.4.4","name":"Khách sạn, Căn hộ dịch vụ","icon":"","vitri":"4"},
+		"1.4.5":{"id":"1.4.5","name":"Mặt bằng, Của hàng, Shop","icon":"","vitri":"1"},
+		"1.4.6":{"id":"1.4.6","name":"Nhà hẻm/ngõ","icon":"","vitri":"2"},
+		"1.4.7":{"id":"1.4.7","name":"Nhà trọ, Phòng trọ","icon":"","vitri":"3"},
+		"1.4.8":{"id":"1.4.8","name":"Văn phòng","icon":"","vitri":"4"},
+	}
+}
+
 
 /*DanhMuc.batdongsan.danhmuccon = {
 	bandat: {id:"1.1", name:"Bán đất", icon:"", vitri:"1"},

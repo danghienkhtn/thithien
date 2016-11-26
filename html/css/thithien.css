@@ -1332,7 +1332,7 @@ label {
     position: absolute;
     top: 45px;
     right: 0;
-    width: 400px;
+    /*width: 400px;*/
 }
 .thong-tin-mo-rong .active {
 	display: block;
@@ -1356,6 +1356,7 @@ label {
     text-align: left!important;
     font-weight: normal;
     color: #555;
+    font-size: 12px;
 }
 .col-sm-10 {
     width: 83.33333333%;

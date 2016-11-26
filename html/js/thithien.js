@@ -15,6 +15,12 @@ $(document).ready(function(){
         $(".top-search-category .chosen-container").toggleClass("chosen-with-drop");
     });
 
+    /*$(".chosen-drop").on("mouseleave", function(){
+        // console.log($(this)[0]);
+        $($(this)[0].parentNode).toggleClass("chosen-with-drop");
+    });*/
+
+    
     /*$(".active-results").hover(function(){
     	console.log("sdd");
         $(".active-results").toggleClass("highlighted");

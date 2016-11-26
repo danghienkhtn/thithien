@@ -164,7 +164,7 @@
             </div>
         </div>
         <!-- form đăng tin -->
-        <div class="form-post" style="display: none;">
+        <div class="form-post row" style="display: none;">
           <div class="col-lg-8 col-xs-12 col-md-8 col-sm-8">
             <form class="form-horizontal" id="frmPosting">
             <div class="po-content clearfix">
@@ -177,13 +177,13 @@
 
               <!-- Tinh thanh -->
               <div class="form-group clearfix">
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Tỉnh thành</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                <div class="col-md-5 col-sm-10 col-xs-12 chosen-citys">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Tỉnh thành</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-8 col-sm-8 col-xs-12 chosen-citys">
                   <input ng-model="cbTinhThanh" value="{{cbTinhThanh.id}}" class="hide" />
                   <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                    <a class="chosen-single" ng-click="cityClick($event)" tabindex="-1">
+                    <a class="chosen-single" ng-click="chosensingleClick('chosen-citys')" tabindex="-1">
                       <span class="drop-cat">                    
-                        <span class="cat-name-tt">Toan quoc</span>
+                        <span class="cat-name-tt">Chọn tỉnh/thành phố</span>                        
                       </span>
                       <div><span class="caret"></span></div>
                     </a>
@@ -205,11 +205,11 @@
 
               <!-- quan huyen -->
               <div class="form-group clearfix">
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Quận/Huyện<span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                <div class="col-md-5 col-sm-10 col-xs-12 chosen-districts">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Quận/Huyện<span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-8 col-sm-8 col-xs-12 chosen-districts">
                   <input ng-model="cbQuanHuyen" value="{{cbQuanHuyen.id}}" class="hide" />
                   <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                    <a class="chosen-single" tabindex="-1" ng-click="districtClick($event)">
+                    <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-districts')">
                       <span class="drop-cat">                    
                         <span class="cat-name-tt">Quận huyện</span>
                       </span>
@@ -233,11 +233,11 @@
 
               <!-- hang san xuat -->
               <div class="form-group clearfix hang-san-xuat">
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Hãng sản xuất</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                <div class="col-md-5 col-sm-10 col-xs-12 chosen-hangsx">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Hãng sản xuất</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-8 col-sm-8 col-xs-12 chosen-hangsx">
                   <input ng-model="cbHangSX" value="{{cbHangSX.id}}" class="hide" />
                   <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                    <a class="chosen-single" tabindex="-1" ng-click="hangSXClick()">
+                    <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-hangsx')">
                       <span class="drop-cat">                    
                         <span class="cat-name-tt">Chọn hãng sản xuất</span>
                       </span>
@@ -254,18 +254,18 @@
                     </div>
                     <!-- END chosen drop -->
                   </div>
-                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  <div class="clearfix"><span class="validationMessage"></span></div>
                 </div>
               </div>
 
 
               <!-- ten san pham -->
               <div class="form-group clearfix ten-san-pham" style="display:none;">
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Tên sản phẩm</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                <div class="col-md-5 col-sm-10 col-xs-12">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Tên sản phẩm</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-8 col-sm-8 col-xs-12 chosen-tensp">
                   <input ng-model="cbTenSP" value="{{cbTenSP.id}}" class="hide" />
                   <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                    <a class="chosen-single" tabindex="-1">
+                    <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-tensp')">
                       <span class="drop-cat">                    
                         <span class="cat-name-tt">Tên sản phẩm</span>
                       </span>
@@ -277,12 +277,12 @@
                         <input type="text" autocomplete="off" readonly="">
                       </div>
                       <ul class="chosen-results">                    
-                        <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenTT(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in tinhthanh" >{{x.name}}</li>                   
+                        <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenTenSP(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in tensanpam" >{{x.name}}</li>                   
                       </ul>
                     </div>
                     <!-- END chosen drop -->
                   </div>
-                  <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  <div class="clearfix"><span class="validationMessage"></span></div>
                 </div>
               </div>
 
@@ -290,96 +290,240 @@
               <!--Đăng tin xe-->
               <div class="clearfix dang-tin-xe" style="display:none;" >
                 <div class="form-group clearfix">
-                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                  <div class="col-md-5 col-sm-10 col-xs-12">
-                    <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Hãng xe"></select>
-                    <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                  <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Hãng xe</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-8 col-sm-8 col-xs-12 chosen-hangxe">
+                    <input ng-model="cbHangXe" type="text" value="{{cbHangXe.id}}" class="hide" />
+                    <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                      <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-hangxe')">
+                        <span class="drop-cat">                    
+                          <span class="cat-name-tt">chọn hãng xe</span>
+                        </span>
+                        <div><span class="caret"></span></div>
+                      </a>
+                      <!-- chosen drop -->  
+                      <div class="chosen-drop">
+                        <div class="chosen-search">
+                          <input type="text" autocomplete="off" readonly="">
+                        </div>
+                        <ul class="chosen-results">                    
+                          <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenHangXe(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in hangxe" >{{x.name}}</li>                   
+                        </ul>
+                      </div>
+                      <!-- END chosen drop -->
+                    </div>
+                    <div class="clearfix"><span class="validationMessage"></span></div>
                   </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: Models, visible: Models.Visible">
-                  <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                  <div class="col-md-5 col-sm-10 col-xs-12">
-                    <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:false, allow_single_deselect: true } }" data-placeholder="Tên xe"></select>
-                    <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                  <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Tên Xe</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                  <div class="col-md-8 col-sm-8 col-xs-12 chosen-tenxe">
+                    <input name="tenxe" type="text" value="{{TenXe}}" placeholder="tên xe" class="form-control" ng-model="TenXe" />
+                    <div class="clearfix"><span class="validationMessage"></span></div>
                   </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: BodyStyles">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Dòng xe"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Dòng xe</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-dongxe">
+                        <input ng-model="cbDongXe" type="text" value="{{cbDongXe.id}}" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-dongxe')">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">chọn dòng xe</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenDongXe(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in dongxe" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: CarYears">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Năm sản xuất"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Năm sản xuất</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-namsx">
+                        <input ng-model="cbNamSX" type="text" value="{{cbNamSX.id}}" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-namsx')">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">chọn năm sản xuất</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenNamSX(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in namsanxuat" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: Origins">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Xuất xứ"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Xuất xứ</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-xuatxu">
+                        <input ng-model="cbXuatXu" type="text" value="{{cbXuatXu.id}}" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-xuatxu')">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">chọn xuất xứ</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenXuatXu(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in xuatxu" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: NewPercen">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <input type="text" data-bind="value: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="3" />
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Xe mới</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <input type="text" placeholder="Xe mới(%)" class="form-control" maxlength="3" />
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: Transmissions">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Hộp số"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Hộp số</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-hopso">
+                        <input ng-model="cbHopSo" type="text" value="{{cbHopSo.id}}" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-hopso')">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">chọn loại hộp số</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenHopSo(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in hopso" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: Drivertypes">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Kiểu dẫn động"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Kiểu dẫn động</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-kieudandong">
+                        <input ng-model="cbKieuDD" type="text" value="{{cbKieuDD.id}}" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-kieudandong')">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">chọn kiểu truyền dẫn động</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenKieuDD(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in kieudandong" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: FuelTypes">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Nhiên liệu"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Nhiên liệu</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-nhienlieu">
+                        <input ng-model="cbNhienLieu" type="text" value="{{cbNhienLieu.id}}" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-nhienlieu')">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">chọn loại nhiên liệu</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenNhienLieu(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in nhienlieu" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: Colors">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Màu xe"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Màu xe</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-mauxe">
+                        <input ng-model="cbMauXe" type="text" value="{{cbMauXe.id}}" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-mauxe')">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">chọn màu xe</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenMauXe(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in mauxe" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: Safeties">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-10 col-sm-12">
-                        <!-- ko foreach:{data: DataOption, as: 'item'} -->
-                        <div class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
-                            <label style="width:100%; font-weight:normal">
-                                <input type="checkbox" data-bind="checked: item.Selected">
-                                <span data-bind="text: item.Name" style="position:relative; top:-2px"></span>
+                <div class="form-group clearfix">
+                    <label class="col-md-12 col-sm-12 col-xs-12 control-label contact-label"><span>Thiết bị an toàn</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <hr />
+                    <div class="col-md-12 col-sm-12">                        
+                        <div ng-repeat="x in thietbiantoan" class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
+                            <label style="width:100%; font-weight:normal;font-size:13px;">
+                                <input class="tbat_{{x.id}}" name="tbat_{{x.id}}" type="checkbox" />
+                                <span style="position:relative; top:-2px">{{x.name}}</span>
                             </label>
                         </div>
                         <!-- /ko -->
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: Features">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-10 col-sm-12">
-                        <!-- ko foreach:{data: DataOption, as: 'item'} -->
-                        <div class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
-                            <label style="width:100%; font-weight:normal">
-                                <input type="checkbox" data-bind="checked: item.Selected">
-                                <span data-bind="text: item.Name" style="position:relative; top:-2px"></span>
+                <div class="form-group clearfix">
+                    <label class="col-md-12 col-sm-12 col-xs-12 control-label contact-label"><span>Tiện nghi</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <hr />
+                    <div class="col-md-12 col-sm-12">                        
+                        <div ng-repeat="x in tiennghi" class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
+                            <label style="width:100%; font-weight:normal;font-size:13px;">
+                                <input class="tn_{{x.id}}" name="tn_{{x.id}}" type="checkbox" />
+                                <span style="position:relative; top:-2px">{{x.name}}</span>
                             </label>
                         </div>
                         <!-- /ko -->
@@ -392,126 +536,179 @@
               <!--Đăng tin bds-->
               <div class="clearfix dang-tin-bds" style="display:none;">
                 <div class="form-group clearfix" data-bind="with: WardId">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Phường/Xã&nbsp;</label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Phường/Xã"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Phường/Xã&nbsp;</label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-phuongxa">
+                        <input ng-model="cbPhuongXa" value="{{cbPhuongXa.id}}" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" ng-click="chosensingleClick('chosen-phuongxa')" tabindex="-1">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">Chọn phường/xã</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenPhuongXa(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in phuongxa" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
                 <div class="form-group clearfix">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text:StreetId.Label"></span>&nbsp;</label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Địa chỉ</span>&nbsp;</label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
                         <div class="col-md-3 col-sm-3 col-xs-4" style="padding:0px" data-bind="with: Address">
-                            <input type="text" class="form-control" data-bind="value: Data" placeholder="Số nhà"/>
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                            <input ng-model="SoNha" name="sonha" type="text" class="form-control" placeholder="Số nhà" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
                         
-                        <div class="col-md-9 col-sm-9 col-xs-8 " data-bind="with: StreetId" style="padding-right:0px">
-                            <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Đường"></select>
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                        <div class="col-md-9 col-sm-9 col-xs-8 " style="padding-right:0px">
+                            <input type="text" class="form-control" ng-model="TenDuong" name="tenduong" placeholder="Tên đường" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
                     </div>
                 </div>                    
-                <div class="form-group clearfix" data-bind="with: ProjectId">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Thuộc dự án&nbsp;</label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-
-                        <!-- ko if: ($parent.VisibleProject() > 0) -->
-                        <div>
-                            <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Thuộc dự án"></select>
+                <div class="form-group clearfix">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Thuộc dự án&nbsp;</label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div style="padding:0px">
+                            <input ng-model="ThuocDuAn" name="thuocduan" type="text" class="form-control" placeholder="Thuộc dự án" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
-                        <!-- /ko -->
-                        <!-- ko if: ($parent.VisibleProject() == 0) -->
-                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;">
-                            <a class="chosen-single chosen-default" style="color:#ccc!important"><span>Thuộc dự án</span><div><b></b></div></a>
-                        </div>
-                        <!-- /ko -->
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="with: PropertyTypes">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Loại bất động sản&nbsp;(<span class="requiredMessage">*</span>)</label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
-                        <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Loại bất động sản"></select>
-                        <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="form-group clearfix loaibds" style="display:none;">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Loại bất động sản&nbsp;(<span class="requiredMessage">*</span>)</label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 chosen-loaibds">
+                        <input ng-model="cbLoaiBDS" type="text" class="hide" />
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                          <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-loaibds')">
+                            <span class="drop-cat">                    
+                              <span class="cat-name-tt">Loại bất động sản</span>
+                            </span>
+                            <div><span class="caret"></span></div>
+                          </a>
+                          <!-- chosen drop -->  
+                          <div class="chosen-drop">
+                            <div class="chosen-search">
+                              <input type="text" autocomplete="off" readonly="">
+                            </div>
+                            <ul class="chosen-results">                    
+                              <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenLoaiBDS(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in loaibds" >{{x.name}}</li>                   
+                            </ul>
+                          </div>
+                          <!-- END chosen drop -->
+                        </div>
+                        <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
                 <div class="form-group clearfix" style="height:200px; display:none">
                     <div id="bds-property-location-sm" style="width: 100%; height: 100%; z-index: 3"></div>
                 </div>
-                <div class="clearfix" data-bind="with: TotalArea">
-                    <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
-                            <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" />
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="clearfix" data-bind="with: LivingArea">
-                    <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
-                            <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" />
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix" data-bind="with: LegalId">
-                    <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
-                            <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Pháp lý"></select>
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix" data-bind="with: Floor">
-                    <div data-bind="visible:Visible" class="form-group">
-                        <label class=" col-md-2 col-sm-2 col-xm-12 control-label contact-label">
-                            <span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span>
+                <div class="clearfix ct1" style="display:none;">
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">
+                          <span class="ct1-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span>
                         </label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
-                            <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="3" />
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input name="ct1" ng-model="CT1" type="text" placeholder="" class="form-control" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
 
                     </div>
                 </div>
-                <div class="form-group clearfix" data-bind="visible: ShowCollap">
-                    <span class="col-md-7 col-sm-12 col-xs-12">
-                        <a href="#" class="float-right mbn-bold" data-bind="click: function(data,e){ data.VisibleExpandRe(!data.VisibleExpandRe());}">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
+                <div class="clearfix ct2" style="display:none;">
+                    <div data-bind="visible:Visible" class="form-group">
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">
+                          <span class="ct2-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span>
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input name="ct2" ng-model="CT2" type="text" placeholder="" class="form-control" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix ct4" style="display:none;">
+                    <div class="form-group">
+                        <label class=" col-md-4 col-sm-4 col-xm-12 control-label contact-label">
+                            <span class="ct4-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span>
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" ng-click="ct4Click()">
+                            <input name="ct4" ng-model="CT4" type="text" placeholder="" class="form-control" maxlength="3" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clearfix ct5" style="display:none;">
+                    <div class="form-group">
+                        <label class=" col-md-4 col-sm-4 col-xm-12 control-label contact-label">
+                            <span class="ct5-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span>
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12" ng-click="ct5Click()">
+                            <input name="ct5" ng-model="CT5" type="text" placeholder="" class="form-control" maxlength="3" />
+                            <div class="clearfix"><span class="validationMessage"></span></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group clearfix ttmr-text" style="display:none;">
+                    <span class="col-md-12 col-sm-12 col-xs-12">
+                        <a href="#s" class="float-right mbn-bold" ng-click="thongtinmorongbdsClick('{{cbLoaiBDS}}')">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
                     </span>
                 </div>
                 <!--khu vục collspan-->
-                <div data-bind="visible: ShowExpand">                        
-                    <div class="clearfix" data-bind="with: BedRooms">
-                        <div data-bind="visible:Visible" class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                            <div class="col-md-5 col-sm-10 col-xs-12">
-                                <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="2" />
-                                <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                <div class="thong-tin-mo-rong-bds" style="display:none;">                        
+                    <div class="clearfix ct6" style="display:none;">
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span class="ct6-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <input name="ct6" ng-model="CT6" type="text" placeholder="" class="form-control" maxlength="2" />
+                                <div class="clearfix"><span class="validationMessage"></span></div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="clearfix" data-bind="with: BathRooms">
-                        <div data-bind="visible:Visible" class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                            <div class="col-md-5 col-sm-10 col-xs-12">
-                                <input type="text" data-bind="inputNumber: Data, attr:{placeholder:Placeholder}" class="form-control" maxlength="2" />
-                                <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                    <div class="clearfix ct7" style="display:none;">
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span class="ct7-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12" ng-click="ct7Click()">
+                                <input name="ct7" ng-model="CT7" type="text" placeholder="" class="form-control" maxlength="2" />
+                                <div class="clearfix"><span class="validationMessage"></span></div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="clearfix" data-bind="with: Direction">
-                        <div data-bind="visible:Visible" class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span data-bind="text: Label"></span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                            <div class="col-md-5 col-sm-10 col-xs-12">
-                                <select class="form-control hide" data-bind="chosen: { source: DataOption, selectedValue: Data, displayProp: 'Name', valueProp: 'Id', isEmpty: true, chosenOption: { disable_search:true, allow_single_deselect: true } }" data-placeholder="Hướng"></select>
-                                <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                    <div class="clearfix ct3" style="display:none;">
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span class="ct3-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12 chosen-ct3">
+                                <input ng-model="ct3" value="{{ct3.id}}" class="hide" />
+                                <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                                  <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-ct3')">
+                                    <span class="drop-cat">                    
+                                      <span class="cat-name-tt ct3-name"></span>
+                                    </span>
+                                    <div><span class="caret"></span></div>
+                                  </a>
+                                  <!-- chosen drop -->  
+                                  <div class="chosen-drop">
+                                    <div class="chosen-search">
+                                      <input type="text" autocomplete="off" readonly="">
+                                    </div>
+                                    <ul class="chosen-results">                    
+                                      <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenCT3(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in huong" >{{x.name}}</li>
+                                    </ul>
+                                  </div>
+                                  <!-- END chosen drop -->
+                                </div>
+                                <div class="clearfix"><span class="validationMessage"></span></div>
                             </div>
 
                         </div>
@@ -526,11 +723,11 @@
               <div class="clearfix dang-tin-viec-lam" style="display:none;">
                 <div class="clearfix" data-bind="with: JobType">
                     <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Hình thức làm việc</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                        <div class="col-md-5 col-sm-10 col-xs-12 chosen-hinhthuclv">
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Hình thức làm việc</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                        <div class="col-md-8 col-sm-8 col-xs-12 chosen-hinhthuclv">
                             <input ng-model="cbHinhThucLV" name="cbHinhThucLV" value="{{cbHinhThucLv.id}}" class="hide" />
                             <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                              <a class="chosen-single" tabindex="-1" ng-click="hinhthuclvClick($event)">
+                              <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-hinhthuclv')">
                                 <span class="drop-cat">                    
                                   <span class="cat-name-tt">Chọn hình thức làm việc</span>
                                 </span>
@@ -547,18 +744,18 @@
                               </div>
                               <!-- END chosen drop -->
                             </div>
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                            <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
 
                     </div>
                 </div>
                 <div class="clearfix">
                     <div data-bind="visible:Visible" class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Ngành nghề</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                        <div class="col-md-5 col-sm-10 col-xs-12 chosen-nganhnghe">
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Ngành nghề</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                        <div class="col-md-8 col-sm-8 col-xs-12 chosen-nganhnghe">
                             <input ng-model="cbNganhNghe" name="cbNganhNghe" value="{{cbNganhNghe.id}}" class="hide" />
                             <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                              <a class="chosen-single" tabindex="-1" ng-click="nganhngheClick($event)">
+                              <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-nganhnghe')">
                                 <span class="drop-cat">                    
                                   <span class="cat-name-tt">Chọn ngành nghề</span>
                                 </span>
@@ -575,16 +772,16 @@
                               </div>
                               <!-- END chosen drop -->
                             </div>
-                            <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                            <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
 
                     </div>
                 </div>                
                 <div class="clearfix">
                     <div class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Mức lương từ
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Mức lương từ
                         </label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
+                        <div class="col-md-8 col-sm-8 col-xs-12">
                             <input ng-model="MucLuongTu" name="MucLuongTu" type="text" placeholder="Nhập mức lương tối thiểu, chỉ nhập số" class="form-control" maxlength="12" />
                             <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
@@ -593,10 +790,10 @@
                 </div>
                 <div class="clearfix">
                     <div class="form-group">
-                        <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">
+                        <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">
                           Mức lương đến
                         </label>
-                        <div class="col-md-5 col-sm-10 col-xs-12">
+                        <div class="col-md-8 col-sm-8 col-xs-12">
                             <input ng-model="MucLuongDen" name="MucLuongDen" type="text" placeholder="Nhập mức lương tối đa, chỉ nhập số" class="form-control" maxlength="12" />
                             <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
@@ -612,11 +809,11 @@
                 <div class="thong-tin-mo-rong" style="display:none;">
                     <div class="clearfix">
                         <div class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Giới tính</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                            <div class="col-md-5 col-sm-10 col-xs-12 chosen-gioitinh">
+                            <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Giới tính</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12 chosen-gioitinh">
                               <input ng-model="cbGioiTinh" name="cbGioiTinh" value="{{cbGioiTinh.id}}" class="hide" />
                               <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                                  <a class="chosen-single" tabindex="-1" ng-click="gioitinhClick($event)">
+                                  <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-gioitinh')">
                                   <span class="drop-cat">                    
                                     <span class="cat-name-tt">Chọn giới tính</span>
                                   </span>
@@ -640,11 +837,11 @@
                     </div>
                     <div class="clearfix">
                         <div class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Năm sinh</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                            <div class="col-md-5 col-sm-10 col-xs-12 chosen-namsinh">
+                            <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Năm sinh</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                            <div class="col-md-8 col-sm-8 col-xs-12 chosen-namsinh">
                               <input ng-model="cbNamSinh" name="cbNamSinh" value="{{cbNamSinh.id}}" class="hide" />
                               <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                                  <a class="chosen-single" tabindex="-1" ng-click="namsinhClick($event)">
+                                  <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-namsinh')">
                                   <span class="drop-cat">                    
                                     <span class="cat-name-tt">Chọn năm sinh</span>
                                   </span>
@@ -668,12 +865,12 @@
 
                     <div class="clearfix dotuoi" style="display:none;">
                         <div class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Độ tuổi </label>
-                            <div class="col-md-5 col-sm-10 col-xs-12 age">
+                            <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Độ tuổi </label>
+                            <div class="col-md-8 col-sm-8 col-xs-12 age">
                                 <div class="from-age">
                                     <input ng-model="cbTuoiTu" name="cbTuoiTu" value="{{cbTuoiTu.id}}" class="hide" />
                                     <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                                        <a class="chosen-single" tabindex="-1" ng-click="tuoituClick($event)">
+                                        <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('from-age')">
                                         <span class="drop-cat">                    
                                           <span class="cat-name-tt">tuổi từ</span>
                                         </span>
@@ -697,7 +894,7 @@
                                 <div class="to-age">
                                     <input ng-model="cbTuoiDen" name="cbTuoiDen" value="{{cbTuoiDen.id}}" class="hide" />
                                     <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                                        <a class="chosen-single" tabindex="-1" ng-click="tuoidenClick($event)">
+                                        <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('to-age')">
                                         <span class="drop-cat">                    
                                           <span class="cat-name-tt">đến tuổi</span>
                                         </span>
@@ -714,7 +911,7 @@
                                       </div>
                                       <!-- END chosen drop -->
                                     </div>
-                                    <div class="clearfix"><span class="validationMessage" data-bind="validationMessage:Data"></span></div>
+                                    <div class="clearfix"><span class="validationMessage"></span></div>
 
                                 </div>
 
@@ -723,10 +920,10 @@
                     </div>
                     <div class="clearfix">
                         <div class="form-group">
-                            <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">
+                            <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">
                               Số năm kinh nghiệm
                             </label>
-                            <div class="col-md-5 col-sm-10 col-xs-12">
+                            <div class="col-md-8 col-sm-8 col-xs-12">
                                 <input ng-model="NamKinhNghiem" type="text" class="form-control" maxlength="2" />
                                 <div class="clearfix"><span class="validationMessage"></span></div>
                             </div>
@@ -740,8 +937,8 @@
 
               <!--Tiêu đề, Nội dung, giá-->
               <div class="form-group clearfix gia" style="display: none;">
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Giá:<span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                <div class="col-md-5 col-sm-10 col-xs-12">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Giá:<span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
                     <input ng-model="gia" name="gia" type="text" class="form-control gia-ban" placeholder="Giá" maxlength="12" ng-keydown="checkLength($event, 12)" />
                     <div class="clearfix"><span class="validationMessage"></span></div>
                     <div style="font-size:12px; font-style:italic; margin-top:5px;">
@@ -750,22 +947,22 @@
                 </div>
               </div>
               <div class="form-group clearfix">
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Tiêu đề</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                <div class="col-md-5 col-sm-10 col-xs-12">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Tiêu đề</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
                     <input ng-model="tieude" name="tieude" type="text" class="form-control tieu-de" placeholder="Vui lòng nhập Tiếng Việt có dấu" value={{tieude}} maxlength="70" ng-keydown="checkLength($event, 70)" />
                     <div class="clearfix"><span class="validationMessage"></span></div>
                     <div style="font-size:12px; margin-top:5px; font-style:italic">
-                        Đã nhập: <span style="color:blue;">0</span> ký tự
+                        Đã nhập: <span style="color:blue;">0</span>/70 ký tự
                     </div>
                 </div>
               </div>
               <div class="form-group clearfix" data-bind="with:Body">                    
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Nội dung</span><span data-bind="visible:Required">&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                <div class="col-md-5 col-sm-10 col-xs-12">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Nội dung</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
                     <textarea ng-model="noidung" name="noidung" type="text" class="form-control noi-dung" rows="8" maxlength="2010" ng-keydown="checkLength($event, 2010)" placeholder="Vui lòng nhập tiếng Việt có dấu"></textarea>
                     <div class="clearfix"><span class="validationMessage"></span></div>
                     <div style="font-size:12px; margin-top:5px; font-style:italic">
-                        Đã nhập: <span style="color:blue">0</span> ký tự 
+                        Đã nhập: <span style="color:blue">0</span>/2010 ký tự 
                         <span style="float:right; color: #f47100; cursor:pointer;" class="visible-lg"> 
                             <span>
                                 <i class="icon icon-light-bulb"></i>Gợi ý
@@ -779,8 +976,8 @@
 
               <!--Hình ảnh-->
               <div class="form-group clearfix">
-                <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">Đăng hình ảnh: </label>
-                <div class="col-md-5 col-sm-10 col-xs-12">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Đăng hình ảnh: </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
                     <div class="image-wapper">
                         <div class="image-wapper-label">
                             ĐĂNG ẢNH THẬT ĐỂ ĐƯỢC HIỆU QUẢ NHẤT!
@@ -825,15 +1022,15 @@
                     <h4 class="title">Thông tin liên hệ</h4>
                 </div>
                 <div class="form-group clearfix nguoi-lien-he" style="margin-top:20px;">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Người liên hệ</span><span >&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Người liên hệ</span><span >&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
                         <input type="text" class="form-control" maxlength="99" />
                         <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
                 <div class="form-group clearfix mobile">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Số di động</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Số di động</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
                         <div class="input-group">
                             <input type="text" class="form-control" maxlength="15" />
                             <span class="input-group-addon">
@@ -844,17 +1041,17 @@
                     </div>
                 </div>
                 <div class="form-group clearfix dia-chi">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"><span>Địa chỉ</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Địa chỉ</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
                         <input ng-model="diachi" type="text" class="form-control" maxlength="256" />
                         <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
                 <div class="row form-group captcha-image">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">
                         <span>Mã an toàn</span>
                     </label>
-                    <div class="col-md-5 col-sm-10 col-xs-12">
+                    <div class="col-md-8 col-sm-8 col-xs-12">
                         <div style="vertical-align:middle;">
                             <input ng-model="captcha" type="text" class="form-control" style="width:120px; float:left;" id="ConfirmCaptcha" name="ConfirmCaptcha"  autocomplete="off" placeholder="Mã an toàn" maxlength="5" />
                             <div style="display:inline-block;width:160px;padding-left:10px;">
@@ -872,8 +1069,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 col-sm-2 col-xs-12 control-label contact-label"> </label>
-                    <div class="col-md-5 col-sm-8 group-cmd">
+                    <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"> </label>
+                    <div class="col-md-8 col-sm-8 col-xs-12 group-cmd">
                         <button class="btn btn-primary cmd-next">Tiếp tục <i class="fa fa-angle-right"></i></button>
                     </div>
                 </div>
