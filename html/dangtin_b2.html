@@ -263,11 +263,19 @@
               <div class="form-group clearfix ten-san-pham" style="display:none;">
                 <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Tên sản phẩm</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                 <div class="col-md-8 col-sm-8 col-xs-12 chosen-tensp">
-                  <input ng-model="cbTenSP" value="{{cbTenSP.id}}" class="hide" />
+                  <input name="tensanpham" type="text" value="{{TenSP}}" placeholder="tên sản phẩm" class="form-control" ng-model="TenSP" />
+                  <div class="clearfix"><span class="validationMessage"></span></div>
+                </div>
+              </div>
+
+              <div class="form-group clearfix hang-xe" style="display:none;">
+                <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Hãng sản xuất</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
+                <div class="col-md-8 col-sm-8 col-xs-12 chosen-hangxe">
+                  <input ng-model="cbHangXe" type="text" value="{{cbHangXe.id}}" class="hide" />
                   <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                    <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-tensp')">
+                    <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-hangxe')">
                       <span class="drop-cat">                    
-                        <span class="cat-name-tt">Tên sản phẩm</span>
+                        <span class="cat-name-tt">chọn hãng xe</span>
                       </span>
                       <div><span class="caret"></span></div>
                     </a>
@@ -277,7 +285,7 @@
                         <input type="text" autocomplete="off" readonly="">
                       </div>
                       <ul class="chosen-results">                    
-                        <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenTenSP(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in tensanpam" >{{x.name}}</li>                   
+                        <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenHangXe(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in hangxe" >{{x.name}}</li>                   
                       </ul>
                     </div>
                     <!-- END chosen drop -->
@@ -286,34 +294,8 @@
                 </div>
               </div>
 
-
               <!--Đăng tin xe-->
-              <div class="clearfix dang-tin-xe" style="display:none;" >
-                <div class="form-group clearfix">
-                  <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Hãng xe</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
-                  <div class="col-md-8 col-sm-8 col-xs-12 chosen-hangxe">
-                    <input ng-model="cbHangXe" type="text" value="{{cbHangXe.id}}" class="hide" />
-                    <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
-                      <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-hangxe')">
-                        <span class="drop-cat">                    
-                          <span class="cat-name-tt">chọn hãng xe</span>
-                        </span>
-                        <div><span class="caret"></span></div>
-                      </a>
-                      <!-- chosen drop -->  
-                      <div class="chosen-drop">
-                        <div class="chosen-search">
-                          <input type="text" autocomplete="off" readonly="">
-                        </div>
-                        <ul class="chosen-results">                    
-                          <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenHangXe(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in hangxe" >{{x.name}}</li>                   
-                        </ul>
-                      </div>
-                      <!-- END chosen drop -->
-                    </div>
-                    <div class="clearfix"><span class="validationMessage"></span></div>
-                  </div>
-                </div>
+              <div class="clearfix dang-tin-xe" style="display:none;" >                
                 <div class="form-group clearfix">
                   <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Tên Xe</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                   <div class="col-md-8 col-sm-8 col-xs-12 chosen-tenxe">
@@ -624,7 +606,7 @@
                     </div>
                 </div>
                 <div class="clearfix ct2" style="display:none;">
-                    <div data-bind="visible:Visible" class="form-group">
+                    <div class="form-group">
                         <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">
                           <span class="ct2-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span>
                         </label>
@@ -639,8 +621,26 @@
                         <label class=" col-md-4 col-sm-4 col-xm-12 control-label contact-label">
                             <span class="ct4-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span>
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12" ng-click="ct4Click()">
-                            <input name="ct4" ng-model="CT4" type="text" placeholder="" class="form-control" maxlength="3" />
+                        <div class="col-md-8 col-sm-8 col-xs-12 chosen-ct4">
+                            <input ng-model="ct4" value="{{ct4.id}}" class="hide" />
+                            <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+                              <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-ct4')">
+                                <span class="drop-cat">                    
+                                  <span class="cat-name-tt ct4-name"></span>
+                                </span>
+                                <div><span class="caret"></span></div>
+                              </a>
+                              <!-- chosen drop -->  
+                              <div class="chosen-drop">
+                                <div class="chosen-search">
+                                  <input type="text" autocomplete="off" readonly="">
+                                </div>
+                                <ul class="chosen-results">                    
+                                  <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenCT4(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in phaply" >{{x.name}}</li>
+                                </ul>
+                              </div>
+                              <!-- END chosen drop -->
+                            </div>
                             <div class="clearfix"><span class="validationMessage"></span></div>
                         </div>
 
@@ -722,7 +722,7 @@
               <!--Đăng tin việc làm-->
               <div class="clearfix dang-tin-viec-lam" style="display:none;">
                 <div class="clearfix" data-bind="with: JobType">
-                    <div data-bind="visible:Visible" class="form-group">
+                    <div class="form-group">
                         <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Hình thức làm việc</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                         <div class="col-md-8 col-sm-8 col-xs-12 chosen-hinhthuclv">
                             <input ng-model="cbHinhThucLV" name="cbHinhThucLV" value="{{cbHinhThucLv.id}}" class="hide" />
@@ -750,7 +750,7 @@
                     </div>
                 </div>
                 <div class="clearfix">
-                    <div data-bind="visible:Visible" class="form-group">
+                    <div class="form-group">
                         <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Ngành nghề</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                         <div class="col-md-8 col-sm-8 col-xs-12 chosen-nganhnghe">
                             <input ng-model="cbNganhNghe" name="cbNganhNghe" value="{{cbNganhNghe.id}}" class="hide" />
@@ -1113,6 +1113,356 @@
         </div>
     </div>  
     <!-- end step 1 -->
+
+
+    <!-- start step 2 -->
+    <div class="post-step-2 clearfix" style="display:none">
+        <div class="clearfix title-review">
+            Xem trước tin sẽ được đăng
+        </div>
+        <div class="margintop po-re-title clearfix">
+            <span>{{tieude}}</span>
+        </div>
+        <div class="margintop po-re-line clearfix"></div>
+        <div class="margintop clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-3 re-label">Chuyên mục:</div>
+            <div class="col-md-9 col-sm-9 col-xs-9 re-value">
+                <span>{{CatItemSelected.name}}</span>&nbsp;<i class="fa fa-angle-right"></i>&nbsp;
+                <span>{{CatItemSelected.name}}</span>
+                <span>
+                    &nbsp;<i class="fa fa-angle-right"></i>&nbsp;
+                    <span>{{cbHangXe.name}}{{cbHangSX.name}}</span>
+                </span>
+                <span>
+                    &nbsp;<i class="fa fa-angle-right"></i>&nbsp;
+                    <span>{{TenXe}}{{TenSP}}</span>
+                </span>
+            </div>
+        </div>
+        <div class="margintop clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-3 re-label">Tỉnh/Thành:</div>
+            <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbQuanHuyen.name}}, {{cbTinhThanh.name}}</div>
+        </div>
+
+        <div class="margintop clearfix">
+            <div class="margintop po-re-line clearfix"></div>
+            <div class="margintop clearfix"></div>
+            <div class="ct-image clearfix">
+                
+                <div id="owl-carousel-detail" class="owl-carousel owl-theme">
+                    <!-- ko foreach:{data: ReviewImages, as: 'item'} -->
+                    <div class="item" data-bind="attr: {id: 'item'+ item.ImageId()}">
+                      <img data-bind="attr:{src: item.FullUrl}" />
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+
+        <div class="margintop clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-3 re-label">Giá</div>
+            <div class="col-md-8 col-sm-9 col-xs-9 re-price">
+                <span>Thỏa thuận</span>
+                <span>{{gia}}</span>
+            </div>
+        </div>
+        <div class="margintop clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-3 re-label">Mức lương:></div>
+            <div class="col-md-8 col-sm-9 col-xs-9 re-price">
+                <span>{{MucLuongTu}} - {{MucLuongDen}}</span>
+            </div>
+        </div>
+        <div class="margintop po-re-line clearfix"></div>
+        <div class="margintop clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-3 re-label">Người liên hệ:</div>
+            <div class="col-md-9 col-sm-9 col-xs-9 re-value" style="font-weight:bold">{{NguoiLienHe}}</div>
+        </div>
+
+        <div class="margintop clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-3 re-label">Số di động:</div>
+            <div class="col-md-9 col-sm-9 col-xs-9 re-value contact-mobile">{{SoDiDong}}</div>
+        </div>
+        <div class="margintop clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-3 re-label">Email:</div>
+            <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{Email}}</div>
+        </div>
+        <div class="margintop clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-3 re-label">Địa chỉ:</div>
+            <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{DiaChi}}</div>
+        </div>
+
+        <div class="margintop po-re-line clearfix"></div>
+        <div class="margintop clearfix" style="overflow:hidden">
+            <div>{{NoiDung}}</div>
+        </div>
+        <!-- tim viec -->
+        <div class="clearfix">
+            <div class="margintop po-re-line clearfix"></div>
+            <div class="clearfix">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Tên CV---chua biet</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value"></div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Giới tính</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbGioiTinh.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Năm sinh</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbNamSinh.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Hình thức làm việc</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbHinhThucLV.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Ngành nghề</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbNganhNghe.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Độ tuổi từ</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbTuoiTu.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Độ tuổi đến</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbTuoiDen.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Kinh nghiệm (năm)</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{NamKinhNghiem}}</div>
+                </div>
+            </div>
+            <div class="clearfix" data-bind="with: SalaryFrom" style="display:none">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Mức lương từ</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{MucLuongTu}}</div>
+                </div>
+            </div>
+            <div class="clearfix" style="display:none">
+                <div class="margintop">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Mức lương đến</div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{MucLuongDen}}</div>
+                </div>
+            </div>
+
+        </div>
+        <!-- nha dat bds -->
+        <div class="clearfix">
+            <div class="margintop po-re-line clearfix"></div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label"></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"></div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Địa chỉ</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{SoNha}} {{TenDuong}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Phường/Xã</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbPhuongXa.name}}</div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Thuộc dự án</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{ThuocDuAn}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Diện tích đất</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct1}}</span></div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Diện tích sử dụng</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct2}}</span></div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Số phòng ngủ</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct6}}</span></div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Số toilet</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct7}}</span></div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Hướng</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct3.name}}</span></div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Pháp lý</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct4.name}}</span></div>
+                </div>
+            </div>
+            <div class="margintop clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label"></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span></span></div>
+                </div>
+            </div>
+
+        </div>
+        <!-- rao xe oto-->
+        <div class="clearfix">
+            <div class="margintop po-re-line clearfix"></div>
+            <div class=" clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Tên xe</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{TenXe}}</div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Hãng xe</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbHangXe.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Dòng xe</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbDongXe.name}}</div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Năm sản xuất</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbNamSX.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Xuất xứ</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbXuatXu.name}}</div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Xe mới</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{XeMoi}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Hộp số</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbHopSo.name}}</div>
+                </div>
+
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Kiểu dẩn động</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbKieuDD.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Nhiên liệu</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbNhienLieu.name}}</div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Màu xe</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbMauXe.name}}</div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div>
+                    <div class="margintop po-re-line clearfix"></div>
+                    <div class="margintop re-label">Thiết bị an toàn</div>
+                    <div class="margintop re-value">
+                      <ul class="ct-safe-list clearfix">
+                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                          <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Khoá động cơ
+                            </div>
+                          </div>
+                        </li>
+                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                          <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Chống bó cứng phanh (ABS)
+                            </div>
+                          </div>
+                        </li>
+                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                          <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Phân bố lực phanh điện tử (EBD)
+                            </div>
+                          </div>
+                        </li>
+                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                          <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Trợ lực phanh khẩn cấp (EBA)
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="margintop clearfix">
+                <div>
+                    <div class="margintop po-re-line clearfix"></div>
+                    <div class="margintop re-label">Tiện nghi</div>
+                    <div class="margintop re-value">
+                      <ul class="ct-safe-list clearfix">
+                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                          <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Khoá động cơ
+                            </div>
+                          </div>
+                        </li>
+                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                          <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Chống bó cứng phanh (ABS)
+                            </div>
+                          </div>
+                        </li>
+                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                          <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Phân bố lực phanh điện tử (EBD)
+                            </div>
+                          </div>
+                        </li>
+                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                          <div class="clearfix">
+                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Trợ lực phanh khẩn cấp (EBA)
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="margintop clearfix" style="margin-top:40px">
+            <button class="btn btn-default" style="width:100px;" data-bind="click: GotoStep1"><i class="fa fa-angle-left"></i> Quay lại</button>
+            <button class="btn btn-primary" style="width:150px;" data-bind="click: QueuePublish, activity: IsExcutingQueue, attr:{id: PostingFinish()==false?'posting-finish':'posting-finish-publish'}">Tiếp tục <i class="fa fa-angle-right"></i></button>
+        </div>
+    </div>  
+    <!-- start step 2 -->
+
+
+
+
 
   </div>
 </div>

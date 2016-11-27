@@ -1,7 +1,5 @@
 var app = angular.module('TTApp',[]);
 app.controller('TTCtrl', function($scope) {
-	// a="1";
-	// b="danhmuccon";
 	$scope.danhmuc = DanhMuc;
 	$scope.tinhthanh = TinhThanh;
 	$scope.bannertop = BannerTop;
@@ -24,6 +22,7 @@ app.controller('TTCtrl', function($scope) {
 		$(".category").css('display','block');
 	}
 	$scope.chosenSubCatItem = function(item) {
+		// console.log(item);
 		$scope.SubCatItemSelected = item;
 		$(".se-category").hide();
 		$(".form-post").show();
@@ -196,8 +195,17 @@ var showRelateBlock = function(scope, subCatId) {
 			scope.mauxe = MauXe;
 			scope.thietbiantoan = ThietBiAnToan;
 			scope.tiennghi = TienNghi;
+			scope.hangxe = HangXe[subCatId];			
+			$(".hang-xe").css("display",blockDisplay[subCatId]["hang-xe"]);
 			$(".dang-tin-xe").css("display",blockDisplay[subCatId]["dang-tin-xe"]);
-		}	
+		}
+		//chi dung cho dang tin ban xe máy, oto
+		if((subCatId === "3.1" || subCatId === "4.1") && blockDisplay[subCatId]["hang-xe"] == "block"){
+			scope.hangxe = HangXe[subCatId];
+			$(".hang-xe").css("display",blockDisplay[subCatId]["hang-xe"]);
+		}
+		else $(".hang-xe").css("display",blockDisplay[subCatId]["hang-xe"]);
+		
 		if(blockDisplay[subCatId]["dang-tin-viec-lam"] == "block"){
 			scope.hinhthuclv = HinhThucLV;
 			scope.nganhnghe = NganhNghe;
@@ -241,14 +249,10 @@ var showChiTietBDS = function(scope, loaibds){
 				$("."+ct).show();				
 			}	
 		}
+		scope.phaply = PhapLy;
 		// console.log(ChiTietBDS[loaibds]['ttmr']);
 		$(".ttmr-text").css("display", ChiTietBDS[loaibds]['ttmr'].ttmr_text);	
 		$(".thong-tin-mo-rong-bds").css("display", ChiTietBDS[loaibds]['ttmr'].thong_tin_mo_rong_bds);
 	}
-}
-
-var showChiTietXe = function(scope, hangxe){
-	if(typeof(ChiTietXe[hangxe]) !== 'undefined'){
-
-	}
 }		
+
