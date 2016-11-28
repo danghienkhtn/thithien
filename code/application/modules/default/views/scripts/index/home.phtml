@@ -1,0 +1,340 @@
+ <div class="wrapper">
+    <div class="inner">
+           <?php 
+              echo $this->render('partials/slogan.phtml');
+           ?>
+        
+        <div class="tab-content">
+            <div class="tab-pane active" id="gntnews">
+                <section class="slide-wrapper">
+                     <?php
+                    if(!empty($this->arrNews))
+                    {
+                        $k=0;
+                        foreach($this->arrNews as $value)
+                        {
+                              if($k==0)
+                              {
+                        ?>
+                                <article class="first-child" style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $value['image_url']; ?>);">
+                                    <a href="/news/detail/id/<?php echo $value['news_id'];?>">
+                                        <span class="header">
+                                            <span class="author"><?php echo $value['source'];?></span>
+                                            <span class="times"><?php echo date('d-m-Y H:i',$value['create_date']);?></span>
+                                        </span>
+                                        <span class="footer"><?php echo Core_Common::SubFullStrings($value['title'], 0, 20);?></span>
+                                    </a>
+                                </article>
+                           <?php
+                              }
+                              else
+                              {
+                                  ?>
+                    
+                                     <article style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $value['image_url']; ?>);">
+                                        <a href="/news/detail/id/<?php echo $value['news_id'];?>">
+                                            <span class="header">
+                                                <span class="author"><?php echo $value['source'];?></span>
+                                                <span class="times"><?php echo date('d-m-Y H:i',$value['create_date']);?></span>
+                                            </span>
+                                            <span class="footer"><?php echo Core_Common::SubFullStrings($value['title'], 0, 20);?></span>
+                                        </a>
+                                    </article>
+                                 <?php
+                              }
+                              
+                              $k++;
+                              ?>
+                      
+                    <?php
+                         }
+                    }
+                    ?>
+                    
+                </section>
+            </div><!-- tab-pane -->
+
+            <div class="tab-pane" id="people">
+                <section class="slide-wrapper">
+                    
+                    <?php
+                       if(!empty($this->arrProfile))
+                       {
+                           
+                           $k=0;
+                           foreach($this->arrProfile as $value)
+                           {
+                               $picture = Core_Common::avatarProcess($value['picture']);
+                               if($k==0)
+                               {
+                                   ?>
+                    
+                                     <article class="first-child" style="background-image:url(<?php echo $picture;?>);">
+                                        <a href="/user/detail/id/<?php echo $value['account_id'];?>">
+                                            <span class="footer">
+                                                <span class="name"><?php echo $value['name'];?></span>
+                                                <span class="position"><?php echo isset($this->arrGeneralAttHash[$value['position']])?$this->arrGeneralAttHash[$value['position']]:'';?></span>
+                                            </span>
+                                        </a>
+                                    </article>
+                    
+                                  <?php
+                               }else{
+                                   ?>
+                                   <article style="background-image:url(<?php echo $picture;?>);">
+                                       <a href="/user/detail/id/<?php echo $value['account_id'];?>">
+                                          <span class="footer">
+                                               <span class="name"><?php echo $value['name'];?></span>
+                                               <span class="position"><?php echo isset($this->arrGeneralAttHash[$value['position']])?$this->arrGeneralAttHash[$value['position']]:'';?></span>
+                                           </span>
+                                       </a>
+                                   </article>
+                    
+                              <?php
+                               }
+                                ?>
+                    
+                       <?php
+                              $k++;
+                           }
+                       }
+                       ?>
+                   
+                    
+                </section>
+            </div><!-- end tabe-pane -->
+            
+       
+            <div class="tab-pane" id="products">
+                <span id="spanproduct">
+                    <section class="slide-wrapper">
+     
+                    <?php
+                       if(!empty($this->arrProduct['data']))
+                       {
+                               $k=0;
+                              foreach($this->arrProduct['data'] as $value)
+                              {
+
+                                    if($k==0)
+                                    {
+                                    ?>
+
+                                           <article class="first-child" style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $value['image_url']; ?>);">
+                                               <a href="/product/detail/id/<?php echo $value['product_id'];?>">
+                                                   <span class="footer">
+                                                       <span class="name"><?php echo $value['name'];?></span>
+                                                       <span class="position">
+                                                            <?php
+                                                                if(($value['device_type']&1)>0)
+                                                                {
+                                                                 ?>
+                                                                     <i class="icon icon-apple-xs"></i>
+                                                                <?php
+                                                                }
+
+
+                                                                if(($value['device_type']&2)>0)
+                                                                {
+                                                                 ?>
+                                                                      <i class="icon icon-android-xs"></i>
+                                                                <?php
+                                                                }
+
+                                                                if(($value['device_type']&4)>0)
+                                                                {
+                                                                 ?>
+                                                                      <i class="icon icon-windowphone-xs"></i>
+                                                                <?php
+                                                                }
+
+
+                                                                if(($value['device_type']&4)>0)
+                                                                {
+                                                                 ?>
+                                                                     <i class="icon icon-computer-xs"></i>
+                                                                <?php
+                                                                }
+
+                                                                ?>
+						       </span>
+                                                       
+                                                   </span>
+                                               </a>
+                                           </article>
+                                    <?php
+                                    }else{
+                                       ?>
+                                           <article style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $value['image_url']; ?>);">
+                                               <a href="/product/detail/id/<?php echo $value['product_id'];?>">
+                                                   <span class="footer">
+                                                       <span class="name"><?php echo $value['name'];?></span>
+                                                       <span class="position">
+                                                         <?php
+                                                          if(($value['device_type']&1)>0)
+                                                          {
+                                                           ?>
+                                                               <i class="icon icon-apple-xs"></i>
+                                                          <?php
+                                                          }
+
+
+                                                          if(($value['device_type']&2)>0)
+                                                          {
+                                                           ?>
+                                                                <i class="icon icon-android-xs"></i>
+                                                          <?php
+                                                          }
+
+                                                          if(($value['device_type']&4)>0)
+                                                          {
+                                                           ?>
+                                                                <i class="icon icon-windowphone-xs"></i>
+                                                          <?php
+                                                          }
+
+
+                                                          if(($value['device_type']&4)>0)
+                                                          {
+                                                           ?>
+                                                               <i class="icon icon-computer-xs"></i>
+                                                          <?php
+                                                          }
+
+                                                          ?>
+                                                       
+                                                       </span>
+                                                   </span>
+                                               </a>
+                                           </article>
+
+                       <?php
+                                    }
+                                $k++;
+                              }
+                       }
+                       ?>
+
+               </section>
+                </span>
+            </div>
+            <!-- end tab-pane-->
+            
+        </div>
+        
+        <ul id="gntTab" class="nav-tabs">
+            <li class="active"><a href="#gntnews" data-toggle="tab">NEWS</a></li>
+            <li><a href="#people" data-toggle="tab">PEOPLE</a></li>
+            <li><a href="#products" data-toggle="tab">PRODUCTS</a></li>
+        </ul>
+        
+      <div class="row static-group">
+        	<div class="my-profiles">
+            	<h2><i class="icon myprofiles"></i><span class="txt">MY PROFILE</span></h2>
+              <div class="clearfix">
+                       <!-- Profile -->
+               		<div class="profile clearfix">
+                    	<div class="avatar">
+                            <?php 
+                            if(!empty($this->arrAccountInfo['picture']))
+                            {
+                             ?>
+
+                            <img src="<?php echo Core_Common::avatarProcess($this->arrAccountInfo['picture']); ?>" border="0"  width="114px"/>
+
+                         <?php
+                            }
+                            else
+                            {
+                            ?>
+                            <img src="<?php echo $this->static->frontend->images;?>/avatar.png" alt="">
+                           <?php
+                            }
+                            ?>
+                        </div>
+                        <ul class="person-info">
+                            <li class="uppercase"><i class="icon personname"></i><?php echo $this->arrAccountInfo['name'];?></li>
+                            <?php
+                              if(isset($this->arrGeneralAttHash[$this->arrAccountInfo['position']]))
+                              {
+                              ?>
+                             <li class="uppercase"><i class="icon persposition"></i><?php echo $this->arrGeneralAttHash[$this->arrAccountInfo['position']];?></li>
+                            <?php
+                              }
+                              ?>
+                            
+                              <?php
+                              if(isset($this->arrGeneralAttHash[$this->arrAccountInfo['department_id']]))
+                              {
+                              ?>
+                             <li class=""><i class="icon offical"></i><?php echo $this->arrGeneralAttHash[$this->arrAccountInfo['department_id']];?></li>
+                            <?php
+                              }
+                              ?>
+                             
+                              <?php
+                              if(!empty($this->arrAccountInfo['mobion_account']))
+                              {
+                              ?>
+                             <li class=""><i class="icon mobionprofile"></i><?php echo $this->arrAccountInfo['mobion_account'];?></li>
+                            <?php
+                              }
+                              ?>
+                             
+                            <li class=""><a href="/myprofile/detail"><i class="icon showmore"></i>See more</a></li>
+                        </ul>
+                    </div>
+                       
+                    <!-- End profile -->
+                    <?php
+                      echo $this->render('index/calendar.phtml');
+                    ?>
+              </div>
+        </div>
+            
+            <!-- Begin Photo -->
+            <div class="memory-slots">
+            	<h2><i class="icon memoryslots"></i><span class="txt">MEMORY SLOTS</span></h2>
+              		<ul class="albumlist clearfix">
+                           
+                             <?php
+                            if(!empty($this->arrAlbum))
+                            {
+
+                                 foreach($this->arrAlbum as $value)
+                                 {
+                                ?>
+                            
+                                      <li style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $value['image_url']; ?>);">
+                                        <a href="/photo/list/id/<?php echo $value['album_id'];?>">
+                                            <span class="footer"><?php echo $value['name'];?></span>
+                                        </a>
+                                    </li>
+
+                          <?php
+                                 }
+                            }
+                            ?>
+                
+                      
+                        <li>
+                            <a class="show-more" href="/photo">Show more <i class="icon showmore"></i></a>
+                        </li>
+                </ul>
+            </div>
+            
+            <!-- End photo -->
+        </div>
+    </div>
+ </div>
+
+<script language="javascript">
+/*function getProductHome()
+{
+      $.get("<?php echo BASE_URL;?>/index/product",{},function(result){
+
+       $('#spanproduct').html(result);
+   });
+}
+getProductHome();*/
+</script>

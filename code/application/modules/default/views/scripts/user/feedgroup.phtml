@@ -1,0 +1,117 @@
+<div class="grid_8">
+    <form name="tf" method ="get"  action="/user">
+        
+              <div class="header-menu-team">
+	                        	<div class="title-team">
+	                                <i class="fa fa-group"></i>
+	                                <span><?php echo $this->locales->group->design;?></span>
+	                            </div>
+	                            <ul class="function-menu-team">
+	                            	<li>
+	                                	<a class="active" href="<?php echo BASE_URL;?>/user/feed/groupid/<?php echo $this->groupid;?>">
+	                                    	<i class="fa fa-area-chart"></i>
+	                                        <span><?php echo $this->locales->group->activitystream;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="#">
+	                                    	<i class="fa fa-folder-open"></i>
+	                                        <span><?php echo $this->locales->group->document;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="#">
+	                                    	<i class="fa fa-calendar"></i>
+	                                        <span><?php echo $this->locales->group->calendar;?></span>
+	                                    </a>
+	                                </li>
+
+	                                <li>
+	                                	<a href="<?php echo BASE_URL;?>/user/index/groupid/<?php echo $this->groupid;?>">
+	                                    	<i class="fa fa-user"></i>
+	                                        <span><?php echo $this->locales->group->member;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="#">
+	                                    	<i class="fa fa-cog"></i>
+	                                        <span><?php echo $this->locales->group->setting;?></span>
+	                                    </a>
+	                                </li>
+	                            </ul>
+                        	</div>
+            <div class="contain-orgchart" id="contain-orgchart" style="display:none;">
+
+            </div>
+            <div class="contain-contact" id="contain-contact">
+                <div class="table-contact">
+                        <table class="table">
+                        <thead>
+                                <tr>
+                                <th width="8%"></th>
+                                <th><?php echo $this->locales->user->id;?></th>
+                                <th><?php echo $this->locales->user->fullname;?></th>
+                                <th><?php echo $this->locales->user->birthday;?></th>
+                                <th><?php echo $this->locales->user->team;?></th>
+                                <th><?php echo $this->locales->user->phonenumber;?></th>
+                                <th><?php echo $this->locales->user->joindate;?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         <?php 
+                            if(!empty($this->paginator))
+                            {
+                                foreach ($this->paginator as $value)
+                                {
+                                     $sImageUrl =  Core_Common::avatarProcess($value['picture']);
+
+                                    ?>
+
+                            <tr>
+                                <td>
+                                        <img src="<?php echo $sImageUrl;?>"  width="36px">
+                                </td>
+                                <td>
+                                         <?php echo $value['account_id'];?>
+                                </td>
+                                <td>
+                                         <?php echo $value['name'];?>
+                                </td>
+                                <td>
+                                         <?php echo $value['birthday'];?>
+                                </td>
+                                <td>
+                                       <?php
+                                         if(isset($this->arrGroupList[$value['team_id']]['group_name']))
+                                         {
+                                             echo $this->arrGroupList[$value['team_id']]['group_name'];
+                                         }
+                                         ?>
+
+                                </td>
+                                <td>
+                                         <?php echo $value['phone'];?>
+                                </td>
+                                <td>
+                                         <?php echo $value['start_date'];?>
+                                </td>
+                            </tr>
+
+                                <?php
+
+                                }
+                            }
+                        ?>	
+                        </tbody>
+                    </table>
+                </div>
+                <div class="people-page clearfix">
+                    <?php echo $this->paginator;?>
+                    <input type="hidden" name="groupid" value="<?php echo $this->page;?>" />
+                    <input type="hidden" name="page" value="<?php echo $this->groupid;?>" />
+
+                </div>
+            </div>
+       
+    </form>
+ </div>

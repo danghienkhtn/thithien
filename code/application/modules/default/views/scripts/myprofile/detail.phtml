@@ -1,0 +1,321 @@
+<div class="wrapper gnt-profile">
+	<div class="inner">
+                <?php 
+                  echo $this->render('partials/slogan.phtml');
+                ?>
+ 
+		<h2 class="page-title"><i class="icon"></i><span class="txt">Profile</span></h2>
+		<div class="content-wrapper">
+                          <?php 
+                        $defaultAvatar = $this->static->frontend->images.'/avatar_default.jpg';
+
+                        if (!empty($this->arrAccountInfo))   
+                        {
+                            $sImageUrl = Core_Common::avatarProcess($this->arrAccountInfo['picture']);
+                        ?>
+			<div class="line-1 my-line">
+				<div class="col-1 my-col">
+                                
+                                    
+					<div class="profile">
+						<div class="avatar"><img src="<?php echo $sImageUrl;?>" alt=""></div>
+						<div class="personal-info">
+							<div class="name-wrap">
+								<div class="name"><i class="icon-name"></i><?php echo $this->arrAccountInfo['name']; ?></div>
+								<div class="pos"><i class="icon-pos"></i><?php echo isset($this->arrGeneralAttHash[$this->arrAccountInfo['position']])?$this->arrGeneralAttHash[$this->arrAccountInfo['position']]:'';?></div>
+							</div>
+							<div class="contact-wrap">
+								<ul class="contact">
+									<?php
+                                                                          if(!empty($this->arrGeneralAttHash[$this->arrAccountInfo['department_id']]))
+                                                                          {
+                                                                          ?>
+                                                                                 <li class="dept"><i class="icon-dept"></i><?php echo $this->arrGeneralAttHash[$this->arrAccountInfo['department_id']]; ?></li>
+                                                                           <?php
+                                                                          }
+                                                                          ?>
+                                                                                  
+                                                                                  
+									
+                                                                                  
+                                                                        <?php
+                                                                          if(!empty($this->arrAccountInfo['phone']))
+                                                                          {
+                                                                          ?>
+                                                                                  <li class="phone"><i class="icon-phone"></i><?php echo $this->arrAccountInfo['phone']; ?></li>
+                                                                           <?php
+                                                                          }
+                                                                          ?>
+									
+								</ul>
+								<ul class="contact">
+									<?php
+                                                                          if(!empty($this->arrAccountInfo['skype_account']))
+                                                                          {
+                                                                          ?>
+                                                                                  <li class="skype"><i class="icon-skype"></i><?php echo $this->arrAccountInfo['skype_account']; ?></li>
+                                                                           <?php
+                                                                          }
+                                                                          ?>
+                                                                                  
+									
+									
+                                                                        
+                                                                        
+									<?php
+                                                                          if(!empty($this->arrAccountInfo['mobion_account']))
+                                                                          {
+                                                                          ?>
+                                                                                  <li class="mobion"><i class="icon-mobion"></i><?php echo $this->arrAccountInfo['mobion_account']; ?></li>
+                                                                           <?php
+                                                                          }
+                                                                          ?>
+									
+								</ul>
+								<ul class="contact">
+                                                                     <li class="email"><i class="icon-email"></i><?php echo $this->arrAccountInfo['email']; ?></li>
+                                                                </ul>
+							</div>
+							<a class="update-profile" href="/user/detail/id/<?php echo $this->arrAccountInfo['account_id'];?> ">View</a>
+							<a class="update-profile" href="<?php echo BASE_URL;?>/myprofile/edit">Edit</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-2 my-col">
+					<div class="box-title">Line Manager of <?php echo $this->arrAccountInfo['name']; ?></div>
+                                        <?php
+                                        if(!empty($this->arrAccountManager))
+                                        {
+                                            $sImageUrl = Core_Common::avatarProcess($this->arrAccountManager['picture']);
+
+                                        ?>
+                                                
+					<div class="wrapper profile">
+						<div class="avatar"><img src="<?php echo $sImageUrl;?>" alt=""></div>
+						<div class="personal-info">
+							<div class="name-wrap">
+								<div class="name"><i class="icon-name"></i><?php echo $this->arrAccountManager['name']; ?></div>
+								<div class="pos"><i class="icon-pos"></i><?php echo isset($this->arrGeneralAttHash[$this->arrAccountManager['position']])?$this->arrGeneralAttHash[$this->arrAccountManager['position']]:'';?></div>
+							</div>
+							<div class="contact-wrap">
+								<ul class="contact">
+                                                                    <?php
+                                                                          if(!empty($this->arrGeneralAttHash[$this->arrAccountManager['department_id']]))
+                                                                          {
+                                                                          ?>
+                                                                                 <li class="dept"><i class="icon-dept"></i><?php echo $this->arrGeneralAttHash[$this->arrAccountManager['department_id']]; ?></li>
+                                                                           <?php
+                                                                          }
+                                                                          ?>
+                                                                                  
+                                              
+                                                                        <?php
+                                                                          if(!empty($this->arrAccountManager['phone']))
+                                                                          {
+                                                                          ?>
+                                                                                  <li class="phone"><i class="icon-phone"></i><?php echo $this->arrAccountManager['phone']; ?></li>
+                                                                           <?php
+                                                                          }
+                                                                          ?>
+									
+									
+								</ul>
+								<ul class="contact">
+                                                                        
+                                                                         <?php
+                                                                          if(!empty($this->arrAccountManager['skype_account']))
+                                                                          {
+                                                                          ?>
+                                                                                  <li class="skype"><i class="icon-skype"></i><?php echo $this->arrAccountManager['skype_account']; ?></li>
+                                                                           <?php
+                                                                          }
+                                                                          ?>
+                                                                                  
+									
+									
+                                                                        
+                                                                        
+									<?php
+                                                                          if(!empty($this->arrAccountManager['mobion_account']))
+                                                                          {
+                                                                          ?>
+                                                                                  <li class="mobion"><i class="icon-mobion"></i><?php echo $this->arrAccountManager['mobion_account']; ?></li>
+                                                                           <?php
+                                                                          }
+                                                                          ?>
+                                                   
+									
+								</ul>
+								<ul class="contact">
+                                                                    
+                                                                    <li class="email"><i class="icon-email"></i><?php echo $this->arrAccountManager['email']; ?></li>
+                                                                </ul>
+							</div>
+						</div>
+					</div>
+                                        <?php
+                                        }
+                                        ?>
+				</div>
+			</div>
+                        <?php
+                        }
+                        ?>
+			<!--<div class="line-4 my-line">
+				<div class="title"><i class="icon"></i><span>ABSENCE FORMS OF EMPLOYEES</span></div>
+				<ul>
+					<li>
+						<a href="#" class="avatar" style="background-image:url(assets/images/avatar.png)"></a>
+						<div class="personal-info">
+							<a href="#" class="name">Nguyen Van A</a>
+							<p>Leave from <strong>12 Sep 2013</strong> to <strong>14 Sep 2013</strong></p>
+							<p><strong>4 Absent days left</strong></p>
+						</div>
+						<div class="action">
+							<a class="approve btn">Approve</a>
+							<a class="reject btn">Reject</a>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="avatar" style="background-image:url(assets/images/avatar.png)"></a>
+						<div class="personal-info">
+							<a href="#" class="name">Nguyen Van A</a>
+							<p>Leave from <strong>12 Sep 2013</strong> to <strong>14 Sep 2013</strong></p>
+							<p><strong>4 Absent days left</strong></p>
+						</div>
+						<div class="action">
+							<a class="approve btn">Approve</a>
+							<a class="reject btn">Reject</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+   -->
+                    <!--
+			<div class="line-2 my-line">
+				<div class="col-1 my-col">
+					<div class="wrapper">
+						<div class="box-title"><i class="icon-myproj"></i>My Projects</div>
+						<div class="proj-scrollbar" id="style-6">
+							<div class="force-overflow">
+								<ul>
+									<li>
+										<i class="icon-project"></i>
+										<div class="proj-name">
+											<a class="name" href="#">MVDIO Music App</a>
+											<div class="detail"><a href="#">Detail</a><i class="icon-detail"></i></div>
+										</div>
+									</li>
+									<li>
+										<i class="icon-project"></i>
+										<div class="proj-name">
+											<a class="name" href="#">DESPERADO</a>
+											<div class="detail"><a href="#">Detail</a><i class="icon-detail"></i></div>
+										</div>
+									</li>
+									<li>
+										<i class="icon-project"></i>
+										<div class="proj-name">
+											<a class="name" href="#">MUSIC BATTLE</a>
+											<div class="detail"><a href="#">Detail</a><i class="icon-detail"></i></div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-2 my-col">
+					<div class="box-title">Project Chart</div>
+					<div class="profile">
+						<div class="wrapper">
+							<div class="avatar"><img src="assets/images/manager-avatar.jpg" alt=""></div>
+							<div class="personal-info">
+								<div class="name-wrap">
+									<div class="name">Nguyen Van B</div>
+									<div class="pos">Design Manager</div>
+								</div>
+								
+							</div>
+						</div>
+						<div class="wrapper">
+							<span>Other Employees</span> 
+							<div class="other-employees-slider-wrapper">
+								<section class="other-employees-slider">
+									<article class="first-child" style="background-image:url(assets/images/people/person-1.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-2.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-3.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-4.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-5.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-6.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-7.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-8.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-9.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-10.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-4.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-5.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-6.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-7.jpg);"><a href="#">&nbsp;</a></article>
+									<article style="background-image:url(assets/images/people/person-8.jpg);"><a href="#">&nbsp;</a></article>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<div class="line-3">
+				<div class="activity-wrap">
+					<div class="box-title">
+						<div class="date">
+							<p>TODAY</p>
+							<p><?php echo date("j F Y");?></p>
+						</div>
+						<div class="title">ACTIVITIES OF <?php echo $this->arrAccountInfo['name']; ?></div>
+					</div>
+					<div class="content">
+					        <div class="col-1 my-col">
+							<div class="wrapper">
+                                                             <span id="appointmentid">
+                                                             
+                                                              
+							
+                                                              </span>
+							</div>
+						</div>
+						<div class="col-2 my-col">
+							<div class="wrapper">
+								<p>Tasks</p>
+								<div class="my-table">
+									<!--<ul>
+										<li>
+											<span>Finish website</span>
+											<span>15 Nov 2013</span>
+										</li>
+										<li>
+											<span>Order banner form Desperado</span>
+											<span>10 Oct 2013</span>
+										</li>
+										<li>
+											<span>Design 2more pages of intranet</span>
+											<span>25 Sep 2013</span>
+										</li>
+									</ul>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div><!-- end wrapper -->
+
+
+<script language="javascript">   
+   $.get("<?php echo BASE_URL;?>/index/calendardetail",{from:1, day:<?php echo date('d', time());?>,month:<?php echo date('m', time());?>, year:<?php echo date('Y', time());?>},function(result){
+
+        $('#appointmentid').html(result);
+         
+   });
+
+</script>

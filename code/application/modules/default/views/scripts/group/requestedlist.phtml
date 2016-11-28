@@ -1,0 +1,107 @@
+<link href="../static/css/v2/group.css" rel="stylesheet" type='text/css'>
+
+<!--data-table css-->
+<link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->js . '/datatable/css/jquery.dataTables.css' ?>" media="screen">
+<link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->js . '/datatable/css/dataTables.tableTools.css' ?>" media="screen">
+<link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->js . '/datatable/css/datatable.responsive.css' ?>" media="screen">
+<!--data-table css-->
+
+
+<script src="../static/js/v2/groupController.js"></script>
+
+<script src="<?= $this->static->frontend->js ;?>/v2/ng-tags-input.min.js"></script>
+<script src="<?= $this->static->frontend->js ;?>/v2/contextMenu.js"></script>
+
+<!--<script type="text/javascript" src="--><?php //echo $this->static->frontend->js . '/feed.js'; ?><!--"></script>-->
+
+
+<!--data-table js-->
+<script type="text/javascript" src="<?= $this->static->frontend->js . '/datatable/js/jquery.dataTables.min.js' ?>"></script>
+<script type="text/javascript" src="<?= $this->static->frontend->js . '/datatable/js/dataTables.tableTools.js' ?>"></script>
+<script type="text/javascript" src="<?= $this->static->frontend->js . '/datatable/js/datatable.responsive.min.js' ?>"></script>
+<script type="text/javascript" src="<?= $this->static->frontend->js . '/v2/group/work-group.js' ?>"></script>
+<!--data-table js-->
+
+<div class="groupWrapper">
+    <div ng-cloak class="contain-request-list">
+        <div class="menu-leave">
+            <?php echo $this->render('partial_tab_group.phtml'); ?><!-- menu-leave -->
+        </div>
+        <div class="container-all-groups clearfix" data-item="lst-group">  
+            <div class="contentInvite">
+                <div class="subTab">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#requestSent">Request sent</a></li>
+                        <li><a data-toggle="tab" href="#requestReceived">Request received</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="requestSent" class="tab-pane fade in active" ng-controller="requestSentCtrl">
+                        <div class="boxCheck">
+                            <input id="request-sent-select-all" type="checkbox">
+                            <i class="fa fa-close" aria-hidden="true" data-action="request-sent-del-all"></i>
+                        </div>
+                        <table class="table table-hover table-condensed" id="request-sent-table" class="display">
+                            <thead>
+                            <tr role="row">
+                                <th></th>
+                                <th>Request ID</th>
+                                <th>Group name</th>
+                                <th>Name</th>
+                                <th>Employee ID</th>
+                                <th>Team</th>
+                                <th class="btnAction">Action</th>
+                                <th>GroupId</th>
+                                <th>Type</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div id="requestReceived" class="tab-pane fade" ng-controller="requestReceiveCtrl">
+                        <div class="boxCheck">   
+                            <input id="request-received-select-all" type="checkbox">
+                            <i class="fa fa-close" aria-hidden="true" data-action="request-received-del-all"></i>
+                        </div>
+                        <table class="table table-hover table-condensed" id="request-received-table" class="display">
+                            <thead>
+                            <tr role="row">
+                                <th></th>
+                                <th>Request ID</th>
+                                <th>Group name</th>
+                                <th>Name</th>
+                                <th>Employee ID</th>
+                                <th>Team</th>
+                                <th  class="btnAction">Action</th>
+                                <th>GroupId</th>
+                                <th>Type</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                </div>
+            </div>
+        </div>
+    </div>             
+</div>
+    <script type="text/javascript">
+        $(function(){
+
+            installDataTable($('#request-sent-table'),$('#request-sent-select-all'),'#request-sent-table [data-action="delete"]','[data-action="request-sent-del-all"]','#request-sent-table [data-item="cb-delete[]"]',2);
+
+            var _installTable = true;
+            $('a[href="#requestReceived"]').click(function(){
+                if(!_installTable)
+                    return;
+
+                _installTable = false;
+                installDataTable($('#request-received-table'),$('#request-received-select-all'),'#request-received-table [data-action="delete"]','[data-action="request-received-del-all"]','#request-received-table [data-item="cb-delete[]"]',0);
+            });
+
+
+        })
+    </script>

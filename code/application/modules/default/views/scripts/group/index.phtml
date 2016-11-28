@@ -1,0 +1,57 @@
+
+<link href="../static/css/v2/group.css" rel="stylesheet" type='text/css'>
+<script src="../static/js/v2/groupController.js"></script>
+
+<script src="<?= $this->static->frontend->js ;?>/v2/ng-tags-input.min.js"></script>
+<script src="<?= $this->static->frontend->js ;?>/v2/contextMenu.js"></script>
+
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/feed.js'; ?>"></script>
+
+<div class="groupWrapper" ng-controller="suggestionController">
+    <div ng-cloak class="contain-request-list">
+        <div class="menu-leave">
+            <?php echo $this->render('partial_tab_group.phtml'); ?><!-- menu-leave -->
+        </div>
+        <div class="container-all-groups clearfix" data-item="lst-group">            
+            <div class="row panelSuggestion">            
+                <div class="col-md-3 boxMySugget" ng-repeat="mySugget in arrSuggestionGroup.data" data-item="group">
+                    <div class="media  _itemgroup clearfix">
+                        <div class="media-body">
+                            <div class="pull-left">
+                                <a href="javascript:;">
+                                    <img  width="80px" height="80px" class="imgs-sub-circle" ng-src="../upload/group/200x200/{{mySugget.image_url}}">
+                                </a>
+                            </div>
+                            <div class="wrap-content-group">
+                                <div class="btn-group">
+                                    <div class="name-group" title="{{mySugget.group_name}}">
+                                        <a class="groupNameText" href="javascript:;">{{mySugget.group_name}}</a>
+                                    </div>   
+                                    <div class="iconJoin">
+                                        <a class="subIcon" href="javascript:void(0);">
+                                            <span class="icon"><i class="fa fa-plus"></i></span>
+                                            <span class="tooltipJoin" href="javascript:void(0)" ng-click="joinGroup(mySugget)">
+                                                Join Group
+                                            </span>
+                                        </a>
+                                        
+                                    </div>                            
+                                </div>
+                                <div class="_tsrs">
+                                    <span class="text-muted">{{mySugget.total}} members</span>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>       
+</div>     
+<!--<script type="text/javascript">
+    $(document).ready(function(){
+        var heightLoad = $(window).height();
+        $('.panelSuggestion').css({height: heightLoad + "px"})
+    })
+</script>
+-->

@@ -1,0 +1,148 @@
+<?php
+$news   = $this->news;
+?>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/ckeditor/ckeditor.js' ?>"
+  xmlns="http://www.w3.org/1999/html"></script>
+  <div class="title-page mar-bot15">
+    <h4>
+      <i class="fa fa-newspaper-o"></i>
+      <span class="capitalize">News</span>
+    </h4>
+  </div><!-- title-page -->
+  <div class="container-content">
+    <div class="title-content bg-blue clearfix">
+      <h5 class="white bold pull-left capitalize">Add news</h5>
+    </div><!-- title-content -->
+    <div class="widget-content">
+      <form method="post">
+        <div id="general" class="general addnew">
+          <div class="row">
+
+            <div class="col-md-8">
+              <ul>
+                <li class="clearfix">
+                  <h6 class="bold pull-left">Title</h6>
+                  <input type="text" placeholder="Add new title" name="title" value="<?php echo $news['title']; ?>" >
+                </li>
+                <li>
+                  <div class="text-editor-area">   
+                  <textarea name="content" id="content" ><?php echo $news['content']; ?> </textarea>
+                    <script>
+                      CKEDITOR.replace( 'content', {
+                        filebrowserBrowseUrl: "<?php echo $this->static->frontend->js .'/ckfinder/ckfinder.html' ?>",
+                        filebrowserImageBrowseUrl: "<?php echo $this->static->frontend->js . '/ckfinder/ckfinder.html?Type=Images' ?>",
+                        filebrowserFlashBrowseUrl: "<?php echo $this->static->frontend->js . '/ckfinder/ckfinder.html?Type=Flash' ?>",
+                        filebrowserUploadUrl: "<?php echo $this->static->frontend->js . '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files' ?>",
+                        filebrowserImageUploadUrl:  "<?php echo $this->static->frontend->js . '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images' ?>",
+                        filebrowserFlashUploadUrl: "<?php echo $this->static->frontend->js .'/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash' ?>",
+                      });
+                    </script>
+                  </div>
+                  <div class="footer-btn-tab clearfix">
+                    <a href="javascript:void(0);" class="back grey bor-raduis4" data-action="back-page">Back</a>
+                    <a href="javascript:void(0);" class="save white bor-raduis4 bg-blue" onclick="submitForm(); return false;">Save change</a>
+                  </div><!--footer-btn-tab-->
+                </div>
+              </li>
+
+            </ul>
+            <script>
+//   CKEDITOR.replace( 'content', {
+//     filebrowserBrowseUrl: "<?php echo $this->static->backend->js .'/ckfinder/ckfinder.html' ?>",
+//     filebrowserImageBrowseUrl: "<?php echo $this->static->backend->js . '/ckfinder/ckfinder.html?Type=Images' ?>",
+//     filebrowserFlashBrowseUrl: "<?php echo $this->static->backend->js . '/ckfinder/ckfinder.html?Type=Flash' ?>",
+//     filebrowserUploadUrl: "<?php echo $this->static->backend->js . '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files' ?>",
+//     filebrowserImageUploadUrl:  "<?php echo $this->static->backend->js . '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images' ?>",
+//     filebrowserFlashUploadUrl: "<?php echo $this->static->backend->js .'/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash' ?>",
+//   });
+// </script>
+
+
+<div class="col-md-4">
+  <ul>
+<!--  <li class="text-editor-area">   
+<textarea name="content" id="content"  class="w500"><?php echo $news['content']; ?> </textarea>
+<script>
+CKEDITOR.replace( 'content', {
+filebrowserBrowseUrl: "<?php echo $this->static->backend->js .'/ckfinder/ckfinder.html' ?>",
+filebrowserImageBrowseUrl: "<?php echo $this->static->backend->js . '/ckfinder/ckfinder.html?Type=Images' ?>",
+filebrowserFlashBrowseUrl: "<?php echo $this->static->backend->js . '/ckfinder/ckfinder.html?Type=Flash' ?>",
+filebrowserUploadUrl: "<?php echo $this->static->backend->js . '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files' ?>",
+filebrowserImageUploadUrl:  "<?php echo $this->static->backend->js . '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images' ?>",
+filebrowserFlashUploadUrl: "<?php echo $this->static->backend->js .'/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash' ?>",
+});
+</script>
+</li> -->
+<li class="clearfix">
+  <h6 class="bold pull-left">Source</h6>
+  <input type="text" name="source" value="<?php echo $news['source']; ?>" class="w500">
+</li>
+<li class="clearfix">
+  <h6 class="bold pull-left">Order</h6>
+  <input type="text" name="sort_order" value="<?php echo $news['sort_order']; ?>" class="w500">
+</li>
+<li class="clearfix">
+  <!-- <h6 class="bold pull-left">Image</h6> -->
+  <div class="container-img-avartar pull-left bor-raduis4">
+    <img id="avatar"   src="<?php echo $news['image_name'];?>" width="100%" height="100%" <?php if (empty($news['image_name'])){echo'style="display:none"';}?>/>
+  </div><!--container-img-avartar-->
+  <span class="file pull-left bor-raduis4"><!-- Browse -->
+    <input type="file"  id="chosenImage" class="file-get img-source" onchange="installCheckImageUpload(this)">
+  </span>
+  <input type="hidden" name="image_url" value="<?php echo $news['image_url'];?>"/>
+  <input type="hidden" name="image_name" value="<?php echo $news['image_name'];?>"/>
+</li>
+
+<li class="clearfix">
+  <div class="group-option">
+    <span>Hot</span>
+    <div class="checkbox">
+      <label> Yes <input type="radio" name="ishot" class="" value="1" <?php if($news['ishot'] == 1) { echo "checked";}?>></label>
+      <label> No <input type="radio" name="ishot" class="" value="0" <?php if($news['ishot'] == 0) { echo "checked";}?>></label>
+    </div>
+  </div>
+  <div class="group-option">
+    <span>Active</span>
+    <div class="checkbox">
+      <label> Yes <input type="radio" name="active" class="" value="1" <?php if($news['active'] == 1) { echo "checked";}?>> </label>
+      <label> No <input type="radio" name="active" class="" value="0" <?php if($news['active'] == 0) { echo "checked";}?>></label>
+    </div>
+  </div>
+</li>
+</ul>
+</div>
+</div>
+</div><!-- add group -->
+</form>
+</div><!-- widget-content -->
+</div><!-- container-content -->
+<script type="text/javascript">
+  $(function(){
+    $('.error-report').remove();
+
+    <?php
+    if(!empty($this->arrError)) {
+      foreach ($this->arrError as $error) {
+        ?>
+        var html = '';
+        html = '<span class="margin-10 red error-report"><?php echo $error['message']; ?></span>';
+        $('[name="<?php echo $error['field']; ?>"]').after(html);
+        <?php
+      }
+    }
+    ?>
+  });
+  function submitForm()
+  {
+    $('form').submit();
+  }
+  function installCheckImageUpload(sender)
+  {
+    var inputHiddenElement  = $('[name="image_url"]');
+    var inputImageName      = $('[name="image_name"]');
+    var inputImage  = $('#avatar');
+    //        sender,urlUpload,jsonData,inputHiddenElement,inputImage
+    var jsonData    = [{'input_name':'f','input_val':'news'}];
+    checkImageUpload(sender,baseurl+'/upload/index',jsonData,inputHiddenElement,inputImage,inputImageName);
+  }
+</script>

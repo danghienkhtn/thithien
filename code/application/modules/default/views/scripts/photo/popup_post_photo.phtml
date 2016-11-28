@@ -1,0 +1,177 @@
+<?php
+$flagShow = true;
+if(isset($this->albumId) && empty($this->albumId))
+{
+    $Group = Group::getInstance()->getGroupByID($this->groupId);
+    $flagShow = Core_Common::checkShowGroupCompany($Group);
+}
+
+?>
+<div class="popup-add-photo" style="display: none;">
+    	<div class="overlay-popup-add-photo"></div>
+        <div class="center-add-photo">
+        	<div class="box-popup-add-photo">
+            	<div class="header-popup-add-photo">
+                	<h4>Add photo</h4>
+                    <i class="fa fa-times" onclick="hidePopupPhotoPost();"></i>
+                </div>
+
+                <?php if($flagShow){?>
+                <div class="text-add-photo-popup">
+                	<textarea id="message" name="message" placeholder="Say something about photo"></textarea>
+                </div>
+                <div class="img-add-photo">
+                	<div class="scroll-add-photo">
+                	    <div id="img_photo_post" style="display: inline-block;">
+
+                        </div>
+                        <div class="frame-add-photo dotted">
+                        	<i class="fa fa-plus-circle"></i>
+                            <span>Attach more</span>
+                            <input id="chosenImagePhotoPost" type="file" onchange="checkImagePhotoPost(this);">
+                        </div>
+                    </div>
+                </div> <!-- img-add-photo -->
+                <div class="share pad10 fr">
+                <?php if(!isset($this->albumId) || empty($this->albumId)){?>
+                    <select name="team_id_to" id="team_id_to">
+					<?php
+					     foreach ($this->arrGroupMember as $group){
+                             ?>
+
+							<option value="<?php echo $group['group_id'];?>"><?php echo $group['group_name'];?></option>
+
+				   <?php }?>
+					</select>
+				<?php }else {?>
+							<input type="hidden" id="team_id_to" name="team_id_to" value="<?php echo $this->groupId;?>">
+				<?php }?>
+                    <input type="button" value="Post" id="post_photo" name="post_photo" class="btn btn-primary">
+            	</div>
+                <?php }else{ ?>
+                    <h3>Access is dined</h3>
+                <?php }?>
+            </div><!-- box-popup-add-photo -->
+        </div><!-- center-add-photo -->
+    <input type="hidden" value="<?php echo $this->albumId;?>" id="album_id" name="album_id">
+    <input type="hidden" value="<?php echo $this->feedId;?>" id="feed_id" name="feed_id">
+    </div>
+
+
+    <script type="text/javascript">
+
+  var locales_file_extens_invalid = "<?php echo $this->locales->validate->invalid_file_extens;?>";
+  var locales_upload_error = "<?php echo $this->locales->validate->upload_error;?>";
+  var popupPhotoPostEle = $('.popup-add-photo');
+  var imgPhotoPosts = [];
+
+	$(document).ready(function() {
+
+		//hide popup
+		$(".popup-add-photo").hide();
+		//post photo
+		$('body').on("click", '#post_photo', function(e){
+				if(imgPhotoPosts.length > 0){
+
+					var photos = {};
+
+					photos['message'] = popupPhotoPostEle.find("#message").val();
+
+					photos['team_id_to'] = popupPhotoPostEle.find("#team_id_to").val();
+					photos['teamName'] =  popupPhotoPostEle.find('#team_id_to option:selected').text();
+
+					/*
+					if($("#album_id").val() == ''){
+						photos['team_id_to'] = $("#team_id_to").val();
+						photos['teamName'] =  $('#team_id_to option:selected').text();
+					}else{
+						photos['team_id_to'] = 0;
+						photos['teamName'] =  '';
+					}*/
+
+					photos['images'] = imgPhotoPosts;
+					photos['album_id'] = popupPhotoPostEle.find("#album_id").val();
+					photos['feed_id'] = popupPhotoPostEle.find("#feed_id").val();
+
+					$.post(baseurl + "/photo/createphoto",{
+							  data:JSON.stringify(photos)
+						  }, function(data){
+
+							if(data.error == 0){
+								window.location.href = baseurl + '/photo';
+							}else{
+								alert('create album error');
+							}
+
+				        },'json');
+				}else{
+					alert('please select a Photo');
+				}
+		});
+
+		$('body').on("click", ".overlay-popup-add-photo", function(){
+			hidePopupPhotoPost();
+		});
+
+	});
+
+	function showPopupPhotoPost(){
+        $('.popup-add-photo').find('#img_photo_post').html('');
+		$(".popup-add-photo").fadeIn();
+	}
+
+	function hidePopupPhotoPost(){
+
+		//clear data
+		while(imgPhotoPosts.length > 0) {
+			imgPhotoPosts.pop();
+		}
+
+		$(".popup-add-photo").fadeOut(300);
+	}
+
+	function checkImagePhotoPost(sender) {
+
+	    var validExts = new Array(".jpg", ".png", ".gif", ".bmp", ".jpeg",".GIF",".JPG",".PNG");
+	    var fileExt = sender.value;
+	    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+	    if (validExts.indexOf(fileExt) < 0) {
+	    	alert(locales_file_extens_invalid.replace("[0]",validExts.toString()));
+	      return false;
+	    }
+
+	    $.ajax({
+	        url: baseurl + "/upload/upload2",
+	        type: "POST",
+	        contentType: false,
+	        processData: false,
+	        dataType: "json",
+	        data: function() {
+	            var data = new FormData();
+	            data.append("chosenImage", $("#chosenImagePhotoPost").get(0).files[0]);
+	            return data;
+	            /* Or simply return new FormData(jQuery("form")[0]);*/
+	        }(),
+	        error: function(_, textStatus, errorThrown) {
+	        	alert(locales_upload_error);
+	            //console.log(textStatus, errorThrown);
+	        },
+	        success: function(response, textStatus) {
+
+	            if(response.error == 0){
+	            	var imgTmp = '<div class="frame-add-photo">'+
+			                	'<img width="90" height="90" src="' + response.url + '">'+
+			                  '</div>';
+		        	$("#img_photo_post").append(imgTmp);
+		            //push into array
+		        	imgPhotoPosts.push({original_name: response.original_name, name:response.filename});
+
+	            }else{
+	                alert(response.message);
+	            }
+	        }
+	    });
+	    return true;
+}
+
+  </script>

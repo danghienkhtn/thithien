@@ -1,0 +1,351 @@
+<?php
+$Group = $this->arrGroupList;
+?>
+
+<style>
+    div[placeholder]:empty:before {
+        content: attr(placeholder);
+        /*color: #555;*/
+    }
+
+    div[placeholder]:empty:focus:before {
+        content: "";
+
+    }
+</style>
+<link rel="stylesheet" href="<?php echo $this->static->frontend->css.'/waves.min.css'?>">
+<input type="hidden" id="group_id" value="<?= $Group['group_id']; ?>"/>
+
+<script src="<?= $this->static->frontend->plugins . '/rich-textarea-ivirabyan/jquery-1.9.1.js'; ?>"></script>
+<script type="text/javascript">
+    var jQuery = jQuery.noConflict(true);
+</script>
+<script src="<?= $this->static->frontend->plugins . '/rich-textarea-ivirabyan/jquery-ui.js'; ?>"></script>
+<script src="<?= $this->static->frontend->plugins . '/rich-textarea-ivirabyan/jquery.mentions.js'; ?>" type='text/javascript'></script>
+
+<script src="<?= $this->static->frontend->js . '/feed.js'; ?>"></script>
+<script type="text/javascript" src="<?= $this->static->frontend->js . '/feed/ng-feed.js'; ?>"></script>
+<script src="<?= $this->static->frontend->plugins . '/rich-textarea-ivirabyan/mentions-model.js'; ?>" type='text/javascript'></script>
+<script src="<?= $this->static->frontend->js . '/feed/feed-contenteditable.js'; ?>" type='text/javascript'></script>
+<script src="<?= $this->static->frontend->js . '/feed/feed-contenteditable-comment.js'; ?>" type='text/javascript'></script>
+
+ <div class="user-group">
+ <!-- mobile nav-->
+ <div class="mn-team-mobile hidden-lg hidden-md hidden-sm">
+     <div class="t-name">
+         <img src="<?= $this->static->frontend->images.'/ios-icon/group-detail.svg';?>" width="32" height="32" alt="">
+         <?= $this->arrGroupList['group_name']; ?>
+     </div>
+     <div class="opt-team">
+         <ul>
+             <li class="waves-btn  active">
+                <a class="active" href="<?= BASE_URL;?>/user/feed/groupid/<?= $this->groupid;?>">
+                    <img src="<?= $this->static->frontend->images.'/ios-icon/chart.svg';?>" alt=""
+                    width="32" height="32">
+                    <span><?= $this->locales->group->activitystream;?></span>
+                </a>
+             </li>
+             <li class="waves-btn">
+                <a href="<?= BASE_URL;?>/group/document/g/<?= $this->groupid;?>/p/0">
+                    <img src="<?= $this->static->frontend->images.'/ios-icon/document.svg';?>" alt="" width="32" height="32">
+                    <span><?= $this->locales->group->document;?></span>
+                </a>
+            </li>
+            <li class="waves-btn">
+                <a href="<?= BASE_URL ?>/group/calendar/groupid/<?= $this->groupid ?>/group-type/<?= $this->arrGroupList['group_type'] ?>">
+                    <img src="<?= $this->static->frontend->images.'/ios-icon/calendar-svg.svg';?>" alt="" width="32" height="32">
+                    <span><?= $this->locales->group->calendar;?></span>
+                </a>
+            </li>
+            <li class="waves-btn">
+                <a href="<?= BASE_URL;?>/user/index/groupid/<?= $this->groupid;?>">
+                    <img src="<?= $this->static->frontend->images.'/ios-icon/group-detail.svg';?>" alt="" width="32" height="32">
+                    <span><?= $this->locales->group->member;?></span>
+                </a> 
+            </li>
+            <li class="waves-btn">
+                <a href="<?= BASE_URL;?>/group/update/id/<?= $this->groupid;?>">
+                    <img src="<?= $this->static->frontend->images.'/ios-icon/settings.svg';?>" alt="" width="32" height="32">
+                    <span><?= $this->locales->group->setting;?></span>
+                </a>
+            </li>
+         </ul>
+     </div>
+ </div>
+ <!--end mobile nav-->
+                            <div class="header-menu-team clearfix hidden-xs">
+	                        	<div class="title-team ">
+	                                <i class="fa fa-group"></i>
+	                                <span><?= $this->arrGroupList['group_name'];?></span>
+	                            </div>
+	                            <ul class="function-menu-team hidden-xs">
+	                            	<li>
+	                                	<a class="active" href="<?= BASE_URL;?>/user/feed/groupid/<?= $this->groupid;?>">
+	                                    	<i class="fa fa-area-chart"></i>
+	                                        <span><?= $this->locales->group->activitystream;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="<?= BASE_URL;?>/group/document/g/<?= $this->groupid;?>/p/0">
+	                                    	<i class="fa fa-folder-open"></i>
+	                                        <span><?= $this->locales->group->document;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="<?= BASE_URL ?>/group/calendar/groupid/<?= $this->groupid ?>/group-type/<?= $this->arrGroupList['group_type'] ?>">
+	                                    	<i class="fa fa-calendar"></i>
+	                                        <span><?= $this->locales->group->calendar;?></span>
+	                                    </a>
+	                                </li>
+                                    <?php
+//                                    if(
+//                                        Core_Common::checkAdminOfObject($Group, $this->arrLogin['accountID']) ||
+//                                        Core_Common::checkOwnerOfObject($Group, $this->arrLogin['accountID'])
+//                                    ){
+                                    ?>
+	                                <li>
+	                                	<a href="<?= BASE_URL;?>/user/index/groupid/<?= $this->groupid;?>">
+	                                    	<i class="fa fa-user"></i>
+	                                        <span><?= $this->locales->group->member;?></span>
+	                                    </a> 
+	                                </li>
+	                                <li>
+	                                	<a href="<?= BASE_URL;?>/group/update/id/<?= $this->groupid;?>">
+	                                    	<i class="fa fa-cog"></i>
+	                                        <span><?= $this->locales->group->setting;?></span>
+	                                    </a>
+	                                </li>
+<!--                                    --><?php //} ?>
+	                            </ul>
+                        	</div>
+                		
+
+                    <div class="grid_8">
+                       		<!-- feed -->
+                       		<div class="feed-tab" id="contain-feed">
+                       			<div class="my-content">
+		                         
+		                        	<div class="new-post">
+                              <!-- <ul class="action-newpost">
+                                <li class="file-uploadBtn">Upload file from folder</li>
+                                <li> | </li>
+                                <li class="showDropzoneUpload">Upload image</li>
+                              </ul> -->
+		                            	<div class="post-status" data-item="post-area">
+		                            		<img id="loading_indicator" src="<?= $this->static->frontend->images . '/ajax-loader.gif';?>">
+		                        			<img width="30" class="img-new-post" src="<?= $this->arrLogin['avatar']; ?>" alt="">
+                                            <div data-item="post-content" contenteditable="true" id="feedPostArea" class="postarea drop-area" placeholder="<?= $this->locales->feedLang->saySomething ?>"></div>
+
+											 <!--div file Document append-->
+											  <div class="documentFileWrapper"></div>
+											  <!--end div file Document -->
+
+		                                </div>
+		                                
+		                                <div id="link_results" style="display:none;"></div>
+		                    			<div class="contain-img-loading clearfix" id="horiz_container"></div>
+		                    			
+		                                <div class="post-service">
+		                                	<div class="icon-file fl">
+		                                    	<ul>
+		                                        	<li>
+                  														<a class="file-uploadBtn" href="javascript:void(0);">
+                  														  <i class="fa fa-file"></i>
+                  														</a>
+                  													</li>
+		                                            <!-- <li>
+		                                            	<a href="javascript:void(0)">
+		                                                	<i class="fa fa-video-camera">
+		                                                    	<input type="file" id="chosenVideo" class="img-source" onchange="checkvideo(this);">
+		                                                    </i>
+		                                                </a>
+		                                            </li> -->
+		                                            <li>
+		                                            	<a href="javascript:void(0)" class="showDropzoneUpload">
+		                                                	<i class="fa fa-camera"></i>
+		                                                    	<!-- <input type="file" id="chosenImage" class="img-source" onchange="checkimage(this);"> -->
+		                                                    
+		                                                </a>
+		                                            </li>
+		                                        </ul>
+		                                    </div>
+		                                    <div class="share fr">
+                                                <!--<select name="team_id_to" id="team_id_to">
+                                                    <option selected value="<?= $this->arrGroupList['group_id'];?>"><?= $this->arrGroupList['group_name'];?></option>
+                                                    <?php
+                                                    $allGianty = Group::getInstance()->selectByName(Group::$AllGianty);
+                                                    if(!empty($allGianty))
+                                                    {
+                                                        ?>
+                                                        <option value="<?= $allGianty['group_id'];?>"><?= $allGianty['group_name'];?></option>
+                                                    <?php
+                                                    }
+                                                    foreach ($this->arrGroupMember as $group) {
+                                                        $tmp = strtolower($group['group_name']);
+                                                        $tmp = str_replace(' ', '-', $tmp);
+                                                        if ($tmp != 'all-gianty' && $group['group_id'] !=  $this->arrGroupList['group_id']) {
+                                                            ?>
+                                                            <option value="<?= $group['group_id'];?>"><?= $group['group_name'];?></option>
+                                                        <?php }
+                                                    }
+                                                    ?>
+                                                </select>-->
+                        
+
+        <div id="team_id_to_wrapper">
+                    <div class="teamNameSelected" id="team_id_to" data-value="<?= $Group['group_id'];?>"><?= $Group['group_name'];?></div>
+                    <div class="popup-teamName">
+                        <?php
+                        $allGianty = Group::getInstance()->selectByName(Group::$AllGianty);
+                        if(!empty($allGianty))
+                        {
+                            ?>
+                            <div data-value="<?= $allGianty['group_id'];?>" ><?= $allGianty['group_name'];?></div>
+                        <?php
+                        }
+                        foreach ($this->arrGroupMember as $group) {
+                            $tmp = strtolower($group['group_name']);
+                            $tmp = str_replace(' ', '-', $tmp);
+                            if ($tmp != 'all-gianty') {
+                                ?>
+
+                                <div data-value="<?= $group['group_id'];?>"><?= $group['group_name'];?></div>
+
+                            <?php }
+                        }
+                        ?>
+                    </div>
+                    </div>
+												<!-- hidden input -->
+												<input type="hidden" name="message" value="">
+												<input type="hidden" name="images" id="images" value="">
+												<input type="hidden" name="typeFeed" id="typeFeed" value="1">
+												<input type="hidden" name="fileName" id="fileName" value="">
+												
+												<input type="hidden" name="link_url" id="link_url" value="">
+												<input type="hidden" name="title" id="title" value="">
+												<input type="hidden" name="description" id="description" value="">
+												<input type="hidden" name="teamName" id="teamName" value="">
+
+												<!-- end hidden input -->
+												<input id="shareBtn" type="button" value="<?= $this->locales->share;?>" name="share" class="share-btn">
+		                                    </div>
+		                                    <div class="clear"></div>
+		                                </div>
+                                    
+                                      <form action="<?= BASE_URL;?>/upload/upload2"
+                                    class="dropzone"
+                                    id="myDropzone">
+                                        <div class="fallback">
+                                         <input name="file" type="file" multiple />
+                                        </div>
+                                      </form>
+                                    
+		                            </div>
+		                           
+		                            <!-- end new post -->
+		                        </div>
+		                        <!--end my content-->
+		                        
+		                    <!-- start new stt-->
+                                <div id="actDisplay" class="container-new-stt" data-item="lst-feed"  ng-app="feedApp" ng-controller="FeedController"
+                                     infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
+
+                                    <div class="icon-refresh" ng-click="refreshPage()">
+                                        <p class="hidden-xs">
+                                            <a href="javascript:void(0);">
+
+                                                <!-- <img src="<?= $this->static->frontend->images . '/new_feed.png';?>" alt=""> -->
+                                                <i class="fa fa-refresh"></i>
+
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="all-status content2" >
+                                        <div ng-show='reddit.busy' class="loading-bar text-center" data-item="feed-loading">Loading...</div>
+                                        <?= $this->partial('feed/lst-feed.phtml', array('viewObj' => $this)); ?>
+                                    </div>
+                                </div>
+                       		</div>
+                       		<!-- end feed -->
+                       		
+                      
+ 
+ </div>
+</div>
+ <!-- Popup Select file-->
+<?= $this->render('/feed/popup_document.phtml');?>
+<!-- End Popup Select file-->
+
+ <!-- source for popup image slide
+ <script type="text/javascript" src="<?= $this->static->frontend->js . '/fancy/jquery.mousewheel-3.0.6.pack.js'; ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->js; ?>/fancy/jquery.fancybox.css" media="screen">
+<script type="text/javascript" src="<?= $this->static->frontend->js; ?>/fancy/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-buttons.css" media="screen">
+<script type="text/javascript" src="<?= $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-buttons.js"></script>
+<script type="text/javascript" src="<?= $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-media.js"></script>
+<link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-thumbs.css" media="screen">
+<script type="text/javascript" src="<?= $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-thumbs.js"></script>
+ source for popup image slide -->
+
+
+<script language="javascript">
+
+    reInstallMentionInput($('#feedPostArea'));
+function getRelationPeople(name, teamid, departmentid)
+{
+      $.get("<?= BASE_URL;?>/user/search",{name:name,teamid:teamid,departmentid:departmentid},function(result){
+
+       $('#relationship_people').html(result);
+   });
+}
+
+   
+//feed  
+var settings = { 
+		nop     : 5,
+		offset  : 0,
+		error   : '<p><?= $this->locales->no_more_posts;?></p>',
+		delay   : 500, 
+		scroll  : true 
+	};
+
+var offset = settings.offset;
+var busy = false;
+var initmessage = '<p><?= $this->locales->load_more;?></p>';
+
+var busyComment = false;
+var busyGetContent = false;
+var groupId = '<?= $this->groupid;?>';
+
+</script>
+
+
+
+<script>
+
+    $("body").on('click', '#team_id_to_wrapper', function(){
+        $(".popup-teamName").toggle();
+    });
+
+    $("body").on('click', function(event){
+        if(!$(event.target).is('.teamNameSelected, .teamNameSelected *')){
+            $(".popup-teamName").hide();
+        }
+    });
+
+    $("body").on('click', '.popup-teamName div', function(){
+        var val = $(this).attr('data-value');
+        var txt = $(this).text();
+        $("#team_id_to").attr('data-value', val);
+        $("#team_id_to").text(txt);
+        $('.popup-teamName').hide();
+    });
+
+</script>
+<script src="<?php echo $this->static->frontend->js.'/waves.min.js'?>"></script>
+<script type="text/javascript">
+    Waves.init();
+    Waves.attach('.waves-btn', ['waves-block']);
+</script>
+                    

@@ -1,0 +1,155 @@
+<?php
+$specialDay = $this->specialDay;
+$types      = $this->types;
+$type      = $this->type;
+$title  =   ($specialDay['type'] == 1) ? 'Holiday' : 'Compensation';
+$title  =   ($type == 3) ? 'Leave unpaid' : $title;
+?>
+
+<div class="title-page mar-bot15">
+    <h4>
+        <i class="fa fa-group"></i>
+        <span class="capitalize"><?php echo $title; ?></span>
+    </h4>
+</div><!-- title-page -->
+<div class="container-content">
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li class="<?php if($type ==1 ) echo 'active';?>"><a href="<?php echo BASE_ADMIN_URL.'/specialday?type=1'; ?>"  >Holiday</a></li>
+        <li class="<?php if($type ==2 ) echo 'active';?>"><a href="<?php echo BASE_ADMIN_URL.'/specialday?type=2'; ?>"  >Compensation</a></li>
+        <li class="<?php if($type ==3 ) echo 'active';?>"><a href="<?php echo BASE_ADMIN_URL.'/specialday?type=3'; ?>"  >Leave unpaid</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="title-content bg-blue clearfix">
+        <h5 class="white bold pull-left capitalize">Add <?php echo $title; ?></h5>
+    </div><!-- title-content -->
+        <div class="widget-content">
+        <form method="post">
+            <div id="general" class="general">
+                <ul>
+                    <li class="clearfix">
+                        <h6 class="bold pull-left">Name</h6>
+                        <input type="text" name="name" value="<?php echo $specialDay['name']; ?>" class="w500">
+                    </li>
+                    <li class="clearfix">
+                        <h6 class="bold pull-left">Type</h6>
+                        <input class="w500" disabled type="text"  value="<?php echo $types[$specialDay['type']]; ?>" >
+                        <input   type="hidden"  name="type" value="<?php echo $specialDay['type']; ?>">
+                    </li>
+
+                    <?php if($type == 3 ){?>
+                        <li class="clearfix">
+                            <h6 class="bold pull-left">No date</h6>
+                            <input class="w500" name="no_date"  type="text"  value="<?php echo $specialDay['no_date']; ?>" >
+                        </li>
+                    <?php } else{?>
+                        <li class="clearfix">
+                            <h6 class="bold pull-left">Date from</h6>
+                            <input class="date_time_picker"  onkeypress="return false" type="text"  name="date_from" value="<?php echo Core_Common::formatDateTime($specialDay['date_from']); ?>" class="w500">
+                        </li>
+
+                        <li class="clearfix">
+                            <h6 class="bold pull-left">Date to</h6>
+                            <input class="date_time_picker"  onkeypress="return false" type="text"  name="date_to" value="<?php echo Core_Common::formatDateTime($specialDay['date_to']); ?>" class="w500">
+                        </li>
+                    <?php }?>
+
+                    <li class="clearfix">
+                        <h6 class="bold pull-left">Description</h6>
+                        <textarea name="description" class="w500"><?php echo $specialDay['description']; ?></textarea>
+                    </li>
+
+
+                </ul>
+                <div class="footer-btn-tab clearfix">
+                    <a href="javascript:void(0);" class="back grey bor-raduis4" data-action="back-page">Back</a>
+                    <a href="javascript:void(0);" class="save white bor-raduis4 bg-blue" onclick="submitForm(); return false;">Save change</a>
+                </div><!--footer-btn-tab-->
+            </div><!-- add group -->
+        </form>
+    </div><!-- widget-content -->
+    </div>
+</div><!-- container-content -->
+<script type="text/javascript">
+    $(function(){
+        $('.error-report').remove();
+
+            <?php
+            if(!empty($this->arrError)) {
+                foreach ($this->arrError as $error) {
+                    ?>
+            var html = '';
+                html = '<span class="margin-10 red error-report"><?php echo $error['message']; ?></span>';
+                $('[name="<?php echo $error['field']; ?>"]').after(html);
+            <?php
+                }
+            }
+        ?>
+
+        $('body').on('input propertychange paste','[data-autocomplete="admin"]',function(e){
+            var _val = $.trim($(this).val());
+            $('input[name="admin_id"]').val(0);
+            if(_val == '')
+                return;
+            var params      = {};
+            params['key']   = _val;
+            params['team']  = '';
+            var _html       = '<li class="clearfix">No Data</li>';
+            var resultPlace =  $('[data-autocomplete="result-admin"]');
+            $.post("<?php echo BASE_ADMIN_URL.'/user/searchuser'; ?>", { data: JSON.stringify(params)}, function(data){
+                if(data.total > 0)
+                {
+                    _html    = '';
+                    $.each(data['data'], function(index, account){
+                        _html += suggesstionLI(account.image_tag,account.name,account.position_name,account.account_id,'addname-admin');
+                    });
+                }
+                resultPlace.find('ul').html(_html);
+                resultPlace.show();
+
+            },'json');
+        });
+
+        $('body').on('click','.addname-admin',function(e){
+
+            var account_id = $(this).attr('data-aId');
+            var name = $(this).attr('data-name');
+            $('input[name="admin_id"]').val(account_id);
+
+            $("#admin-display").fadeOut(100);
+            $('[data-autocomplete="admin"]').val(name);
+            $('[data-autocomplete="admin"]').focus();
+
+
+        });
+
+        function suggesstionLI(avatar, name, position, account_id,class_name){
+
+            return '<li class="'+class_name+'" data-aId="' + account_id + '" data-name="' + name + '">'+
+                '<a href="javascript:void(0);">'+
+                '<div class="inform-tags-members clearfix">'+
+                '<div class="img-tags-members mg10 fl">'+
+                '<img alt="" width="36" src="' + avatar + '">'+
+                ' <strong> ' + name + ' </strong> '+
+                ' <span> ' + position + ' </span> '+
+                '</div>'+
+                '</div>'+
+                '</a>'+
+                '</li>';
+        }
+    });
+    function submitForm()
+    {
+        $('form').submit();
+    }
+    function installCheckImageUpload(sender)
+    {
+        var inputHiddenElement  = $('[name="image_url"]');
+        var inputImageName      = $('[name="image_name"]');
+        var inputImage  = $('#avatar');
+
+//        sender,urlUpload,jsonData,inputHiddenElement,inputImage
+        var jsonData    = [{'input_name':'f','input_val':'avatar'}];
+        checkImageUpload(sender,baseurl+'/upload',jsonData,inputHiddenElement,inputImage,inputImageName);
+    }
+
+</script>

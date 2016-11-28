@@ -1,0 +1,195 @@
+ <?php
+  if (!empty($this->arrProduct))
+  {
+      ?>
+<div class="wrapper gnt-products-detail">
+	<div class="inner">
+                 <?php
+                    echo $this->render('partials/slogan.phtml');
+
+                    $sImageUrl = (!empty($this->arrProduct['image_url'])) ? PATH_NEWS_URL .'/'. $this->arrProduct['image_url'] : '';
+
+
+                 ?>
+		<h2 class="page-title"><i class="icon"></i><span class="txt">Products</span></h2>
+		<div class="content-wrapper">
+			<div class="game-title">
+				<a class="imgs" href="#"><article style="background-image:url(<?php echo $sImageUrl;?>);"></article></a>
+				<div class="wrap">
+					<a class="name" href="#"><?php echo $this->arrProduct['name']; ?></a>
+					<div class="info f-italic">Create date <?php echo date('d/m/Y',$this->arrProduct['create_date']);?></div>
+                                        <div class="ver">
+						<?php echo isset($this->arrProductType[$this->arrProduct['type']])?$this->arrProductType[$this->arrProduct['type']]:'';?>
+					</div>
+					<!--<div class="country">
+						<span>Game available in countries:</span>
+						<i class="i-jp icon"></i>
+						<i class="i-usa icon"></i>
+						<i class="i-vn icon"></i>
+					</div>
+                                        -->
+
+				</div>
+			</div>
+                        <?php
+                          if(!empty($this->arrProduct['screenshots1']) || !empty($this->arrProduct['screenshots2']) || !empty($this->arrProduct['screenshots3']) || !empty($this->arrProduct['screenshots4']) || !empty($this->arrProduct['screenshots5']))
+                          {
+                          ?>
+			<div class="screenshot">
+				<h3>Screenshots</h3>
+				<div class="photo-slider-wrapper">
+					<section class="photo-slider">
+                                                <?php
+                                                  if(!empty($this->arrProduct['screenshots1']))
+                                                  {
+                                                  ?>
+                                                    <article style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $this->arrProduct['screenshots1'];?>);"><a href="#"></a></article>
+                                                  <?php
+                                                  }
+                                                  ?>
+
+                                                  <?php
+                                                  if(!empty($this->arrProduct['screenshots2']))
+                                                  {
+                                                  ?>
+                                                    <article style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $this->arrProduct['screenshots2'];?>);"><a href="#"></a></article>
+                                                  <?php
+                                                  }
+                                                  ?>
+
+
+                                                 <?php
+                                                  if(!empty($this->arrProduct['screenshots3']))
+                                                  {
+                                                  ?>
+                                                    <article style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $this->arrProduct['screenshots3'];?>);"><a href="#"></a></article>
+                                                  <?php
+                                                  }
+                                                  ?>
+
+
+
+                                                 <?php
+                                                  if(!empty($this->arrProduct['screenshots4']))
+                                                  {
+                                                  ?>
+                                                    <article style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $this->arrProduct['screenshots4'];?>);"><a href="#"></a></article>
+                                                  <?php
+                                                  }
+                                                  ?>
+
+
+                                                 <?php
+                                                  if(!empty($this->arrProduct['screenshots5']))
+                                                  {
+                                                  ?>
+                                                    <article style="background-image:url(<?php echo PATH_NEWS_URL .'/'. $this->arrProduct['screenshots5'];?>);"><a href="#"></a></article>
+                                                  <?php
+                                                  }
+                                                  ?>
+
+					</section>
+				</div>
+			</div>
+                        <?php
+                          }
+                          ?>
+
+
+			<div class="description">
+				<h3>Description</h3>
+                                <p>
+                                    <?php echo $this->arrProduct['content']; ?>
+                                </p>
+			</div>
+
+                        <?php
+                          if(!empty($this->arrProduct['ios_link']) || !empty($this->arrProduct['android_link']) || !empty($this->arrProduct['window_link']))
+                          {
+                              ?>
+			<div class="download">
+				<h3>Download</h3>
+				<div>
+                                        <?php
+                                          if(!empty($this->arrProduct['ios_link']))
+                                          {
+                                           ?>
+                                            <a href="<?php echo $this->arrProduct['ios_link'];?>" target="_blank">appstore</a>
+                                          <?php
+                                          }
+                                          ?>
+
+                                            <?php
+                                          if(!empty($this->arrProduct['android_link']))
+                                          {
+                                           ?>
+                                            <a href="<?php echo $this->arrProduct['android_link'];?>" target="_blank">android</a>
+                                          <?php
+                                          }
+                                          ?>
+
+                                         <?php
+                                          if(!empty($this->arrProduct['window_link']))
+                                          {
+                                           ?>
+                                            <a href="<?php echo $this->arrProduct['window_link'];?>" target="_blank">window phone</a>
+                                          <?php
+                                          }
+                                          ?>
+
+				</div>
+			</div>
+                        <?php
+                          }
+                          ?>
+
+                        <?php
+                           if(!empty($this->arrResult))
+                           {
+                           ?>
+                                <div class="other-game">
+				<h4>Other games from GNT</h4>
+				<ul>
+                                        <?php
+                                           $iCount = count($this->arrResult);
+
+                                           $index=0;
+                                           foreach($this->arrResult as $value)
+                                           {
+                                                 if($value['product_id'] != $this->arrProduct['product_id'])
+                                                 {
+                                                    $sImageUrl = (!empty($value['image_url'])) ? PATH_NEWS_URL .'/'. $value['image_url'] : '';
+                                                    $first='';
+                                                    if($index ==0)
+                                                    {
+                                                        $first='class="first"';
+                                                    }
+
+                                                    if($index == $iCount-2)
+                                                    {
+                                                        $first='class="last"';
+                                                    }
+
+                                              ?>
+
+                                                    <li <?php echo $first;?>><a class="imgs" href="/product/detail/id/<?php echo $value['product_id'];?>"><article style="background-image:url(<?php echo $sImageUrl;?>);"></article><span><?php echo  Core_Common::SubFullStrings($value['name'], 0, 10);?></span></a></li>
+
+                                              <?php
+                                                   $index++;
+                                                 }
+                                           }
+                                           ?>
+
+                                </ul>
+			</div>
+
+                           <?php
+                           }
+                           ?>
+
+        </div>
+    </div>
+</div><!-- end wrapper -->
+<?php
+  }
+  ?>

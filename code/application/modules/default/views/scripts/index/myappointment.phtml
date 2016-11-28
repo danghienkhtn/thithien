@@ -1,0 +1,27 @@
+ <?php
+      if(!empty($this->arrCalendar))
+      {
+       ?>
+         <p>Appointments</p>
+         <div class="my-table">
+           <ul>
+            <?php
+                  foreach($this->arrCalendar as $value)
+                  {
+              ?>
+                    <li>
+                         <span><?php echo $value['subject'];?></span>
+                         <span><?php echo $value['startDate'];?></span>
+                    </li>
+
+               <?php
+                     }
+                   ?>
+                    
+                </ul>
+            </div>
+          
+        <?php
+      }
+      ?>
+    

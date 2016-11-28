@@ -1,0 +1,106 @@
+<?php 
+    $arrEventClick = array(
+        CALENDAR_DAY_TAB => 'changeCheckboxOnCalendarByDay(getCommonPost4AllTab())',
+        CALENDAR_WEEK_TAB => 'changeCheckboxOnCalendarByWeek(getCommonPost4AllTab())',
+        CALENDAR_MONTH_TAB => 'changeCheckboxOnCalendarByMonth(getCommonPost4AllTab())',
+        CALENDAR_WORK_WEEK_TAB => 'changeCheckboxOnCalendarByWorkWeek(getCommonPost4AllTab())',
+    );
+    $clickLeftMenuCheckbox = '';
+    isset($arrEventClick[$this->currentTab]) && $clickLeftMenuCheckbox = $arrEventClick[$this->currentTab];
+?>
+<div class="col-md-3 col-xs-12">
+<button class="btn btn-default" id="btn-show-add-popup-form" href="#"><i class="fa fa-plus"></i><?= $this->locales->calendarEvent->addNew ?></button>   
+<div id="datepicker"></div>
+<div class="calendar-panel">
+    <h3><?= $this->locales->calendarEvent->calendar ?></h3>
+    <div class="calendar-panel-list">
+        <div class="group team-group">
+            <div class="group-title group-title-default-group"><?= $this->locales->calendarEvent->defaultGroup ?></div>
+            <div class="form-group">
+                <?php foreach ($this->defaultGroups as $group): ?>
+                    <?php
+                    $checked = ' checked';
+                    $disabled = '';
+                    if (! $this->isAdmin):
+                        $disabled = ' disabled';
+                    endif;
+                    ?>
+                    <div class="checkbox check-all checkbox-primary">
+                        <input type="checkbox" <?= $disabled ?> name="default_group[]" id="chck-default-group" value="<?= $group['group_id'] ?>"<?= $checked ?>  onclick="reloadEvents()"><label><?= $this->escape($group['group_name']) ?></label>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="group team-group">
+            <div class="group-title group-title-team"><?= $this->locales->calendarEvent->team ?></div>
+            <div class="form-group">
+                <?php foreach ($this->teams as $team): ?>
+                    <?php
+                    $checked = ' checked';
+                    if (in_array($team['group_id'], $this->teamIdList)):
+                        $checked = ' checked';
+                    endif;
+                    ?>
+                    <div class="checkbox check-all checkbox-primary">
+                        <input type="checkbox" name="team[]" id="chck-team" value="<?= $team['group_id'] ?>"<?= $checked ?>  onclick="reloadEvents()"><label><?= $this->escape($team['group_name']) ?></label>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="group project-group">
+            <div class="group-title group-title-project"><?= $this->locales->calendarEvent->project ?></div>
+            <div class="form-group">
+                <?php foreach ($this->projects as $project): ?>
+                    <?php
+                    $checked = ' checked';
+                    if (in_array($project['group_id'], $this->projectIdList)):
+                        $checked = ' checked';
+                    endif;
+                    ?>                            
+                    <div class="checkbox check-all checkbox-primary">
+                        <input type="checkbox" name="project[]" id="chck-project" value="<?= $project['group_id'] ?>"<?= $checked ?> onclick="reloadEvents()"><label><?= $this->escape($project['group_name']) ?></label>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="group project-group">
+                <div class="group-title group-title-other-group"><?= $this->locales->calendarEvent->otherGroup ?></div>
+            <div class="form-group">
+                <?php foreach ($this->otherGroups as $group): ?>
+                    <?php
+                    $checked = ' checked';
+                    if (in_array($group['group_id'], $this->otherGroupIdList)):
+                        $checked = ' checked';
+                    endif;
+                    ?>                            
+                    <div class="checkbox check-all checkbox-primary">
+                        <input type="checkbox" name="other_group[]" id="chck-project" value="<?= $group['group_id'] ?>"<?= $checked ?> onclick="reloadEvents()"><label><?= $this->escape($group['group_name']) ?></label>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <!--
+        <div class="group project-group">
+            <div class="group-title group-title-tools"><?= $this->locales->calendarEvent->tools ?></div>
+
+        </div>-->
+        <div class="group project-group">
+            <div class="group-title group-title-personal"><?= $this->locales->calendarEvent->personal ?></div> 
+            <div class="form-group">
+                <div class="checkbox check-all checkbox-primary">
+                    <?php
+                    //($this->personal == EVENT_PERSONAL) ? ($checked = ' checked') : ($checked = '');
+                    $checked = ' checked';
+                    ?>
+                    <input type="checkbox" name="personal" id="chck-personal" value="<?= EVENT_PERSONAL ?>" onclick="reloadEvents()"<?= $checked ?>><label><?= $this->locales->calendarEvent->itemPersonal ?></label>
+                </div>                   
+            </div>
+        </div>
+        <!--
+        <div class="group project-group">
+            <div class="group-title group-title-annual"><?= $this->locales->calendarEvent->annualLeave ?></div>
+        </div>
+        -->
+    </div>
+</div>
+</div>

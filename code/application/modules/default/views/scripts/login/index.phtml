@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Login-Web Portal Internal</title>
+  <link href="<?= $this->static->frontend->css ;?>/v2/font-awesome.min.css" rel="stylesheet" type='text/css'>
+  <link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->css .'/v2/bootstrap.min.css';?>" media="screen">
+  <link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->css . '/v2/login.css'; ?>" media="screen">
+  <link rel="shortcut icon" href="<?= $this->static->frontend->images.'/favicon-2.ico'?>" type="image/x-icon">
+  <link rel="icon" href="<?= $this->static->frontend->images.'/favicon-2.ico'?>" type="image/x-icon">
+  <script  type="text/javascript" src="<?= $this->static->frontend->js . '/v2/jquery.min.js'; ?>"></script> 
+  <script  type="text/javascript" src="<?= $this->static->frontend->js . '/v2/bootstrap.min.js' ?>"></script>
+</head>
+<body> 
+<div class="container-fluid">
+    <div class="row">
+<div class="col-md-4 col-md-offset-4">
+  <div class="login-wrapper-st">
+    <img class="center-block img-responsive" width="170" height="133" src="<?= $this->static->frontend->images.'/v2/_logo.png';?>">
+    <img class="_btLogin" src="<?= $this->static->frontend->images.'/v2/bt_login.png';?>">
+    <form  name="tf" class="m-t-60" action="<?= BASE_URL; ?>/login" method="post">
+      <?php if(isset($this->message) && $this->message != ''): ?>
+        <div class="alert alert-danger">
+          <?= $this->message; ?>
+        </div>
+      <?php endif; ?>
+      <div class="form-group margin-bottom-sm">
+        <input type="text" name="username" value="<?= $this->escape($this->email); ?>" class="form-control" placeholder="Username" id="username">
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" class="form-control" placeholder="Password" id="pwd">
+      </div>
+     
+      <div class="text-center">
+        <?php
+        if($this->iLoginTime >= 3){
+        ?>
+        <div id="html_element"></div>
+        <?php } ?>
+        <button type="submit" class="btn btn-primary btn-block btn-main">Login</button>
+      </div>
+      <div class="checkbox text-center m-t-40">
+        <div class="cb_style"><i class="fa fa-check"></i></div>
+        <input type="checkbox" name="isremember" id="remember" class="checkbox-input"><label for="remember">Keep me logged in</label>
+      </div>
+      <input type="hidden" name="redirect"  value="<?= $this->redirectPage?>"/>
+    </form>
+  </div>
+</div>
+</div>
+<h4 class="text_footer">Gianty Portal Version 2.0</h4>
+</div>
+<script type="text/javascript">
+    var onloadCallback = function() {
+        grecaptcha.render('html_element', {
+          'sitekey' : '6LdYFh0TAAAAAGRaE5vfa1kfuWZyYHPwt33yEUSv'
+        });
+    };
+    $(document).ready(function(){
+      $('.checkbox').on('click', function(){
+        $(this).toggleClass('checked');
+        var checkBoxes = $('.checkbox input[type="checkbox"]');
+        checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+      });
+    })
+</script>
+ <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer></script>
+</body>
+</html>

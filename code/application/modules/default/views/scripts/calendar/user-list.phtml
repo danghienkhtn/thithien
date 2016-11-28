@@ -1,0 +1,10 @@
+<?php if(count($this->users)): ?>
+<table class="table table-condensed" style="overflow-y:auto">
+    <?php foreach($this->users as $user): ?>
+    <tr>
+        <td><input type="checkbox" name="<?= $user['name'] ?>" id="<?= $user['account_id'] ?>"><?= $user['name'] ?></td>
+        <td class="mail"><?= $user['email'] ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+<?php endif; ?>

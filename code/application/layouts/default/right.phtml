@@ -1,0 +1,158 @@
+<?php if (strtolower($this->controllerName) != 'calendar' 
+        && !(strtolower($this->controllerName) == 'group' && strtolower($this->actionName) == 'calendar')):?>     
+<div class="rightContentWrapper hidden-xs">
+  <article>
+    <div id="right-menu-datepicker"></div>
+  </article>
+  <article class="widget-euro" id="appWidget" ng-controller="WidgetEuroCtrl" ng-show="activeModule()">
+    <div class="tab-widget">
+            <a href="#prdct" ng-class="{'active':tabSelected=='#prdct'}" ng-click="tabChange($event)">Prediction</a>
+            <a href="#rslt" ng-class="{'active':tabSelected=='#rslt'}"  ng-click="tabChange($event)">Result</a>
+    </div>         
+    <div class="tab-content" id="rslt" class="ng-hide" ng-show="tabSelected=='#rslt'">
+        <div class="custom-scrollbar">
+          <div class="match-done-list" ng-repeat="i in listResult">
+          		<div class="text-center info-predct">
+              <span class="label label-{{i.status === 'FINISHED' ? 'danger' : 'primary'}} m-r-10" 
+                    ng-show="{{i.status === 'FINISHED' || i.status === 'IN_PLAY'}}">
+                    {{i.status === 'FINISHED' ? 'ENDED' : i.status}}
+              </span>
+               {{i.sDate}} <span class="text-default" ng-if="i.guess">{{i.bet_goal_home}}-{{i.bet_goal_away}}</span>
+               </div>
+          		<div class="match-info  m-t-10">
+	          		<img ng-src="<?= $this->static->frontend->images.'/euro/flag/'?>{{i.home}}.png" alt="">
+	          		<div class="teamName text-left" title="{{i.home}}">{{i.shortName1 | uppercase}}</div>
+	          		<div class=" text-default">{{i.goal_home}}:{{i.goal_away}}</div>
+	          		<div class="teamName text-right" title="{{i.away}}">{{i.shortName2 | uppercase}}</div>
+	          		<img ng-src="<?= $this->static->frontend->images.'/euro/flag/'?>{{i.away}}.png" alt="">
+          		</div>
+          </div>
+          <div class="text-center noresult-widget" ng-if="!listResult.length">There is no match result.</div>
+        </div>
+    </div>
+    <div class="tab-content" id="prdct" class="ng-hide" ng-show="tabSelected=='#prdct'">
+          <div class="match-done-list" ng-repeat="m in listPrediction">
+          		<div class="text-center info-predct">{{m.sDate}}
+          			<a class="score-rslt" ng-if="m.guess"
+                              data-toggle="modal"
+                              data-target="#updatePredict"
+                              title="Click to update predict" 
+                              data-teamone="{{m.home}}"
+                              data-teamtwo="{{m.away}}"
+                              data-matchtime="{{m.sDate}}"
+                              data-matchid="{{m.match_day}}"
+                              data-fixtureid="{{m.fixture_id}}"
+                              data-scorehome = "{{m.bet_goal_home}}"
+                              data-scoreaway = "{{m.bet_goal_away}}"
+                              ng-click='getDataFromPredictList($event)'
+                              >
+          			 {{m.bet_goal_home}}-{{m.bet_goal_away}}
+                </a>
+          			<a class="text-default" 
+          			ng-show="!m.guess"
+          			data-toggle="modal" 
+      					data-target="#modalPredict"
+      					data-teamone="{{m.home}}"
+      					data-teamtwo="{{m.away}}"
+      					data-matchtime="{{m.sDate}}"
+                data-fixtureid="{{m.fixture_id}}"
+                data-matchid="{{m.match_day}}"
+  					    ng-click='getDataFromPredictList($event)'>Predict</a>
+          		</div>
+          		<div class="match-info  m-t-10">
+	          		<img ng-src="<?= $this->static->frontend->images.'/euro/flag/'?>{{m.home}}.png" alt="">
+	          		<div class="teamName left" title="{{m.home}}">{{m.shortName1 | uppercase}}</div>
+	          		<div class="text-default">-:-</div>
+	          		<div class="teamName right" title="{{m.away}}">{{m.shortName2 | uppercase}}</div>
+	          		<img ng-src="<?= $this->static->frontend->images.'/euro/flag/'?>{{m.away}}.png" alt="">
+          		</div>
+          </div>
+           <div class="text-center noresult-widget" ng-if="!listPrediction.length">There is no match prediction.</div>
+    </div>
+    <!-- Modal predict-->
+			<div class="modal fade widget-prediction" id="modalPredict" tabindex="-1" role="dialog" aria-labelledby="modalPredict">
+        <div class="err-number" ng-if="showError">
+            <div class="text-err">
+              {{errText}}
+            </div>
+            <div class="btn-cancelError" ng-click="turnOffError();">
+              Ok
+            </div>
+        </div>
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			      <div class="modal-body">
+			        <div class="teamOnePrdt pull-left">
+			        	<div class="center-block team-flag" ng-if="matchModal.modalteamOne">
+			        		<img ng-src="<?= $this->static->frontend->images.'/euro/Nation/'?>{{matchModal.modalteamOne}}.png" alt="">
+			        	</div>
+			        	<h3 class="text-white text-center">{{matchModal.modalteamOne}}</h3>
+			        </div>
+			        <div class="teamTwoPrdt pull-right">
+			        	<div class="center-block team-flag" ng-if="matchModal.modalteamTwo">
+			        		<img ng-src="<?= $this->static->frontend->images.'/euro/Nation/'?>{{matchModal.modalteamTwo}}.png" alt="">
+			        	</div>
+			        	<h3 class="text-white text-center">{{matchModal.modalteamTwo}}</h3>
+			        </div>
+			        <input type="number" class="score-teamone"  ng-model="matchModal.scoreTeamone" placeholder="?"  min="0" max="99">
+			        <input type="number" class="score-teamtwo"  ng-model="matchModal.scoreTeamtwo" placeholder="?"  min="0" max="99">
+			      </div>
+			    </div>
+			    <div class="text-center">
+			    	<div class="text-center match-time">{{matchModal.matchTime}}</div>
+			    	<button class="center-block link-predct" ng-click="setPredictMatch($event, matchModal);">
+              <span ng-if="!loading">Predict</span>
+              <span ng-if="loading" class="processing-predict">Processing..</span></button>
+            </buton>
+			    </div>
+			  </div>
+			</div>
+      <!-- Modal predict update-->
+      <div class="modal fade" id="updatePredict" tabindex="-1" role="dialog" aria-labelledby="modalPredict">
+        <div class="err-number" ng-if="showError">
+            <div class="text-err">
+              {{errText}}
+            </div>
+            <div class="btn-cancelError" ng-click="turnOffError();" ng-if="cancelError">
+              Ok
+            </div>
+            <div class="btn-cancelError" ng-click="turnOffUpdate();" ng-if="cancelUpdate">
+                  Ok
+            </div>
+        </div>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+              <div class="teamOnePrdt pull-left" ng-if="matchModal.modalteamOne">
+                <div class="center-block team-flag">
+                  <img ng-src="<?= $this->static->frontend->images.'/euro/Nation/'?>{{matchModal.modalteamOne}}.png" alt="">
+                </div>
+                <h3 class="text-white text-center">{{matchModal.modalteamOne}}</h3>
+              </div>
+              <div class="teamTwoPrdt pull-right">
+                <div class="center-block team-flag" ng-if="matchModal.modalteamTwo">
+                  <img ng-src="<?= $this->static->frontend->images.'/euro/Nation/'?>{{matchModal.modalteamTwo}}.png" alt="">
+                </div>
+                <h3 class="text-white text-center">{{matchModal.modalteamTwo}}</h3>
+              </div>
+              <input type="hidden" ng-model="matchModal.matchDayId">
+              <input type="hidden" ng-model="matchModal.fixtureId">
+              <input type="number"  class="score-teamone"  ng-model="matchModal.scoreUpdateTeamone" placeholder="?" min="0" max="99">
+              <input type="number"  class="score-teamtwo"  ng-model="matchModal.scoreUpdateTeamtwo" placeholder="?" min="0" max="99">
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-center match-time">{{matchModal.matchTime}}</div>
+            <button class="center-block link-predct" ng-click="updatePredictMatch($event, matchModal);">
+            <span ng-if="!loading">Predict</span> 
+            <span ng-if="loading" class="processing-predict">Processing..</span></button>
+          </div>
+        </div>
+      </div>
+   </article>
+</div>
+<?php endif; ?>
+<link rel="stylesheet" href="<?= $this->static->frontend->css.'/euro.css';?>">
+<script src="<?= $this->static->frontend->js.'/euro/widget-euro.js';?>"></script>   

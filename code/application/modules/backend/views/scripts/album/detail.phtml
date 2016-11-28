@@ -1,0 +1,287 @@
+<?php
+$album  = $this->album;
+$photos = $this->photos;
+?>
+
+
+<div class="title-page mar-bot15">
+    <h4>
+        <i class="fa fa-group"></i>
+        <span class="capitalize">Gallery</span>
+    </h4>
+</div><!-- title-page -->
+<div class="container-content">
+    <div class="title-content bg-blue clearfix">
+        <h5 class="white bold pull-left capitalize">Album</h5>
+        <ul class="function-header pull-right">
+            <li>
+                <a data-toggle="modal" data-target="#album-detail" href="#">
+                    <i class="fa fa-plus"></i>
+                    <span class="capitalize">Edit album</span>
+                </a>
+            </li>
+            <li>
+                <a data-action="delete-album" href="javascript:void(0);">
+                    <i class="fa fa-trash-o"></i>
+                    <span class="capitalize">Delete album</span>
+                </a>
+            </li>
+        </ul>
+    </div><!-- title-content -->
+    <div class="widget-content">
+        <div class="row">
+            <div class="col-md-3 gallery-edit">
+                <div class="row">
+                    <a class="btn btn-default"  data-action="check-all" data-value="true" href="javascript:void(0);"> Select all </a>
+                    <a class="btn btn-default" data-action="delete-photos" href="javascript:void(0);"><i class="fa fa-trash-o"></i> Delete photos </a>
+                    <div class="clearfix"></div>
+                <input type="file"  id="chosenImage" class="file-get img-source" onchange="installCheckImageUpload(this)">
+                </div>
+                
+                    
+
+              
+            </div>
+            <div class="col-md-9" id="list-photo">
+
+                <?php
+                if(!empty($photos)) {
+                    foreach ($photos as $photo) {
+                        $photo  = Core_Common::photoProcess($photo);
+                        ?>
+                        <div  id="photo-item">
+                            <div class="thumbnail">
+                                <img  src="<?php echo $photo['image_tag']; ?>" >
+                                <span class="pull-right">
+                                    <a href="javascript:void(0);"  data-action="delete-photo" data-value="<?php echo $photo['photo_id']; ?>"  class="btn btn-default close-btn-photo-album"><i class="fa fa-remove"></i></a>
+                                    <input type="checkbox" name="imageIds" data-action="check-delete" value="<?php echo $photo['photo_id']; ?>" style="margin: 10px 35px;"  class="close-btn-photo-album"/>
+                                </span>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                }else{
+                    ?>
+                    <p class="text-center">NoData</p>
+                <?php
+                }
+                ?>
+
+            </div>
+            <div class="text-center"><a href="javascript:void(0);" class="button-back back grey bor-raduis4" data-action="back-page"><i class="fa fa-arrow-circle-o-left"></i> Back</a></div>
+        </div>
+    </div><!-- widget-content -->
+</div><!-- container-content -->
+
+<div class="modal fade" id="album-detail" tabindex="-1" role="dialog" aria-labelledby="album detail" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Album detail</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="f-album-detail">
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Name: </label>
+                            <input type="text" class="form-control" value=" <?php echo $album['name']; ?>"name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Description: </label>
+                            <textarea class="form-control" name="content"><?php echo $album['content']; ?></textarea>
+                        </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-action="update-detail-album">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    $(function(){
+        $('body').on('click','a[data-action="check-all"]',function(){
+
+            var _this = $(this);
+            var checkboxItems = $( '[data-action="check-delete"]');
+
+            if(_this.attr('data-value') == "true")
+            {
+                _this.attr('data-value',"false");
+                doChecked(checkboxItems,true);
+            }
+            else {
+                _this.attr('data-value',"true");
+                doChecked(checkboxItems, false);
+            }
+        });
+        $('body').on('click','[data-action="update-detail-album"]', function(){
+            var albumId = "<?php echo $album['album_id'];?>";
+            $.post(baseurl+'/album/updatedetail?album_id='+albumId,$('#f-album-detail').serialize(), function(response){
+                $('.error-report').remove();
+                if(response.validate == true)
+                {
+                    $.each(response.validate_data, function(index, value){
+
+                        var html = '';
+                        html = '<span class="margin-10 red error-report">'+value.message+'</span>';
+                        $('[name="'+value.field+'"]').after(html);
+                    });
+
+                }else if(response.error == true)
+                    alert(response.message);
+                else if(response.validate == false && response.error == false)
+                    $('#album-detail').modal('hide');
+            },'json');
+
+        });
+        $('body').on('click','a[data-action="delete-album"]', function(){
+            if(confirm('Do you want to delete ?'))
+            {
+                showLoading();
+                var album   = {};
+                var album_id = "<?php echo $album['album_id']; ?>";
+                var group_id = "<?php echo $album['group_id']; ?>";
+                $.post("<?php  echo BASE_ADMIN_URL.'/album/delete'; ?>",{'album_id': album_id, 'group_id':group_id}, function(data){
+                    if(data.error === 0)
+                        window.location = "<?php echo BASE_ADMIN_URL.'/album'; ?>";
+                    else {
+                        alert(data.message);
+                        hideLoading();
+                    }
+                },'json');
+            }
+
+        });
+
+        $('body').on('click','[data-action="delete-photo"]', function(){
+            if(confirm('Do you want to delete ?'))
+            {
+                showLoading();
+                var _this   = $(this);
+                var arrId   = [_this.attr('data-value')];
+                var albumId = "<?php echo $album['album_id']; ?>";
+                var groupIdId = "<?php echo $album['group_id']; ?>";
+                $.post("<?php  echo BASE_ADMIN_URL.'/photo/delete'; ?>",{'arr_photoId':arrId, 'albumId': albumId, 'groupId':groupIdId}, function(data){
+                    if(data.error === false && data.album === true)
+                    {
+                        window.location.href = "<?php echo BASE_ADMIN_URL.'/album';?>";
+                    }
+                    else if(data.error === false)
+                        _this.parents('#photo-item').remove();
+                    else
+                        alert(data.message);
+                    hideLoading();
+                },'json');
+            }
+        });
+//
+        $('body').on('click','[data-action="delete-photos"]', function(){
+            var arrCheck = Array();
+            var checkboxItems = $( '[data-action="check-delete"]');
+            $.each(checkboxItems,function(index,value){
+                var element = $(this);
+                if(element.is(':checked'))
+                    arrCheck.push(element.val());
+            });
+            if(arrCheck.length == 0)
+            {
+                alert('Please choose photos !');
+                return;
+            }
+            if(confirm('Do you want to delete ?'))
+            {
+                showLoading();
+
+                if(arrCheck.length)
+                {
+                    var albumId = "<?php echo $album['album_id']; ?>";
+                    var groupIdId = "<?php echo $album['group_id']; ?>";
+                    $.post("<?php  echo BASE_ADMIN_URL.'/photo/delete'; ?>",{'arr_photoId':arrCheck, 'albumId': albumId, 'groupId':groupIdId}, function(data){
+
+                        if(data.error === false && data.album === true)
+                        {
+                            window.location.href = "<?php echo BASE_ADMIN_URL.'/album';?>";
+                        }
+                        else if(data.error === false)
+                        {
+                            $.each(checkboxItems,function(index,value){
+                                var element = $(this);
+                                if(element.is(':checked'))
+                                    element.parents('#photo-item').remove();
+                            });
+                        }
+                        else
+                            alert(data.message);
+                        hideLoading();
+                    },'json');
+                }
+
+            }
+        });
+
+    });
+
+    function doChecked(checkboxItems, checked){
+        $.each(checkboxItems,function(index,value){
+            $(this).prop('checked',checked);
+        });
+    }
+    function installCheckImageUpload(sender)
+    {
+        var inputImage  = $('#chosenImage');
+//        sender,urlUpload,jsonData,inputHiddenElement,inputImage
+        var jsonData    = [{'input_name':'f','input_val':'news'}];
+        // ajax upload file process return ajax jquery Object
+        showLoading();
+        checkImageWithThumbnailUpload(sender,'/upload/upload5',jsonData,inputImage)
+            .success(function(response, textStatus){
+                response =  $.parseJSON(response)
+                hideLoading();
+
+                if(response.error)
+                    alert(response.message);
+                else{
+
+                    // process params
+                    var photo = {};
+                    photo['team_id_to'] = '<?php echo $album['group_id']; ?>';
+                    photo['imageNames'] = [response.filename];
+                    photo['album_id'] = '<?php echo $album['album_id']; ?>';
+                    photo['feed_id'] = '<?php echo $this->feedId; ?>';
+                    photo['message'] = '';
+                    // add photo to album
+                    $.post(baseurl+'/photo/add',{"data" : JSON.stringify(photo) },function(data){
+                        //console.log(data);
+                        if(data.error === 0)
+                        {
+                            // append photo to list-photo
+                            $.each(data.arrPhoto, function(index,value){
+                                var _html = '<div  id="photo-item">'+
+                                    '<div class="thumbnail">'+
+                                    '<img src="'+value.image_tag+'">'+
+                                    '<span class="pull-right">'+
+                                    '<a href="javascript:void(0);" data-action="delete-photo" data-value="'+value.id+'"   class="btn btn-default close-btn-photo-album"><i class="fa fa-remove"></i></a>'+
+                                    '<input type="checkbox" data-action="check-delete" value="'+value.id+'" name="imageIds" style="margin: 10px 35px;"  class="close-btn-photo-album"/>'+
+                                    '</span> </div> </div>';
+                                $('#list-photo').append(_html);
+                            });
+                            //refresh page after add photo to album
+                             location.reload();
+                        }
+
+                    },'json');
+                }
+
+            },'json')
+            .error(function(){
+                hideLoading();
+            });
+
+
+    }
+</script>

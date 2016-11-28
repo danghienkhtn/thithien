@@ -1,0 +1,144 @@
+<div class="asideCont clearfix" id="_jsListPackage">
+    <div class="bgTitlef9f9f9 titleReport titlecampaign">
+        Group list (Total: <span><?php echo $this->iTotal; ?></span>)
+        <div class="floatright clear">
+            <a href="<?php echo BASE_ADMIN_URL; ?>/group/new">[New Group]</a>
+        </div>
+    </div>
+    
+    <div class="width100Pec floatleft clear">
+        <form action="<?php echo BASE_ADMIN_URL; ?>/group" method="get" name="filterform">
+         
+            <div class="boxFilter">
+                <label>Page size:</label>
+                <select id="_jsPageSize" name="pagesize" class="seleComm width50">
+                    <option <?php if($this->pagesize == "5") echo 'selected="true"'; ?>  >5</option>
+                    <option <?php if($this->pagesize == "10") echo 'selected="true"'; ?> >10</option>
+                    <option <?php if($this->pagesize == "15") echo 'selected="true"'; ?> >15</option>
+                </select>
+                <p class="ico iconLineVer"><em></em></p>
+                <a id="_jsBtnSubmit" href="javascript:void(0);"  class="button green"><span class="ico iconGoo"><em></em></span>Search</a>
+                <p class="ico iconLineVer"><em></em></p>
+                <a id="_jsBtnReset" href="javascript:void(0);" class="button green"><span class="ico iconRefresh"><em></em></span>Refresh</a>
+            </div>
+            
+            <div class="hidden">
+                <input type="hidden"  value="<?php echo $this->iPage; ?>" name="page" id="_jsPage" />
+            </div>
+        </form>
+    </div>
+    
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" class="tblComm tblListCont">
+        <tbody>
+            <?php if ($this->isCheck ==1): ?>
+                <tr>
+                    <th align="left">No.</th>
+                    <th align="left">Group Name</th>
+                    <th align="left">Group Type</th>
+                     <th align="left">Country</th>
+                    <th align="left">Sort Order</th>
+                    <th align="left">IsShow</th>
+                    <th align="left" width="20%">Active</th>
+                </tr>
+                <?php
+                
+                 $index=0;
+                 foreach ($this->paginator as $value): ?>
+                 <tr>
+                    <td align="left"><?php echo $index + 1; ?></td>
+                   
+                     
+                    <td align="left">
+                        <?php 
+                          echo $value['group_name'];
+                        ?>
+                    </td>
+                    
+                    <td align="left">
+                        <?php 
+                          echo isset($this->GroupType[$value['group_type']])?$this->GroupType[$value['group_type']]:'';
+                        ?>
+                    </td>
+                    <td align="left">
+                        <?php 
+                          echo isset($this->arrCountry[$value['country_id']])?$this->arrCountry[$value['country_id']]:'';
+                        ?>
+                    </td>
+                    <td align="left">
+                         <?php 
+                          echo $value['sort_order'];
+                        ?>
+                   </td>
+                    <td align="center"><input disabled type="checkbox"<?php if (!empty($value['active']) && ($value['active'])) {echo "checked";} ?> /></td>
+                    <td align="left">
+                        <a href="<?php echo BASE_ADMIN_URL; ?>/groupmember/index?id=<?php echo $value['group_id']; ?>">Member List</a> | 
+                        <a href="<?php echo BASE_ADMIN_URL; ?>/group/upd?id=<?php echo $value['group_id']; ?>&page=<?php echo $this->iPage; ?>">Update</a> | 
+                        <a class="btnDelete" rel="<?php echo $value['group_id']; ?>"  href="javascript:void(0);">Delete</a>
+                    </td>
+                </tr>
+                <?php 
+                 $index++;
+                endforeach; 
+                ?>
+            <?php else: ?>
+                <tr>
+                    <th colspan="5">Don't have data</th>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+
+    <?php echo $this->paginator ?>
+</div>
+<div id="toTop">^ Back to Top</div>
+<script type="text/javascript">
+    
+    $(function() {
+	$(window).scroll(function() {
+		if($(this).scrollTop() != 0) {
+			$('#toTop').fadeIn();	
+		} else {
+			$('#toTop').fadeOut();
+		}
+	});
+ 
+	$('#toTop').click(function() {
+		$('body,html').animate({scrollTop:0},800);
+	});	
+    });
+    
+   
+    
+    $("#_jsBtnSearch").click(function(){
+         $("#_jsPage").val("1");
+         document.forms['filterform'].submit();
+    });
+    
+    $("#_jsBtnSubmit").click(function(){
+         $("#_jsPage").val("1");
+         document.forms['filterform'].submit();
+    });
+    
+    
+    $(".btnDelete").click(function() {
+        var id = $(this).attr('rel');
+
+        if(id)
+        {          
+            if(confirm('Are you sure want to delete this group?'))
+            {
+                $.post("<?php echo BASE_ADMIN_URL; ?>/group/delete",{ id: id },function(result){
+                    if(result.error == 0)
+                    {
+              
+                       window.location= '<?php echo BASE_ADMIN_URL; ?>/group/index/page/<?php echo $this->iPage;?>';
+                    }
+                    else
+                    {
+                        alert(result.message);
+                    }
+                },'json');
+            }
+        }
+    });
+</script>

@@ -1,0 +1,433 @@
+<script src="<?= $this->static->frontend->js .'/bootstrap-checkbox.js';?>"></script>
+<script src="<?= $this->static->frontend->js .'/jquery.hideseek.js';?>"></script>
+<style>
+    #sidebar a>i.fa, #sidebar a>i.fa:hover{
+        color:#333;
+    }
+    #sidebar a:visited, #sidebar a:link{
+        color:#333;
+    }
+</style>
+<link rel="stylesheet" href="<?php echo $this->static->frontend->css.'/waves.min.css'?>">
+<div class="option-mobile  hidden-md hidden-sm hidden-lg col-xs-12">
+    <div class="pt-mbl">
+        <div><a href="/feed" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/rss-icon.svg' ?>" width="32" height="32" alt=""></i>Feed</a></div>
+        <div><a href="/news" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/news-svg.svg' ?>" width="32" height="32" alt=""></i>News</a></div>
+        <div><a href="/photo" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/photo.svg' ?>" width="32" height="32" alt=""></i>Photos</a></div>
+        <div><a href="/mail" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/mail.svg' ?>"  width="32" height="32" alt=""></i>Mail</a></div>
+        <div><a href="/calendar" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/calendar-svg.svg' ?>" width="32" height="32"  alt=""></i>Calendar</a></div>
+        <div><a href="/check-in-out" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/magnifier-cheque.svg' ?>" width="32" height="32" alt=""></i>Check in out</a></div>   
+        <div><a href="/absence" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/check-absence-svg.svg' ?>" width="32" height="32" alt=""></i>Absence</a></div>
+        <div><a href="/expense" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/Money-Increase.svg' ?>" width="32" height="32" alt=""></i>Expense</a></div>
+        <div><a href="/#" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/Report.svg' ?>" width="32" height="32" alt=""></i>IT Report</a></div>
+        <div><a href="/#" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/Report.svg' ?>" width="32" height="32" alt=""></i>QA Report</a></div>
+        <div><a href="/logout" class="waves-btn"><i class="material-icons"><img src="<?php echo $this->static->frontend->images . '/ios-icon/ic_exit_to_app_black_24px.svg' ?>" width="32" height="32" alt=""></i>Log out</a></div>
+    </div>
+    <div style="margin-left:15px;"><h3>Workgroups</h3></div>
+     <div class="mobile-workgroup-list">
+            <?php
+            $arrType = $this->groupTypes;
+            $myGroups = Core_Common::array_sort($this->arrGroupMember, 'group_type');
+            //     Core_Common::var_dump($myGroups);
+            $type = 0;
+            foreach ($myGroups as $group) {
+                $currentType = $group['group_type'];
+                $group = Core_Common::groupProcess($group);
+                $iGroupFeedIds = Core_Common::countRedis(REDIS_FEED_GROUP_NOTIFY,$group['group_id']);
+                $iGroupFeedIds = empty($iGroupFeedIds) ? '' : $iGroupFeedIds;
+                if ($type != $currentType) {
+                    $type = $currentType;
+                    if ($type != DEFAULT_GROUP) {
+                        ?>
+                        <div><div class="gn bg-default"><?= Core_Helper::getGroupName($type) ?></div></div>
+                        <?php
+                    }
+                }
+                ?>
+                <div class="waves-btn">
+                    <a href="/user/feed/groupid/<?= $group['group_id']; ?>"
+                       title="<?= $this->escape($group['group_name']); ?>">
+                        <div class="private-group clearfix">
+                            <div class="img-group fl">
+                                <img src="<?= $group['image_tag'] ?>" alt="">
+                            </div>
+                            <div class="name-group">
+                                <?= $this->escape($group['group_name']); ?>
+                            </div>
+                            <div  style="position:absolute; right:10px;">
+                                <small class="label label-success" style="border-radius:3px"><?= $iGroupFeedIds ?></small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <?php
+            } ?>
+        </div>
+        <div class="text-center join-group" onclick="joinGroupRef();">
+            <button class="btn btn-primary btn-sm" type="button" style="border-radius:3px; "
+                    value="<?= $this->locales->group->joingroup; ?>"><?= $this->locales->group->joingroup; ?>
+            </button>
+        </div>
+</div>
+<div class="menu sidebar-offcanvas hidden-xs" id="sidebar">
+    <script>
+        $(document).ready(function () {  
+           $(".content-list").mCustomScrollbar({
+                theme: "dark-3"
+           });
+        });
+        function joinGroupRef() {
+            console.log('joinGroupRef');
+            window.location.href = baseurl + '/group';
+        }
+    </script>
+    <?php
+    $flagHome = false;
+    if ($this->controllerName == 'feed' || $this->controllerName == 'user'
+        || $this->controllerName == 'news' || $this->controllerName == 'photo'
+    ) {
+        $flagHome = true;
+    }
+    if ($this->controllerName == 'user' && $this->acctionName != 'index') {
+        $flagHome = false;
+    }
+    ?>
+    <div class="home-menu-group">
+        <ul class="cate-company" id="accordion1">
+         <?php
+            $flagWork = 'none';
+            $classWork = '';
+            $icon = '';
+            if ($this->controllerName == 'news' || $this->controllerName == 'photo') {
+                $flagWork = 'block';
+                $classWork = 'in';
+                $icon = 'fa-minus-square';
+            }else {
+                $icon = 'fa-plus-square';
+            }
+        ?>
+            <li class="panel">
+            <div class="accordion-heading">
+                <a href="#firstLink" data-toggle="collapse" data-parent="#accordion1" class="accordion-toggle"><h3 class="linkCollapseGroup" style="cursor:pointer;"><i
+                        class="fa fa-globe fa-fw"></i><?= $this->locales->company ?><i class="fa fa-change <?php echo $icon; ?> fa-fw pull-right"></i>
+                </h3></a>
+            </div>
+                <ul <?php if (!$flagHome) {
+                } ?>
+                    class="sub-cate-company collapse <?php echo $classWork; ?>" id="firstLink">
+                    <li <?php if ($this->controllerName == 'news') {
+                        echo 'class="active"';
+                    } ?>>
+                        <span <?php if ($this->controllerName == 'news') {
+                            echo 'class="active-sub"';
+                        } ?>></span>
+                        <a href="/news"><?= $this->locales->news->menu; ?></a>
+                    </li>
+                    <li <?php if ($this->controllerName == 'photo') {
+                        echo 'class="active"';
+                    } ?>>
+                        <span <?php if ($this->controllerName == 'photo') {
+                            echo 'class="active-sub"';
+                        } ?>></span>
+                        <a href="/photo"><?= $this->locales->photo->photo; ?></a>
+                    </li>
+                </ul>
+            </li>
+            <!-- Events -->
+            <li class="panel">
+                <div class="accordion-heading">
+                    <a href="#eventLink" data-toggle="collapse" data-parent="#accordion1" class="accordion-toggle">
+                        <h3 class="link-collapse-workgroup"><i class="fa fa-futbol-o fa-fw"></i>Events<i class="fa fa-change <?php echo $icon; ?> fa-fw pull-right"></i></h3>
+                    </a>
+                </div>
+                <ul class="sub-cate-company collapse" id="eventLink">
+                    <li>
+                        <a href="/euro">Euro</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="panel">
+                <?php
+                $flagWork = 'none';
+                $classWork = '';
+                $icon = '';
+                if ($this->controllerName == 'mail' || $this->controllerName == 'calendar' || $this->controllerName == 'feed' || $this->controllerName == 'feed' || $this->controllerName == 'check-in-out') {
+                    $flagWork = 'block';
+                    $classWork = 'in';
+                    $icon = 'fa-minus-square';
+                }else {
+                    $icon = 'fa-plus-square';
+                }
+                ?>
+                <div class="accordion-heading">
+                <a <?= $classWork; ?> href="#secondLink" data-toggle="collapse" data-parent="#accordion1" class="accordion-toggle"> 
+                    <h3 class="link-collapse-workgroup"><i class="fa fa-bookmark fa-fw"></i><?= $this->locales->menuleft->work; ?><i class="fa fa-change <?php echo $icon; ?> fa-fw pull-right"></i></h3>
+                </a>
+                </div>
+                <ul class="sub-cate-company workgroup-wrapper collapse <?php echo $classWork; ?>" id="secondLink">
+                    <!--feed-->
+                    <li <?php if ($this->controllerName == 'feed') {
+                        echo 'class="active"';
+                    } ?>>
+                        <span <?php if ($this->controllerName == 'feed') {
+                            echo 'class="active-sub"';
+                        } ?>></span>
+                        <a href="/feed"><?= $this->locales->feed; ?></a>
+                    </li>
+                    <!-- mail -->
+                    <li <?php if ($this->controllerName == 'mail') {
+                        echo 'class="active"';
+                    } ?>>
+                        <span <?php if ($this->controllerName == 'mail') {
+                            echo 'class="active-sub"';
+                        } ?>></span>
+                        <a href="/mail"><?= $this->locales->menuleft->mail; ?>
+                            <span class="number label label-danger" id="totalunread" style="margin-left:10px;"></span>
+                        </a>
+                    </li>
+                    <li <?php if ($this->controllerName == 'calendar') {
+                        echo 'class="active"';
+                    } ?>>
+                        <span <?php if ($this->controllerName == 'calendar') {
+                            echo 'class="active-sub"';
+                        } ?>></span>
+                        <a href="/calendar"><?= $this->locales->menuleft->calendar; ?></a>
+                    </li>
+                    <li <?php if ($this->controllerName == 'check-in-out') {
+                        echo 'class="active"';
+                    } ?>>
+                        <a href="/check-in-out"><?= $this->locales->checkinout->checkinout; ?></a>
+                    </li><!--check in out-->
+                </ul>
+            </li>
+            <li class="panel">
+            <?php
+                $flagWork = 'none';
+                $classWork = '';
+                $icon = '';
+                if ($this->controllerName == 'absence' || $this->controllerName == 'expense') {
+                    $flagWork = 'block';
+                    $classWork = 'in';
+                    $icon = 'fa-minus-square';
+                }else{
+                    $icon = 'fa-plus-square';
+                }
+            ?>
+            <div class="accordion-heading">
+                 <a href="#thirdLink" data-toggle="collapse" data-parent="#accordion1" class="accordion-toggle">
+                 <h3 style="padding-top:10px;cursor:pointer;" class="tool-group"><i class="fa fa-cog fa-fw"></i><?= $this->locales->menuleft->tools; ?><i class="fa fa-change <?php echo $icon; ?> fa-fw pull-right"></i></h3>
+                 </a>
+            </div>
+                    <ul class="sub-cate-company tool-group-wrapper collapse <?php echo $classWork; ?>" id="thirdLink">
+                        <li <?php if ($this->controllerName == 'absence') {
+                                    echo 'class="active"';
+                                } ?>>
+                                    <span <?php if ($this->controllerName == 'absence') {
+                                        echo 'class="active-sub"';
+                                    } ?>></span>
+                                    <a href="/absence"><?= $this->locales->menuleft->absence; ?></a>
+                        </li>
+                        <li <?php if ($this->controllerName == 'expense') {
+                                    echo 'class="active"';
+                                } ?>>
+                                    <span <?php if ($this->controllerName == 'expense') {
+                                        echo 'class="active-sub"';
+                                    } ?>></span>
+                                    <a href="/index/coming-soon"><?= $this->locales->menuleft->expense; ?></a>
+                        </li>
+                        <li <?php if ($this->controllerName == 'finance') {
+                                    echo 'class="active"';
+                                } ?>>
+                                    <span <?php if ($this->controllerName == 'expense') {
+                                        echo 'class="active-sub"';
+                                    } ?>></span>
+                                    <a href="/index/coming-soon"><?= $this->locales->menuleft->finance; ?></a>
+                        </li>
+                        <li>
+                            <a href="https://app.mobigame.jp/" target="_blank">Giantry</a>
+                        </li>
+                    </ul>
+            </li>
+            <li class="panel">
+            <div class="accordion-heading">
+                <a href="#fifthLink" data-toggle="collapse" data-parent="#accordion1" class="accordion-toggle">
+                <h3 style="padding-top:10px;cursor:pointer;" class="report-group"><img src="<?php echo $this->static->frontend->images.'/report-icon.png';?>" width="16" height="16" alt="" style="margin-left:3px; margin-right:5px;"><?= $this->locales->report; ?><i class="fa fa-plus-square fa-change fa-fw pull-right"></i></h3>
+               </a>
+            </div>
+                <ul class="sub-cate-company report-group-wrapper collapse" id="fifthLink">
+                    <li><a href="/index/coming-soon">IT Report</a></li>
+                    <li><a href="/index/coming-soon">QA Report</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="reports-group">
+    </div>
+    <!-- end company cate -->
+    <div class="my-group"  >
+        <div style="display:inline-flex; display:-moz-inline-box;">
+          <h3 style="padding-top:10px;"><i class="fa fa-users fa-fw"></i><?= $this->locales->menuleft->mygroup; ?></h3>
+
+          <div class="text-center join-group" onclick="joinGroupRef();">
+              <button class="btn btn-primary btn-sm" type="button" style="box-shadow: 0 -2px 0 rgba(0,0,0,0.2) inset;margin-left:5px;
+    -moz-box-shadow: 0 -2px 0 rgba(0,0,0,0.2) inset;"
+                      value="<?= $this->locales->group->joingroup; ?>"><?= $this->locales->group->joingroup; ?>
+              </button>
+          </div>
+        </div>
+        
+        <div class="input-group search-groupinput">
+            <input type="text" class="search" name="search"  id="search-field" placeholder="<?= $this->locales->menuleft->searchmygroup ?>"  data-list=".default_list" autocomplete="off">
+        </div>
+        <!-- /input-group -->
+        <!-- End search group-->
+        <div class="content-list">
+            <ul class="group-names default_list list">
+                <?php
+                $arrType = $this->groupTypes;
+                $myGroups = Core_Common::array_sort($this->arrGroupMember, 'group_type');
+                $type = 0;
+                foreach ($myGroups as $key=>$group) {
+
+                    $currentType = $group['group_type'];
+                    $group = Core_Common::groupProcess($group);
+                    $iGroupFeedIds = Core_Common::countRedis(REDIS_FEED_GROUP_NOTIFY,$group['group_id']);
+                    $iGroupFeedIds = empty($iGroupFeedIds) ? '' : $iGroupFeedIds;
+                    if ($type != $currentType) {
+                        $type = $currentType;
+                        if ($type != DEFAULT_GROUP) {
+                            ?>
+                            <small style="margin-left:10px;text-transform:capitalize; color: #4c4c4c;" 
+                                   ><?= Core_Helper::getGroupName($type) ?></small><?php
+                        }
+                    }
+                    ?>
+                    <li>
+                            <div class="private-group clearfix">
+                                <div class="img-group fl">
+                                  <a href="/user/feed/groupid/<?= $group['group_id']; ?>" title="<?= $this->escape($group['group_name']); ?>">
+                                    <img src="<?= $group['image_tag'] ?>" alt="">
+                                  </a>
+                                </div>
+                                <div class="name-group">
+                                  <a style="display:block; line-height:32px; text-transform:capitalize;" href="/user/feed/groupid/<?= $group['group_id']; ?>" title="<?= $this->escape($group['group_name']); ?>" class="group-of-name text-ellipsis">
+                                    <?= $this->escape($group['group_name']); ?>
+                                  </a>
+                                </div>
+                                <div style="margin-top:5px;">
+                                    <small style="margin-left:10px; color:#fff;" class="label label-danger"><?= $iGroupFeedIds ?></small>
+                                </div>
+                            </div>
+                    </li>
+                <?php
+                } ?>
+            </ul>
+        </div>
+    </div>
+ </div>
+<!-- Modal -->
+<div class="modal fade" id="modal-edit-notifications" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Notification : GroupName</h4>
+      </div>
+      <div class="modal-body">
+        <form action="">
+            <div class="input-group">
+                <input type="checkbox" class="checkbox-notifications" id="name-notifi">
+                <label for="name-notifi" style="margin-left:1rem;">Turn off notifications names</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" class="checkbox-notifications" id="cale-noti">
+                <label for="cale-noti" style="margin-left:1rem;">Turn off notifications calendar event</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" class="checkbox-notifications" id="main-feed-noti">
+                <label for="main-feed-noti" style="margin-left:1rem;">Turn off notifications main feed</label>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script language="javascript">
+$('.checkbox-notifications').checkboxpicker();
+    function getUnreadMail() {
+        $.get("<?= BASE_URL;?>/index/totalunread", {}, function (result) {
+            return result.total === 0 ? void(0) : $('#totalunread').html(result.total);
+        }, 'json');
+    }
+
+    NotifyMail();
+
+    function NotifyMail() {
+        setTimeout("getUnreadMail()", 1000);
+        setTimeout("NotifyMail()", 30000);
+    }  
+    var options = {valueNames: ['group-of-name'] };   
+    $('#search-field').hideseek({
+        nodata: 'No result found',
+    });
+
+    $('body').on('click', '#like-action', (function(){
+        $(this).find(".like").toggleClass('active');
+        var check = $(this).find(".fa-heart-o");
+        if(check.hasClass("fa-heart-o")) {
+            $(this).find(".fa-heart-o").addClass("fa-heart");
+            $(this).find(".fa-heart-o").removeClass("fa-heart-o");
+        }else {
+            $(this).find(".fa-heart").addClass("fa-heart-o");
+            $(this).find(".fa-heart").removeClass("fa-heart");
+        }
+    }));
+
+    (function($) {
+     "use strict"
+     // Accordion Toggle Items
+       var iconOpen = 'fa fa-minus-square',
+            iconClose = 'fa fa-plus-square';
+
+        $(document).on('show.bs.collapse hide.bs.collapse', '#accordion1', function (e) {
+            var $target = $(e.target)
+              $target.siblings('.accordion-heading')
+              .find('i.fa-change').toggleClass(iconOpen + ' ' + iconClose);
+              if(e.type == 'show')
+                  $target.prev('.accordion-heading').find('.accordion-toggle').addClass('active');
+              if(e.type == 'hide')
+                  $(this).find('.accordion-toggle').not($target).removeClass('active');
+        });
+    })(jQuery);
+
+    $(document).ready(function(){
+        $("body").on('click', '.contain-radio-approve', function(){
+            if($('form').find('.contain-radio-approve').hasClass('hover-approve'))
+            {
+                $('form').find('.contain-radio-approve').removeClass('hover-approve');
+            }
+            $(this).find('input[type="radio"]').prop('checked',true);
+            $(this).addClass('hover-approve');
+        });
+
+        $('.contain-radio-approve input:radio').change(function(){
+
+            if($('form').find('.contain-radio-approve').hasClass('hover-approve'))
+            {
+                $('form').find('.contain-radio-approve').removeClass('hover-approve');
+            }
+            $(this).parents(".contain-radio-approve").addClass('hover-approve');
+            $(this).parents(".contain-radio-approve").find('input[type="radio"]:checked').prop('checked', false);
+        });
+    });
+</script>
+<script src="<?php echo $this->static->frontend->js.'/waves.min.js'?>"></script>
+<script type="text/javascript">
+    Waves.init();
+    Waves.attach('.waves-btn', ['waves-block']);
+</script>
+

@@ -1,0 +1,144 @@
+<?php
+// account info
+$accountInfo    =  $this->accountInfo;
+$achievements   = $this->achievements;
+//var_dump($accountInfo);
+?>
+<div class="title-page mar-bot15">
+    <h4>
+        <i class="fa fa-user"></i>
+        <span class="capitalize">User</span>
+    </h4>
+</div><!-- title-page -->
+<div class="container-content">
+    <!-- <div class="title-content bg-blue clearfix">
+        <h5 class="white bold pull-left capitalize">User <?php echo $accountInfo['name']; ?></h5>
+    </div> --><!-- title-content -->
+    <div class="widget-content-user">
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-sm-3 border-right">
+                    <?php echo $this->render('usersearch.phtml'); ?>
+                </div>
+                <div class="col-sm-9">
+                    <div class="all-info-user">
+                        <ul class="tabs-menu-info mar-bot20 clearfix">
+                            <li><a href="<?php echo BASE_ADMIN_URL.'/user/summary?account_id='.$accountInfo['account_id'];?>">Summary</a></li>
+                            <li><a href="<?php echo BASE_ADMIN_URL.'/user/general?account_id='.$accountInfo['account_id'];?>">General</a></li>
+                            <li ><a href="<?php echo BASE_ADMIN_URL.'/user/personal?account_id='.$accountInfo['account_id'];?>">Personal</a></li>
+                            <li><a href="<?php echo BASE_ADMIN_URL.'/user/jobuser?account_id='.$accountInfo['account_id'];?>">Job</a></li>
+                            <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" ><a href="javascript:void(0);">Achievement</a></li>
+                        </ul><!-- tabs-menu-info -->
+                        <div class="tabs-child">
+                            <form action="<?php echo BASE_ADMIN_URL.'/user/achievement'?>" method="post">
+                                <input type="hidden" name="account_id" value="<?php echo $accountInfo['account_id'];?>"/>
+                                <div id="achivement" class="achivement">
+                                    <div class="achivement-info">
+                                        <?php
+                                        if(!empty($achievements))
+                                        {
+                                        foreach ($achievements['data'] as $key => $achievementYear) {
+                                            $arrMonth = array();?>
+                                            <div class="year-achivement bor-raduis4">
+                                                <h6 class="bold">
+                                                    <?php
+
+                                                    if (intval($key) == date('Y'))
+                                                        echo 'This year';
+                                                    else
+                                                        echo intval($key);
+                                                    ?>
+                                                </h6>
+                                            </div><!--year-achivement-->
+                                        <?php foreach ($achievementYear as $achievement) {
+                                                $sMonth = date("F", mktime(0, 0, 0, intval($achievement['month']), 1, 2000));
+                                                ?>
+                                                <div class="all-achivement-year clearfix">
+                                                    <?php
+                                                    if (!in_array($sMonth, $arrMonth)) { ?>
+                                                        <div class="month-of-year pull-left">
+                                                            <h6 class="bold"><?php echo $sMonth; ?></h6>
+                                                        </div><!--month-of-year-->
+                                                        <?php
+                                                        $arrMonth [] = $sMonth;
+                                                    }
+                                                    ?>
+                                                    <div class="content-of-month">
+                                                        <div class="detail-content-month bor-raduis4">
+                                                            <p><?php echo $achievement['name']; ?></p>
+                                                            <span><?php echo $achievement['day'] . '-' . $achievement['month']; ?></span>
+                                                            <a href="javascript:void(0);" data-action="achievement-delete" data-achievement="id" data-value="<?php echo $achievement['id']; ?>"><i class="fa fa-trash-o"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <!--content-of-month-->
+                                                </div><!--month-of-year-->
+                                            <?php
+                                            }// end foreach ($achievementYear as $achievement)
+                                        }// end foreach ($achievements['data'] as $key => $achievementYear)?>
+                                        <?php }else {echo '<p class="txt-center">No Data</p>';} ?>
+                                        <div class="all-achivement-year clearfix">
+                                            <div class="month-of-year pull-left">
+                                                <span class="add-more-achivement"><i class="fa fa-plus-square blue"></i></span>
+                                            </div><!--month-of-year-->
+                                            <div class="add-text-achivement">
+                                                <div class="achivement-addmore mar-bot10 clearfix">
+                                                    <span class="bold w100 pull-left mar-right10">Achivement</span>
+                                                    <input type="text" name="name" class="pull-left w500">
+                                                </div><!--achivement-addmore-->
+                                                <div class="achivement-addmore mar-bot10 clearfix">
+                                                    <span class="bold w100 pull-left mar-right10">Date</span>
+                                                    <input type="text" name="date" class="pull-left w500 date_time_picker" onkeypress="return false">
+                                                </div><!--achivement-addmore-->
+                                                <span data-action="achievement-submit" class="add-achivement-btn bor-raduis4">Add</span>
+                                            </div><!--content-of-month-->
+                                        </div><!--month-of-year-->
+<!--                                        <div class="footer-btn-tab clearfix">-->
+<!--                                            <a href="javascript:void(0);" class="back grey bor-raduis4" data-action="back-page">Back</a>-->
+<!--                                            <a href="#" data-action="achievement-submit" class="save white bor-raduis4 bg-blue">Save change</a>-->
+<!--                                        </div><!--footer-btn-tab-->
+                                    </div><!--achivement-info-->
+                                </div><!-- achivement -->
+                            </form>
+                        </div><!-- tabs-child -->
+                    </div><!-- all-info-user -->
+                </div>
+            </div><!-- row -->
+        </div><!-- container-fluid -->
+    </div><!-- widget-content -->
+</div><!-- container-content -->
+<script type="text/javascript">
+$(function(){
+   $('body').on('click','[data-action="achievement-submit"]', function(){
+       var achievement = {};
+       achievement['name']  = $('[name="name"]').val();
+       achievement['date']  = $('[name="date"]').val();
+       achievement['account_id']  = $('[name="account_id"]').val();
+//       console.log(achievement);
+       $.post("<?php echo BASE_ADMIN_URL.'/user/addachievement'; ?>", { data: JSON.stringify(achievement)}, function(data){
+
+           if(data.result == false)
+           {
+               alert(data.message);
+           }else
+            location.reload(true);
+       },'json')
+
+   });
+    $('body').on('click','[data-action="achievement-delete"]', function(){
+
+        if(confirm('Do you want to delete this Achievement ?'))
+        {
+            var _this   = $(this);
+            var _id     = _this.attr('data-value');
+            $.post("<?php echo BASE_ADMIN_URL.'/user/deleteachievement'; ?>",{id:_id}, function(data){
+                if(data.result)
+                    location.reload(true);
+                else
+                    alert(data.message);
+            },'json');
+        }
+
+    });
+
+});
+</script>

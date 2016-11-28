@@ -1,0 +1,192 @@
+<div class="asideCont clearfix" id="newproduct">
+    <div class="bgTitlef9f9f9 titleReport">ADD PHOTO
+        <div class="floatright clear">
+            <a href="javascript:void(0)" onClick="window.history.back();" class="button gray">[Back]</a>
+        </div>
+    </div>
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" class="tblComm">
+        <tbody>
+            <tr>
+                <td valign="top" width="25%">
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                            <li>                        
+                                <form name="uploadImage" url="<?php echo BASE_URL . "/upload/upload/type/1"; ?>">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" input-id="1">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img class="img" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                    <div id="photoUploadResult1" class="hidden imageResult"></div>
+                                </form>
+                                <p class="error" id="pImageError" ></p>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td valign="top" width="25%">
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                            <li>                        
+                                <form name="uploadImage" url="<?php echo BASE_URL . "/upload/upload/type/1"; ?>">
+                                   
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" input-id="2">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img class="img" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                    <div id="photoUploadResult2" class="hidden imageResult"></div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td valign="top" width="25%">
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                            <li>                        
+                                <form name="uploadImage" url="<?php echo BASE_URL . "/upload/upload/type/1"; ?>">
+                                   
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" input-id="3">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img class="img" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                    <div id="photoUploadResult3" class="hidden imageResult"></div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td valign="top" width="25%">
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                            <li>                        
+                                <form name="uploadImage" url="<?php echo BASE_URL . "/upload/upload/type/1"; ?>">
+          
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" input-id="4">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img class="img" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                    <div id="photoUploadResult4" class="hidden imageResult"></div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top" colspan="5">
+                    <div class="floatleft mLeft10 mTop10">
+                        <a href="#" id="btnAdd" class="button green">Add</a>
+                        <span id="btnSubmitting" class="button gray hidden">Submitting...</span>
+                        <a href="javascript:void(0);" id="btnMore" rel="2" class="button gray">More Image</a>
+                    </div>                    
+                </td>                    
+            </tr>
+        </tbody>
+    </table>
+</div>
+<form name="clone" class="hidden" url="<?php echo BASE_URL . "/upload/upload/type/1"; ?>">
+    <div class="fileupload fileupload-new" data-provides="fileupload" input-id="1">
+        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img class="img" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
+        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+        <div>
+            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+        </div>
+    </div>
+    <div id="photoUploadResult1" class="hidden imageResult"></div>
+</form>
+<script type="text/javascript">
+    this.isProcess = false;
+    document.domain = "<?php echo DOMAIN; ?>";
+    
+    $('.fileupload').fileupload({"name":"file_upload"});
+    
+    $('#btnMore').click(function(){
+        var ul = $(".ulListIfSch");
+        var num = prompt("How many images do you want to add?");
+        var form = $("form[name='clone']").first().clone().removeClass('hidden');
+        var idResult = "photoUploadResult";
+        var temp = $("form[name='uploadImage']").length;
+        var index = temp % 4;
+        
+        if (!parseInt(num) || parseInt(num) <= 0) {
+            alert("Input a number greater than 0 please!");
+            return false;
+        }
+        
+        while(num > 0) {
+            jQuery.each(ul, function(){
+                if (num) {
+                    if (!index) {
+                        temp += 1;
+                        form.find("div.imageResult").attr("id", idResult + temp);
+                        form.find("div.fileupload").attr("input-id", temp);
+
+                        $(this).append("<li>" + form[0].outerHTML + "</li>");
+                        num -= 1;
+                    } else {
+                        index -= 1;
+                    }
+                } else {
+                    return false;
+                }
+            });
+        }
+        
+    });
+    
+    $('#btnAdd').click(function() {
+        if(!this.isProcess) {
+            var self = this;
+            var errors = false;
+            
+            var images = $(".response .image_id");
+            if(!images) {
+                alert("Please choose at least 1 image.");
+               return;
+            } 
+            
+            var data = {};
+            images.each(function(index, value) {
+                data[index] = $(this).html() + '.' + $(this).siblings('.image_format').html();
+            });
+            
+            var id = <?php echo $this->iAlbumID; ?>;
+          
+
+            $.post("<?php echo BASE_ADMIN_URL; ?>/photo/addphotos", {albumid:id,data:data}, function(result){
+                if(result.error == 0)
+                {
+                   /* alert("Add successfully, you'll be redirect to package item list page.\n\nBut it'll take a while to update new item(s) into list!");*/
+                    
+                    window.location='<?php echo BASE_ADMIN_URL; ?>/photo/index?albumid=' + id;
+                    
+                }
+                else
+                {
+                    alert(result.message);
+                    $("#btnAdd").removeClass("hidden");
+                    $("#btnSubmitting").addClass('hidden');
+                    self.isProcess = false;
+                }
+            },'json');
+        }
+    });
+</script>

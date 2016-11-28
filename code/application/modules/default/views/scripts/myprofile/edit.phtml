@@ -1,0 +1,318 @@
+ <div class="wrapper">
+    <div class="inner">
+           <?php 
+              echo $this->render('partials/slogan.phtml');
+           ?>
+        
+<?php
+$sImageUrl = Core_Common::avatarProcess($this->arrAccountInfo['picture']);
+
+   
+?>
+
+<div class="asideCont clearfix">
+    <div class="bgTitlef9f9f9 titleReport">UPDATE ACCOUNT INFO
+        <div class="floatright clear">
+            <a href="javascript:void(0)" onClick="window.history.back();" class="button gray">Back</a>
+        </div>
+    </div>
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" class="tblComm" style="margin-bottom:0;">
+        <tbody>
+            <tr>
+                <td valign="top" style="width: 350px;">
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                            <li>
+                                <p class="titleDes"><label>GNT ID</label></p>
+                                <input type="text" id="gID" name="gID" placeholder="ID" value="<?php echo $this->arrAccountInfo['id'];?>">
+                                <p class="error" id="gIDError" ></p>
+                            </li>
+                             <li>
+                                <p class="titleDes"><label>Skype (Account/Password)</label></p>
+                                <input type="text" id="gSkype" name="gSkype" placeholder="Skype Account" value="<?php echo $this->arrAccountInfo['skype_account'];?>">
+                                <p class="error" id="gSkypeError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Mobion (Account/Password)</label></p>
+                                <input type="text" id="gMobion" name="gMobion" placeholder="Mobion Account" value="<?php echo $this->arrAccountInfo['mobion_account'];?>">
+                                <p class="error" id="gMobionError" ></p>
+                            </li>
+                            
+                            <li>
+                                <p class="titleDes"><label>Name</label></p>
+                                <input type="text" id="gName" name="gName" placeholder="Name"  value="<?php echo $this->arrAccountInfo['name'];?>">
+                                <p class="error" id="gNameError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Email</label></p>
+                                <input type="text" id="gEmail" name="gEmail" placeholder="Email address"  value="<?php echo $this->arrAccountInfo['email'];?>">
+                                <p class="error" id="gEmailError" ></p>
+                            </li>
+                            
+                          
+                           
+                            <li>                        
+                                <p class="titleDes"><label>Image</label></p>
+                                <form name="uploadImage" url="<?php echo BASE_URL . "/upload/upload"; ?>">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 100px; height: 100px;"><img class="img" src="<?php echo !empty($sImageUrl)?$sImageUrl:'http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image';?>" width="100px" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                    <div id="photoUploadResult" class="hidden"></div>
+                                </form>
+                                <p class="error" id="pImageError" ></p>
+                                <input type="hidden" name="gPicture" value ="<?php echo $this->arrAccountInfo['picture'];?>" id ="gPicture" />
+                            </li>
+                           
+            
+                        </ul>
+                    </div>
+                </td>
+                <td valign="top" style="width: 350px;">
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                              <?php
+                            
+                               $birthDay ='';
+                                
+                               if($this->arrAccountInfo['birthday'] != '0000-00-00')
+                               {
+                                   $birthDay = $this->arrAccountInfo['birthday'];
+                               }
+                               ?>
+
+                            <li>
+                                <p class="titleDes"><label>BirthDay (yyyy-mm-dd)</label></p>
+                                <input type="text" id="gBirthday" name="gBirthday" placeholder="Birthday"  value="<?php echo $birthDay;?>">
+                                <p class="error" id="gBirthdayError" ></p>
+                            </li>
+                             <li>
+                                <p class="titleDes"><label>Phone</label></p>
+                                <input type="text" id="gPhone" name="gPhone" placeholder="Phone"  value="<?php echo $this->arrAccountInfo['phone'];?>">
+                                <p class="error" id="gPhoneError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Identity</label></p>
+                                <input type="text" id="gIdentity" name="gIdentity" placeholder="Identity"  value="<?php echo $this->arrAccountInfo['identity'];?>">
+                                <p class="error" id="IdentityError" ></p>
+                            </li>
+                           
+                            <li>
+                                <p class="titleDes"><label>About Me</label></p>
+                                <textarea style="width:258px; font-size: 13px;" id="gAboutme" name="gAboutme" placeholder="About me"><?php echo $this->arrAccountInfo['description'];?></textarea>
+                                <p class="error" id="gAboutmeError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Address</label></p>
+                                <input type="text" id="gAddress" name="gAddress" placeholder="Address" value="<?php echo $this->arrAccountInfo['address'];?>">
+                                <p class="error" id="gAddressError" ></p>
+                            </li>
+                            
+                             <li>                        
+                                <p class="titleDes"><label>Country</label></p>
+                                <select id="gCountry" name="gCountry" class="seleComm width270">
+                                    <option value="0">Choose a Country</option>
+                                    <?php 
+                                   if(!empty($this->arrGeneralAtt['country']))
+                                   {
+                                        foreach ($this->arrGeneralAtt['country'] as $value): 
+                                         ?>
+                                        <option value="<?php echo $value['id']; ?>"  <?php echo ($value['id'] == $this->arrAccountInfo['country_id'])?'selected':'';?>><?php echo $value['name']; ?></option>
+                                        <?php 
+                                        endforeach; 
+                                   }
+                                   ?>
+                                </select>
+                                <p class="error" id="gCountryError" ></p>
+                            </li>
+                            
+                         
+                        </ul>
+                    </div>
+                </td>
+                
+                <!-- Extra Field -->
+                <td valign="top">
+                    <?php
+                      if(!empty($this->arrAttribute))
+                      { 
+                      ?>
+                   
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                            
+                            <?php
+                               //Init Att
+                               $arrAttID = array();
+                               $sAttID = '';
+                               
+                               //check attribute
+                               if(!empty($this->arrAttribute))
+                               {
+                                    foreach($this->arrAttribute as $value)
+                                    {
+                                        
+                                        
+                                       $dataValue = isset($this->arrAccountExtra[$value['attribute_id']])?$this->arrAccountExtra[$value['attribute_id']]:'';
+                                       
+                                       $arrAttID[] = $value['attribute_id'];
+                                       if($value['attribute_type'] ==TEXTBOX_ATTRIBUTE_TYPE)
+                                       {
+                                    ?>
+                                         <li>
+                                             <p class="titleDes"><label><?php echo $value['attribute_name'];?></label></p>
+                                             <input type="text" id="attribute_<?php echo $value['attribute_id'];?>" name="attributeText[<?php echo $value['attribute_id'];?>]" placeholder="<?php echo $value['attribute_name'];?>" value="<?php echo $dataValue;?>">
+                                             <p class="error" id="gAttribute_<?php echo $value['attribute_id'];?>Error" ></p>
+                                         </li>
+                                       <?php
+                                       }
+                                       else if ($value['attribute_type'] == TEXTAREA_ATTRIBUTE_TYPE)
+                                       {
+                                        ?>
+
+                                         <li>
+                                             <p class="titleDes"><label><?php echo $value['attribute_name'];?></label></p>
+                                            <textarea style="width:258px; font-size: 13px;" id="attribute_<?php echo $value['attribute_id'];?>" name="attributeText[<?php echo $value['attribute_id'];?>]" placeholder="<?php echo $value['attribute_name'];?>"><?php echo $dataValue;?></textarea>
+                                             <p class="error" id="gAttribute_<?php echo $value['attribute_id'];?>Error" ></p>
+                                         </li>
+
+                                         <?php
+                                       }
+                                       ?>
+                                 <?php
+                                    }
+                                    
+                                    $sAttID = implode(',',$arrAttID);
+                               }
+                               ?>
+                        </ul>
+                    </div>
+                    
+                    <?php
+                      }
+                      ?>
+                </td>
+                <!-- End Extra Field -->
+            </tr>
+            
+            <tr>
+                <td valign="top" colspan="2">
+                    <div class="floatleft mLeft10 mTop10">
+                        <a href="#" id="btnEventAdd" class="button green">Update</a>
+                        <input type="hidden" id="gAccountID" name="gAccountID" value="<?php echo $this->arrAccountInfo['account_id'];?>" />
+                         <input type="hidden" id="gAttIDs" name="gAttIDs" value="<?php echo $sAttID;?>" />
+                         <input type="hidden" id="gMail" name="gMail" value="<?php echo $this->arrAccountInfo['email'];?>" />
+                         
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    
+    /* Upload */
+    document.domain = "<?php echo DOMAIN; ?>";
+    $('.fileupload').fileupload({"name":"itemImage"});
+    
+    
+    $("#gBirthday").datetimepicker({ 
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+	stepHour: 1,
+	stepMinute: 1,
+	stepSecond: 1
+    });
+    
+
+    $('#btnEventAdd').click(function() {
+
+        
+        var accountid = $('#gAccountID').val();
+        var id = $('#gID').val();
+        var skype = $('#gSkype').val();
+        var mobion = $('#gMobion').val();
+        var name = $('#gName').val();
+        var email    = $('#gMail').val();
+        var birthday = $('#gBirthday').val();
+        var phone = $('#gPhone').val();
+        var identity = $('#gIdentity').val();
+        var picture = $('#gPicture').val();
+        var aboutme = $('#gAboutme').val();
+        var country = $('#gCountry').val();
+        var address = $('#gAddress').val();
+        var image = $('#photoUploadResult .response .image_id').html();
+        var gAttIDs = $('#gAttIDs').val();
+
+         
+        if(name =='')
+        {
+            alert('Pls input name');
+            return;  
+        }
+        
+        if(accountid ==0)
+        {
+            alert('Pls check your information');
+            return;  
+        }
+        
+        
+        if (image == undefined) {
+            image = picture;
+        } else {
+            image = $('#photoUploadResult .response .image_id').html() + "." + $('#photoUploadResult .response .image_format').html();
+        }
+       
+
+        var params = {
+            accountid: accountid,
+            id: id,
+            skype: skype,
+            mobion:mobion,
+            name: name,
+            email: email,
+            birthday: birthday,
+            phone: phone,
+            identity: identity,
+            picture: image,
+            aboutme:aboutme,
+            country:country,
+            address:address,
+            attids:gAttIDs,
+            <?php
+            if(!empty($arrAttID))
+            {
+                foreach($arrAttID as $value)
+                {
+
+                ?>
+                  attribute_<?php echo $value;?>:$("#attribute_<?php echo $value;?>").val(),
+
+              <?php
+                }
+            }
+            ?>
+        };
+
+        $.post("<?php echo BASE_URL; ?>/myprofile/update", params, function(result){
+            if(result.error == 0)
+            {
+                window.location='<?php echo BASE_URL; ?>/myprofile/detail';
+            }
+            else
+            {
+                alert(result.message);
+            }
+        },'json');
+    });
+    
+        
+</script>

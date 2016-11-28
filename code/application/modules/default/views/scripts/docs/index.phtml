@@ -1,0 +1,1008 @@
+<link href="<?= $this->static->frontend->css ;?>/v2/document.css" rel="stylesheet" type='text/css'>
+<script src="<?= $this->static->frontend->js ;?>/v2/ngtags-input.js"></script>
+<script src="<?= $this->static->frontend->js ;?>/v2/contextMenu_docs.js?v=1.5.6"></script>
+<script src="<?= $this->static->frontend->js ;?>/v2/docCtrl.js"></script>
+<!-- main document content -->
+        <article class="document-wrapper m-t-20"  ng-class="{off: toggle}" ng-controller="documentCtrl" ng-init="baseURL='<?= BASE_URL?>'" ng-click="clickMainEvent($event)" ng-style="widthWrapper">
+            <div class="left-side">
+                <div class="btn-add-new">
+                    <div class="dropdown">
+                          <a class="btn btn-banana dropdown-toggle" id="chose-group"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add new
+                            <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="chose-group">
+                            <li><a href ng-click="newFile('folder')"><i class="fa fa-folder-o m-r-10" aria-hidden="true"></i>New folder</a>
+                            </li><li role="presentation" class="divider dcm"></li>
+                            <li><a href ng-click="newFile('doc')"><img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-10" width="13" height="14">Documents</a></li>
+                            <li><a href ng-click="newFile('xlxs')"><img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-10" width="13" height="14">Sheets</a></li>
+                            <li><a href ng-click="newFile('ppt')"><img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-10" width="13" height="14">Slides</a></li>
+                            <li><a href ng-click="newFile('note')"><i class="fa fa-file-o m-r-10" aria-hidden="true"></i>Plain text document</a></li>
+                          </ul>
+                    </div>
+                </div>
+                <div class="list-folder"  custom-scroll="optionCustomscrollLeft">
+                    <div class="item-listfolder m-t-10">
+                        <div class="drive-info _2mdv"><img src="<?= $this->static->frontend->images ?>/v2/icon.png" alt="" class="m-r-5" width="7" height="7">
+                            <span class="text-bold"  ng-click="gotoMydrive()">MY DRIVE</span>
+                            <div class="folder-item" ng-repeat="i in mdriveFiles" ng-if="i.type === 1" title="{{i.name}}">
+                                <a href class="fld-itm" ng-click="getFileFromMyDrive(m, i);" ng-class="{active: i.active === true}">
+                                <i class="fa fa-caret-right fa-fw" ng-show="i.active === true"></i>
+                                <span class="text-ellipsis _dri">
+                                <i class="fa fa-folder-o m-r-10" aria-hidden="true"></i> 
+                                {{i.name}}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-listfolder m-t-10" ng-repeat="m in listFolder">
+                        <div class="drive-info"> <img src="<?= $this->static->frontend->images ?>/v2/icon.png" alt="" class="m-r-5" width="7" height="7">
+                            <span class="text-bold _drv278" ng-click="getFolderFromDrive(m.drive)">{{m.drive}}</span>
+                        </div>
+                        <div class="folder-item" ng-repeat="i in m.folders" ng-switch="i.type" title="{{i.name}}">
+                                <a href class="fld-itm" ng-click="setActiveFolder(m, i);" ng-class="{active: i.active === true}" ng-switch-when="1">
+                                <i class="fa fa-caret-right fa-fw" ng-show="i.active === true"></i>
+                                <span class="text-ellipsis _dri">
+                                <i class="fa fa-folder-o m-r-10" aria-hidden="true"></i> 
+                                {{i.name}}</span>
+                                </a>
+                                <a href="#" ng-class="{active: i.active === true}" ng-switch-when="0">
+                                    <span ng-switch="i.ext">
+                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" class="m-r-10" alt="" width="14" height="13" ng-switch-when=".pptx">    
+                                        <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" class="m-r-10" alt="" width="14" height="13" ng-switch-when=".xlsx"> 
+                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" class="m-r-10" alt="" width="14" height="13" ng-switch-when=".docx"> 
+                                    </span>
+                                    {{i.name}}
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-driver">
+                    <div class="process-storage">
+                        <div class="used-storage" ng-style="{'width': storageObj.percentStorage + '%'}"></div>
+                    </div>
+                    <div class="info text-grey m-t-10">
+                        <i class="fa fa-cloud" aria-hidden="true"></i> {{storageObj.curStorage}} of {{storageObj.limitStorage}} storage used ({{storageObj.percentStorage}}%)
+                    </div>
+                    <!-- <div class="m-t-10"><span class="text-bold">Sync account</span></div>
+                    <div class="sync-acc m-t-10 m-b-10">
+                        <a href="/google-drive" class="m-r-10"><img src="<?= $this->static->frontend->images ?>/v2/GG.png"   alt=""></a>
+                        <a href="/one-drive"><img src="<?= $this->static->frontend->images ?>/v2/One.png"  alt=""></a>
+                        <a href="/other"><img src="<?= $this->static->frontend->images ?>/v2/more.png" alt=""></a>
+                    </div> -->
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="top-act">
+                    <div class="top-left" ng-show="!toggleSearch">
+                        <a href class="m-r-10" ng-class="{'active': folderItem.swm == 'rcn'}" ng-click="recentAction()"><i class="fa fa-clock-o m-r-5" aria-hidden="true"></i> Recent</a>
+                        <a href ng-class="{'active': folderItem.swm == 'swm'}" ng-click="loadShareWithMe()" class="m-r-10"><i class="fa fa-users m-r-5" aria-hidden="true"></i> Shared with me</a>
+                        <a href ng-class="{'active': folderItem.swm == 'fvr'}" ng-click="loadFavorites()" class="m-r-10"><i class="fa fa-star-o m-r-5" aria-hidden="true"></i>Favorites</a>
+                        <a href ng-class="{'active': folderItem.swm == 'trs'}" ng-click="loadTrashFile($event)" class="m-r-10"><i class="fa fa-trash-o m-r-5"></i>Trash</a>
+                    </div>
+                    <div class="top-right" ng-show="!toggleSearch">
+                        <div class="right-spc" ng-if="activeToolItem">
+                            <a href ng-show="uId == objectSelect.owner" ng-click="shareSelectFile()"><i class="fa fa-share-alt m-r-20"></i></a>
+                            <a href ng-click="deleteSelectFile()"><i class="fa fa-trash-o m-r-20"></i></a>
+                            <a href ><i class="fa fa-ellipsis-h m-r-20" aria-hidden="true"></i></a>
+                        </div>
+                        <a href class="m-r-20 m-l-20" ng-click="openSearchField($event)"><i class="fa fa-search" aria-hidden="true"></i></a>
+                        <a href class="m-r-20" ng-click="switchViewType(viewFileType);"><i class="fa" ng-class="changeViewIcon(viewFileType)" aria-hidden="true"></i></a>
+                        <a href class="m-r-20"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i></a>
+                        <a href ng-click="classToggleRight = !classToggleRight">
+                        <img ng-if="classToggleRight" ng-src="<?= $this->static->frontend->images ?>/v2/recent_close.png" width="14" height="13" alt=""><img ng-if="!classToggleRight" ng-src="<?= $this->static->frontend->images ?>/v2/recent.png" width="14" height="13" alt=""></a>
+                    </div>
+                    <div class="_searchff" ng-show="toggleSearch">
+                        <div class="_ls"><input type="text" ng-model="searchFile" class="form-control" placeholder="Type here for search"></div>
+                        <div class="_cls" ng-click="toggleSearch = false"><a href><i class="fa fa-times"></i></a></div>
+                    </div>
+                </div>
+                <div class="mct-m" ng-class="{'active': classToggleRight}">
+                    <div class="mct-m-left" flow-init flow-drop flow-files-added="fileDocumentDropAdded( $files, $message, $flow )" 
+                     flow-drag-enter="activeDrop = 'active'" flow-name="flowObj.flow" flow-drag-leave="activeDrop = ''"> 
+                        <div class="loading_ic" ng-if="loading"><img src="<?= $this->static->frontend->images.'/loading.svg'?>" alt=""></div>
+                        <div class="field-drag" ng-class="activeDrop"><span>Drop file here to upload</span></div>
+                        <div class="nav-fldrs">
+                            <div class="dropdown">
+                                <span ng-repeat="i in navigationFolder">
+                                    <a ng-click="navigationAccessFile(i)">{{i.name}}</a>
+                                    <i class="fa fa-angle-right" aria-hidden="true"></i> 
+                                    <a href class="_lTgg92"  ng-if="$index + 1 !== 1 && $index + 1 === navigationFolder.length" data-toggle="dropdown"><span class="caret"></span></a>
+                                    <ul class="dropdown-menu _lTgg93" aria-labelledby="chose-group" 
+                                    ng-if="$index + 1 !== 1 && $index + 1 === navigationFolder.length">
+                                        <li>
+                                            <a href data-toggle="modal" data-target="#modalRename" ng-click="setObjectRename(i)"><i class="fa fa-pencil-square-o fa-fw m-r-10"></i>Rename</a>   
+                                            <a href  data-toggle="modal" data-target="#modalDelete" ng-click="setObjectDelete(i)"><i class="fa fa-trash fa-fw m-r-10"></i>Remove</a>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </div>
+                            <button class="btn btn-main" ng-click="loadmoreActionsLogs()"  ng-if="viewFileType === 'recent'" ng-disabled="disabledLoadMore">
+                            <span ng-if="!disabledLoadMore">View More</span><span ng-if="disabledLoadMore">Loading...</span></button>
+                            <div class="dropdown" ng-if="folderItem.swm !== 'rcn'">
+                                <a href data-toggle="dropdown"><span >Filter</span><span class="caret"></span></a>
+                                <ul class="dropdown-menu filter" aria-labelledby="chose-filter">
+                                    <li>
+                                        <a href="" ng-click="filterAll()">All</a>
+                                    </li>
+                                    <li>
+                                        <a href="" ng-click="filterFolder()">By Folder</a>
+                                    </li>
+                                    <li>
+                                        <a href="" ng-click="filterFile()">By Files</a>
+                                    </li>
+                                    <li>
+                                        <a href="" ng-click="filterImage()">By Images</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="fldrs-wrapper" ng-class="viewFileType" ng-if="viewFileType === 'table'" custom-scroll="optionCustomscroll" context-menu="createFolder">
+                               <div class="fldrs-item"  ng-repeat="fl in folderItem | filter:searchFile">
+                                    <div class="" ng-switch="fl.type">
+                                        <div class="folder" ng-switch-when="1" context-menu="folderOptions" ng-dblclick="accessFolderItem($event, fl);" ng-click="selectItem($event, fl)"  ng-class="{active : fl.selected}" ng-disabled="loading">
+                                            <span class="text-ellipsis doc fldrs_n"
+                                            title="{{fl.name}}">{{fl.name}}</span>
+                                        </div>
+                                        <div class="file" ng-class="{active : fl.selected}" ng-click="selectItem($event, fl)" ng-switch-when="0" context-menu="fileOptions" ng-dblclick="openFile(fl)">
+                                                <span ng-switch="fl.ext" ng-click="getFileInfo(fl)">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" width="100" height="80" ng-switch-when="xlsx" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" width="100" height="80" ng-switch-when="docx" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" width="100" height="80" class="_imfDk21"
+                                                    ng-switch-when="pptx">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" width="100" height="80" ng-switch-when="xls" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" width="100" height="80" ng-switch-when="doc" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" width="100" height="80" class="_imfDk21"
+                                                    ng-switch-when="ppt">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" width="100" height="80" ng-switch-when="txt" class="_imfDk21">
+                                                    <img ng-src="{{checkUrl(fl.URL)}}" alt="" width="100" height="80" ng-switch-when="jpg" class="_imfDk21">
+                                                    <img ng-src="{{checkUrl(fl.URL)}}" alt="" width="100" height="80" ng-switch-when="jpeg" class="_imfDk21">
+                                                    <img ng-src="{{checkUrl(fl.URL)}}" alt="" width="100" height="80" ng-switch-when="png" class="_imfDk21">
+                                                    <img ng-src="{{checkUrl(fl.URL)}}" alt="" width="100" height="80" ng-switch-when="gif" class="_imfDk21">
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/defaultFile.png" alt="" width="100"
+                                                    height="80" ng-switch-default class="_imfDk21">
+                                                    <div class="img-file _imfDk21">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="xlsx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="docx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="pptx">
+                                                         <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="xls">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="doc">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="ppt">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="txt">
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="jpg"></i>
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="gif"></i>
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="jpeg"></i>
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="png"></i>
+                                                        <i class="fa fa-file-o m-r-5" ng-switch-default></i>
+                                                        <span class="text-ellipsis" title="{{fl.name}}">{{fl.name}}</span>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                    </div>
+                               </div>
+                        </div><!-- end fldrs wrapper -->
+                        <div class="fldrs-wrapper"  ng-class="viewFileType" ng-if="viewFileType === 'list'" 
+                        custom-scroll="optionCustomscroll" context-menu="createFolder">
+                                    <div class="title-header-list text-grey">
+                                        <div class="name">
+                                            Name <i class="fa fa-sort m-l-10"></i>
+                                        </div>
+                                        <div class="detailSizeFolder text-grey m-l-10">
+                                            {{detailSizeFolder}}
+                                        </div>
+                                        <div class="modified">
+                                            Last modified <i class="fa fa-sort m-l-10"></i>
+                                        </div>
+                                    </div>
+                                   <div class="fldrs-item-list" ng-repeat="fl in folderItem | filter:searchFile" ng-click="getDetailFile(fl)">
+                                        <div ng-switch="fl.type">
+                                            <div class="folder" ng-dblclick=accessFolder(fl.group_id) ng-class="activeClass" ng-switch-when="1" context-menu="folderOptions" ng-mouseenter="activeClass = 'active'" 
+                                             ng-mouseleave="activeClass = ''">
+                                                <i class="fa m-r-10" ng-class="checkFavorites(fl.favorites)" ng-click="setFavorites(fl)"></i>
+                                                <i class="fa fa-folder-o fa-3x m-r-10"></i>
+                                                <div class="text-left content-file text-ellipsis">{{fl.name}} | <span class="text-grey" ng-if="fl.size !== 0">{{fl.size}}</span>
+                                                <i class="fa fa-users fa-fw m-l-10" ng-if="fl.share"></i>
+                                                <br/><span class="text-grey">{{fl.info}}</span></div>
+                                                <div edit-file info="fl"></div>
+                                                <div class="text-right text-grey">{{fl.updated}}</div>
+                                            </div>
+                                            <div class="file" ng-switch-when="0" context-menu="folderOptions" ng-dblclick="openFile(fl)">
+                                                <i class="fa m-r-10" ng-class="checkFavorites(fl.favorites)" ng-click="setFavorites(fl)"></i>
+                                                <span ng-switch="fl.ext">
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/word.png"  
+                                                    class="m-r-10 _imfDk21"  alt="" width="40" height="40" ng-switch-when="docx">    
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/xlxs.png"  
+                                                    class="m-r-10 _imfDk21"  alt="" width="40" height="40" ng-switch-when="xlsx">    
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/ppt.png"  
+                                                    class="m-r-10 _imfDk21"  alt="" width="40" height="40" ng-switch-when="pptx">  
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/word.png"  
+                                                    class="m-r-10 _imfDk21"  alt="" width="40" height="40" ng-switch-when="doc">    
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/xlxs.png"  
+                                                    class="m-r-10 _imfDk21"  alt="" width="40" height="40" ng-switch-when="xls">    
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/ppt.png"  
+                                                    class="m-r-10 _imfDk21"  alt="" width="40" height="40" ng-switch-when="ppt">   
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" width="40" height="40" ng-switch-when="txt" class="_imfDk21"> 
+                                                    <img ng-src="{{fl.URL}}" class="m-r-10 _imfDk21"  alt="" width="40" height="40" 
+                                                    ng-switch-when="jpg">
+                                                    <img ng-src="{{fl.URL}}" class="m-r-10 _imfDk21"  alt="" width="40" height="40" 
+                                                    ng-switch-when="png">
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/defaultFile.png" alt="" width="40" height="40" ng-switch-default class="_imfDk21">
+                                                </span>
+                                                <div class="text-left content-file text-ellipsis _imfDk21">{{fl.name}} | 
+                                                <span class="text-grey" ng-if="fl.size !== 0">{{fl.size}}</span>
+                                                <i class="fa fa-users fa-fw m-l-10" ng-if="fl.share"></i>
+                                                <br/> <span class="text-grey">{{fl.info}}</span></div>
+                                                <div edit-file info="fl"></div>
+                                                <div class="text-right text-grey">{{fl.updated}}
+                                                </div>
+                                            </div>
+                                            <div class="image" ng-switch-when="img" context-menu="folderOptions" ng-dblclick="loadImgSlide(fl)">
+                                                <i class="fa m-r-10" ng-class="checkFavorites(fl.favorites)" ng-click="setFavorites(fl)"></i>
+                                                <img ng-src="{{fl.URL}}" class="m-r-10"  alt="" width="40" height="40">
+                                                <div class="text-left content-file text-ellipsis">{{fl.name}}
+                                                <i class="fa fa-users fa-fw m-l-10" ng-if="fl.share"></i>
+                                                <br/><span class="text-grey">{{fl.info}}</span></div>
+                                                <div edit-file info="fl"></div>
+                                                <div class="text-right text-grey">{{fl.updated}}</div>
+                                            </div>
+                                            <div class="default" ng-switch-default></div>
+                                        </div>
+                                   </div>
+                        </div>
+                        <div class="fldrs-wrapper" ng-class="viewFileType" ng-if="viewFileType === 'favorites'" custom-scroll="optionCustomscroll">
+                            <div class="fldrs-item"  ng-repeat="fl in folderItem | filter:searchFile">
+                                    <div class="" ng-switch="fl.type">
+                                        <div class="folder" ng-switch-when="1" context-menu="favoritesOptions" ng-dblclick="accessFolderItem($event, fl);" ng-click="activeClassFolder = !activeClassFolder" 
+                                        ng-class="{active : activeClassFolder}" ng-disabled="loading">
+                                            <span class="text-ellipsis doc fldrs_n"
+                                            title="{{fl.name}}">{{fl.name}}</span>
+                                        </div>
+                                        <div class="file-xlxs" ng-switch-when="0" context-menu="favoritesOptions" ng-dblclick="openFile(fl)">
+                                                <span ng-switch="fl.ext" ng-click="getFileInfo(fl)">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" width="90" height="80" ng-switch-when="xlsx" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" width="90" height="80" ng-switch-when="docx" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" width="90" height="80" class="_imfDk21"
+                                                    ng-switch-when="pptx">
+                                                     <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" width="90" height="80" ng-switch-when="xls" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" width="90" height="80" ng-switch-when="doc" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" width="90" height="80" class="_imfDk21"
+                                                    ng-switch-when="ppt">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" width="90" height="80" ng-switch-when="txt" class="_imfDk21">
+                                                    <img ng-src="{{checkUrl(fl.URL)}}" alt="" width="90" height="80" ng-switch-when="jpg" class="_imfDk21">
+                                                    <img ng-src="{{checkUrl(fl.URL)}}" alt="" width="90" height="80" ng-switch-when="png" class="_imfDk21">
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/defaultFile.png" alt="" width="100" height="80" ng-switch-default class="_imfDk21">
+                                                    <div class="img-file _imfDk21">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="xlsx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="docx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="pptx">
+                                                         <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="xls">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="doc">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="ppt">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="txt">
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="jpg"></i>
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="png"></i>
+                                                        <i class="fa fa-file-o m-r-5" ng-switch-default></i>
+                                                        <span class="text-ellipsis" title="{{fl.name}}">{{fl.name}}</span>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                    </div>
+                               </div>
+                        </div>
+                        <div class="fldrs-wrapper zsw" ng-class="viewFileType" ng-if="viewFileType === 'shared'" 
+                        custom-scroll="optionCustomscroll">
+                            <div class="fldrs-item"  ng-repeat="fl in folderItem | filter:searchFile">
+                                    <div class="" ng-switch="fl.type">
+                                        <div class="folder" ng-switch-when="1" context-menu="sharedOptions" ng-dblclick="accessFolderItem($event, fl);" ng-click="selectItem($event, fl)" ng-class="{active : fl.selected}" ng-class="{active : activeClassFolder}" ng-disabled="loading">
+                                            <span class="text-ellipsis doc fldrs_n"
+                                            title="{{fl.name}}">{{fl.name}}</span>
+                                        </div>
+                                        <div class="file file-shared" ng-switch-when="0" context-menu="sharedOptions" ng-class="{active : fl.selected}" ng-dblclick="openFile(fl)" ng-click="selectItem($event, fl)">
+                                                <span ng-switch="fl.ext" ng-click="getFileInfo(fl)">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" width="100" height="80" ng-switch-when="xlsx" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" width="100" height="80" ng-switch-when="docx" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" width="100" height="80" class="_imfDk21"
+                                                    ng-switch-when="pptx">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" width="100" height="80" ng-switch-when="xls" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" width="100" height="80" ng-switch-when="doc" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" width="100" height="80" class="_imfDk21"
+                                                    ng-switch-when="ppt">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" width="100" height="80" ng-switch-when="txt" class="_imfDk21">
+                                                    <img ng-src="{{fl.file_url}}" alt="" width="100" height="80" ng-switch-when="jpg" class="_imfDk21">
+                                                    <img ng-src="{{fl.file_url}}" alt="" width="100" height="80" ng-switch-when="png" class="_imfDk21">
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/defaultFile.png" alt="" width="100" height="80" ng-switch-default class="_imfDk21">
+                                                    <div class="img-file _imfDk21">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="xlsx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="docx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="pptx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="xls">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="doc">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="ppt">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="txt">
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="jpg"></i>
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="png"></i>
+                                                        <i class="fa fa-file-o m-r-5" ng-switch-default></i>
+                                                        <span class="text-ellipsis" title="{{fl.name}}">{{fl.name}}</span>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div ng-class="viewFileType" ng-if="viewFileType === 'recent'">
+                            <div class="_wr2928 fldrs-wrapper" custom-scroll="optionCustomscroll">
+                                <div class="_itemDk21" ng-repeat="v in folderItem | filter:searchFile">
+                                    <div class="_wr21Z" ng-switch="v.action">
+                                        <div class="_div" ng-switch-when="renamefile">
+                                            <div class="item">
+                                                <img ng-src="{{v.account_avatar}}" alt="" class="img-circle m-r-5" width="40" 
+                                                height="40">
+                                                <div class="action">
+                                                    <div class="above">
+                                                        <span class="text-bold">{{v.account_name}}</span>
+                                                        <span class="text-grey">{{v.action_name}}</span>
+                                                    </div>
+                                                    <div class="below act-inf text-grey">
+                                                        <div class="itm m-r-20" ng-click="openFile(v)">
+                                                            <i class="fa fa-photo m-r-5" ng-if="v.docs_type === 'image'"></i>
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xlxs'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'docx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'pptx'">
+                                                             <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xls'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'doc'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'ppt'">
+                                                            <span class="text-ellipsis _f" title="{{v.file_name}}">{{v.file_name}}</span>
+                                                        </div>
+                                                        <span class="time" am-time-ago="v.created | amFromUnix"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="_div" ng-switch-when="createfolder">
+                                            <div class="item">
+                                                    <img ng-src="{{v.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{v.account_name}}</span>
+                                                            <span class="text-grey">{{v.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20  text-ellipsis" ng-click="openFile(k)">
+                                                                <i class="fa fa-photo m-r-5" ng-if="v.docs_type === 'image'"></i>
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xlxs'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'docx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'pptx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xls'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'doc'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'ppt'">
+                                                               <i class="fa fa-folder-o fa-fw m-r-5"></i> <span class="" title="{{v.file_name}}">{{v.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="v.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="_div" ng-switch-when="sharefile">
+                                            <div class="item">
+                                                <img ng-src="{{v.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                <div class="action">
+                                                    <div class="above">
+                                                        <span class="text-bold">{{v.account_name}}</span>
+                                                        <span class="text-grey">{{v.action_name}}</span>
+                                                    </div>
+                                                    <div class="below act-inf text-grey">
+                                                        <div class="itm m-r-20  text-ellipsis" ng-click="openFile(v)">
+                                                            <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xlxs'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'docx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'pptx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xls'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'doc'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'ppt'">
+                                                            <span class="" title="{{v.file_name}}">{{v.file_name}}</span>
+                                                        </div>
+                                                        <span class="time" am-time-ago="v.created | amFromUnix"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="_div" ng-switch-when="uploadfile">
+                                            <div class="item">
+                                               <img ng-src="{{v.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                <div class="action">
+                                                    <div class="above">
+                                                        <span class="text-bold">{{v.account_name}}</span>
+                                                        <span class="text-grey">{{v.action_name}}</span>
+                                                    </div>
+                                                    <div class="below act-inf text-grey">
+                                                        <div class="itm m-r-20  text-ellipsis" ng-click="openFile(v)">
+                                                            <i class="fa fa-photo m-r-5" ng-if="v.docs_type === 'image'"></i>
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xlxs'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'docx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'pptx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xls'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'doc'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'ppt'">
+                                                            <span class="" title="{{v.file_name}}">{{v.file_name}}</span>
+                                                        </div>
+                                                        <span class="time" am-time-ago="v.created | amFromUnix"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="_div" ng-switch-when="deletefile">
+                                            <div class="item">
+                                                <img ng-src="{{v.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                <div class="action">
+                                                    <div class="above">
+                                                        <span class="text-bold">{{v.account_name}}</span>
+                                                        <span class="text-grey">{{v.action_name}}</span>
+                                                    </div>
+                                                    <div class="below act-inf text-grey">
+                                                        <div class="itm m-r-20  text-ellipsis" ng-click="openFile(v)">
+                                                            <i class="fa fa-photo m-r-5" ng-if="v.docs_type === 'image'"></i>
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xlxs'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'docx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'pptx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xls'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'doc'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'ppt'">
+                                                            <i class="fa fa-fw fa-file-o m-r-5"></i><span class="overstrike" title="{{v.file_name}}">{{v.file_name}}</span>
+                                                        </div>
+                                                        <span class="time" am-time-ago="v.created | amFromUnix"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="_div" ng-switch-when="deletefolder">
+                                            <div class="item">
+                                               <img ng-src="{{v.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                <div class="action">
+                                                    <div class="above">
+                                                        <span class="text-bold">{{v.account_name}}</span>
+                                                        <span class="text-grey">{{v.action_name}}</span>
+                                                    </div>
+                                                    <div class="below act-inf text-grey">
+                                                        <div class="itm m-r-20  text-ellipsis" ng-click="openFile(v)">
+                                                            <i class="fa fa-photo m-r-5" ng-if="v.docs_type === 'image'"></i>
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xlxs'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'docx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'pptx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xls'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'doc'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'ppt'">
+                                                            <i class="fa fa-fw fa-folder-o m-r-5"></i><span class="overstrike" title="{{v.file_name}}">{{v.file_name}}</span>
+                                                        </div>
+                                                        <span class="time" am-time-ago="v.created | amFromUnix"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="_div" ng-switch-when="createfile">
+                                            <div class="item">
+                                                <img ng-src="{{v.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                <div class="action">
+                                                    <div class="above">
+                                                        <span class="text-bold">{{v.account_name}}</span>
+                                                        <span class="text-grey">{{v.action_name}}</span>
+                                                    </div>
+                                                    <div class="below act-inf text-grey">
+                                                        <div class="itm m-r-20  text-ellipsis" ng-click="openFile(v)">
+                                                            <i class="fa fa-photo m-r-5" ng-if="v.docs_type === 'image'"></i>
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xlxs'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'docx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'pptx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'xls'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'doc'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="v.docs_type === 'ppt'">
+                                                            <span class="" title="{{v.file_name}}">{{v.file_name}}</span>
+                                                        </div>
+                                                        <span class="time" am-time-ago="v.created | amFromUnix"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="_div" ng-switch-when="img">
+                                            <div class="item">
+                                                <i class="fa fa-photo m-r-5" aria-hidden="true"></i> 
+                                                <span class="text-bold text-ellipsis">{{k.action_name}}</span>
+                                                <div class="act-inf text-grey m-l-20">
+                                                    <span>{{k.action_info}}</span> 
+                                                    <span  class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="_div" ng-switch-when="resquestsharefile">
+                                            <div class="item">
+                                                <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                <div class="action">
+                                                    <div class="above">
+                                                        <span class="text-bold">{{k.account_name}}</span>
+                                                        <span class="text-grey">{{k.action_name}}</span>
+                                                    </div>
+                                                    <div class="below act-inf text-grey">
+                                                        <div class="itm m-r-20" ng-click="openFile(k)">
+                                                            <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xlxs'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'docx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'pptx'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xls'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'doc'">
+                                                            <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'ppt'">
+                                                            <span class="text-ellipsis" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                        </div>
+                                                        <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fldrs-wrapper" context-menu="trashDeleteAll" ng-class="viewFileType" ng-if="viewFileType === 'trash'" custom-scroll="optionCustomscroll">
+                             <div class="fldrs-item"  ng-repeat="fl in folderItem | filter:searchFile">
+                                    <div class="" ng-switch="fl.type">
+                                        <div class="folder" ng-switch-when="1" context-menu="trashOptions" ng-dblclick="accessFolderItem($event, fl);" ng-click="activeClassFolder = !activeClassFolder" 
+                                        ng-class="{active : activeClassFolder}" ng-disabled="loading">
+                                            <span class="text-ellipsis doc fldrs_n"
+                                            title="{{fl.name}}">{{fl.name}}</span>
+                                        </div>
+                                        <div class="file-xlxs" ng-switch-when="0" context-menu="trashOptions" 
+                                        ng-dblclick="openFile(fl)">
+                                                <span ng-switch="fl.ext" ng-click="getFileInfo(fl)">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" width="100" height="80" ng-switch-when="xlsx" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" width="100" height="80" ng-switch-when="docx" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" width="100" height="80" class="_imfDk21"
+                                                    ng-switch-when="pptx">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" width="100" height="80" ng-switch-when="xls" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" width="100" height="80" ng-switch-when="doc" class="_imfDk21">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" width="100" height="80" class="_imfDk21"
+                                                    ng-switch-when="ppt">
+                                                    <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" width="100" height="80" ng-switch-when="txt" class="_imfDk21">
+                                                    <img ng-src="{{fl.file_url}}" alt="" width="100" height="80" ng-switch-when="jpg" class="_imfDk21">
+                                                    <img ng-src="{{fl.file_url}}" alt="" width="100" height="80" ng-switch-when="png" class="_imfDk21">
+                                                    <img ng-src="<?= $this->static->frontend->images ?>/v2/defaultFile.png" alt="" width="100" height="80" ng-switch-default class="_imfDk21">
+                                                    <div class="img-file _imfDk21">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="xlsx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="docx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="pptx">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="xls">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/word.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="doc">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="ppt">
+                                                        <img src="<?= $this->static->frontend->images ?>/v2/txtb-128.png" alt="" class="m-r-5" width="14" height="13" ng-switch-when="txt">
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="jpg"></i>
+                                                        <i class="fa fa-picture-o m-r-5" aria-hidden="true" ng-switch-when="png"></i>
+                                                        <i class="fa fa-file-o m-r-5" ng-switch-default></i>
+                                                        <span class="text-ellipsis" title="{{fl.name}}">{{fl.name}}</span>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mct-m-right" ng-style="{'min-height': heightWrapper - 80}">
+                        <div class="nav-fldrs-r text-center text-maincolor text-bold">
+                            <i class="fa fa-folder m-r-10" aria-hidden="true"></i> 
+                            <span class="ellipsis" title="{{currentFolder.name}}">{{currentFolder.name}} 
+                            ({{folderItem.length}}/{{folderItem.totalData}})</span>
+                        </div>
+                        <div class="navitab-info p-db-10 p-dt-10">
+                            <div class="mg-line" ng-class="activenav"></div>
+                            <a href="#" class="text-center" ng-click="activenav = 'details'" ng-class="{active: activenav === 'details'}"><i class="fa fa-wpforms m-r-5" aria-hidden="true"></i>Details</a>
+                            <a href="#" class="text-center" ng-click="activenav = 'recents'" ng-class="{active: activenav === 'recents'}"><i class="fa fa-clock-o m-r-5" aria-hidden="true"></i>Recents</a>
+                        </div>
+                        <div class="fldrs-history" ng-if="activenav === 'recents'">
+                            <div class="field-fldrs" ng-repeat="b in fldrsHistory" ng-if="b.actionshistory.length !== 0">
+                                <span class="text-bold text-maincolor time-hts-fldrs p-dl-20 p-dt-10">{{b.time}}</span>
+                                <!-- <span class="text-muted">({{b.totalAction}})</span> -->
+                                    <div class="_field-itemwrapper" ng-style="{'max-height' : heightWrapper - 300}" custom-scroll="{ 'theme': 'minimal-dark', 'autoHide': true}">
+                                    <div class="field-item m-t-10" ng-repeat="k in b.actionshistory">
+                                    <div class="itm-name  p-dl-10 p-dt-10 p-db-10 p-dr-10">
+                                        <div class="act-field" ng-switch="k.action">
+                                            <div class="hts-item-share" ng-switch-when="createfolder">
+                                                <div class="item">
+                                                    <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{k.account_name}}</span>
+                                                            <span class="text-grey">{{k.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20  text-ellipsis" ng-click="openFile(k)">
+                                                                <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xlsx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'docx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'pptx'">
+                                                                 <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xls'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'doc'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'ppt'">
+                                                               <i class="fa fa-folder-o fa-fw m-r-5"></i> <span class="" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hts-item-share" ng-switch-when="createfile">
+                                               <div class="item">
+                                                    <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{k.account_name}}</span>
+                                                            <span class="text-grey">{{k.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20  text-ellipsis" ng-click="openFile(k)">
+                                                                <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xlsx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'docx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'pptx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xls'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'doc'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'ppt'">
+                                                                <span class="" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hts-item-share" ng-switch-when="uploadfile">
+                                                <div class="item">
+                                                    <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{k.account_name}}</span>
+                                                            <span class="text-grey">{{k.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20  text-ellipsis" ng-click="openFile(k)">
+                                                                <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xlxs'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'docx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'pptx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xls'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'doc'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'ppt'">
+                                                               <span class="" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hts-item" ng-switch-when="img">
+                                                <i class="fa fa-photo m-r-5" aria-hidden="true"></i> 
+                                                <span class="text-bold text-ellipsis">{{k.action_name}}</span>
+                                                <div class="act-inf text-grey m-l-20">
+                                                    <span>{{k.action_info}}</span> 
+                                                    <span  class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                </div>
+                                            </div>
+                                            <div class="hts-item-share" ng-switch-when="sharefile">
+                                                <div class="item">
+                                                    <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{k.account_name}}</span>
+                                                            <span class="text-grey">{{k.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20  text-ellipsis" ng-click="openFile(k)">
+                                                                <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xlxs'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'docx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'pptx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xls'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'doc'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'ppt'">
+                                                                <span class="" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hts-item-share" ng-switch-when="resquestsharefile">
+                                                <div class="item">
+                                                    <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{k.account_name}}</span>
+                                                            <span class="text-grey">{{k.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20" ng-click="openFile(k)">
+                                                                <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xlsx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'docx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'pptx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xls'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'doc'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'ppt'">
+                                                                <span class="text-ellipsis" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="hts-item-share" ng-switch-when="renamefile">
+                                                <div class="item">
+                                                    <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{k.account_name}}</span>
+                                                            <span class="text-grey">{{k.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20" ng-click="openFile(k)">
+                                                                <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xlxs'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'docx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'pptx'">
+                                                                  <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xls'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'doc'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'ppt'">
+                                                                <span class="text-ellipsis _f" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hts-item-share" ng-switch-when="renamefolder">
+                                                <div class="item">
+                                                    <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{k.account_name}}</span>
+                                                            <span class="text-grey">{{k.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20">
+                                                                <i class="fa fa-folder m-r-5"></i>
+                                                                <span class="text-ellipsis _f" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hts-item-share" ng-switch-when="deletefolder">
+                                                <div class="item">
+                                                    <img ng-src="{{k.account_avatar}}" alt="" class="img-circle m-r-5" width="40" height="40">
+                                                    <div class="action">
+                                                        <div class="above">
+                                                            <span class="text-bold">{{k.account_name}}</span>
+                                                            <span class="text-grey">{{k.action_name}}</span>
+                                                        </div>
+                                                        <div class="below act-inf text-grey">
+                                                            <div class="itm m-r-20" ng-click="openFile(k)">
+                                                                <i class="fa fa-photo m-r-5" ng-if="k.docs_type === 'image'"></i>
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xlxs'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'docx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'pptx'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'xls'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'doc'">
+                                                                <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" alt="" ng-if="k.docs_type === 'ppt'">
+                                                                <i class="fa fa-folder-o m-r-5 fa-fw"></i><span class="overstrike text-ellipsis _f" title="{{k.file_name}}">{{k.file_name}}</span>
+                                                            </div>
+                                                            <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hts-item-share" ng-switch-when="deletefile">
+                                                <i class="fa fa-file-text-o m-r-5" aria-hidden="true"></i> <span class="text-bold">{{k.action_name}}</span>
+                                                <div class="act-inf text-grey m-l-20">
+                                                    <span class="m-r-5 overstrike text-ellipsis _f" title="{{k.file_name}}">{{k.file_name}}</span> <span class="time" am-time-ago="k.created | amFromUnix"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fldrs-details" ng-if="activenav === 'details'" 
+                        custom-scroll="{ 'theme': 'minimal-dark', 'autoHide': true}" ng-style="{'max-height' : heightWrapper - 300}">
+                            <detail-file info="detailFile"></detail-file>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- delete file or folder -->
+            <div class="modal _dlt fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title text-bold" id="myModalLabel">Delete</span></span>
+                  </div>
+                  <div class="modal-body">
+                        Are you sure you want to delete this?
+                  </div>
+                  <div class="modal-footer text-right">
+                    <button type="button" class="btn btn-default _f" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-main" ng-click="DeleteFolderandFile(renameObj)" ng-disabled="waitingDelete"> 
+                    <span ng-if="!waitingDelete">Done</span> <span ng-if="waitingDelete">Waiting..</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal new folder -->
+            <div class="modal _dlt fade" id="modalNewFolder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title" id="myModalLabel" ng-if="typeModal">New folder</span>
+                    <span class="modal-title" id="myModalLabel" ng-if="!typeModal">New file</span>
+                  </div>
+                  <div class="modal-body">
+                    <form action="" name="formNewFolder" ng-submit="createNewFolder($event, folderName, typeModal)">
+                        <div class="form-group">
+                            <label for="" ng-if="typeModal">Folder name</label>
+                            <label for="" ng-if="!typeModal">File name</label>
+                            <input type="text" ng-model="folderName.name" class="form-control" id="_nfld321">    
+                            <input type="hidden" ng-model="folderName._id">
+                        </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default _f" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-main" ng-click="createNewFolder($event, folderName, typeModal)" ng-disabled="!folderName.name">Done</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <!-- Modal share docs-->
+            <div class="modal _dlt fade" id="modalShareDoc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title text-bold" id="myModalLabel">Share with others</span>
+                  </div>
+                  <div class="modal-body">
+                        <form class="form-inline _sxir">
+                          <div class="form-group share_input tag-field">
+                            <tags-input ng-model="fileShare.tagsId" add-on-paste="false" max-tags="1" add-from-autocomplete-only="true" key-property="searchId"  display-property="searchName" replace-spaces-with-dashes="false" placeholder="Username/group" on-tag-removed="tagRemove($tag);" on-tag-adding="tagAdd($event, $tag);" enable-editing-last-tag="true">
+                                 <auto-complete key-property="searchId" max-results-to-show="250" display-property="searchName" source="loadTags($query)" template="template-tags" ></auto-complete>
+                            </tags-input>
+                            <script type="text/ng-template" id="template-tags">
+                              <div class="autocomplete-template">
+                                <div class="left-panel">
+                                  <span ng-bind-html="data.searchName"></span>
+                                </div>
+                              </div>
+                            </script>
+                          </div>
+                          <div class="form-group opt_Share">
+                                <select name="" id="" class="form-control" ng-model="fileShare.permissionSelect" ng-options="option.name for option in fileShare.permission track by option.value">
+                                </select>
+                          </div>
+                          <button type="button" class="btn btn-main" ng-click="shareFile(fileShare)" ng-disabled="waitShare">
+                          <span ng-show="!waitShare">Done</span><span ng-show="waitShare">Processing..</span>
+                          </button>
+                        </form>
+                  </div>
+                  <div class="_uf292 m-t-10 m-b-10" ng-if="fileShare.arrUserShare.requestR.length !== 0 || fileShare.arrUserShare.shared.length !== 0">
+                        <span class="label label-warning" ng-if="fileShare.arrUserShare.requestR.length !== 0">Request Received</span>
+                        <div class="_itm m-t-10 m-b-10 row" ng-repeat="k in fileShare.arrUserShare.requestR">
+                            <div class="col-md-6"> <i class="fa fa-user fa-fw  m-r-10" ng-if="k.share_type === 'user'"></i><i class="fa fa-users fa-fw  m-r-10" ng-if="k.share_type === 'group'"></i>
+                            <span class="" title="{{k.share_account_name || k.share_group_name}}">{{k.share_account_name || k.share_group_name}} </span></div>
+                            <div class="col-md-4 _radioWrapper">
+                                <div class="_radio" ng-click="k.permission = 'view'"><div class="_radioStyle m-r-5"><i ng-if="k.permission === 'view'" class="fa fa-circle" aria-hidden="true"></i></div><span>View</span></div>
+                                <div class="_radio" ng-click="k.permission = 'canedit'"><div class="_radioStyle m-r-5"><i ng-if="k.permission === 'canedit'" class="fa fa-circle" aria-hidden="true"></i></div><span>Edit</span></div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a href class="m-r-10" ng-disabled="k._lUpShare" ng-click="updateSharePermission(k)">
+                                <span ng-if="!k._lUpShare"><i class="fa fa-check-square-o" aria-hidden="true"></i></span><span ng-if="k._lUpShare"><i class="fa fa-spinner" aria-hidden="true"></i></span></a>
+                                <a href class="" ng-click="removeShare(k)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <span class="label label-success" ng-if="fileShare.arrUserShare.shared.length !== 0">Shared</span>
+                        <div class="_itmShred m-t-10 m-b-10 row" ng-repeat="i in fileShare.arrUserShare.shared">
+                            <div class="col-md-6"><i class="fa fa-user fa-fw m-r-10" ng-if="i.share_type === 'user'"></i><i class="fa fa-users fa-fw  m-r-10" ng-if="i.share_type === 'group'"></i>
+                            <span class="" title="{{i.share_account_name || i.share_group_name}}">{{i.share_account_name || i.share_group_name}} </span></div>
+                            <div class="col-md-4 _radioWrapper">
+                            <div class="_radio" ng-click="i.permission = 'view'"><div class="_radioStyle m-r-5"><i ng-if="i.permission === 'view'" class="fa fa-circle" aria-hidden="true"></i></div><span>View</span></div>
+                                <div class="_radio" ng-click="i.permission = 'canedit'"><div class="_radioStyle m-r-5"><i ng-if="i.permission === 'canedit'" class="fa fa-circle" aria-hidden="true"></i></div><span>Edit</span></div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <a href class="m-r-10" ng-disabled="i._lUpShare" ng-click="updateSharePermission(i)">
+                                <span ng-if="!i._lUpShare"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span><span ng-if="i._lUpShare"><i class="fa fa-spinner" aria-hidden="true"></i></span></a>
+                                <a href class="" ng-click="removeShare(i)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer text-center _f">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal rename file -->
+            <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-bold" id="myModalLabel">Rename</span></h4>
+                  </div>
+                  <div class="modal-body">
+                        <form class="" ng-submit="renameFile(renameObj)">
+                          <div class="form-group">
+                            <input type="text" ng-model="renameObj.name" class="form-control" id="_nfls77879">
+                          </div>
+                        </form>
+                  </div>
+                  <div class="modal-footer text-right">
+                    <button type="button" class="btn btn-main" ng-click="renameFile(renameObj)">Done</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal shareable link -->
+            <div class="modal fade" id="modalShareAbleLink" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-bold" id="myModalLabel">Share link</span></h4>
+                  </div>
+                  <div class="modal-body">
+                         <div class="form-group">
+                            <input type="text" ng-model="shareLink" class="form-control">
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal share when not owner docs-->
+            <div class="modal _dlt fade" id="modalShareNotOwnerDoc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span class="modal-title text-bold" id="myModalLabel">Link sharing</span>
+                  </div>
+                  <div class="modal-body">
+                        <div class="text-left m-l-10 m-b-20">{{fileShareWNO.fileLink}}</div>
+                        <form class="form-inline _sxir">
+                          <div class="form-group share_input tag-field">
+                            <tags-input ng-model="fileShareWNO.tagsId2" add-on-paste="false" max-tags="1" add-from-autocomplete-only="true" key-property="searchId"  display-property="searchName" replace-spaces-with-dashes="false" placeholder="Username/group" on-tag-removed="tagRemove($tag);" on-tag-adding="tagAdd($event, $tag);" enable-editing-last-tag="true">
+                                 <auto-complete key-property="searchId" max-results-to-show="250" display-property="searchName" source="loadTags($query)" template="template-tags" ></auto-complete>
+                            </tags-input>
+                            <script type="text/ng-template" id="template-tags">
+                              <div class="autocomplete-template">
+                                <div class="left-panel">
+                                  <span ng-bind-html="data.searchName"></span>
+                                </div>
+                              </div>
+                            </script>
+                          </div>
+                          <button type="button" class="btn btn-main" ng-click="shareWNO(fileShareWNO)" ng-disabled="waitShare">
+                          <span ng-show="!waitShare">Done</span><span ng-show="waitShare">Processing..</span>
+                          </button>
+                        </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </article>
+        <script type="text/ng-template" id="/people-mentions.tpl">
+            <ul class="list-group user-search">
+                <li mentio-menu-item="person" ng-repeat="person in items | limitTo: 5" class="list-group-item">
+                    <img ng-src="{{person.image}}" ng-if="person.image" class="user-photo img-circle" width="20" height="20">
+                    <span class="text-primary" ng-bind-html="person.value | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                    </span>
+                    <em class="text-muted" ng-bind="person.bio | words:5"></em>
+                </li>
+            </ul>
+        </script>

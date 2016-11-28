@@ -1,0 +1,79 @@
+<div class="detail-file-wrapper" ng-if="fileInfo">
+	<img ng-src="{{fileInfo.img_url}}" ng-if="fileInfo.type == 'jpg'" alt="" class="img-responsive">
+	<img ng-src="{{fileInfo.img_url}}" ng-if="fileInfo.type == 'png'" alt="" class="img-responsive">
+	<div class="owner-file">
+		<span class="text-bold">Owner</span>
+		<div class="name"><img ng-src="{{fileInfo.owner_avatar}}" alt="" class="img-circle m-r-10" width="40" height="40">{{fileInfo.owner_user}}</div>
+	</div>	
+	<div class="share-file">
+		<span class="text-bold">Share</span>
+		<div class="share-users">
+			<img ng-src="{{k.share_avatar}}" ng-repeat="k in fileInfo.share" alt="" class="img-circle m-r-5" ng-if="k.share_avatar.length !== 0">
+			<div class="plus-share" data-toggle="modal" data-target="#"><i class="fa fa-user-plus"></i></div>
+		</div>
+	</div>
+	<div class="information-file">
+		<span class="text-bold">Information</span>
+		<div class="item">
+			<div class="type">
+				<span class="text-bold">Type</span>
+			</div>
+			<div class="detail">
+				<span class="" ng-switch="fileInfo.type">
+					<i class="fa fa-photo m-r-5" ng-switch-when="jpg"></i>
+					<i class="fa fa-photo m-r-5" ng-switch-when="png"></i>
+					<img src="<?= $this->static->frontend->images ?>/v2/xlxs.png" width="14" height="13" class="m-r-5" 
+					alt=""  ng-switch-when="xlsx">
+                    <img src="<?= $this->static->frontend->images ?>/v2/word.png" width="14" height="13" class="m-r-5" 
+                    alt=""  ng-switch-when="docx">
+                    <img src="<?= $this->static->frontend->images ?>/v2/ppt.png" width="14" height="13" class="m-r-5" 
+                    alt=""  ng-switch-when="pptx">
+				</span>
+				.{{fileInfo.type}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="type">
+				<span class="text-bold">Size</span>
+			</div>
+			<div class="detail">
+				{{fileInfo.size}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="type">
+				<span class="text-bold">Location</span>
+			</div>
+			<div class="detail">
+				<i class="fa fa-folder-o m-r-5"></i>{{fileInfo.location}}
+			</div>
+		</div>
+		<div class="item m-t-10">
+			<div class="type">
+				<span class="text-bold">Modified</span>
+			</div>
+			<!-- <div class="_itemwrapper">
+				<span class="text-grey" ng-if="fileInfo.history.length == 0 ">No modified</span>
+				<div class="detail_history" ng-repeat="k in fileInfo.history">
+					<a ng-href="<?= BASE_URL?>/{{k.file_url}}"><span class="time" 
+					am-time-ago="k.created.sec | amFromUnix"></span> <br>
+					<span class="text-grey">by</span> <span class="">{{k.account_name}}</span></a>
+				</div>
+			</div> -->
+			<div class="detail">
+				{{fileInfo.updated}}
+			</div>
+		</div>
+		<div class="item m-b-10">
+			<div class="type">
+				<span class="text-bold">Created</span>
+			</div>
+			<div class="detail">
+				{{fileInfo.created}}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="text-center text-grey" ng-if="!fileInfo">
+	No details for this.!
+</div>

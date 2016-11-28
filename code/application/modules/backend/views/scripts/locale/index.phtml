@@ -1,0 +1,34 @@
+<?php
+$configuration = Zend_Registry::get(APP_CONFIG);
+?>
+var stats = {
+    "static" : <?php echo Zend_Json::encode($configuration->app->static->toArray()); ?>,
+    ERROR_SUCCESS: <?php echo ERROR_SUCCESS ?>,
+    CHANGE_AVATAR_URL: '<?php echo CHANGE_AVATAR_URL; ?>',
+};
+var gLocale = <?php echo Zend_Json::encode($this->locales->toArray()); ?>;
+<?php
+/*
+var baseurl = '<?php echo MOBILE_BASE_URL; ?>';
+var baseJsonpUrl = "<?php echo MOBILE_BASE_URL; ?>";
+var staticServer = '<?php echo $this->static->frontend_mobile->server; ?>';
+var baseForumUrl = '<?php echo MOBILE_BASE_URL; ?>';
+var notifyUrl = '<?php echo PUSH_NOTIFY_URL; ?>';
+var widget_base_url = '<?php echo WIDGET_BASE_URL ?>';
+var imgServer = '<?php echo $this->static->frontend_mobile->images; ?>';
+var imgPcServer = '<?php echo $this->static->frontend_mobile->pc_images; ?>';
+var cssServer = '<?php echo $this->static->frontend_mobile->css; ?>';
+var jsServer = '<?php echo $this->static->frontend_mobile->js; ?>';
+var baseEnv = '<?php echo APP_ENV; ?>';
+var gLocale = <?php echo Zend_Json::encode($this->locales->toArray()); ?>;
+var iMaxNumberTag = <?php echo MAX_NUMBER_TAG; ?>;
+var iMinLengthTextTag = <?php echo MIN_LENGTH_TEXT_TAG; ?>;
+var iMaxLengthTextTag = <?php echo MAX_LENGTH_TEXT_TAG; ?>;
+var iMinLengthForumName = <?php if( $this->locales->general->lang_code === "ja"){echo MIN_LENGTH_TEXT_JA;} else echo MIN_LENGTH_TEXT; ?>;
+var iMaxLengthForumName = <?php if( $this->locales->general->lang_code === "ja"){echo MAX_LENGTH_TEXT_JA;} else echo MAX_LENGTH_TEXT; ?>;
+var sTagDelemite = '<?php echo TAGS_DELIMITER;?>';
+var sAva_gender_Male = '<?php echo DEFAULT_USER_AVATAR; ?>';
+var sAva_gender_Female = '<?php echo DEFAULT_USER_FEMALE_AVATAR; ?>';
+ * 
+ */
+?>

@@ -1,0 +1,72 @@
+<?php
+foreach ($this->paginator as $value)
+{
+      $titleCSS ='normal-news-title';
+      $contentCSS ='normal-news';
+      if($value['ishot'] ==1)
+      {
+           $contentCSS ='hot-news';
+           $titleCSS ='hot-news-title';
+      }
+
+
+
+      $sImageUrl = (!empty($value['image_url'])) ? PATH_NEWS_URL .'/'. $value['image_url'] : '';
+?>
+<div class="cols_4" >
+       <div class="news">
+       <div class="news-title">
+               <a href="<?php echo BASE_URL; ?>/news/detail/id/<?php echo $value['news_id']; ?>" class="<?php echo $titleCSS;?>">
+                   <span>
+                       <?php echo Core_Common::SubFullStrings($value['title'], 0, 50);?>
+                   </span>
+           </a>
+       </div>
+       <div class="<?php echo $contentCSS;?>" >
+               <div class="content-news">
+                <?php
+                  if(!empty($sImageUrl))
+                  {
+                  ?>
+                    <a href="<?php echo BASE_URL; ?>/news/detail/id/<?php echo $value['news_id']; ?>">
+                       <img src="<?php echo $sImageUrl;?>" alt="" height="200px;">
+                    </a>
+
+                   <?php
+                  }
+                  ?>
+
+                   <p style="height:110px;">
+                       <?php echo Core_Common::SubFullStrings(strip_tags($value['content']), 0, 200);;?>
+                   </p>
+
+           </div>
+           <div class="function-news clearfix">
+               <div class="like-share-news cols_7 fl">
+                       <ul>
+                       <li>
+                               <a href="#">
+                               <i class="fa fa-hand-o-right"></i>
+                               <span>0</span>
+                           </a>
+                       </li>
+                       <li>
+                               <a href="#">
+                               <i class="fa fa-share-alt"></i>
+                               <span>0</span>
+                           </a>
+                       </li>
+                   </ul>
+               </div>
+               <div class="date-news cols_5 fr">
+                       <span><?php echo date('H:i',$value['create_date']);?> - <?php echo date('Y-m-d',$value['create_date']);?></span>
+               </div>
+           </div><!-- end function-news-->
+       </div><!-- hot news -->
+   </div><!-- end news -->
+</div><!-- end cols_4 -->  
+<?php
+}
+?>
+
+

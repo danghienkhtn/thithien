@@ -1,0 +1,189 @@
+<?php
+ $sImageUrl = (!empty($this->arrAlbum['image_url'])) ? PATH_NEWS_URL .'/'. $this->arrAlbum['image_url'] : '';
+?>
+
+<div class="asideCont borPaddNon clearfix" id="newproduct">
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" class="tblComm">
+        <tbody>
+            <tr>
+                <th align="left" colspan="2">UPDATE ALBUM</th>
+            </tr>
+          
+            <tr>
+                <td valign="top">
+                    <div class="padLefRig20">
+                        
+                        <ul class="ulListIfSch">
+                             <li>
+                                <p class="titleDes"><label>Name</label></p>
+                                <input type="text" id="gName" name="gName" placeholder="Enter name" value="<?php echo $this->arrAlbum['name'];?>">
+                                <p class="error" id="gNameError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Location</label></p>
+                                <input type="text" id="gLocation" name="gLocation" placeholder="Enter location" value="<?php echo $this->arrAlbum['location'];?>">
+                                <p class="error" id="gLocationError" ></p>
+                            </li>
+                            
+                            <?php
+                            $eventDate ='';
+                            if(!empty($this->arrAlbum['event_date']) && $this->arrAlbum['event_date']>0)
+                            {
+                                
+                                $eventDate = date('Y-m-d', $this->arrAlbum['event_date']);
+                            }
+                            
+                            
+                            ?>
+                            <li>
+                                <p class="titleDes"><label>Event Date</label></p>
+                                <input type="text" id="gEventDate" name="gEventDate" placeholder="Enter event date" value="<?php echo $eventDate;?>">
+                                <p class="error" id="gLocationError" ></p>
+                            </li>
+                             <li>                        
+                                <p class="titleDes"><label>Image</label></p>
+                                <form name="uploadImage" url="<?php echo BASE_URL . "/upload/upload/type/1"; ?>">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 150px;"><img class="img" src="<?php echo !empty($sImageUrl)?$sImageUrl:'http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image';?>" width="150px" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                    <div id="photoUploadResult" class="hidden"></div>
+                                </form>
+                                <p class="error" id="pImageError" ></p>
+                                <input type="hidden" name="gPicture" value ="<?php echo $this->arrAlbum['image_url'];?>" id ="gPicture" />
+                            </li>
+                             <li>
+                                <p class="titleDes"><label>Description</label></p>
+                                <textarea style="width:258px; font-size: 13px;" id="gContent" name="gContent" placeholder="Description"><?php echo $this->arrAlbum['content'];?></textarea>
+                                <p class="error" id="gAboutmeError" ></p>
+                            </li>
+                            
+                            <?php
+                             $check1='checked';
+                             $check2='';
+                             
+                             if($this->arrAlbum['active'] ==0)
+                             {
+                                  $check1='';
+                                  $check2='checked';
+                             }
+                             
+                             ?>
+                            <li>                        
+                                <p class="titleDes"><label>Active</label></p>
+                                <div class="product-display">
+                                    <label class="radio">
+                                        <input type="radio" name="gDisplay" value="1" <?php echo $check1;?>>Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="gDisplay" value="0" <?php echo $check2;?>>No
+                                    </label>
+                                </div>
+                                <p class="error" id="eventDisplayError" ></p>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </td>
+                
+            </tr>                  
+
+            <tr>
+                <td valign="top" colspan="2">
+                    <div class="floatleft mLeft10 mTop10">
+                        <a href="javascript:void(0)"  id="btnAdd1" class="button green">Update</a>
+                        <input  type="hidden" name="album_id" id="album_id" value="<?php echo $this->arrAlbum['album_id'];?>" />
+                    </div>                    
+                </td>                    
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div style="height: 30px"></div>
+
+<div id="toTop">^ Back to Top</div> 
+<script type="text/javascript">
+    
+    /* For upload */
+    document.domain = "<?php echo DOMAIN; ?>";
+    $('.fileupload').fileupload({"name":"itemImage"});
+    
+    
+    $("#gEventDate").datetimepicker({ 
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        /*showTimezone: true,*/
+        showSecond: false,
+	/*timeFormat: 'HH:mm:ss',*/
+	stepHour: 1,
+	stepMinute: 1,
+	stepSecond: 1
+    });
+    $(function() {
+	$(window).scroll(function() {
+            if($(this).scrollTop() != 0) {
+                    $('#toTop').fadeIn();	
+            } else {
+                    $('#toTop').fadeOut();
+            }
+	});
+ 
+	$('#toTop').click(function() {
+		$('body,html').animate({scrollTop:0},800);
+	});	
+    });
+    
+    
+    $('#btnAdd1').click(function() {
+        var name  = $('#gName').val(); 
+        var location  = $('#gLocation').val(); 
+        var eventdate  = $('#gEventDate').val(); 
+        var content  = $('#gContent').val(); 
+        var active = $("input:radio[name='gDisplay']:checked").val();
+        var id  = $('#album_id').val(); 
+        var image = $('#photoUploadResult .response .image_id').html();
+        var picture = $('#gPicture').val();
+        
+        
+        
+        if (name =='') {
+            alert('Please input Name!');
+            return;
+        }
+        
+         if (image == undefined) {
+            image = picture;
+        } else {
+            image = $('#photoUploadResult .response .image_id').html() + "." + $('#photoUploadResult .response .image_format').html();
+        }
+
+
+        var params = {
+            active:active,
+            location: location,
+            edate: eventdate,
+            name:name,
+            content:content,
+            image:image,
+            id: id
+        };
+
+        $.post("<?php echo BASE_ADMIN_URL; ?>/album/add", params, function(result){
+            if(result.error == 0)
+            {
+                window.location= '<?php echo BASE_ADMIN_URL; ?>/album/index/page/<?php echo $this->iPage;?>';
+            }
+            else
+            {
+                alert(result.message);
+            }
+        },'json');
+    });
+  
+   
+</script>

@@ -1,0 +1,201 @@
+<?php
+$userStatistic  = $this->userStatistic;
+$percentUserActive  = ($userStatistic['total_in_day'] * 100) / $userStatistic['total_user_active'];
+?>
+<script type="text/javascript" src="<?php echo $this->static->backend->js . '/chart.js' ?>"></script>
+<div class="title-page mar-bot15">
+    <h4>
+        <i class="fa fa-home"></i>
+        <span class="capitalize">Dashboard</span>
+    </h4>
+</div><!-- title-page -->
+<div class="processbar-all-section container-fluid mar-bot15">
+    <div class="row clearfix">
+        <div class="col-sm-4 mar-bot-mobi15">
+            <div class="contain-process bg-white bor-raduis4">
+                <h4 class="bold"><?php echo $userStatistic['total_in_day'].'/'.$userStatistic['total_user_active'];?></h4>
+                <h4>User</h4>
+                                <span class="icon-bar-process bg-green circle">
+                                	<i class="fa fa-flag"></i>
+                                </span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $percentUserActive;?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $percentUserActive;?>%;">
+                        <span class="number-percentage white"><?php echo $percentUserActive;?></span>
+                    </div>
+                </div>
+            </div><!-- contain-process -->
+        </div>
+        <div class="col-sm-4 mar-bot-mobi15">
+            <div class="contain-process bg-white bor-raduis4">
+
+                <h4 class="bold"><?php echo $this->totalPhoto.'k'; ?></h4>
+                <h4>Photo</h4>
+                                <span class="icon-bar-process bg-light-blue circle">
+                                	<i class="fa fa-image"></i>
+                                </span>
+                <div class="progress">
+                    <div class="progress-bar <?php echo Core_Common::colorProcess($this->percentTotalPhoto); ?>" role="progressbar" aria-valuenow="<?php echo $this->percentTotalPhoto; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $this->percentTotalPhoto.'%'; ?>;">
+                        <span class="number-percentage white"><?php echo $this->percentTotalPhoto.'%'; ?></span>
+                    </div>
+                </div>
+            </div><!-- contain-process -->
+        </div>
+        <div class="col-sm-4 mar-bot-mobi15">
+            <div class="contain-process bg-white bor-raduis4">
+                <h4 class="bold"><?php echo $this->totalFile.'k'; ?></h4>
+                <h4>Files</h4>
+                                <span class="icon-bar-process bg-orange circle">
+                                	<i class="fa fa-file"></i>
+                                </span>
+                <div class="progress">
+                    <div class="progress-bar <?php echo Core_Common::colorProcess($this->percentTotalFile); ?>" role="progressbar" aria-valuenow="<?php echo $this->percentTotalFile; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $this->percentTotalFile.'%'; ?>;">
+                        <span class="number-percentage white"><?php echo $this->percentTotalFile.'%'; ?></span>
+                    </div>
+                </div>
+            </div><!-- contain-process -->
+        </div>
+    </div>
+</div><!-- processbar-all-section -->
+<div class="highchart container-fluid mar-bot15">
+    <div class="row clearfix">
+        <div class="col-sm-6 mar-bot-mobi15">
+            <div class="highchart-column-ctn bg-white bor-raduis4">
+                <h4 class="capitalize">Realtime Chart</h4>
+                <div class="hightchart-column-removed" id="real-time-chart" style="min-width: 100%; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+        <div class="col-sm-6 mar-bot-mobi15">
+            <div class="highchart-circle-ctn bg-white bor-raduis4">
+                <h4 class="capitalize">Files</h4>
+                <div id="container-chart-circle" class="hightchart-circle" style="min-width: 100%; height: 400px; margin: 0 auto"></div>
+                <div id="addText" style="position:absolute; left:0px; top:0px;"></div>
+            </div>
+        </div>
+    </div>
+</div><!-- highchart -->
+<div class="project-log container-fluid">
+    <div class="row clearfix">
+        <div class="col-sm-6 mar-bot-mobi15">
+            <div class="project-contain bg-white bor-raduis4">
+                <h4 class="mar-bot10">Project</h4>
+                <div class="container-table">
+                    <div class="table-responsive">
+                        <table id="table-content" class="display responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Project</th>
+                                <th>Project Manager</th>
+                                <th>Start date</th>
+                                <th>Number of members</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+<!--                            --><?php
+//                                foreach($this->projects['data'] as $project) {
+//                                    $totalMember = ProjectMember::getInstance()->getProjectMemberCountByProjectID($project['id']);
+//                                    $ProManage = $this->arrAccountInfo[$project['account_id']];
+//                                    $ProManageName = $ProManage['name'];
+//                            ?>
+<!--                                <tr>-->
+<!--                                    <td class="truncate truncate-w300-sm">--><?php //echo $project['name']; ?><!--</td>-->
+<!--                                    <td>--><?php //echo $ProManageName; ?><!--</td>-->
+<!--                                    <td>--><?php //echo date('Y-m-d',$project['created']); ?><!--</td>-->
+<!--                                    <td>--><?php //echo $totalMember; ?><!--</td>-->
+<!--                                </tr>-->
+<!--                            --><?php //} ?>
+                            </tbody>
+                        </table>
+                    </div><!-- table-responsive -->
+                </div><!-- container-table -->
+            </div><!--project-contain -->
+        </div>
+        <div class="col-sm-6 mar-bot-mobi15">
+            <div class="action-log bg-white bor-raduis4">
+                <h4 class="mar-bot10">Action Log</h4>
+                <ul class="logs">
+                    <?php
+                        foreach($this->actionLogs['data'] as $actionLog){
+                                // process Action
+                                $actionLog  = Core_Common::actionLogsProcess($actionLog);
+                                // process icon and class
+                                $iconProcess = Core_Common::iconActionProcess($actionLog['action']);
+                                $bgColor = $iconProcess['bg-color'];
+                                $class = $iconProcess['class'];
+
+                          ?>
+                        <li>
+                            <span class="icon-logs <?php echo $bgColor; ?> bor-raduis4">
+                                <i class="fa <?php echo $class; ?>"></i>
+                            </span>
+                            <a href="<?php echo BASE_ADMIN_URL.'/actionlogs/detail?id='.$actionLog['_id'];?>"><span class="light-blue"><?php echo $actionLog['account_name']; ?></span>
+                            </span> <?php echo  $actionLog['sActionName'].' '.Core_Common::SubFullStrings($actionLog['note'],0,40);  ?> <span class="light-blue"><?php // echo $type; ?></span>
+                            </a>
+                        </li>
+
+                  <?php } ?>
+<!--                    <li>-->
+<!--                                        <span class="icon-logs bg-green bor-raduis4">-->
+<!--                                            <i class="fa fa-plus"></i>-->
+<!--                                        </span>-->
+<!--                        <span class="light-blue">Lorem</span> commented on the post <span class="light-blue">#123</span>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                                        <span class="icon-logs bg-red bor-raduis4">-->
+<!--                                            <i class="fa fa-remove"></i>-->
+<!--                                        </span>-->
+<!--                        <span class="light-blue">Lorem</span> commented on the post <span class="light-blue">#123</span>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                                        <span class="icon-logs bg-orange bor-raduis4">-->
+<!--                                            <i class="fa fa-pencil"></i>-->
+<!--                                        </span>-->
+<!--                        <span class="light-blue">Lorem</span> commented on the post <span class="light-blue">#123</span>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                                        <span class="icon-logs bg-light-blue bor-raduis4">-->
+<!--                                            <i class="fa fa-list-alt"></i>-->
+<!--                                        </span>-->
+<!--                        <span class="light-blue">Lorem</span> commented on the post <span class="light-blue">#123</span>-->
+<!--                    </li>-->
+                </ul>
+            </div><!-- action-log -->
+        </div>
+    </div><!-- row -->
+</div><!-- project-log -->
+<pre id="csv" style="display:none">
+[
+{"color":"#3ebbe7", "name":"Photo", "y": <?php echo $this->percentTotalPhoto;?>},
+{"color":"#faa227", "name":"Files", "y": <?php echo $this->percentTotalFile;?>},
+{"color":"#96b95d", "name":"User", "y":37}
+    ]
+</pre>
+<script>
+
+    $(document).ready(function() {
+        $('#table-content tbody').on('click', 'td', function(e){
+            if($(this).index() > 0)
+            {
+                var action = $(this).parent('tr').find('td').eq(0).find('a');
+                if(typeof action.attr('href') !== 'undefined');
+                {
+                    hrefRedirect(action);
+                }
+            }
+
+        });
+
+        $('#table-content').dataTable( {
+            "processing": true,
+            "serverSide": true,
+            "bSort":      false,
+            "ajax": "<?php echo BASE_ADMIN_URL."/project/lstproject"; ?>",
+            "columns": [
+                { "data": "name" },
+                { "data": "manager_name" },
+                { "data": "sCreated" },
+                { "data": "totalMember" }
+            ]
+        } );
+    });
+
+</script>

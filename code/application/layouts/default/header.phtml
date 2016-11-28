@@ -1,0 +1,216 @@
+<header class="visible-xs hidden-lg hidden-md hidden-sm">
+  <ul class="top-navigation">
+    <li class="active"><a href="<?= BASE_URL;?>/feed">
+    <i class="material-icons">
+    <img src="<?= $this->static->frontend->images . '/ios-icon/ic_chrome_reader_mode_white_24px.svg' ?>" width="24" height="24" alt=""></i>
+    </a></li><!-- feed-->
+    <li  class="notify-mobile"><a href=""><i class="material-icons"><img src="<?= $this->static->frontend->images . '/ios-icon/ic_notifications_none_white_24px.svg' ?>" width="24" height="24" alt=""></i></a>
+    <span class="number-notify-mobile label label-danger"></span>
+    </li><!--notify-->
+    <!-- <li><i class="material-icons">search</i> -->
+      
+    </li><!--search-->
+    <li class="user-settings"><a href="#"><i class="material-icons"><img src="<?= $this->static->frontend->images . '/ios-icon/ic_settings_white_24px.svg' ?>" width="24" height="24" alt=""></i></a></li><!--setting-->
+    <!-- <li><i class="material-icons">reorder</i></li> --><!--menu-->
+  </ul>
+</header>
+<div class="push-notify-detail notify-detail-mobile hidden-lg hidden-sm hidden-md "></div>
+<header class="site-header hidden-xs">
+ <div class="container">
+   <div class="row">
+     <div class="col-md-2 col-sm-4">
+       <div class="logo" style="position:relative;">
+         <a href="<?= BASE_URL;?>/feed">
+           <img src="<?= $this->static->frontend->images . '/logo-2.png' ?>"  class="img-responsive" href="" alt=""> 
+         </a>
+           <!-- <img src="<?= $this->static->frontend->images . '/background/bird.png' ?>"  class="img-responsive" href="" alt="" style="position:absolute; left:-9rem; top:-1rem;"> --> 
+       </div>
+     </div>
+     <div class="col-md-3 col-sm-3 hidden-sm" style="margin-top:7px;">
+       <span id="analogClock"></span>
+      <!--  <img src="<?= $this->static->frontend->images. '/fireworks-03.svg';?>" width="48" height="48" alt="">
+       <img src="<?= $this->static->frontend->images. '/31057-NY79XA.svg';?>" width="48" height="48" alt=""> -->
+       <!-- <img src="<?= $this->static->frontend->images. '/background/hpny.png';?>" width="230" height="48" alt="" class="img-tet-bc img-responsive hidden-sm">  -->
+     </div>
+     <!-- <div class="col-md-1 col-sm-1">
+       <img src="<?= $this->static->frontend->images. '/background/bc.png';?>" width="240" height="48" alt="" class="img-responsive"> 
+     </div> -->
+     <div class="col-md-7 col-sm-8">
+       <div class="header-right" style="margin-top:5px;">
+         <div class="search-plus fl">
+           <ul>
+             <li class="">
+               <a href="#">
+     <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" data-original-title="Quick&nbsp;actions"></i>
+               </a>
+             </li>
+             <li class="search-bar">
+             <form id="demo-2">
+              <input type="search" placeholder="Search" data-toggle="tooltip" data-placement="bottom" data-original-title="Search">
+            </form>
+          </li>
+        </ul>
+      </div>
+      <div class="notification fl">
+       <span id="show-notify">
+         <i class="fa fa-bell-o" data-toggle="tooltip" data-placement="bottom" data-original-title="Notifications"></i>
+           <span class="number-push label label-danger" style="background:#b51020;"></span>
+       </span>
+       <div class="push-notify">
+        <span class="arrow-push"></span>
+        <div class="header-notifications"><strong>Notifications</strong>
+        <!-- <a href="/notification/all"><span class="label label-info">View all</span></a>
+        <a href="/notification/setting"><span class="label label-info">Setting</span></a> -->
+        <img id="loading_indicator_notifi"  src="<?= $this->static->frontend->images ?>/ajax-loader-2.gif" draggable="false">
+        <div class="pull-right">
+          <a href="javascript:void(0);">Mark All As Read </a>
+          <img src="<?= $this->static->frontend->images.'/new-noti/Noti.png'?>" alt="" width="20" height="17">
+          <img src="<?= $this->static->frontend->images.'/new-noti/Setting.png'?>" alt="" width="17" height="17">
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+        <ul class="tab-noti">
+          <li class="active"><a href="javascript:void(0);">Activity</a> <span class="label label-danger">5</span></li>
+          <li><a href="javascript:void(0);">Tools</a> <span class="label label-danger">20</span></li>
+        </ul>
+        </div>
+        <div class="bottom-notifications">
+            <a href="/notification/all">See all notifications</a>
+        </div>
+         <div class="push-notify-detail">
+          
+         </div>
+       </div>
+     </div>
+     <div class="myinfo  userNameInfo fl" style="cursor:pointer;">
+       <div class="text-info fl">
+         <?= $this->arrLogin['nickName'];?>
+       </div>
+     </div>
+     <div class="log-out fl">
+        <i class="fa fa-angle-down dropDownPopUp"></i>
+        <div class="dropdownSetting">
+          <ul>
+          <span class="arrow-top"></span>
+            <li><a href="/profile-setting"><i class="fa fa-cog fa-fw"></i><?= $this->locales->topMenu->profileSetting ?></a></li>
+            <li>
+            <?php if($this->isAdmin) {?><a href="<?= BASE_ADMIN_URL;?>" target="_blank"><i class="fa fa-cogs fa-fw"></i><?= $this->locales->topMenu->backend ?></a>
+            <?php } ?></li>
+            <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i><?= $this->locales->topMenu->logout ?></a></li>
+          </ul>
+        </div>
+     </div>
+     <div class="img-info fl">
+         <img width="30" src="<?= $this->arrLogin['avatar']; ?>" alt="">
+       </div>
+     <div class="language-bar fl" data-toggle="tooltip" data-placement="bottom" data-original-title="Language">
+     <select onChange="window.location.href=this.value">
+         <option value="<?= BASE_URL; ?>/translate?lang=en" <?php if($_SESSION['language'] == 'en'){echo 'selected';}?>>
+           EN
+         </option>
+         <option value="<?= BASE_URL; ?>/translate?lang=vi" <?php if($_SESSION['language'] == 'vi'){echo 'selected';}?>>
+           VN
+         </option>
+         <option value="<?= BASE_URL; ?>/translate?lang=ja" <?php if($_SESSION['language'] == 'ja'){echo 'selected';}?>>
+           JP
+         </option>
+       </select>
+     </div>
+     <div class="user-guide hidden-xs pull-left">
+        <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" data-original-title="User&nbsp;guide"><i class="fa fa-question fa-fw"></i></button>
+     </div>
+     <div class="clearfix">&nbsp;</div>
+   </div>
+ </div>
+</div>
+</div>
+</header>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
+<script>
+  $('body').on('click','.userNameInfo, .dropDownPopUp', function(e){
+    $('.push-notify').hide();
+    $(".dropdownSetting ul").toggle();       
+    e.stopPropagation();
+  });
+
+  $('body').click(function(){
+    $(".dropdownSetting ul").hide();
+  });
+
+    if($(window).width() < 415){
+        $('.box-content').addClass('fixed-mobile');
+        $('.all-status').css({
+            'border-left' : 'none',
+            'margin-left' : '0px',
+        });
+        
+        $('.mainContainerWrapper').css({
+          'margin-top' : '0px'
+        });
+
+        $('.news').parent().css({
+          'width' : '100%',
+          'display' : 'block'
+        });
+
+        $('.index-page').css({
+          'margin-left': '0'
+         });
+
+        $('.box-content strong').css({
+            'line-height' : '2 rem'
+        });
+
+        $('body').css('padding-top', '0');
+
+        
+      }
+      
+      $(window).resize(function(){
+          if($(window).width() > 415){
+            $('.index-page, #actDisplay, .index-page h3').show();
+          }    
+      });
+    
+      $(document).ready(function(){
+         if($(window).width() < 415){
+           $('.container-all-members .box-member').css({
+              'width' : '100%',
+              'height' : 'auto'
+           });
+         
+           $('.fc-toolbar').find('.fc-left').addClass('tlb-rps');
+
+           $('.mainContainerWrapper').css({
+            'margin-top' : '0px'
+           });
+          
+           $('.index-page').css({
+            'margin-left': '0'
+           });
+        }
+        $('.user-settings').on('click', function(){
+          $('.top-navigation').find('.active').removeClass();
+          $(this).addClass('active');
+          $("#actDisplay, .index-page h3, .contain-request-list, .calendar-wrapper, .mailWrapper, .photowrapper, .user-group, .notify-detail-mobile, .contain-request-form, .contain-request-list, .index-page, .document-wrapper, .mn-team-mobile, .expense-wrapper, .header-expense-mobile").hide();
+          $('.option-mobile').show();
+        });
+
+         $('.notify-mobile').on('click', function(){
+            $('.top-navigation').find('.active').removeClass();
+            $(this).addClass('notify-mobile active');
+            $('.index-page, .contain-request-list, .contain-request-form, .document-wrapper, .mn-team-mobile, .calendar-wrapper, .mailWrapper, .photowrapper, .user-group').hide();
+            $('.option-mobile').hide();
+            $('.notify-detail-mobile').show();
+         });  
+       });
+    
+</script>
+
+
+

@@ -1,0 +1,136 @@
+<div class="title-page mar-bot15">
+    <h4>
+        <i class="fa fa-newspaper-o"></i>
+        <span class="capitalize">News</span>
+    </h4>
+</div><!-- title-page -->
+<div class="container-content">
+    <div class="title-content bg-blue clearfix">
+       <!-- <h5 class="panel-title white bold pull-left capitalize">News</h5> -->
+        <ul class="function-header pull-right">
+            <li>
+                <a href="<?php echo BASE_ADMIN_URL.'/news/add';?>">
+                    <i class="fa fa-plus"></i>
+                    <span class="capitalize">Add news</span>
+                </a>
+            </li>
+        </ul>
+    </div><!-- title-content -->
+    <div class="widget-content">
+        <div class="container-table">
+            <div class="table-responsive">
+                <table id="table-content" class="display responsive nowrap table table-hover table-condensed" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th><div class="checkbox-custom checkbox-primary"><input id="inputUnchecked" type="checkbox" data-action="check-all"/><label for="inputUnchecked"></label></div></th>
+                        <th width="7%">ID</th>
+                        <th>Title</th>
+                        <th>Picture</th>
+                        <th>Hot</th>
+                        <th>Active</th>
+                        <th>Action</th>
+                        <th>Order</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div><!-- table-responsive -->
+        </div><!-- container-table -->
+    </div><!-- widget-content -->
+</div><!-- container-content -->
+
+<script>
+    $(document).ready(function() {
+
+        $('#table-content tbody').on('click', 'td', function(e){
+            if($(this).index() > 0 && $(this).index() != 6)
+            {
+                var action = $(this).parent('tr').find('td').eq(2).find('a');
+                if(typeof action.attr('href') !== 'undefined');
+                {
+                    hrefRedirect(action);
+                }
+            }
+
+        });
+
+        $('body').on('click','[data-action="check-all"]',function(){
+            var _this = $(this);
+            var checkboxItems = $( '[data-action="check-delete"]');
+            if(_this.is(':checked'))
+                doChecked(checkboxItems,true);
+            else
+                doChecked(checkboxItems,false);
+        });
+
+        var newsTable  = $('#table-content').DataTable( {
+            "dom": '<"top"<"margin-10 pull-left delete-ids">lpf <"clear">>rt<"bottom"ip<"clear">>',
+            "processing": true,
+            "serverSide": true,
+            "bSort":      false,
+            "ajax": "<?php echo BASE_ADMIN_URL."/news/lstnews"; ?>",
+            "columns": [
+                { "data": "checkbox_delete" },
+                { "data": "id" },
+                { "data": "title" },
+                { "data": "image_tag" },
+                { "data": "hot_checkbox" },
+                { "data": "active_checkbox" },
+                { "data": "actions" },
+                { "data": "order" }
+            ]
+        } );
+        // Apply the search
+
+        $("div.delete-ids").prepend('<a href="javascript:void(0);"><i data-action="news-delete" class="fa fa-trash fa-lg"></i><a>');
+
+        $('body').on('click','[data-action="new-delete"]', function(){
+            if(confirm('Do you want to delete ?'))
+            {
+                var _this   = $(this);
+                var arrId   = [_this.attr('data-value')];
+                $.post("<?php  echo BASE_ADMIN_URL.'/news/delete'; ?>",{'news_id':arrId}, function(){
+                    newsTable
+                        .row( _this.parents('tr') )
+                        .remove()
+                        .draw();
+                },'json');
+            }
+        });
+//
+        $('body').on('click','[data-action="news-delete"]', function(){
+            if(confirm('Do you want to delete ?'))
+            {
+                var arrCheck = Array();
+                var checkboxItems = $( '[data-action="check-delete"]');
+                $.each(checkboxItems,function(index,value){
+                    var element = $(this);
+                    if(element.is(':checked'))
+                        arrCheck.push(element.val());
+                });
+                if(arrCheck.length)
+                {
+                    $.post("<?php  echo BASE_ADMIN_URL.'/news/delete'; ?>",{'news_id':arrCheck}, function(){
+                        $.each(checkboxItems,function(index,value) {
+                            var _this = $(this);
+                            newsTable
+                                .row( _this.parents('tr') )
+                                .remove();
+                        });
+                        $('[data-action="check-all"]').prop('checked',false);
+                        newsTable.draw();
+                    },'json');
+                }
+
+            }
+        });
+//
+        function doChecked(checkboxItems, checked){
+            $.each(checkboxItems,function(index,value){
+                $(this).prop('checked',checked);
+            });
+        }
+    } );
+</script>

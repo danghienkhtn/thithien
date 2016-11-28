@@ -1,0 +1,111 @@
+<?php
+   if(isset($this->arrMail['total']) && $this->arrMail['total']>0)
+   {
+    ?>
+  
+    <div class="email-block">
+        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="icon message"></i><span class="notiNumber"><?php echo $this->arrMail['total'];?></span></a>
+    <div class="dropdown-email">
+            <div id="emailscrollbar">
+                <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+                <div class="viewport">
+                    <div class="overview">
+                        <?php
+                           if(!empty($this->arrMail['data']['today']))
+                           {
+                           ?>
+                            <div class="header">Today</div>
+                            <ul class="list-email">
+                            <?php
+                                    foreach($this->arrMail['data']['today'] as $value)
+                                    {
+                                   ?>
+
+                                        <li>
+                                            <a href="https://mail3.gnt-global.com/owa/" target="_blank">
+                                            <span class="subject"><?php echo $value['Subject'];?></span>
+                                            <span class="sender"><?php echo $value['Sender'];?></span>
+                                            <span class="timer"><?php echo $value['DateSent'];?></span>
+                                            </a>
+                                        </li>  
+                                <?php
+                                    }
+                                    ?>
+                               </ul>
+
+                           <?php
+                         
+                            }
+                           ?>
+                            
+                            <?php
+                           if(!empty($this->arrMail['data']['yesterday']))
+                           {
+                           ?>
+                            <div class="header">Yesterday</div>
+                            <ul class="list-email">
+                            <?php
+                                    foreach($this->arrMail['data']['yesterday'] as $value)
+                                    {
+                                   ?>
+
+                                        <li>
+                                            <a href="https://mail3.gnt-global.com/owa/" target="_blank">
+                                            <span class="subject"><?php echo $value['Subject'];?></span>
+                                            <span class="sender"><?php echo $value['Sender'];?></span>
+                                            <span class="timer"><?php echo $value['DateSent'];?></span>
+                                            </a>
+                                        </li>  
+                                <?php
+                                    }
+                                    ?>
+                               </ul>
+
+                           <?php
+                         
+                            }
+                           ?>
+                            
+                            
+                            <?php
+                           if(!empty($this->arrMail['data']['last']))
+                           {
+                           ?>
+                            <div class="header">Mail</div>
+                            <ul class="list-email">
+                            <?php
+                                    foreach($this->arrMail['data']['last'] as $value)
+                                    {
+                                   ?>
+
+                                        <li>
+                                            <a  href="https://mail3.gnt-global.com/owa/" target="_blank">
+                                            <span class="subject"><?php echo $value['Subject'];?></span>
+                                            <span class="sender"><?php echo $value['Sender'];?></span>
+                                            <span class="timer"><?php echo $value['DateSent'];?></span>
+                                            </a>
+                                        </li>  
+                                <?php
+                                    }
+                                    ?>
+                               </ul>
+
+                           <?php
+                         
+                            }
+                           ?>
+                          
+   
+                 
+                    </div>
+                </div>
+            </div>
+     </div>
+</div>
+
+<?php
+ }
+ ?>
+<script language="javascript">
+$('.dropdown-toggle').dropdown();
+</script>

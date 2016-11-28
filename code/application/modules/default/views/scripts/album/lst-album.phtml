@@ -1,0 +1,27 @@
+<?php
+$group = $this->group;
+$arrAlbum = $this->arrAlbum;
+if(!empty($arrAlbum)){
+        foreach ($arrAlbum['data'] as $album){
+            $album = Core_Common::albumProcess($album);
+            ?>
+            <li data-item="album">
+                <a href="<?= BASE_URL;?>/photo/albumdetail?a_id=<?= $album['album_id'];?>&g_id=<?= $album['group_id'];?>">
+                    <div class="iframe">
+                        <div class="ifram-img-in">
+
+                            <img class="img-responsive" src="<?= $this->urlImage . $album['image_tag'];?>" alt="">
+
+                        </div>
+                    </div>
+                </a>
+                <div class="_ttPh23"><?= substr($album['name'], 0, 50) .'...';?></div>
+                <span class="text-grey"><?= $album['total'];?> images</span>
+                <?php if($album['isOwner']){?>
+                    <i data-action="delete-album" data-value="<?= $album['album_id']; ?>" class="fa fa-times" style="position:absolute;top:5px;right:25px;background:#fff;padding:5px;cursor:pointer;"></i>
+                <?php }?>
+            </li>
+        <?php
+        }
+    }
+?>

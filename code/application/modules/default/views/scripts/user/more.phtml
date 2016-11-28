@@ -1,0 +1,71 @@
+<div class="table-contact">
+        <table class="table">
+        <thead>
+                <tr>
+                <th width="8%"></th>
+                <th>ID</th>
+                <th>FullName</th>
+                <th>Birthday</th>
+                <th>Team</th>
+                <th>Phone Number</th>
+                <th>Join Date</th>
+            </tr>
+        </thead>
+        <tbody>
+         <?php 
+            if(!empty($this->paginator))
+            {
+                foreach ($this->paginator as $value)
+                {
+//                      if(empty($value['picture']))
+//                      {
+//                          $value['picture'] ='avatar_default.jpg';
+//                      }
+
+                     $sImageUrl = Core_Common::avatarProcess($value['picture']);
+
+                    ?>
+
+            <tr>
+                <td>
+                        <img src="<?php echo $sImageUrl;?>"  width="36px">
+                </td>
+                <td>
+                         <?php echo $value['account_id'];?>
+                </td>
+                <td>
+                         <?php echo $value['name'];?>
+                </td>
+                <td>
+                         <?php echo $value['birthday'];?>
+                </td>
+                <td>
+                       <?php
+                         if(isset($this->arrGroupList[$value['team_id']]['group_name']))
+                         {
+                             echo $this->arrGroupList[$value['team_id']]['group_name'];
+                         }
+                         ?>
+
+                </td>
+                <td>
+                         <?php echo $value['phone'];?>
+                </td>
+                <td>
+                         <?php echo $value['start_date'];?>
+                </td>
+            </tr>
+
+                <?php
+
+                }
+            }
+        ?>	
+        </tbody>
+    </table>
+</div>
+<div class="people-page clearfix">
+    <?php echo $this->paginator;?>
+    <input type="hidden" name="groupid" value="<?php echo $this->page;?>" />
+    <input type="hidden" name="page" value="<?php echo $this->groupid;?>" />	
+</div>

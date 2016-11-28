@@ -1,0 +1,95 @@
+<?php
+$albums   = $this->albums;
+//$groups   = $this->groups;
+$typeName     = $this->typeName;
+$typeId     = $this->typeId;
+$arrGroup   = array();
+$groups = Group::getInstance()->getGroupAlls(11,$typeId,0,MAX_QUERY_LIMIT);
+?>
+<style>
+    .album-name {
+        font-size: 15px;
+        color: #286D91;
+    }
+    h3.group_name_album{
+        padding:0px 20px;
+        font-size:17px;
+    }
+    .thumbnail .caption {
+        padding: 5px 0px;
+        color: #333;
+    }
+</style>
+<div class="container-content">
+    <div class="title-content bg-blue clearfix">
+        <h5 class="panel-title white bold pull-left capitalize"><?php echo $typeName; ?></h5>
+        <ul class="function-header pull-right">
+            <li>
+            <!-- <a class="create-album-btn" href="<?php echo BASE_ADMIN_URL . '/album/add?type=' . $typeId; ?>" data-typeId="<?php echo $typeId; ?>"> -->
+            <a class="create-album-btn"  data-typeId="<?php echo $typeId; ?>">
+                    <i class="fa fa-plus"></i>
+                    <span class="capitalize">Add more</span>
+                </a>
+            </li>
+        </ul>
+    </div><!-- title-content -->
+    <?php if(!empty($albums['data'])) { ?>
+    <div class="widget-content">
+        <?php
+
+        foreach ($groups['data'] as $group) {
+            if($group['group_type'] == $typeId) {
+                $teamAlbums = Album::getInstance()->getAlbumList('',0,0,11,$group['group_id'],0,1);
+
+                ?>
+                <?php if(!empty($teamAlbums['data'])) { ?>
+                    <h3 class="group_name_album"><?php echo $group['group_name']; ?></h3>
+                    <div class="grid">
+                        <?php foreach ($albums['data'] as $album) {
+
+                            if ($album['group_id'] == $group['group_id']) {
+                                $album = Core_Common::albumProcess($album);
+                                ?>
+                                <div class="grid-item">
+                                <a href="#" style="position:absolute;top:0;right:0;padding:5px;background:#fff;"><i class="fa fa-times" ></i></a>
+                                    <a href="<?php echo BASE_ADMIN_URL . '/album/detail?album_id=' . $album['album_id'] . '&group_id=' . $group['group_id']; ?>">
+                                        <!-- <div class="col-xs-6 col-md-2"> -->
+                                        <div class="thumbnail">
+                                            <img src="<?php echo $album['image_tag']; ?>"
+                                                >
+
+                                            <div class="caption">
+                                                <h3 class="album-name"><?php echo $album['name']; ?></h3>
+                                                <?php if ($album['total'] <= 1) { ?>
+                                                    <div
+                                                        class="text-muted"><?php echo $album['total'] . ' photo'; ?></div>
+                                                <?php } else { ?>
+                                                    <div
+                                                        class="text-muted"><?php echo $album['total'] . ' photos'; ?></div>
+                                                <?php } ?>
+
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+                                    </a>
+                                </div>
+                            <?php
+                            }//end  if($album['group_id'] == $group['group_id'])
+                        }//end  foreach ($arrAlbum as $album)
+                        ?>
+                    </div>
+                <?php
+                }
+}//end if($group['group_type'] == $typeId)
+}//end  foreach ($groups['data'] as $group)
+?>
+<div class="row" <?php if($albums['total']<5) echo 'style="display:none;"' ?>>
+    <div class="text-center col-md-2 col-md-offset-5">
+        <a class="btn btn-primary" href="javascript:void(3);" >More</a>
+    </div>
+</div>
+
+<?php }?>
+</div><!-- widget-content -->
+</div><!-- container-content -->
+

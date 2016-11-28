@@ -1,0 +1,379 @@
+ 
+<div class="grid_8">
+ 
+                            <div class="header-menu-team clearfix">
+	                        	<div class="title-team">
+	                                <i class="fa fa-group"></i>
+	                                <span><?php echo $this->arrGroupList['group_name'];?></span>
+	                            </div>
+	                            <ul class="function-menu-team">
+	                            	<li>
+	                                	<a class="active" href="<?php echo BASE_URL;?>/user/feed/groupid/<?php echo $this->groupid;?>">
+	                                    	<i class="fa fa-area-chart"></i>
+	                                        <span><?php echo $this->locales->group->activitystream;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="#">
+	                                    	<i class="fa fa-folder-open"></i>
+	                                        <span><?php echo $this->locales->group->document;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="#">
+	                                    	<i class="fa fa-calendar"></i>
+	                                        <span><?php echo $this->locales->group->calendar;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="<?php echo BASE_URL;?>/user/index/groupid/<?php echo $this->groupid;?>">
+	                                    	<i class="fa fa-user"></i>
+	                                        <span><?php echo $this->locales->group->member;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a href="#">
+	                                    	<i class="fa fa-cog"></i>
+	                                        <span><?php echo $this->locales->group->setting;?></span>
+	                                    </a>
+	                                </li>
+	                            </ul>
+                        	</div>
+                        
+                            
+                		
+                       		<!-- feed -->
+                       		<div class="feed-tab" id="contain-feed">
+                       			<div class="my-content">
+		                         
+		                        	<div class="new-post">
+		                            	<div class="post-status">
+		                            		<img id="loading_indicator" src="<?php echo $this->static->frontend->images . '/ajax-loader.gif';?>">
+		                        			
+		                        			 <div data-placeholder="Say something..." contenteditable="true" id="postArea" class="postarea"></div>
+		                              		 <div id="msgbox"></div>
+		                              		 <!-- suggestion users -->
+		                              		 <ul id="display" style="display:none;" class="tags-staff">                                    	
+		                                        
+		                                    </ul>
+		                              		 <!-- end suggestion users -->
+		                                </div>
+		                                
+		                                <div id="link_results" style="display:none;"></div>
+		                    			<div class="contain-img-loading clearfix" id="horiz_container"></div>
+		                    			
+		                                <div class="post-service">
+		                                	<div class="icon-file fl">
+		                                    	<ul>
+		                                        	<li>
+		                                            	<a href="javascript:void(0)">
+		                                                	
+		                                                	<i class="fa fa-file">
+		                                                		<input type="file" id="chosenFile" class="img-source" onchange="checkfile(this);">
+		                                                    </i>
+		                                                </a>
+		                                            </li>
+		                                            <li>
+		                                            	<a href="javascript:void(0)">
+		                                                	<i class="fa fa-video-camera">
+		                                                    	<input type="file" id="chosenVideo" class="img-source" onchange="checkvideo(this);">
+		                                                    </i>
+		                                                </a>
+		                                            </li>
+		                                            <li>
+		                                            	<a href="javascript:void(0)">
+		                                                	<i class="fa fa-camera">
+		                                                    	<input type="file" id="chosenImage" class="img-source" onchange="checkimage(this);">
+		                                                    </i>
+		                                                </a>
+		                                            </li>
+		                                        </ul>
+		                                    </div>
+		                                    <div class="share fr">
+					                            <select name="team_id_to" id="team_id_to">
+												    	<option value="<?php echo $this->arrGroupList['group_id'];?>"><?php echo $this->arrGroupList['group_name'];?></option>
+												</select> 
+												
+												<!-- hidden input -->
+												<input type="hidden" name="message" value="">
+												<input type="hidden" name="images" id="images" value="">
+												<input type="hidden" name="typeFeed" id="typeFeed" value="1">
+												<input type="hidden" name="fileName" id="fileName" value="">
+												
+												<input type="hidden" name="link_url" id="link_url" value="">
+												<input type="hidden" name="title" id="title" value="">
+												<input type="hidden" name="description" id="description" value="">
+												<input type="hidden" name="teamName" id="teamName" value="">
+
+												<!-- end hidden input -->
+												<input id="shareBtn" type="button" value="<?php echo $this->locales->share;?>" name="share" class="share-btn">
+		                                    </div>
+		                                    <div class="clear"></div>
+		                                </div>
+		                            </div>
+		                           
+		                            <!-- end new post -->
+		                        </div>
+		                        <!--end my content-->
+		                        
+		                    <!-- start new stt-->
+		                    <div id="actDisplay" class="container-new-stt">
+		                        	<div id="refeshPage" class="icon-refresh">
+		                            	<p>
+		                                    <a href="javascript:void(0);">
+		                                        <img src="<?php echo $this->static->frontend->images . '/new_feed.png';?>" alt="">
+		                                    </a>
+		                                </p>
+		                            </div>
+		                     </div>
+                       		</div>
+                       		<!-- end feed -->
+                       		
+                       <?php echo $this->render('/feed/popup_photo.phtml');?>
+ 
+ </div>
+
+ <!-- source for popup image slide
+ <script type="text/javascript" src="<?php echo $this->static->frontend->js . '/fancy/jquery.mousewheel-3.0.6.pack.js'; ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->js; ?>/fancy/jquery.fancybox.css" media="screen">
+<script type="text/javascript" src="<?php echo $this->static->frontend->js; ?>/fancy/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-buttons.css" media="screen">
+<script type="text/javascript" src="<?php echo $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-buttons.js"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-media.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-thumbs.css" media="screen">
+<script type="text/javascript" src="<?php echo $this->static->frontend->js; ?>/fancy/helpers/jquery.fancybox-thumbs.js"></script>
+ source for popup image slide -->
+
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.caret.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/feed.js'; ?>"></script>
+
+<script language="javascript">
+var locales_file_extens_invalid = "<?php echo $this->locales->validate->invalid_file_extens;?>";
+var locales_upload_error = "<?php echo $this->locales->validate->upload_error;?>";
+var locales_status_empty = "<?php echo $this->locales->validate->status_empty;?>";
+var locales_download = "<?php echo $this->locales->download;?>";
+var locales_write_comment = "<?php echo $this->locales->write_comment;?>";
+var locales_share_something = "<?php echo $this->locales->share_something;?>";
+var locales_no_support_video = "<?php echo $this->locales->no_support_video;?>";
+
+function getRelationPeople(name, teamid, departmentid)
+{
+      $.get("<?php echo BASE_URL;?>/user/search",{name:name,teamid:teamid,departmentid:departmentid},function(result){
+
+       $('#relationship_people').html(result);
+   });
+}
+
+
+/* Search  Relationship to user*/
+ $(".seach_people").click(function(){
+         
+      var  departmentid = $('#departmentid').val();
+      var  teamid = $('#teamid').val();
+      var  name = $('#name').val();
+      
+      getRelationPeople(name, teamid, departmentid);
+         
+  });
+  
+  $('#name').keypress(function(event){
+ 
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+            
+            var  departmentid = $('#departmentid').val();
+            var  teamid = $('#teamid').val();
+            var  name = $('#name').val();
+
+            getRelationPeople(name, teamid, departmentid);
+	 }
+	
+     });
+   
+   /* End Search */
+   
+//feed  
+var settings = { 
+		nop     : 5,
+		offset  : 0,
+		error   : '<p><?php echo $this->locales->no_more_posts;?></p>',
+		delay   : 500, 
+		scroll  : true 
+	};
+
+var offset = settings.offset;
+var busy = false;
+var initmessage = '<p><?php echo $this->locales->load_more;?></p>';
+
+var busyComment = false;
+var busyGetContent = false;
+var groupId = '<?php echo $this->groupid;?>';
+
+$(document).ready(function() {
+
+	/* Append custom messages and extra UI*/
+	$('#actDisplay').append('<div class="all-status content2"></div><div id="loadMore" class="loading-bar load-more"><a href="javascript:void(0);">' + initmessage +'</a></div>');
+	
+	/* Post data to ajax.php*/
+	getData(groupId);
+
+	$('#actDisplay').find('.loading-bar').click(function() {
+		
+		if(busy == false) {
+			busy = true;
+			getData(groupId);
+		}
+	
+	}); 
+
+	// .. and the user is scrolling
+	$(window).scroll(function() {
+		// Check the user is at the bottom of the element
+		if($(window).scrollTop() + $(window).height() > $('#actDisplay').height() && !busy) {
+			// Now we are working, so busy is true
+			busy = true;
+			// Run the function to fetch the data inside a delay This is useful if you have content in a footer you want the user to see.
+			setTimeout(function() {
+				getData(groupId);
+			}, settings.delay);
+				
+		}
+	});
+
+	
+	/*get content from url*/
+	var getUrl  = $('#postArea'); 
+	getUrl.bind('paste', null, function(e) {
+			setTimeout(function() { getContentFromUrl(getUrl); }, 100);
+	});
+	getUrl.keyup(function() { 
+		getContentFromUrl(getUrl);
+	});
+
+	//refesh refeshPage
+	$("#refeshPage" ).live( "click", function(e) {
+		//reset
+		offset = 0;
+		$('#actDisplay').find('.content2').html('');
+		getData(groupId);
+	});
+	
+
+	/* post status */ 
+	$( "#shareBtn" ).live( "click", function(e) {
+		$("#teamName").val($('#team_id_to option:selected').text());
+		postStatus(e);
+		});
+
+	 /* post comment */
+    $("body").delegate(".comment2","keypress", function(e) {
+    	var code = (e.keyCode ? e.keyCode : e.which);
+  	  if (code == 13 && e.shiftKey) {
+  	    
+  	  }else if(code == 13 && $.trim($(this).text()).length){
+  		  e.preventDefault(); /*Stops enter from creating a new line*/
+
+  		if(busyComment == false){
+  			busyComment = true;
+
+  			  var id = $(this).attr("title");
+  			  var str = id.split("_"); 
+  			
+  			  if(str.length > 1){
+  				  var feed_id = str[0];
+  				  var account_id = str[1];
+  				  var comment = $(this).html();
+
+  				//get userId added tag
+  				var userIdStr = getUserIdStr(comment);
+  				//remove add tag button
+  				var commentTmp = comment.replace(/<a class="close-btn close-btn-hover" href="(.*?)"(.*?)><\/a>/g, '');
+				commentTmp = commentTmp.replace(/class="uiToken"/g,'');
+				commentTmp = commentTmp.replace(/class="close-btn close-btn-hover"/g,'');
+				
+  				  $.post(baseurl + "/feed/addcomment",{
+  					  'feed_id': feed_id,
+  					  'account_id': account_id,
+  					  'comment': commentTmp,
+  					  'account_list_to': userIdStr
+  					  }, function(data){       
+
+  						if(data.error == 1){
+  							alert(data.message);
+  						}else{
+  						
+  							var valueComment = commentPost(data.picture, data.name, '', data.create_date, commentTmp);
+
+  							$("#addComment_" + feed_id).append(valueComment);
+  							$('div.cmt .comment2').html('');
+  							
+  							var numberComment = $("#numberComment_" + feed_id).html().trim();
+  							numberComment++;
+  							$("#numberComment_" + feed_id).text(numberComment);
+  						}
+
+  		           		busyComment = false;
+  		           		
+  		            },'json');
+  			  }
+  		 }
+  	  }
+	 });
+
+
+ 	
+    var start=/@/ig;
+    var word=/@(\w+)/ig;
+    var feed_id = '';
+    
+	 //search tag freinds
+	 getUrl.live("keyup",function(e){
+		 
+		feed_id = ''; //reset			 
+		var content = $(this).html();
+		return searchUserName(content, start, word, $("#display"), $("#msgbox"));
+		
+	});
+
+	//comment search tag friends
+	$(".comment2").live("keyup",function(e){
+
+		var id = $(this).attr("title");
+		var str = id.split("_"); 
+			
+		if(str.length > 1){
+			feed_id = str[0];		 
+			var content = $(this).html();
+			return searchUserName(content, start, word, $("#display" + feed_id), $("#msgbox" + feed_id));
+		}
+		
+	});
+	
+	//add freinds
+	$(".addname").live("click",function(){
+		
+		var tmp = $(this).attr('title');
+		var tmpTextAre = getUrl;
+		
+		if(feed_id != ''){
+			tmpTextAre = $("#comment_" + feed_id);
+		}
+
+		addUserNameToText(tmp, tmpTextAre, word, feed_id);	
+
+		tmpTextAre.focusEnd();
+		//moveCursorToEnd(tmpTextAre);
+		
+		//getUrl.focus();
+		//getUrl.prop("selectionStart", getUrl.html().length).focus();
+		
+	});
+
+
+	
+});
+
+
+//end feed
+</script>
+                    

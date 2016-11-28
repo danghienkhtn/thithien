@@ -1,0 +1,580 @@
+<!-- auto complete -->
+<script src="<?php echo $this->static->backend->js;?>/jquery.fcbkcomplete2.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/autocomplete.css' ?>" />
+<!-- end autocomplete -->
+
+<?php
+ $sImageUrl = (!empty($this->arrAccountInfo['picture'])) ? PATH_AVATAR_URL .'/'. $this->arrAccountInfo['picture'] : '';
+ $sAvatarUrl = (!empty($this->arrAccountInfo['avatar'])) ? PATH_AVATAR_URL .'/'. $this->arrAccountInfo['avatar'] : '';
+?>
+
+<div class="asideCont clearfix">
+    <div class="bgTitlef9f9f9 titleReport">UPDATE ACCOUNT INFO
+        <div class="floatright clear">
+            <a href="javascript:void(0)" onClick="window.history.back();" class="button gray">Back</a>
+        </div>
+    </div>
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" class="tblComm" style="margin-bottom:0;">
+        <tbody>
+            <tr>
+                <td valign="top" style="width: 350px;">
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                             
+                            <li>
+                                <p class="titleDes"><label>Name</label></p>
+                                <input type="text" id="gName" name="gName" placeholder="Name"  value="<?php echo $this->arrAccountInfo['name'];?>">
+                                <p class="error" id="gNameError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Email</label></p>
+                                <input type="text" id="gEmail" name="gEmail" placeholder="Email address"  value="<?php echo $this->arrAccountInfo['email'];?>">
+                                <p class="error" id="gEmailError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>GNT ID</label></p>
+                                <input type="text" id="gID" name="gID" placeholder="ID" value="<?php echo $this->arrAccountInfo['id'];?>">
+                                <p class="error" id="gIDError" ></p>
+                            </li>
+                             <li>
+                                <p class="titleDes"><label>Skype (Account/Password)</label></p>
+                                <input type="text" id="gSkype" name="gSkype" placeholder="Skype Account" value="<?php echo $this->arrAccountInfo['skype_account'];?>">
+                                <p class="error" id="gSkypeError" ></p>
+                            </li>
+                            
+                           
+                            
+                            <?php
+                            
+                               $birthDay ='';
+                                
+                               if($this->arrAccountInfo['birthday'] != '0000-00-00')
+                               {
+                                   $birthDay = $this->arrAccountInfo['birthday'];
+                               }
+                               ?>
+
+                            <li>
+                                <p class="titleDes"><label>BirthDay (yyyy-mm-dd)</label></p>
+                                <input type="text" id="gBirthday" name="gBirthday" placeholder="Birthday"  value="<?php echo $birthDay;?>">
+                                <p class="error" id="gBirthdayError" ></p>
+                            </li>
+                            
+                           
+                            <li>                        
+                                <p class="titleDes"><label>Picture</label></p>
+                                <form name="uploadImage" url="<?php echo BASE_URL . "/upload/upload"; ?>">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" input-id="1">
+                                        <div class="fileupload-new thumbnail" style="width: 100px; height: 100px;"><img class="img" src="<?php echo !empty($sImageUrl)?$sImageUrl:'http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image';?>" width="100px" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                    <div id="photoUploadResult1" class="hidden"></div>
+                                </form>
+                                <p class="error" id="pImageError" ></p>
+                                <input type="hidden" name="gPicture" value ="<?php echo $this->arrAccountInfo['picture'];?>" id ="gPicture" />
+                            </li>
+                            
+                            <!-- <li>                        
+                                <p class="titleDes"><label>Avatar</label></p>
+                                <form name="uploadImage" url="<?php echo BASE_URL . "/upload/upload"; ?>">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" input-id="2">
+                                        <div class="fileupload-new thumbnail" style="width: 100px; height: 100px;"><img class="img" src="<?php echo !empty($sAvatarUrl)?$sAvatarUrl:'http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image';?>" width="100px" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new" id="btnUpload">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="file_upload" accept="image/png, image/gif, image/jpeg" /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                    <div id="photoUploadResult2" class="hidden"></div>
+                                </form>
+                                <p class="error" id="pImageError" ></p>
+                                <input type="hidden" name="gAvatar" value ="<?php echo $this->arrAccountInfo['avatar'];?>" id ="gAvatar" />
+                            </li>
+                            -->
+                            <li>                        
+                                <p class="titleDes"><label>Position</label></p>
+                                <select id="gPosition" name="gPosition" class="seleComm width270">
+                                    <option value="0">Choose a Position</option>
+                                    <?php 
+                                   if(!empty($this->arrGeneralAtt['position']))
+                                   {
+                                        foreach ($this->arrGeneralAtt['position'] as $value): 
+                                         ?>
+                                        <option value="<?php echo $value['id']; ?>"  <?php echo ($value['id'] == $this->arrAccountInfo['position'])?'selected':'';?>><?php echo $value['name']; ?></option>
+                                        <?php 
+                                        endforeach; 
+                                   }
+                                   ?>
+                                </select>
+                                <p class="error" id="gPositionError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Leader</label></p>
+                                 <select id="gLeader" name="gLeader"  ></select>
+                                <p class="error" id="gLeaderError" ></p>
+                            </li>
+                             <li>
+                                <p class="titleDes"><label>Manager</label></p>
+                                 <select id="gManager" name="gManager"  ></select>
+                                <p class="error" id="gManagerError" ></p>
+                            </li>
+                           <li>
+                                <p class="titleDes"><label>Direct Manager</label></p>
+                                 <select id="gDirectManager" name="gDirectManager"  ></select>
+                                <p class="error" id="gDirectManagerError" ></p>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                </td>
+                <td valign="top" style="width: 350px;">
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                             <li>                        
+                                <p class="titleDes"><label>Team</label></p>
+                                <select id="gTeam" name="gTeam" class="seleComm width270">
+                                    <option value="0">Choose a Team</option>
+                                    <?php 
+                                   if(!empty($this->arrGroup))
+                                   {
+                                        foreach ($this->arrGroup as $value): 
+                                         ?>
+                                        <option value="<?php echo $value['group_id']; ?>"  <?php echo ($value['group_id'] == $this->arrAccountInfo['team_id'])?'selected':'';?>><?php echo $value['group_name']; ?></option>
+                                        <?php 
+                                        endforeach; 
+                                   }
+                                   ?>
+                                </select>
+                                <p class="error" id="gTeamError" ></p>
+                            </li>
+                             <li>
+                                <p class="titleDes"><label>Phone</label></p>
+                                <input type="text" id="gPhone" name="gPhone" placeholder="Phone"  value="<?php echo $this->arrAccountInfo['phone'];?>">
+                                <p class="error" id="gPhoneError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Identity</label></p>
+                                <input type="text" id="gIdentity" name="gIdentity" placeholder="Identity"  value="<?php echo $this->arrAccountInfo['identity'];?>">
+                                <p class="error" id="IdentityError" ></p>
+                            </li>
+                            <li>                        
+                                <p class="titleDes"><label>Contract Type</label></p>
+                                <select id="gContractType" name="gContractType" class="seleComm width270">
+                                    <option value="0">Choose a contract type</option>
+                                    <?php 
+                                   if(!empty($this->arrGeneralAtt['contract_type']))
+                                   {
+                                        foreach ($this->arrGeneralAtt['contract_type'] as $value): 
+                                         ?>
+                                        <option value="<?php echo $value['id']; ?>"  <?php echo ($value['id'] == $this->arrAccountInfo['contract_type'])?'selected':'';?>><?php echo $value['name']; ?></option>
+                                        <?php 
+                                        endforeach; 
+                                   }
+                                   ?>
+                                </select>
+                                <p class="error" id="gContractTypeError" ></p>
+                            </li>
+                            <?php
+                               $signDay ='';
+                                
+                               if($this->arrAccountInfo['contract_sign_date'] != '0000-00-00')
+                               {
+                                   $signDay = $this->arrAccountInfo['contract_sign_date'];
+                               }
+                              ?>
+                
+                             <li>
+                                <p class="titleDes"><label>Contract Sign Date (yyyy-mm-dd)</label></p>
+                                <input type="text" id="gSignDate" name="gSignDate" placeholder="Contract Sign Date" value="<?php echo $signDay;?>">
+                                <p class="error" id="gSignDateError" ></p>
+                            </li>
+                             <?php
+                               $startDay ='';
+                                
+                               if($this->arrAccountInfo['start_date'] != '0000-00-00')
+                               {
+                                   $startDay = $this->arrAccountInfo['start_date'];
+                               }
+                              ?>
+                           
+                            <li>
+                                <p class="titleDes"><label>Start Date (yyyy-mm-dd)</label></p>
+                                <input type="text" id="gStartDate" name="gStartDate" placeholder="Start date"  value="<?php echo $startDay;?>">
+                                <p class="error" id="gStartDateError" ></p>
+                            </li>
+                            
+                            <?php
+                               $endDay ='';
+                                
+                               if($this->arrAccountInfo['end_date'] != '0000-00-00')
+                               {
+                                   $endDay = $this->arrAccountInfo['end_date'];
+                               }
+                              ?>
+                            
+                            <li>
+                                <p class="titleDes"><label>End Date (yyyy-mm-dd)</label></p>
+                                <input type="text" id="gEndDate" name="gEndDate" placeholder="End date"  value="<?php echo $endDay;?>">
+                                <p class="error" id="gEndDateError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Tax Code</label></p>
+                                <input type="text" id="gTaxcode" name="gTaxcode" placeholder="Tax Code" value="<?php echo $this->arrAccountInfo['tax_code'];?>">
+                                <p class="error" id="gTaxcodeError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>About Me</label></p>
+                                <textarea style="width:258px; font-size: 13px;" id="gAboutme" name="gAboutme" placeholder="About me"><?php echo $this->arrAccountInfo['description'];?></textarea>
+                                <p class="error" id="gAboutmeError" ></p>
+                            </li>
+                            <li>
+                                <p class="titleDes"><label>Address</label></p>
+                                <input type="text" id="gAddress" name="gAddress" placeholder="Address" value="<?php echo $this->arrAccountInfo['address'];?>">
+                                <p class="error" id="gAddressError" ></p>
+                            </li>
+                            
+                             <li>                        
+                                <p class="titleDes"><label>Country</label></p>
+                                <select id="gCountry" name="gCountry" class="seleComm width270">
+                                    <option value="0">Choose a Country</option>
+                                    <?php 
+                                   if(!empty($this->arrCountry))
+                                   {
+                                        foreach ($this->arrCountry as $key=>$val): 
+                                         ?>
+                                        <option value="<?php echo $key; ?>"  <?php echo ($key == $this->arrAccountInfo['country_id'])?'selected':'';?>><?php echo $val; ?></option>
+                                        <?php 
+                                        endforeach; 
+                                   }
+                                   ?>
+                                </select>
+                                <p class="error" id="gCountryError" ></p>
+                            </li>
+                            
+                            <li>                        
+                                <p class="titleDes"><label>Root Team</label></p>
+                                <select id="gTopPeole" name="gTopPeole" class="seleComm width270">
+                                    <option value="0" <?php echo ($this->arrAccountInfo['top_people'] ==0)? 'selected':'';?>>None</option>
+                                    <option value="1" <?php echo ($this->arrAccountInfo['top_people'] ==1)? 'selected':'';?>>Yes</option>
+                                </select>
+                                <p class="error" id="gManagerTypeError" ></p>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                
+                <!-- Extra Field -->
+                <td valign="top">
+                    <?php
+                      if(!empty($this->arrAttribute))
+                      { 
+                      ?>
+                   
+                    <div class="padLefRig20">
+                        <ul class="ulListIfSch">
+                            
+                            <?php
+                               //Init Att
+                               $arrAttID = array();
+                               $sAttID = '';
+                               
+                               //check attribute
+                               if(!empty($this->arrAttribute))
+                               {
+                                    foreach($this->arrAttribute as $value)
+                                    {
+                                        
+                                        
+                                       $dataValue = isset($this->arrAccountExtra[$value['attribute_id']])?$this->arrAccountExtra[$value['attribute_id']]:'';
+                                       
+                                       $arrAttID[] = $value['attribute_id'];
+                                       if($value['attribute_type'] ==TEXTBOX_ATTRIBUTE_TYPE)
+                                       {
+                                    ?>
+                                         <li>
+                                             <p class="titleDes"><label><?php echo $value['attribute_name'];?></label></p>
+                                             <input type="text" id="attribute_<?php echo $value['attribute_id'];?>" name="attributeText[<?php echo $value['attribute_id'];?>]" placeholder="<?php echo $value['attribute_name'];?>" value="<?php echo $dataValue;?>">
+                                             <p class="error" id="gAttribute_<?php echo $value['attribute_id'];?>Error" ></p>
+                                         </li>
+                                       <?php
+                                       }
+                                       else if ($value['attribute_type'] == TEXTAREA_ATTRIBUTE_TYPE)
+                                       {
+                                        ?>
+
+                                         <li>
+                                             <p class="titleDes"><label><?php echo $value['attribute_name'];?></label></p>
+                                            <textarea style="width:258px; font-size: 13px;" id="attribute_<?php echo $value['attribute_id'];?>" name="attributeText[<?php echo $value['attribute_id'];?>]" placeholder="<?php echo $value['attribute_name'];?>"><?php echo $dataValue;?></textarea>
+                                             <p class="error" id="gAttribute_<?php echo $value['attribute_id'];?>Error" ></p>
+                                         </li>
+
+                                         <?php
+                                       }
+                                       ?>
+                                 <?php
+                                    }
+                                    
+                                    $sAttID = implode(',',$arrAttID);
+                               }
+                               ?>
+                        </ul>
+                    </div>
+                    
+                    <?php
+                      }
+                      ?>
+                </td>
+                <!-- End Extra Field -->
+            </tr>
+            
+            <tr>
+                <td valign="top" colspan="2">
+                    <div class="floatleft mLeft10 mTop10">
+                        <a href="#" id="btnEventAdd" class="button green">Update</a>
+                        <span id="btnSubmitting" class="button gray hidden">Submitting...</span>
+                        <input type="hidden" id="gAccountID" name="gAccountID" value="<?php echo $this->arrAccountInfo['account_id'];?>" />
+                         <input type="hidden" id="gAttIDs" name="gAttIDs" value="<?php echo $sAttID;?>" />
+                         <input type="hidden" id="gMail" name="gMail" value="<?php echo $this->arrAccountInfo['email'];?>" />
+                         
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    
+    /* Upload */
+    document.domain = "<?php echo DOMAIN; ?>";
+    $('.fileupload').fileupload({"name":"file_upload"});
+    
+    
+    $("#gBirthday").datetimepicker({ 
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+	stepHour: 1,
+	stepMinute: 1,
+	stepSecond: 1
+    });
+    
+    $("#gSignDate").datetimepicker({ 
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        /*showTimezone: true,*/
+        showSecond: false,
+	/*timeFormat: 'HH:mm:ss',*/
+	stepHour: 1,
+	stepMinute: 1,
+	stepSecond: 1
+    });
+    
+    
+    $("#gStartDate").datetimepicker({ 
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        /*showTimezone: true,*/
+        showSecond: false,
+	/*timeFormat: 'HH:mm:ss',*/
+	stepHour: 1,
+	stepMinute: 1,
+	stepSecond: 1
+    });
+    
+     $("#gEndDate").datetimepicker({ 
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        /*showTimezone: true,*/
+        showSecond: false,
+	/*timeFormat: 'HH:mm:ss',*/
+	stepHour: 1,
+	stepMinute: 1,
+	stepSecond: 1
+    });
+    
+    
+    
+    $('#btnEventAdd').click(function() {
+
+        var accountid = $('#gAccountID').val();
+        var id = $('#gID').val();
+        var skype = $('#gSkype').val();
+        var name = $('#gName').val();
+        var email    = $('#gMail').val();
+        var birthday = $('#gBirthday').val();
+        var phone = $('#gPhone').val();
+        var identity = $('#gIdentity').val();
+        var picture = $('#gPicture').val();
+        var position = $('#gPosition').val();
+        var leader = $('#gLeader').val();
+        var manager = $('#gManager').val();
+        var directmanager = $('#gDirectManager').val();
+        
+        
+        var team = $('#gTeam').val();
+        var contracttype = $('#gContractType').val();
+        var signday = $('#gSignDate').val();
+        var startday = $('#gStartDate').val();
+        var endday = $('#gEndDate').val();
+        var taxcode = $('#gTaxcode').val();
+        var aboutme = $('#gAboutme').val();
+        var country = $('#gCountry').val();
+        var address = $('#gAddress').val();
+        var image = $('#photoUploadResult1 .response .image_id').html();
+        var gAttIDs = $('#gAttIDs').val();
+        var managertype = 0;
+        var gTopPeole    = $('#gTopPeole').val();
+        var avatar ='';
+        
+        //var oldavatar = $('#gAvatar').val();
+        //var avatar = $('#photoUploadResult2 .response .image_id').html();
+         
+        if(name =='')
+        {
+            alert('Pls input name');
+            return;  
+        }
+        
+        if(accountid ==0)
+        {
+            alert('Pls check your information');
+            return;  
+        }
+        
+        
+        if (image == undefined) {
+            image = picture;
+        } else {
+            image = $('#photoUploadResult1 .response .image_id').html() + "." + $('#photoUploadResult1 .response .image_format').html();
+        }
+        
+        
+        /*if (avatar == undefined) {
+            avatar = oldavatar;
+        } else {
+            avatar = $('#photoUploadResult2 .response .image_id').html() + "." + $('#photoUploadResult2 .response .image_format').html();
+        }
+        */
+       
+      
+        $("#btnEventAdd").addClass('hidden');
+        $("#btnSubmitting").removeClass('hidden');
+
+        var params = {
+            accountid: accountid,
+            id: id,
+            skype: skype,
+            name: name,
+            email: email,
+            birthday: birthday,
+            phone: phone,
+            identity: identity,
+            picture: image,
+            avatar:avatar,
+            position:position,
+            leader:leader,
+            manager: manager,
+            directmanager:directmanager,
+            team:team,
+            contracttype:contracttype,
+            signday:signday,
+            startday:startday,
+            endday:endday,
+            taxcode:taxcode,
+            aboutme:aboutme,
+            country:country,
+            address:address,
+            managertype:managertype,
+            toppeople: gTopPeole,
+            attids:gAttIDs,
+            <?php
+            if(!empty($arrAttID))
+            {
+                foreach($arrAttID as $value)
+                {
+
+                ?>
+                  attribute_<?php echo $value;?>:$("#attribute_<?php echo $value;?>").val(),
+
+              <?php
+                }
+            }
+            ?>
+        };
+
+        $.post("<?php echo BASE_ADMIN_URL; ?>/index/add", params, function(result){
+            if(result.error == 0)
+            {
+                window.location='<?php echo BASE_ADMIN_URL; ?>/index';
+            }
+            else
+            {
+                alert(result.message);
+                $("#btnEventAdd").removeClass("hidden");
+                $("#btnSubmitting").addClass('hidden');
+            }
+        },'json');
+    });
+    
+    
+    
+    $(document).ready(function(){  
+            $("#gLeader").fcbkcomplete({
+                    json_url: '<?php echo BASE_URL;?>/index/autocomplete',
+                    addontab: true,                   
+                    maxitems: 1,
+                    input_min_size: 0,
+                    height: 10,
+                    width: '320px',
+                    cache: false,
+                    newel: false,
+                    select_all_text: "",
+                    input_value_id: '<?php echo $this->arrAccountInfo['leader_id'];?>',
+                    input_value: '<?php echo isset($this->arrProfileManager[$this->arrAccountInfo['leader_id']]['name'])?$this->arrProfileManager[$this->arrAccountInfo['leader_id']]['name']:'';?>'
+
+            });
+            
+           
+               
+             $("#gManager").fcbkcomplete({
+                    json_url: '<?php echo BASE_URL;?>/index/autocomplete',
+                    addontab: true,                   
+                    maxitems: 1,
+                    input_min_size: 0,
+                    height: 10,
+                    width: '320px',
+                    cache: false,
+                    newel: false,
+                    select_all_text: "",
+                    input_value_id: '<?php echo $this->arrAccountInfo['manager_id'];?>',
+                    input_value: '<?php echo isset($this->arrProfileManager[$this->arrAccountInfo['manager_id']]['name'])?$this->arrProfileManager[$this->arrAccountInfo['manager_id']]['name']:'';?>'
+
+            });
+            
+             $("#gDirectManager").fcbkcomplete({
+                    json_url: '<?php echo BASE_URL;?>/index/autocomplete',
+                    addontab: true,                   
+                    maxitems: 1,
+                    input_min_size: 0,
+                    height: 10,
+                    width: '320px',
+                    cache: false,
+                    newel: false,
+                    select_all_text: "",
+                    input_value_id: '<?php echo $this->arrAccountInfo['direct_manager'];?>',
+                    input_value: '<?php echo isset($this->arrProfileManager[$this->arrAccountInfo['direct_manager']]['name'])?$this->arrProfileManager[$this->arrAccountInfo['direct_manager']]['name']:'';?>'
+
+            });
+            
+            
+            
+	});
+        
+</script>

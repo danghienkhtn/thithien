@@ -1,0 +1,34 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".admin .fa-chevron-down").click(function(){
+            $(".panel-setting-admin").fadeToggle();
+        });
+    });
+</script>
+<div class="topbar clearfix">
+    <div class="header-left">
+        <a href="#" class="menutoggle pull-left">
+            <i class="fa fa-outdent"></i>
+        </a>
+        <input type="text" class="search-box bor-raduis4" placeholder="search">
+    </div><!-- header-left -->
+    <div class="header-right clearfix">
+        <a href="#" class="notification pull-left">
+            <i class="fa fa-bell"></i>
+            <span class="number-notify">10</span>
+        </a>
+        <div class="admin pull-left">
+            <span class="img-admin circle" />
+                <img src="<?php echo $this->arrLogin["avatar"]; ?>" width="30"/>
+            </span>
+            <h6 class="name-admin bold capitalize"><strong><?php echo $this->arrLogin['nickName']; ?></strong>&nbsp;<i class="fa fa-chevron-down"></i></h6>
+            <div class="panel-setting-admin">
+                <ul class="list-panel">
+                <li><a href="/user/summary?account_id=<?php echo $this->arrLogin['accountID'];?>"><i class="fa fa-info-circle fa-fw"></i>&nbsp;User info</a></li>
+                <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i>&nbsp;Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- admin -->
+    </div><!-- header-right -->
+</div><!-- topbar -->

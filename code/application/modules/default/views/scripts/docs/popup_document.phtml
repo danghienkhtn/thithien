@@ -1,0 +1,676 @@
+<!-- Popup Select file-->
+<style>
+.try-editor {
+    background-color: transparent;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+    padding-top: 100px;
+    text-align: center;
+    text-decoration: none;
+}
+.try-editor.document {
+    background-image: url("<?php echo BASE_URL ?>/static/images/docs/file_docx.png");
+}
+.try-editor.spreadsheet {
+    background-image: url("<?php echo BASE_URL ?>/static/images/docs/file_xlsx.png");
+}
+.try-editor.presentation {
+    background-image: url("<?php echo BASE_URL ?>/static/images/docs/file_pptx.png");
+}
+</style>
+<div class="popup-selectFile" id="draggable">
+    <div class="title-selectFile">Select file
+    <div class="text-center loading_effect" style="display:inline-block;"><i class="fa fa-refresh fa-spin"></i></div>
+    <span class="close-FilePopup pull-right text-right clearfix"><i
+                class="fa fa-times"></i></span></div>
+
+    <div class="option-linkFile" data-item="menu-actions">
+        <div class="linkFolder pull-left">
+            <small id="backFolder"><i class="fa fa-arrow-left text-muted pull-left"
+                                      style="padding-top:5px;cursor:pointer;"></i></small>
+            <small id="refreshFolder"><i class="fa fa-refresh text-muted pull-left"
+                                         style="padding-top:5px;cursor:pointer;"></i></small>            
+            <ul id="pull-left" data-item="bread-crumb" class='pull-left'>
+            </ul>
+        </div>
+        <div class="file-uploadOption pull-right">
+            <div class="newFolderbtn pull-right">
+                <span style="cursor:pointer;" class="btn-newFolder"><i class="fa fa-plus fa-fw"></i>New folder</span>
+            </div>
+            <div class="fileUpload btn btn-success pull-right">
+                <span><i class="fa fa-cloud-upload fa-fw"></i>Upload</span>
+                <input type="file" class="upload"  id="chosenFile" onchange="checkFileDocument(this,'',false);"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="mainContent-Folder">
+        <div id="subFolder" class="subFolder" style="display:none;">
+            <a href="javascript:void(0);" title="Personal Document" class="linkSubFolder"><i
+                    class="fa fa-folder fa-fw"></i>
+                <small>Personal Document</small>
+            </a>
+        </div>
+
+        <div id="actDocument" data-item="lst-ele" class="subFolder-Active">
+            <div class="content2">
+
+            </div>
+            <div class="loading-bar text-center">
+            </div>
+        </div>
+        <!--<div class="text-center"><img  src="<?php echo $this->static->frontend->images . '/ajax-loader-2.gif'; ?>"></div>-->
+    </div>
+    <div class="text-center group-selectFilebutton">
+        <button class="btn btn-default btn-sm btnSelectFile" disabled>Select</button>
+        <button class="btn-cancelFolder btn btn-default btn-sm ">Cancel</button>
+    </div>
+</div>
+<!-- End Popup Select file-->
+
+<!-- Popup Newfolder file-->
+<div class="popup-newFolderFile newFolderWrapper" id="draggablenewFolder">
+    <div class="title-selectnewFolder">New folder<span
+            class="close-FilePopupnewFolder pull-right text-right clearfix"><i class="fa fa-times"></i></span></div>
+    <div class="form-group formNewFolder">
+        <label for="folderName">Folder Name:</label>
+        <input type="text" id="folderName" name="folderName" class="form-control folderName">
+    </div>
+
+    <div class="text-center group-selectFilebutton">
+        <button class="btn btn-primary btn-sm" onclick="createFolder();">Create Folder</button>
+        <button class="btn-cancelnewFolder btn btn-default btn-sm">Cancel</button>
+    </div>
+</div>
+    <!--Start Popup check file--><!--muon show thi display:block; an? display:none;-->
+        <div class="overlayCheckFile">
+            <div class="popupWrapper">
+                <i class="fa fa-times" data-action="cancel-replace" ></i>
+                <div class="proccessDocument">
+                    <h3>Upload new document</h3>
+                    <div class="form-inline-01">
+                        <div class="form-group">
+                            <span class="text-danger">This file has already exists.</span>
+                            <input type="text" class="form-control" data-item="file-name-replace" disabled placeholder="">
+                            
+                       </div>
+                        <button type="button" class="btn btn-primary" data-action="replace">Replace</button>
+                        <button type="button" class="btn btn-default" data-action="cancel-replace" >Cancel</button><br/>
+<!--                        <span class="text-danger">This file has already exists.</span>-->
+                    </div>
+<!--                    <button type="button" class="btn btn-success" data-action="add-new-file" >Upload more</button>-->
+<!--                    <button type="button" class="btn btn-default" data-action="cancel-replace" >Close</button>-->
+                </div>
+            </div>
+        </div>
+    <!--End popup check file-->
+<script type="text/javascript">
+
+    var parent = 0;
+    var addNew = false, reName = '';
+    var settings = {
+        nop: 10,
+        offset: 0,
+        error: '<p><?php echo $this->locales->no_more_posts;?></p>',
+        delay: 500,
+        scroll: true
+    };
+
+    var offset = settings.offset;
+
+    // var initmessage = '<p><?php echo $this->locales->load_more;?></p>';
+    var initmessage = '<img  src="<?php echo $this->static->frontend->images . '/ajax-loader-2.gif';?>">';
+    var breadCrumbs = Array();
+    var parent = 0;
+    var group = 0;
+    var groupId = 0;
+    busy = false;
+    //file array
+    var fileIds = [];
+
+
+
+    $(function () {
+        function checkBtn(){
+                var _activeItm = $('.subFolder-Active .active-item').length;
+                // console.log(_activeItm);
+
+                if(_activeItm !== 0){
+                    $('.btnSelectFile').removeAttr('disabled');
+                    $('.btnSelectFile').removeClass('btn-default').addClass('btn-primary');
+                }else{
+                    $('.btnSelectFile').attr('disabled', 'true');
+                    $('.btnSelectFile').removeClass('btn-primary').addClass('btn-default');
+                }
+            }
+        checkBtn();
+        $(document).ready(function () {
+
+            //click item
+            $('body').on('click', '.linkSubFolder', function () {
+
+                (typeof $(this).data("g") === 'undefined') ? '' : groupId = $(this).data("g");
+                var id = $(this).data("id");
+                var path = $(this).find('small').text();
+                if ((typeof id === 'undefined') && groupId > 0) {
+                    breadCrumbs.push({g: groupId, p: 0, f: path});
+                    setItem(0);
+                    getDocument();
+                    $('[data-item="bread-crumb"]').html('');
+
+                    $('[data-item="bread-crumb"]').append("<li style='font-weight:bold;' class='linkFile' data-g='" + groupId + "'><small>" + path + "</small></li><li class='File'><i class='fa fa-caret-right fa-fw'></i></li>");
+
+                } else {//click folder or file
+                    var type = $(this).data("type");
+                    var parentInternal = $(this).data("parent");
+
+                    //folder
+                    if (type == '<?php echo FOLDER;?>') {
+                        breadCrumbs.push({g: groupId, p: id, f: path});
+                        $('[data-item="bread-crumb"]').append("<li style='font-weight:bold;' class='linkFile' data-g='" + groupId + "'><small>" + path + "</small></li><li class='File'><i class='fa fa-caret-right fa-fw'></i></li>");
+                        setItem(id);
+                        getDocument();
+                    }
+                    //show path
+                    else if (typeof id !== 'undefined') {
+                        getDocumentById(id, type, parentInternal);
+                    }
+                }
+                checkBtn();
+            });
+
+            $('body').on('dblclick', '.linkSubFolder', function () {
+                var _this = $(this);
+                var id = _this.data("id");
+
+               if (typeof id !== 'undefined') {
+                   var itemName = _this.data('file-name');
+                   var fileIcon = '<i class="fa '+_this.data('icon')+' fa-fw"></i>';
+
+//                   if (!$(".documentFileWrapper span").hasClass(itemName)) {
+//                       var id = _this.find('.active-item').data("id");
+
+                       //push array list file
+                       if (typeof  id !== 'undefined' && id > 0) {
+                           if ($.inArray(id, fileIds) == -1) {
+                               if (fileIds.length < <?php echo LIMIT4;?>) {//limit file
+//                                   $(".documentFileWrapper").append('<span data-item="files-feed" class=' + itemName + '>' + fileIcon + '' + itemName + '<i data-id="' + id + '" class="rmvFileFolder fa fa-times text-muted fa-fw"></i></span>');
+                                   $(".documentFileWrapper").append('<span data-item="files-feed" >' + fileIcon + '' + itemName + '<i data-id="' + id + '" class="rmvFileFolder fa fa-times text-muted fa-fw"></i></span>');
+                                   fileIds.push(id);
+                               } else {
+                                   alert('Maximum 4 file upload.');
+                               }
+                           }else
+                                AlertFail(locales_file_chose_invalid);
+                       }else
+                        //console.log(id);
+                   $('.popup-selectFile').hide();
+//                   }
+               }
+
+            });
+
+
+
+            //back folder
+            $("body").on('click', '#backFolder', function () {
+                //back to group
+                breadCrumbs.pop();
+                (breadCrumbs.length == 0) ? getMyGroup() : getDocument();
+                //remove last note
+                removeLastBreadCrumb();
+            });
+
+            //refesh
+            $("body").on('click', '#refreshFolder', function () {
+//            refresh current bread-crumb
+                (breadCrumbs.length == 0) ? getMyGroup() : getDocument();
+//            getMyGroup();
+                //remove last note
+//            $('#pull-left').html('');
+//            $('#pull-left').html('');
+            });
+
+            $('[data-item="lst-ele"]').on('scroll', function () {
+                if ($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight && !busy) {
+                    // Now we are working, so busy is true
+                    busy = true;
+                    // Run the function to fetch the data inside a delay This is useful if you have content in a footer you want the user to see.
+                    setTimeout(function () {
+                        getDocument();
+                    }, settings.delay);
+
+                }
+            });
+
+            $('body').on('click', '[data-action="replace"]', function(){
+//                $('[data-action="add-new-file"]').prop('disabled',true);
+                $('[data-action="replace"]').prop('disabled',true);
+//                checkFileDocument(null,$('[data-item="file-name-replace"]').val(),false);
+                checkFileDocument(null,$('[data-item="file-name-replace"]').val(),false,true);
+            });
+
+//            $('body').on('click', '[data-action="add-new-file"]', function(){
+//                $('[data-action="add-new-file"]').prop('disabled',true);
+//                $('[data-action="replace"]').prop('disabled',true);
+//                checkFileDocument(null,'',true);
+//            });
+
+            $('body').on('click', '[data-action="cancel-replace"]', function(){
+                $('#chosenFile').val('');
+                $('[data-item="file-name-replace"]').val('');
+                $('.overlayCheckFile').hide();
+            });
+        });
+    });
+
+
+    function getMyGroup() {
+        if (busy) {
+            return false;
+        }
+        showLoadingFile();
+        $('[data-item="lst-ele"]').find('.content2').html('');
+        group = 0;
+
+        busy = true;
+
+        $.get(baseurl + "/group/get-my-group", {
+            action: 'get-my-group'
+
+        }, function (data) {
+            hideLoadingFile();
+            /* Change loading bar content (it may have been altered)*/
+            $('[data-item="lst-ele"]').find('.loading-bar').html(initmessage);
+            $('[data-item="bread-crumb"]').html('');
+            /* If there is no data returned, there are no more posts to be shown. Show error*/
+            if (data.error == 1) {
+                $('[data-item="lst-ele"]').find('.loading-bar').html('');
+                alert(data.message);
+            }
+            else {
+                busy = false;
+                /* No longer busy!*/
+
+                var value = '';
+                var row = '<a href="javascript:void(0);" data-g="{{group_id}}" class="linkSubFolder folderItem">' +
+                    '<div class="iconFile pull-left"><i class="fa {{icon}} fa-fw"></i></div><small>{{name}}</small>' +
+                    '</a>';
+                for (var i = 0; i < data.data.length; i++) {
+
+                    var tmp = row;
+                    tmp = tmp.replace("{{group_id}}", data.data[i]["group_id"]);
+
+                    value += tmp.replace("{{name}}", data.data[i]['group_name']).replace("{{icon}}", "fa fa-folder-o");
+
+                }
+
+                $('[data-item="lst-ele"]').find('.content2').append(value);
+
+                //off loading
+                $('[data-item="lst-ele"]').find('.loading-bar').html('');
+            }
+        }, 'json');
+    }
+
+
+    function getDocument() {
+        if(breadCrumbs.length == 0)
+            return;
+        showLoadingFile();
+        var lastBreadCrumb = breadCrumbs[breadCrumbs.length - 1];
+
+        var params = {
+            action: 'personal-document',
+            limit: settings.nop,
+            page: offset,
+            p: lastBreadCrumb.p,
+            g: lastBreadCrumb.g
+        };
+
+
+        $.get(baseurl + "/group/personal-document", params, function (response) {
+            parent = 0;
+            busy = false;
+            hideLoadingFile();
+            /* No longer busy!*/
+            /* Change loading bar content (it may have been altered)*/
+            $('[data-item="lst-ele"]').find('.loading-bar').html(initmessage);
+
+            /* If there is no data returned, there are no more posts to be shown. Show error*/
+            if (response.data.length < 1) {
+                $('[data-item="lst-ele"]').find('.content2').html('');
+                $('[data-item="lst-ele"]').find('.loading-bar').html('');
+            }
+            else {
+                offset = offset + settings.nop;
+                /* Offset increases*/
+
+                var _html = '';
+                var subEleHtmlTmp = '<a href="javascript:void(0);" data-id="{{id}}" data-icon="{{data-icon}}" data-file-name="{{file_name}}" data-parent="{{parent}}" data-type="{{type}}" class="linkSubFolder folderItem">' +
+                    '<div class="iconFile pull-left"><i class="fa {{icon}} fa-fw"></i></div><small>{{name}}</small>' +
+                    '</a>';
+
+                $.each(response.data, function (i, ele) {
+//                        ele is a folder or file
+
+                    parent = ele.parent;
+                    var fileName = (typeof   ele["original_name"] === 'undefined') ?  ele["name"] :  ele["original_name"];
+                    var subEleHtml = subEleHtmlTmp; // tmp html of a folder or a file
+                    subEleHtml = subEleHtml.replace("{{id}}", ele["_id"]).replace("{{parent}}", parent);
+                    subEleHtml = subEleHtml.replace("{{type}}", ele["type"]);
+                    subEleHtml = subEleHtml.replace("{{file_name}}", fileName);
+
+                    if (ele['type'] == '<?php echo FOLDER;?>') { // is a folder
+                        _html += subEleHtml.replace("{{name}}", ele['name']).replace("{{icon}}", "fa fa-folder-o");
+                    }
+                    else {  // is a file
+                        var fileName = (typeof  ele['original_name'] === 'undefined') ? ele['name'] : ele['original_name'];
+                        if (ele['ext'] == 'doc' || ele['ext'] == 'docx') {
+                            subEleHtml = subEleHtml.replace("{{data-icon}}", "fa-file-word-o");
+                            _html += subEleHtml.replace("{{name}}", fileName).replace("{{icon}}", "fa-file-word-o");
+                        }
+                        if (ele['ext'] == 'xls' || ele['ext'] == 'xlsx') {
+                            subEleHtml = subEleHtml.replace("{{data-icon}}", "fa-file-excel-o");
+                            _html += subEleHtml.replace("{{name}}", fileName).replace("{{icon}}", "fa-file-excel-o");
+                        }
+                        if (ele['ext'] == 'pdf') {
+                            subEleHtml = subEleHtml.replace("{{data-icon}}", "fa-file-pdf-o");
+                            _html += subEleHtml.replace("{{name}}", fileName).replace("{{icon}}", "fa-file-pdf-o");
+                        }
+                        if (ele['ext'] == 'ppt' || ele['ext'] == 'pptx') {
+                            subEleHtml = subEleHtml.replace("{{data-icon}}", "fa-file-powerpoint-o");
+                            _html += subEleHtml.replace("{{name}}", fileName).replace("{{icon}}", "fa-file-powerpoint-o");
+                        }
+                    }
+
+                });
+                setItem(parent);
+                $('[data-item="lst-ele"]').find('.content2').html(_html);
+                $('[data-item="lst-ele"]').find('.loading-bar').html('');
+            }
+        }, 'json');
+    }
+
+    //get document by id
+    function getDocumentById(id, type, parentInternal) {
+        showLoadingFile();
+        $.get(baseurl + "/group/get-document-by-id", {
+            action: 'get-document-by-id',
+            id: id
+
+        }, function (data) {
+            hideLoadingFile();
+            if (data.error) {
+                $('[data-id="' + id + '"]').remove();
+                AlertFail(data.message);
+                return;
+            }
+
+            var parentPull = $('[data-item="bread-crumb"] li.linkFile:last').data("parent");
+
+            //the same parent
+            if (parentPull == parentInternal) {
+                //remove last note
+                removeLastBreadCrumb();
+                breadCrumbs.pop();
+            }
+
+//            var path = data.file['name'];
+//            $('[data-item="bread-crumb"]').append("<li style='font-weight:bold;' class='linkFile' data-type='" + data.file["type"] + "' data-id='" + id + "' data-parent='" + parentInternal + "'><small>" + path + "</small></li><li class='File'><i class='fa fa-caret-right fa-fw'></i></li>");
+
+        }, 'json');
+    }
+
+    function removeLastBreadCrumb()
+    {
+        $('[data-item="bread-crumb"] li.linkFile:last').remove();
+        $('[data-item="bread-crumb"] li.File:last').remove();
+    }
+
+    function setItem(id) {
+        parent = id;
+        offset = 0;
+        $('[data-item="lst-ele"]').find('.content2').html('');
+    }
+
+
+    /*check file type*/
+    function checkFileDocument(sender,reName,addNew,replace) {
+        var lastBreadCrumb = breadCrumbs[breadCrumbs.length - 1];
+        if(typeof lastBreadCrumb === 'undefined')
+        {
+            alert('choose folder to upload document.Please!');
+            return;
+        }
+
+        reName = (typeof reName === 'undefined') ? '' : reName;
+        addNew = (typeof addNew === 'undefined') ? false : addNew;
+        replace = (typeof replace === 'undefined') ? false : replace;
+        (replace || addNew) ? uploadMoreShowLoading() :  showLoadingFile();
+
+        $('#shareBtn').prop('disabled', true);
+        var validExts = new Array(".xlsx", ".xls", ".pdf", ".doc", ".docx", ".ppt", ".pptx");
+        if (breadCrumbs.length == 0) {
+            alert('please choose a group');
+            return;
+        }
+        var lastBreadCrumb = breadCrumbs[breadCrumbs.length - 1];
+        $.ajax({
+            url: baseurl + "/upload/upload-document",
+            type: "POST",
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            data: function () {
+                var data = new FormData();
+                data.append("chosenFile", jQuery("#chosenFile").get(0).files[0]);
+                data.append("re-name", reName);
+                data.append("add-new", addNew);
+                data.append("replace", replace);
+                data.append("g", lastBreadCrumb.g);
+                data.append("p", lastBreadCrumb.p);
+                data.append("f", lastBreadCrumb.f);
+
+                return data;
+                /* Or simply return new FormData(jQuery("form")[0]);*/
+            }(),
+            error: function (_, textStatus, errorThrown) {
+                (replace || addNew) ? uploadMoreHideLoading() :  hideLoadingFile();
+                $('#shareBtn').prop('disabled', false);
+                alert("upload file error");
+
+            },
+            success: function (response, textStatus) {
+                (replace || addNew) ? uploadMoreHideLoading() :  hideLoadingFile();
+                $('[data-item="file-name-replace"]').val('');
+                if (response.error == 0) {
+                    $('#chosenFile').val('');
+
+                    $('.overlayCheckFile').hide();
+                    //reload
+                    setItem(lastBreadCrumb.p);
+                    getDocument();
+                    //create file
+//                    $.post(baseurl + "/group/create-folder", {
+//                        'g': lastBreadCrumb.g,
+//                        'p': lastBreadCrumb.p,
+//                        'f': response.filename,
+//                        'original_name': response.original_name,
+//                        't': '<?php //echo FILE;?>//',
+//                        'path': response.path
+//                    }, function (data) {
+//                        if (data.error == 1) {
+//                            alert(data.message);
+//                        } else {
+
+//                        }
+//                    }, 'json');
+
+                } else {
+                    $('[data-action="add-new-file"]').prop('disabled',false);
+                    $('[data-action="replace"]').prop('disabled',false);
+                    if(typeof response.file_already !== 'undefined')
+                    {
+                        $('[data-item="file-name-replace"]').val(response.filename);
+                        $('.overlayCheckFile').show();
+                    }else
+                        AlertFail(response.message);
+                }
+                $('#shareBtn').prop('disabled', false);
+            }
+        });
+
+        return true;
+
+    }
+    //create new folder
+    function createFolder() {
+        if(breadCrumbs.length == 0) {
+            alert('choose a group. Please!');
+            return;
+        }
+        var lastBreadCrumb = breadCrumbs[breadCrumbs.length - 1];
+        var g = lastBreadCrumb.g;
+        var p = lastBreadCrumb.p;
+        var f = $("#folderName").val();
+
+        $.post(baseurl + "/group/create-folder", {
+            'g': g, 'p': p, 'f': f
+        }, function (data) {
+            if (data.error == 1) {
+                alert(data.message);
+            } else {
+                //reload
+                setItem(lastBreadCrumb.p);
+                getDocument();
+                $(".popup-newFolderFile").hide();
+            }
+        }, 'json');
+
+    }
+
+    $('.title-selectFile').mouseover(function () {
+        $("#draggable").draggable({disabled: false, containment: "body"});
+    });
+    $('.title-selectFile').mouseout(function () {
+        $("#draggable").draggable({disabled: true});
+    });
+
+    $("body").on('click', '.file-uploadBtn', function () {
+        $(".popup-selectFile").show();
+//        setType(4); //file == 4
+//        switchFeedType('[data-item="lst-file"]',4);
+        breadCrumbs = Array();
+
+        getMyGroup();
+
+        $('[data-item="bread-crumb"]').html('');
+
+    });
+
+    $("body").on('click', '.close-FilePopup', function () {
+        $(".popup-selectFile").hide();
+        setItem(0);
+        $("#pull-left").html('');
+    });
+
+    $("body").on('click', '.btn-cancelFolder', function () {
+        $(".popup-selectFile").hide();
+        setItem(0);
+        $("#pull-left").html('');
+    });
+
+    //click button to add File select to Post area
+    $('body').on('click', '.btnSelectFile', function () {
+        var _this = $('.subFolder-Active');
+        var activeItem = _this.find('.active-item');
+        activeItem.each(function(k, v){
+            var itemName = $(this).text();
+            var fileIcon = $(this).find('.iconFile').html();
+//            if (!$(".documentFileWrapper span").hasClass(itemName)) {
+            var id = $(this).data("id");
+                //push array list file
+                if (typeof  id !== 'undefined' && id > 0) {
+                    if ($.inArray(id, fileIds) == -1) {
+                        window.location.href = baseurl + '/docs/editor/id/' + id;
+                        $(location).attr('href', baseurl + '/docs/editor/id/' + id);
+                        return false;
+                    }
+                    else
+                        AlertFail(locales_file_chose_invalid);
+                }
+//            }
+            // console.log('div'+k+'value:'+$(this).text());
+        });
+        //$('.popup-selectFile').hide();
+    });
+
+    //remove file Folder from Post
+    $('body').on('click', '.rmvFileFolder', function () {
+        $(this).parents("span").remove();
+
+        var id = $(this).data("id");
+        fileIds.splice($.inArray(id, fileIds), 1);
+    });
+
+
+    // Add class active-item when select file
+    $('body').on('click', '.folderItem', function () {
+        //$(this).parent().find('.active-item').removeClass('active-item');
+        $(this).toggleClass('active-item');
+
+    });
+
+    //Tooltip file
+    $('body').tooltip({
+        selector: '[data-toggle="tooltip"]'
+    });
+
+    $('.title-selectnewFolder').mouseover(function () {
+        $("#draggablenewFolder").draggable({disabled: false});
+    });
+    $('.title-selectnewFolder').mouseout(function () {
+        $("#draggablenewFolder").draggable({disabled: true});
+    });
+
+    $("body").on('click', '.btn-newFolder', function () {
+        $(".popup-newFolderFile").show();
+    });
+
+    $("body").on('click', '.close-FilePopupnewFolder', function () {
+        $(".popup-newFolderFile").hide();
+    });
+
+    $("body").on('click', '.btn-cancelnewFolder', function () {
+        $(".popup-newFolderFile").hide();
+    });
+
+    function showLoadingFile(){
+        $('.loading_effect').show();
+    }
+
+    function hideLoadingFile(){
+        $('.loading_effect').hide();
+    }
+
+    function uploadMoreShowLoading(){
+        $('.proccessDocument .btn-success').text('Loading...');
+    }
+    function uploadMoreHideLoading(){
+        $('.proccessDocument .btn-success').text('Upload more');
+    }
+
+
+    if($(window).width() < 415){
+        $('.popup-selectFile').css({
+                'left' : '0',
+                'min-width': '100%'
+        });
+    };
+
+</script>

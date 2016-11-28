@@ -1,0 +1,194 @@
+         <?php echo $this->render('/group/partial_tab.phtml');?>
+        <div class="contain-request-list">
+                        	<div class="menu-leave">
+                            	<ul>
+                                	<li>
+                                    	<a class="active" href="javascript:void(0);">
+                                        	<?php echo $this->locales->group->member;?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                    	<a href="<?php echo BASE_URL.'/group/org-chart/group_id/'.$this->groupid; ?>">
+                                        	<?php echo $this->locales->group->orgchart;?>
+                                        </a>
+                                    </li>                                  
+                                </ul>
+                            </div><!-- menu-leave -->
+                            
+                            <div class="box-search-member">
+                            	<input type="text" placeholder="Search member in group.." name="name" id="name">
+                            	<!-- <input type="button" value="Search" id="search"> -->
+                            </div><!-- box-search-member -->      
+                                             
+                            <div id="actDisplay" class="container-all-members clearfix">
+                            	
+                             
+                            </div><!-- container-all-member -->
+                        </div>
+                        
+      <input type="hidden" value="<?php echo $this->groupid;?>" id="groupid">
+ 
+
+<script language="javascript">
+var settings = { 
+		nop     : '<?php echo ADMIN_PAGE_SIZE;?>',
+		offset  : 0,
+		error   : '<p><?php echo $this->locales->no_more_posts;?></p>',
+		delay   : 500, 
+		scroll  : true 
+	};
+
+var offset = settings.offset;
+var busy = false;
+var initmessage = '<p><?php echo $this->locales->load_more;?></p>';
+
+$(document).ready(function() {
+
+	$('#actDisplay').append('<div class="content2 list-member-feed clearfix"></div><div id="loadMore" class="loading-bar load-more"><a href="javascript:void(0);">' + initmessage +'</a></div>');
+	
+	getDataMemberOfGroup();
+
+	//search
+	$('body').on( "keyup", '#name',function(e) {
+		offset = 0;
+        $('#actDisplay').find('.content2').html('');
+        getDataMemberOfGroup();
+	});
+//    $('#search').live( "click", function(e) {
+//        offset = 0;
+//        $('#actDisplay').find('.content2').html('');
+//        getDataMemberOfGroup();
+//    });
+
+	$('#actDisplay').find('.loading-bar').click(function() {
+		
+		if(busy == false) {
+			busy = true;
+			getDataMemberOfGroup();
+		}
+	
+	}); 
+
+	// .. and the user is scrolling
+	$(window).scroll(function() {
+		// Check the user is at the bottom of the element
+		if($(window).scrollTop() + $(window).height() > $('#actDisplay').height() && !busy) {
+			// Now we are working, so busy is true
+			busy = true;
+			// Run the function to fetch the data inside a delay This is useful if you have content in a footer you want the user to see.
+			setTimeout(function() {
+				getDataMemberOfGroup();
+			}, settings.delay);
+				
+		}
+	});
+	
+});
+
+function getDataMemberOfGroup()
+{
+     var groupid = $('#groupid').val();
+     var name = $('#name').val();
+     
+     $.post(baseurl + "/group/scrollmemberpagination",{
+			  'groupId': groupid,
+			  'name': name,
+			   number        : settings.nop,
+			    offset        : offset
+			  }, function(data){       
+
+				  /* Change loading bar content (it may have been altered)*/
+					$('#actDisplay').find('.loading-bar').html(initmessage); 
+						
+					/* If there is no data returned, there are no more posts to be shown. Show error*/
+					if(data.members.length < 1) { 
+						$('#actDisplay').find('.loading-bar').html(settings.error);	
+					}
+					else {
+						
+						
+					    offset = parseInt(offset) + parseInt(settings.nop); /* Offset increases*/
+						busy = false;/* No longer busy!*/	
+						    
+						/* Append the data to the content div*/
+						var valueStr = '', managerStr = '', adminStr;
+			            
+						
+						for (var i = 0; i < data.members.length; i++){
+
+//                            if(data.members[i]['is_manager'])
+//                            {
+//                                managerStr = getBoxMemberStr(data.members[i]['is_admin'], data.members[i]['is_manager'], data.members[i]['image_tag'], data.members[i]['name']
+//                                    , data.members[i]['team_name'], data.members[i]['id'], data.members[i]['email']
+//                                    , data.members[i]['skype_account'], data.members[i]['manager_name'], data.members[i]['group_name']);
+//                            }
+//                            else if(data.members[i]['is_admin'])
+//                            {
+//                                adminStr = getBoxMemberStr(data.members[i]['is_admin'], data.members[i]['is_manager'], data.members[i]['image_tag'], data.members[i]['name']
+//                                    , data.members[i]['team_name'], data.members[i]['id'], data.members[i]['email']
+//                                    , data.members[i]['skype_account'], data.members[i]['manager_name'], data.members[i]['group_name']);
+//                            }else {
+                                var accountInfo = data.members[i]['accountInfo'];
+                                valueStr += getBoxMemberStr(data.members[i]['is_admin'], data.members[i]['is_manager'], accountInfo['image_tag'], accountInfo['name']
+                                    , data.members[i]['group_name'], accountInfo['id'], accountInfo['email']
+                                    , accountInfo['skype_account'], accountInfo['manager_name'], data.members[i]['group_name']);
+//                            }
+
+								
+						}
+                        if($.trim($('#name').val())!='')
+                            $('#actDisplay').find('.content2').html(valueStr);
+                        else
+					   	    $('#actDisplay').find('.content2').append(valueStr);
+					}
+         },'json');
+}
+
+function getBoxMemberStr(isAdmin, isManager, picture, name, team, id, email, skype, manager, groupName){
+
+	var cAdmin = '';
+	var spanAdmin = '';
+	var cAdminTitle = '';
+	
+	if(isAdmin){
+		cAdmin = 'active-box-member';
+		spanAdmin = '<span class="title-color fl">Administrator</span>';
+		cAdminTitle = 'title-member-admins';
+	}else if(isManager){
+        cAdmin = 'active-box-member';
+        spanAdmin = '<span class="title-color fl">Manager</span>';
+        cAdminTitle = 'title-member-admins';
+    }
+	
+	var boxStr = '<div class="box-member ' + cAdmin + ' clearfix">'+
+				'<div class="img-member fl">'+
+				'<img alt="" src="' + picture + '">'+
+			'</div>'+
+			'<div class="content-member">'+
+				 '<h4>' + name + '</h4>'+
+			     '<p>' + team + '</p>'+
+			     '<p class="idMember">' + id + '</p>'+    
+			'</div>'+
+			'<div class="detail-members-group">'+
+				'<div class="detail-row-member clearfix">'+
+			    	'<label>Email</label>'+
+			        '<span>' + email + '</span>'+
+			    '</div>'+
+			    '<div class="detail-row-member clearfix">'+
+			    	'<label>Skype</label>'+
+			        '<span>' + skype + '</span>'+
+			    '</div>'+
+			    '<div class="detail-row-member clearfix">'+
+			    	'<label>Manager</label>'+
+			        '<span>' + manager + '</span>'+
+			    '</div>'+
+			'</div>'+
+			'<div class="title-member-group ' + cAdminTitle + '">'+
+				 spanAdmin +
+			    '<span class="title-color fr">' + groupName + '</span>'+
+			'</div>'+                                 
+			'</div>';
+	return boxStr;
+}
+</script>
+                    

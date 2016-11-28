@@ -1,0 +1,43 @@
+
+    <?php echo $this->render('partial_tab.phtml');?>
+
+<div>
+    <span id="calendar-placeholder"></span>   
+</div>
+<?php
+$paramName = '';
+
+switch ($this->groupType)
+{
+    case DEFAULT_GROUP:
+        $paramName = 'defaultGroupList';
+        break;
+    case TEAM_GROUP:
+        $paramName = 'teamIdList';
+        break;
+    case PROJECT_GROUP:
+        $paramName = 'projectIdList';
+        break;
+    case OTHER_GROUP:
+        $paramName = 'otherGroupList';
+        break;
+    default:
+        break;
+}
+?>
+<script type="text/javascript">
+    
+// defined scroll top for calendar page
+var CALENDAR_SCROLL_TOP = 230;
+
+$(document).ready(function() {
+    var params = {};
+    var arrGroupId = [<?= $this->groupid ?>];
+    <?php if ($paramName): ?>
+    params.<?= $paramName ?> = arrGroupId;
+    <?php endif; ?>
+    getCalendarByDay(params);
+});
+</script>
+<?= $this->render('calendar/partial-callback-js.phtml'); ?>
+

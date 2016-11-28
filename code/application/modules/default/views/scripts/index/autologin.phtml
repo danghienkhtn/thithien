@@ -1,0 +1,99 @@
+
+<body onload="document.forms['logon1Form'].submit();">
+  <form action="https://mail3.gnt-global.com/owa/auth.owa" method="POST" name="logon1Form" ENCTYPE="application/x-www-form-urlencoded" id="loginForm">
+      <input type="hidden" id="destination" name="destination" value="https://mail3.gnt-global.com/owa">
+      <input type="hidden" name="username"  value="<?php echo $this->arrLogin['email'];?>" >
+      <input type="hidden" name="password"  value="<?php echo base64_decode($this->arrLogin['ps']);?>">
+      <input type="hidden" name="flags" value="4">
+      <input type="hidden" name="forcedownlevel" value="0">
+      <input type="radio"  name="trusted" value="4" class="rdo" checked>
+      <input type="hidden" name="isUtf8"  value="1">
+ </form>
+</body>
+
+
+<!--
+<html>
+<head>
+<script type="text/javascript">
+function OWA_AutoLogin (strServer, strDomain, strUsername, strPassword)
+{
+ 
+ var strUrl = "https://" + strServer + "/owa/auth.owa";
+ var strExchange = {destination:'https://' + strServer +
+ '/owa',flags:'0',forcedownlevel:'0',
+ trusted:'0',isutf8:'1',username:strDomain +
+ '\\' + strUsername,password:strPassword};
+ 
+ var myForm = document.createElement("form");
+ myForm.method="post" ;
+ myForm.action = strUrl ;
+ 
+for (var varElement in strExchange) {
+ 
+ var myInput = document.createElement("input") ;
+ myInput.setAttribute("name", varElement) ;
+ myInput.setAttribute("value", strExchange[varElement]);
+ myForm.appendChild(myInput) ;
+ }
+ 
+ document.body.appendChild(myForm) ;
+ myForm.submit() ;
+ document.body.removeChild(myForm) ;
+}
+</script>
+</head>
+
+<body onload="OWA_AutoLogin('mail3.gnt-global.com','gnt-global.com','hoai.tn','hoaigntvietnam@')">
+</body>
+</html>
+
+-->
+<!--
+<script type="text/javascript">
+   document.forms["logon1Form"].submit();
+</script>
+-->
+
+<!--
+<!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.0 Transitional//EN”>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html" CHARSET="utf-8"/>
+
+<title>Microsoft Exchange – Outlook Web Access</title>
+
+</head>
+<script language="javascript">
+function LoginToOWA(server,domain,username,password) {
+  
+  var url = "https://" + server + "/owa/auth.owa";
+  var p = {destination:'https://' + server + '/owa',flags:'0',forcedownlevel:'0',trusted:'0',isutf8:'1',username:domain + '\\' + username,password:password};
+  
+  
+  var myForm = document.createElement("form");
+  myForm.method="post" ;
+  myForm.action = url ;
+
+  for (var k in p) {
+  
+    var myInput = document.createElement("input") ;
+    myInput.setAttribute("name", k) ;
+    myInput.setAttribute("value", p[k]);
+    myForm.appendChild(myInput) ;
+  }
+    
+  document.body.appendChild(myForm) ;
+  myForm.submit() ;
+  document.body.removeChild(myForm) ;
+}
+</script>
+
+
+<body onload="javascript:LoginToOWA('mail3.gnt-global.com','gnt-global.com','hoai.tn','hoaigntvietnam@');">
+
+</body>
+</html>
+-->
+

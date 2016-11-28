@@ -1,0 +1,279 @@
+<?php
+// account info
+$accountInfo    = $this->accountInfo;
+// achievements
+$achievements = $this->achievements;
+$projectMember = $this->projectMember;
+$sStartDate = ($accountInfo['start_date'] != '0000-00-00') ? date('d-m-Y') : '';
+?>
+<script type="text/javascript" src="<?= $this->static->backend->js.'/chart/pie-chart.js'?>"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+//        $('.all-info-user').tabs();
+});
+</script>
+<pre id="csv" style="display:none" >
+    <?php
+    if(!empty($projectMember))
+    {
+        $sData = "[";
+        $endArr = end($projectMember);
+        foreach ($projectMember as $proMember) {
+            $sData .= "{".'"name":"'.$proMember['name'].'","y":'. $proMember['percent'].'}';
+            if($endArr != $proMember)
+                $sData.=',';
+        }
+        echo $sData.']';
+    }
+    ?>
+</pre>
+<div class="title-page mar-bot15">
+    <h4>
+        <i class="fa fa-user"></i>
+        <span class="capitalize">User</span>
+    </h4>
+</div><!-- title-page -->
+<div class="container-content">
+    <!-- <div class="title-content bg-blue clearfix">
+        <h5 class="white bold pull-left capitalize"><?= $accountInfo['name']; ?></h5>
+    </div> --><!-- title-content -->
+    <div class="widget-content-user">
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-sm-3 border-right">
+                    <?= $this->render('usersearch.phtml'); ?>
+                </div>
+                <div class="col-sm-9">
+                    <div class="all-info-user">
+                        <ul class="tabs-menu-info mar-bot20 clearfix">
+                            <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a href="#" >Summary</a></li>
+                            <li><a href="<?= BASE_ADMIN_URL.'/user/general?account_id='.$accountInfo['account_id'] ?>">General</a></li>
+                            <li ><a href="<?= BASE_ADMIN_URL.'/user/personal?account_id='.$accountInfo['account_id'];?>">Personal</a></li>
+                            <li><a href="<?= BASE_ADMIN_URL.'/user/jobuser?account_id='.$accountInfo['account_id'];?>">Job</a></li>
+                            <li><a  href="<?= BASE_ADMIN_URL.'/user/achievement?account_id='.$accountInfo['account_id'];?>">Achievement</a></li>
+                        </ul><!-- tabs-menu-info -->
+                        <div class="tabs-child">
+                            <div id="summary" class="summary">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="title-summary mar-bot15 clearfix">
+                                            <h5 class=" bg-deep-red pull-left">General Information<span class="arrow-title"></span></h5>
+                                            <span class="light-blue pull-right"><a href="<?= BASE_ADMIN_URL.'/user/general?account_id='.$accountInfo['account_id'] ?>"><i class="fa fa-pencil-square fa-lg"></i></a></span>
+                                        </div><!-- title-summary-->
+                                        <div class="general-info mar-bot20 clearfix">
+                                            <div class="img-user-large pull-left bor-raduis4">
+                                                <img src="<?= $accountInfo['image_tag']; ?>" alt="">
+                                            </div><!-- img-user-large -->
+                                            <div class="user-info-detail">
+                                                <h4 class=""><?= $accountInfo['name']; ?></h4>
+                                                <ul class="clearfix">
+                                                    <li><i class="fa fa-tag fa-fw"></i><?= $accountInfo['id']; ?></li>
+                                                    <li><i class="fa fa-envelope  fa-fw"></i><?= $accountInfo['email']; ?></li>
+                                                    <li><i class="fa fa-phone  fa-fw"></i><?= $accountInfo['phone']; ?></li>
+                                                    <li><i class="fa fa-group fa-fw"></i><?= $accountInfo['team_name']; ?></li>
+                                                    <li><i class="fa fa-skype fa-fw"></i><?= $accountInfo['skype_account']; ?></li>
+                                                    <li><i class="fa fa-home fa-fw"></i><?= $accountInfo['address']; ?></li>
+                                                    <li><i class="fa fa-suitcase fa-fw"></i><?= $accountInfo['position_name']; ?></li>
+                                                    <li><i class="fa fa-birthday-cake  fa-fw"></i><?= $accountInfo['birthday']; ?></li>
+                                                    <!--                                            <li><i class="fa fa-envelope"></i>123@gianty.com.vn</li>-->
+                                                </ul>
+                                            </div><!-- user-info-detail -->
+                                        </div><!-- general-info -->
+
+                                        <div class="title-summary mar-bot15 clearfix">
+                                            <h5 class=" bg-blue pull-left">Job Information<span class="arrow-title_3"></span></h5>
+                                            <span class="light-blue pull-right"><a href="<?= BASE_ADMIN_URL.'/user/jobuser?account_id='.$accountInfo['account_id'] ?>"><i class="fa fa-pencil-square fa-lg"></i></a></span>
+                                        </div><!-- title-summary-->
+                                        <div class="job-info mar-bot20 clearfix">
+                                            <div class="job-info-left">
+                                                <ul>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Contact type</h6>
+                                                        <span><?= $accountInfo['contract_name'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Level</h6>
+                                                        <span><?= $accountInfo['level_name'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Starting date</h6>
+                                                        <span><?= $sStartDate ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Manager</h6>
+                                                        <span><?= $accountInfo['manager_name'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Leader</h6>
+                                                        <span><?= $accountInfo['leader_name'] ?></span>
+                                                    </li class="clearfix">
+                                                </ul>
+                                            </div><!--job-info-left-->
+                                            <div class="job-info-right">
+                                                <div id="container-chart-circle" class="hightchart-circle" style="min-width: 100%; height:250px; margin: 0 auto"></div>
+                                            </div><!--job-info-right-->
+                                        </div><!--job-info-->
+
+                                        <div class="title-summary mar-bot15 clearfix">
+                                            <h5 class=" bg-green pull-left">Achivements<span class="arrow-title_4"></span></h5>
+                                            <span class="light-blue pull-right"><a href="<?= BASE_ADMIN_URL.'/user/achievement?account_id='.$accountInfo['account_id'] ?>"><i class="fa fa-pencil-square fa-lg"></i></a></span>
+                                        </div><!-- title-summary-->
+
+                                        <?php
+                                        if(!empty($achievements))
+                                        {
+                                            foreach ($achievements['data'] as $key => $achievementYear) {
+                                                $arrMonth = array();
+                                                ?>
+                                                <div class="year-achivement bor-raduis4">
+                                                    <h6 class="bold">
+                                                        <?php
+
+                                                        if (intval($key) == date('Y'))
+                                                            echo 'This year';
+                                                        else
+                                                            echo intval($key);
+                                                        ?>
+                                                    </h6>
+                                                </div>
+                                                
+                                                    <?php foreach ($achievementYear as $achievement) {
+                                                        $sMonth = date("F", mktime(0, 0, 0, intval($achievement['month']), 1, 2000));
+                                                        ?>
+                                                        <!--year-achivement-->
+                                                        <div class="achivement-info">
+                                                            <div class="all-achivement-year clearfix">
+                                                                <?php
+                                                                if (!in_array($sMonth, $arrMonth)) { ?>
+                                                                <div class="month-of-year pull-left">
+                                                                    <h6 class="bold"><?= $sMonth; ?></h6>
+                                                                </div><!--month-of-year-->
+                                                                <?php
+                                                                $arrMonth [] = $sMonth;
+                                                            }
+                                                            ?>
+                                                            <div class="content-of-month">
+                                                                <div class="detail-content-month bor-raduis4">
+                                                                    <p><?= $achievement['name']; ?></p>
+                                                                    <span><?= $achievement['day'] . '-' . $achievement['month']; ?></span>
+                                                                </div>
+                                                            </div><!--content-of-month-->
+                                                        </div><!--month-of-year-->
+                                                    </div><!--achivement-info-->
+                                                    <?php
+                                                        }
+                                                    }?>
+                                                
+                                                    <?php }else {echo '<p class="txt-center">No Data</p>';} ?>
+                                                </div>
+                                    <div class="col-md-6">
+                                        <div class="title-summary mar-bot15 clearfix">
+                                            <h5 class=" bg-orange pull-left">Personal Information<span class="arrow-title_2"></span></h5>
+                                            <span class="light-blue pull-right"><a href="<?= BASE_ADMIN_URL.'/user/personal?account_id='.$accountInfo['account_id'] ?>"><i class="fa fa-pencil-square fa-lg"></i></a></span>
+                                        </div><!-- title-summary-->
+                                        <div class="personal-info mar-bot20 personal-info-fix">
+                                                <ul>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Gender</h6>
+                                                        <span><?= $accountInfo['gender_name']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Place of birth</h6>
+                                                        <span><?= $accountInfo['place_of_birth_name']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Hometown</h6>
+                                                        <span><?= $accountInfo['home_town_name']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Permanent address</h6>
+                                                        <span><?= $accountInfo['address']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">IDcard-no</h6>
+                                                        <span><?= $accountInfo['identity']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">IDcard - Issued date</h6>
+                                                        <span><?= $accountInfo['identity_date']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">IDcard - Issued place</h6>
+                                                        <span><?= $accountInfo['identity_place_name']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Passport - no</h6>
+                                                        <span><?= $accountInfo['passport'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Passport - issued date</h6>
+                                                        <span><?= $accountInfo['passport_date'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Passport - issued place</h6>
+                                                        <span><?= $accountInfo['passport_place_name']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Social Insurance Book No.</h6>
+                                                        <span><?= $accountInfo['social_insurance'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Personal Income Tax code</h6>
+                                                        <span><?= $accountInfo['tax_code'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Bank Account Information - No.</h6>
+                                                        <span><?= $accountInfo['bank_account'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Bank Account Information - Bank's name</h6>
+                                                        <span><?= $accountInfo['bank_account_id_name']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Bank Account Information - Branch name</h6>
+                                                        <span><?= $accountInfo['bank_account_branch_name']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Marital status</h6>
+                                                        <span><?= $accountInfo['marital_status_name']; ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">No of children</h6>
+                                                        <span><?= $accountInfo['no_of_children'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Emergency Contact Information - Name</h6>
+                                                        <span><?= $accountInfo['contact_name'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Emergency Contact Information - Relationship</h6>
+                                                        <span><?= $accountInfo['contact_relationship'] ?></span>
+                                                    </li>
+                                                    <li class="clearfix">
+                                                        <h6 class="bold pull-left text-info">Emergency Contact Information - Contact</h6>
+                                                        <span><?= $accountInfo['contact_address'] ?></span>
+                                                    </li>
+                                                </ul>
+                                            </div><!--personal-info-->
+                                        </div><!--end col-md-6 -->
+                                    </div><!--end row-->
+                                </div><!-- end summary-->
+                            
+                            <div id="personal" class="personal">
+
+                            </div><!-- personal -->
+                            <div id="job" class="job">
+
+                            </div><!-- job -->
+                            <div id="achivement" class="achivement">
+
+                            </div><!-- achivement -->
+                        </div><!-- tabs-child -->
+                        </div><!-- all-info-user -->
+                    </div><!-- end col-sm-9 -->
+                </div><!-- row -->
+            </div><!-- container-fluid -->
+        </div><!-- widget-content -->
+    </div><!-- container-content -->
+
+

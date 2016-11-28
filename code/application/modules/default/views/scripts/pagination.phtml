@@ -1,0 +1,40 @@
+<?php
+
+if ($this->pageCount > 1) {
+    ?>
+       <ul class="clearfix">
+
+                <?php if ($this->current != 1): ?>
+                    <li>
+                        <a  href="javascript:void(0);" onClick="showGroupNext('1')">&laquo;&laquo;</a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if ($this->current > 1): ?>
+                    <li>
+                        <a href="javascript:void(0);" onClick="showGroupNext('<?php echo $this->current - 1; ?>')">&laquo;</a>
+                    </li>
+                <?php endif; ?>
+
+                Page
+                <li class="active">
+                    <span><?php echo $this->current; ?></span>
+                </li>
+                of <?php echo $this->pageCount; ?>
+
+
+                <?php if ($this->current < $this->pageCount): ?>
+                    <li>
+                        <a href="javascript:void(0);" onclick="showGroupNext('<?php echo $this->current + 1; ?>')">&raquo;</a>
+                    </li>
+                <?php endif; ?>
+                <?php if ($this->current != $this->pageCount): ?>
+                    <li>
+                        <a href="javascript:void(0);" onClick="showGroupNext('<?php echo $this->pageCount; ?>')">&raquo;&raquo;</a>
+                    </li>
+                <?php endif; ?>
+
+         </ul>
+    <?php
+}
+?>

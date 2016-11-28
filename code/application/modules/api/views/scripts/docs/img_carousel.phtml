@@ -1,0 +1,123 @@
+<div id="carousel-wrapper">
+  <div id="edit-carousel">
+    <div class="left">
+      <span class="m-l-10 m-r-10"><i class="fa fa-share-alt m-r-5"></i>Share</span>
+      <span class="m-r-10" ng-click="toggleSlideShow()">
+        <a  href ng-if="!activeToggleCarousel"><i class="fa fa-play m-r-5" ></i> Play slide show</a>
+        <a  href ng-if="activeToggleCarousel"><i class="fa fa-pause m-r-5"></i> Pause slide show</a>
+      </span>
+      <span class="m-r-10"><a ng-href="{{detailImg.downloadURL}}" target="_blank"><i class="fa fa-cloud-download m-r-5"></i>Download</a></span>
+      <span class="m-r-10"><i class="fa fa-trash-o m-r-5"></i>Trash</span>
+      <span class="m-r-10"><a ng-href="{{detailImg.URL}}" target="_blank"><i class="fa fa-photo m-r-5"></i>View Original
+      </a></span>
+      <div class="dropdown m-r-10">
+          <a href="#" class="username dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="userinf">
+            <i class="fa fa-ellipsis-h"></i> 
+          </a>  
+          <ul class="dropdown-menu" aria-labelledby="userinf">
+            <li><a href="#"><i class="fa fa-share m-r-5"></i>Move to</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="fa fa-star m-r-5"></i>Favorites</a></li>
+            <li><a href="#"><i class="fa fa-pencil-square-o m-r-5"></i>Rename</a></li>
+          </ul>
+      </div>
+    </div>
+    <div class="right">
+      <span class="m-r-10" >{{currentIndex}} of {{imgInfo.length}} items</span>
+      <span class="m-r-10" ng-click="toggleDetailImg()" ng-class="{'active': activeDetailImg}">
+        <!-- <img ng-show="activeDetailImg === true"  src="<?= $this->static->frontend->images.'/v2'?>/recent.png" alt="" width="14" height="13">
+        <img ng-show="activeDetailImg === false"  src="<?= $this->static->frontend->images.'/v2'?>/recent_close.png" alt="" width="14" height="13"> -->
+        <i class="fa fa-info"></i>
+      </span>
+      <span class="m-r-10" ng-click="turnOffCarousel()"><i class="fa fa-times"></i></span>
+    </div>
+  </div>
+  <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item {{k._leftClass}}" ng-repeat="k in imgInfo" ng-class="{'active': k.active === true}">
+        <img ng-src="{{k.URL || k.file_url}}" width-carousel alt="{{k.name}}" class="center-block img-responsive">
+      </div>
+      <!-- Left and right controls -->
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" ng-click="prevCarousel()">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next" ng-click="nextCarousel()">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </a>
+    </div>
+
+   
+  </div>
+
+  <div id="imgCarousel_detail" class="detail-file-wrapper" ng-class="{active: activeDetailImg === true}">
+      <div ng-if="detailImg">
+          <div class="title-img p-db-10 p-dt-10">
+            <div class="text-center text-bold text-maincolor">
+            {{detailImg.original_name}}</div>
+          </div>
+          <div class="owner-file text-left">
+            <span class="text-bold">Owner</span>
+            <div class="detail-image">
+              <img ng-src="{{detailImg.owner_avatar}}" alt="" width="40" height="40" class="img-responsive img-circle m-r-10">
+              <span class="">{{detailImg.owner_user}}</span>
+            </div>
+          </div>
+          <div class="share-file text-left">
+            <span class="text-bold">Share</span>
+            <div class="detail-image">
+              <img ng-src="images/{{detailImg.sharewith_avt}}" alt="">
+              <span>{{detailImg.sharewith_user}}</span>
+            </div>
+          </div>
+          <div class="information-file  text-left">
+           <span class="text-bold">Information</span>
+              <div class="item">
+                <div class="type">
+                  <span class="text-bold">Type</span>
+                </div>
+                <div class="detail">
+                  <i class="fa fa-photo m-r-5"></i> Photo
+                </div>
+              </div>
+              <div class="item">
+                <div class="type">
+                  <span class="text-bold">Size</span>
+                </div>
+                <div class="detail">
+                  {{detailImg.size}}
+                </div>
+              </div>
+              <div class="item">
+                <div class="type">
+                  <span class="text-bold">Location</span>
+                </div>
+                <div class="detail">
+                  <i class="fa fa-folder-o m-r-5"></i> {{detailImg.currentFolder}}
+                </div>
+              </div>
+               <div class="item">
+                <div class="type">
+                  <span class="text-bold">Created</span>
+                </div>
+                <div class="detail">
+                  {{detailImg.created}}
+                </div>
+              </div>
+              <div class="item">
+                <div class="type">
+                  <span class="text-bold">Modified</span>
+                </div>
+                <div class="detail">
+                  {{detailImg.updated}} <br>
+                  <span class="text-grey">{{detailImg.informationImg.modified.by}}</span>
+                </div>
+              </div>
+             
+        </div>
+      </div>
+      <div ng-if="!detailImg">
+        <div class="text-center text-grey">No details for this image.</div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+<?php
+$arrMenu    = $this->arrMenu;
+$arrTypeMenu = array(1=>'Page',2=>'Tool');
+$controllerName = strtolower($this->controllerName);
+$pageMenu   = true;
+$toolMenu   = true;
+//Core_Common::var_dump($arrMenu);
+?>
+<div class="sidebar">
+    <div class="logopanel">
+        <h1>
+            <a href="<?php echo BASE_ADMIN_URL; ?>"></a>
+        </h1>
+    </div><!-- logopanel -->
+    <ul class="menu-left nav-sidebar">
+        <!--        <li class="border-botm none-border">-->
+        <!--            <h6 class="txt-center capitalize">General</h6>-->
+        <!--        </li>-->
+        <?php
+        if(!empty($arrMenu)) {
+
+//show group menu
+            foreach ($this->arrMenuParent as $menuGroup){?>
+
+            <li class="border-botm none-border">
+                <h6 class="capitalize"> <?php echo $menuGroup['name']; ?> </h6>
+            </li>
+            <?php 	
+//show menu
+            foreach ($menuGroup['menu'] as $keyMenu=>$menu){
+                if (!empty($menu['controller'])) {
+                    if (array_intersect($menu['controller'], array_keys($this->arrMenu))) {
+
+						if(count($menu['controller']) > 1 || isset($menu['subMenu']) ){//has submenu
+							//active menu
+							$activeMenu = '';
+							$show = '';
+						
+							if (in_array($controllerName, $menu['controller'])) {
+								$activeMenu = 'active';
+								$show = 'style="display: block;"';
+							}
+
+                            $arrAbsenceMenuActive = array('absence','manual-absence','attendance-statistic');
+                            if($menu['name'] == 'Absence') {
+                                if (in_array($controllerName, $arrAbsenceMenuActive)) {
+                                    $activeMenu = 'active';
+                                    $show = 'style="display: block;"';
+                                }
+                            }
+						    ?>
+						    <li class="border-botom sub-menu"><a href="javascript:void(0);" class="right tooltip-nav <?php echo $activeMenu;?>" data-placement="right" data-toggle="tooltip" title="Work Flow"><i class="fa fa-dot-circle-o"></i> <span>
+						               <?php echo $menu['name']; ?>
+						            </span> <i class="text-right fa fa-angle-right"></i></a>
+						        <div class="dropdown-submenu">
+						
+						            <ul <?php echo $show;?>>
+						                <i class="fa fa-caret-left"></i>
+						                <?php
+						                foreach ($menu['controller'] as $key => $controller){
+
+						                    $detail = $this->arrMenu[$controller];
+						                    $active = ($controllerName == $controller) ? 'active' : '';
+						                    ?>
+						                    <li class="<?php echo $active;?>"><a href="<?php echo BASE_ADMIN_URL . $detail['link']; ?>"><?php echo $detail['name']; ?></a></li>
+						                    <?php
+						                }?>
+						            </ul>
+						        </div>
+						    </li>
+						
+						    <?php
+						}else{//no submenu
+						
+						    $controller = $menu['controller'][0];
+						    if (in_array($controller, array_keys($this->arrMenu))) {
+						        $active = ($controllerName == $controller) ? 'active' : '';
+						        $detail = $this->arrMenu[$controller];
+						        ?>
+						        <li class="border-botm">
+						            <a href="<?php echo BASE_ADMIN_URL . $detail['link']; ?>" class="right tooltip-nav <?php echo $active;?>"
+						                data-placement="right" data-toggle="tooltip" title="<?php echo $detail['name']; ?>">
+						                <i class=" <?php echo $detail['icon']; ?> "></i>
+						                <span><?php echo $detail['name']; ?></span>
+						            </a>
+						        </li>
+						        <?php
+						    }
+						}
+}
+}
+}
+}
+}
+?>
+<!--        <li class="border-botm">-->
+<!--            <a href="--><?php //echo BASE_ADMIN_URL; ?><!--" class="right tooltip-nav active" data-placement="right" data-toggle="tooltip" data-original-title="Dashboard">-->
+<!--                <i class="fa fa-home"></i>-->
+<!--                <span>Dashboard</span>-->
+<!--            </a>-->
+<!--        </li>-->
+
+</ul><!-- nav nav-sidebar -->
+</div><!-- sidebar -->
+
+<script type="text/javascript">
+    $(document).ready(function(){
+         $(document).on('click','.sub-menu', function(){
+            if(!$('body').hasClass('sidebar-collapsed')){
+               $('.sub-menu').find('.dropdown-submenu ul').slideToggle('2000','swing');
+               $('.sub-menu').find('.fa-angle-right').toggleClass("fa-rotate-90");
+            }
+            else{
+            $('.sub-menu').find('.dropdown-submenu ul').fadeToggle('2000','swing');
+            }
+        });  
+
+        $('.dropdown-submenu li ').click(function(){
+        $(this).addClass('active');
+        });     
+    });
+    
+</script>
+

@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <?php echo $this->headTitle(); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->fontawesome . '/css/font-awesome.css'; ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/reset.css'; ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/grid.css'; ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/base.css'; ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/page.css'; ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/fonts.css'; ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/calendar.css'; ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/icon.css'; ?>" media="screen">
+
+    <script type="text/javascript">
+
+        var baselinkimage = "<?php echo PATH_IMAGES_URL;?>";
+        var baseAdminUrl = "<?php echo BASE_ADMIN_URL;?>";
+    </script>
+
+
+    <script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery-1.8.3.min.js'; ?>"></script>
+
+
+</head>
+
+<body>
+<div class="contain-create-album">
+
+    <div class="header-cal clearfix">
+        <h4 class="fl">Create album</h4>
+        <div class="btn-album-img fr">
+            <ul>
+                <li>
+                    <form id="upload" method="post" action="<?php echo BASE_ADMIN_URL;?>/upload/upload5" enctype="multipart/form-data">
+                        <div id="drop">
+                            <a>
+                                <i class="fa fa-plus"></i>
+                                <span>Add more</span>
+                            </a>
+                            <input type="file" name="chosenImage" multiple />
+
+                    </form>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" onclick="goBack()">
+                        <span>Cancel</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="set-name-album">
+        <div class="widget-post-album">
+            <h6>Album name</h6>
+            <input type="text" name="album_name" id="album_name" value="" />
+        </div>
+        <div class="widget-post-album">
+            <h6>Description</h6>
+            <textarea name="desc" id="desc" rows="3"></textarea>
+        </div>
+        <div class="share fr">
+            <select name="team_id_to" id="team_id_to">
+                <?php
+                foreach ($this->arrGroupMember as $group){?>
+
+                    <option value="<?php echo $group['group_id'];?>"><?php echo $group['group_name'];?></option>
+
+                <?php }?>
+            </select>
+            <input type="button" class="share-btn" name="post" value="Post" id="post">
+        </div>
+    </div>
+
+    <div class="contain-add-album">
+        <div class="img-add-album">
+            <ul id="imageUploadList" class="clearfix">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/upload_style_base.css'; ?>" media="screen">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/upload_style_image.css'; ?>" media="screen">
+
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.knob.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.ui.widget.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.iframe-transport.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.fileupload.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.upload.script.js'; ?>"></script>
+
+
+
+<script type="text/javascript">
+
+    var imgNames = [];
+    var descs = [];
+
+    $(document).ready(function() {
+        $('#post').live("click",function(e){
+
+            //loop li get image
+            getImageFile();
+
+            if(imgNames.length > 0){
+
+                var photos = {};
+
+                photos['name'] = $("#album_name").val();
+                photos['desc'] = $("#desc").val();
+                photos['team_id_to'] = $("#team_id_to").val();
+                photos['teamName'] =  $('#team_id_to option:selected').text();
+                photos['imageNames'] = imgNames;
+                photos['descImages'] = descs;
+
+                $.post(baseAdminUrl+"/album/add",{
+                    data:JSON.stringify(photos)
+                }, function(data){
+                    //console.log(data);
+                    if(data.error == 0){
+                        window.location.href = baseAdminUrl + '/album';
+                    }else{
+                        alert('create album error');
+                    }
+
+                },'json');
+            }else{
+                alert('please select a Photo');
+            }
+        });
+
+    });
+
+
+
+    function getImageFile(){
+        $( "#imageUploadList li" ).each(function( index ) {
+            var imageName = $(this).find('img').attr('data-f');
+            var desc = $(this).find('textarea').val();
+
+            imgNames.push(imageName);
+            descs.push(desc);
+        });
+    }
+
+    function goBack() {
+        window.history.back()
+    }
+</script>
+
+
+
+</html>

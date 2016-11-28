@@ -1,0 +1,52 @@
+<script type="text/javascript">
+calendarCallbacks.getLanguage = function (key) {
+    var params = {};
+    params.language = "<?= $_SESSION['language'] ?>";
+    params.chooseFileText = "<?= $this->locales->calendarEvent->chooseFile ?>";
+    params.dropdownTitle = "<?= $this->locales->calendarEvent->dropdownTitle ?>";
+    params.errBlankTitle = "<?= $this->locales->calendarEvent->errBlankTitle ?>";
+    params.errBlankDescription = "<?= $this->locales->calendarEvent->errBlankDescription ?>";
+    params.errBlankLocation = "<?= $this->locales->calendarEvent->errBlankLocation ?>";
+    params.errBlankFromdate = "<?= $this->locales->calendarEvent->errBlankFromdate ?>";
+    params.errBlankTodate = "<?= $this->locales->calendarEvent->errBlankTodate ?>";
+    params.errBlankCate = "<?= $this->locales->calendarEvent->errBlankCate ?>";
+    params.errBlankPriority = "<?= sprintf($this->locales->calendarEvent->errBlankPriority, $this->locales->calendarEvent->priority, 'UTF-8') ?>";
+    params.errBlankFromdate = "<?= $this->locales->calendarEvent->errBlankFromdate ?>";
+    params.errBlankTodate = "<?= $this->locales->calendarEvent->errBlankTodate ?>";
+    params.errBlankRepeatType = "<?= $this->locales->calendarEvent->errBlankRepeatType ?>";
+    params.errBlankRepeatEvery = "<?= $this->locales->calendarEvent->errBlankRepeatEvery ?>";
+    params.errBlankFromtime = "<?= $this->locales->calendarEvent->errBlankFromtime ?>";
+    params.errBlankTotime = "<?= $this->locales->calendarEvent->errBlankTotime ?>";
+    params.errInvalidFromDate = "<?= sprintf($this->locales->calendarEvent->errInvalidDate, strtolower($this->locales->calendarEvent->fromDate)) ?>";
+    params.errInvalidToDate = "<?= sprintf($this->locales->calendarEvent->errInvalidDate, strtolower($this->locales->calendarEvent->toDate)) ?>";
+    params.errBlankSubcate = "<?= $this->locales->calendarEvent->errBlankSubcate ?>";
+    params.errInvalidRepeatEvery = "<?= sprintf($this->locales->calendarEvent->errInvalidRepeatEvery, strtolower($this->locales->calendarEvent->repeatEvery), EVENT_MIN_REPEAT, EVENT_MAX_REPEAT) ?>";
+    params.errFromdateBiggerTodate = "<?= sprintf($this->locales->calendarEvent->errFromdateBiggerTodate, $this->locales->calendarEvent->fromDate, $this->locales->calendarEvent->toDate) ?>";
+    params.errAddedAccount = "<?= $this->locales->calendarEvent->errAddedAccount ?>";
+    params.confirmDelete = "<?= $this->locales->calendarEvent->confirmDelete ?>";
+    params.notFoundData = "<?= $this->locales->calendarEvent->notFoundData ?>";
+    
+    if (params[key] === undefined) {
+        return null;
+    }
+    return params[key];
+};
+
+calendarCallbacks.getDefine = function (key) {
+    var params = {};
+    
+    params.EVENT_TEAM = "<?= EVENT_TEAM ?>";
+    params.EVENT_PROJECT = "<?= EVENT_PROJECT ?>";
+    params.EVENT_PERSONAL = "<?= EVENT_PERSONAL ?>";
+    params.EVENT_DEFAULT_GROUP = "<?= EVENT_DEFAULT_GROUP ?>";
+    params.EVENT_OTHER_GROUP = "<?= EVENT_OTHER_GROUP ?>";
+    params.CALENDAR_EVENT_FROM_TIME = "<?= CALENDAR_EVENT_FROM_TIME ?>";
+    params.CALENDAR_EVENT_TO_TIME = "<?= CALENDAR_EVENT_TO_TIME ?>";
+    params.EVENT_MIN_REPEAT = "<?= EVENT_MIN_REPEAT ?>";
+    params.EVENT_MAX_REPEAT = "<?= EVENT_MAX_REPEAT ?>";
+    if (params[key] === undefined) {
+        return null;
+    }    
+    return params[key];    
+}
+</script>

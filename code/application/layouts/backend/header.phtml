@@ -1,0 +1,59 @@
+<div id="uniHeader">
+    <div class="headerIn">
+        <a class="lgMobion" href="/">
+            <img src="<?php echo $this->static->backend->images; ?>/lg_mobion_140x27.png">
+        </a>
+
+        <div class="boxSetting">
+            <?php
+              if(!empty($this->arrLogin['nickName']))
+              {
+                  ?>
+            <table>
+                <tr>
+                    <td style="padding-top:10px;color:#FFF;font-weight:bold;">Hi <?php echo $this->arrLogin['nickName'];?>!&nbsp;&nbsp;</td>
+                    <td><a title="Logout" alt="Logout" href="<?php echo BASE_ADMIN_URL; ?>/logout" class="ico iconLogout"><em></em></a></td>
+                </tr>
+            </table>
+            <?php
+              }
+              ?>
+        </div>
+    </div>
+    <div class="boxNav">
+        <ul class="navMain">
+            <?php 
+            global $globalConfig;
+            if(!empty($this->arrMenu))
+            {
+                foreach ($this->arrMenu as $value) 
+                {
+                     if(isset($globalConfig['menu'][$value]["controller"]) && $globalConfig['menu'][$value]['isshow'] ==1)
+                     {
+                ?> 
+                    <li>
+                        <a <?php if($this->request->getControllerName() == $globalConfig['menu'][$value]["controller"]) { echo 'class="curr"'; } ?>  href="<?php echo $globalConfig['menu'][$value]["link"];?>">
+                            <span class="icoNew <?php echo $globalConfig['menu'][$value]["icon"];?>">
+                                <em></em>
+                            </span>
+                            <span class="txt">
+                                <?php echo $globalConfig['menu'][$value]["name"];?>
+                            </span>
+                        </a>
+                    </li>
+                <?php
+                     }
+                }
+            }
+            ?>
+            <li>
+                <!--
+                <a <?php //if($this->request->getControllerName() == 'settings') { echo 'class="curr"'; } ?> href="/settings">
+                    <span class="ico iconFolder"><em></em></span>
+                    <span class="txt">SETTINGS</span>
+                </a>
+                -->
+            </li>
+        </ul>
+    </div>
+</div>

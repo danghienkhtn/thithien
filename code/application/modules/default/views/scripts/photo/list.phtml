@@ -1,0 +1,200 @@
+
+<div class="wrapper gnt-photos">
+	<div class="inner">
+                <?php 
+                    echo $this->render('partials/slogan.phtml');
+                 ?>
+		<h2 class="page-title"><i class="icon"></i><span class="txt">Photos</span></h2>
+		<div class="content-wrapper">
+			<div class="gnt-photo-lightbox">
+				<div class="title"><?php echo $this->arrAlbum['name'];?> (<?php echo $this->iTotal; ?> Photos)</div>
+				<ul class="gallery clearfix" id="photo-list-main">
+                                <?php
+                                 foreach ($this->paginator as $value)
+                                 {
+                                     
+                                      $sImageUrl = (!empty($value['image_url'])) ? PATH_NEWS_URL .'/'. $value['image_url'] : '';
+                                     ?>
+                                    
+                                       <li><a href="<?php echo $sImageUrl;?>" rel="prettyPhoto[gallery2]"><img src="<?php echo $sImageUrl;?>"  style="width:210px" /></a></li>
+                                    <?php
+                                 }
+                                 ?>
+				</ul>
+                                
+                                 <input type="hidden" name="type" id="type" value="<?php echo $this->iType;?>">
+                                 <input type="hidden" name="page" id="page" value="<?php echo ($this->iPage + 1);?>">
+                                 <input type="hidden" name="more" id="more" value="<?php echo $this->iMore;?>">
+                                 <input type="hidden" name="id" id="id" value="<?php echo $this->arrAlbum['album_id'];?>">
+			</div>
+			
+			<div class="line-seperate"></div>
+			
+			<div class="wrap photo-wrap" id="albumOtherID" style="display:<?php echo ($this->iMore ==1)?'none':'block';?>;" >
+				<ul class="tabs depts">
+                                        <?php
+                                            if($this->iType ==1){
+                                                ?>
+                                              <li><a>Company</a></li>
+                                    
+                                              <?php
+                                            }else{
+                                            ?>
+                                                <li><a>Teams</a></li>
+                                            <?php
+                                            }
+                                            ?>
+					
+				</ul>
+				
+                                <?php
+                                     $year = date('Y', time());
+                                 ?>
+				<div class="pane">
+					<ul class="tabs years">
+						<li class="company21" rel="<?php echo  $year;?>"><?php echo  $year;?></li>
+						<li class="company22" rel="<?php echo  $year-1;?>"><?php echo  $year-1;?></li>
+						<li class="company23" rel="<?php echo  $year-2;?>"><?php echo  $year-2;?></li>
+					</ul>
+					<div class="pane" style="height:280px">
+						<div class="photo-slider-wrapper" >
+							<section class="photo-slider">
+                                                               <?php
+                                                               if(!empty($this->arrAlbumOther))
+                                                               {
+
+                                                                        $index=0;
+                                                                        foreach ($this->arrAlbumOther as $value)
+                                                                        {
+                                                                             $classColumn ='';
+                                                                              if($index==0)
+                                                                              {
+
+                                                                                 $classColumn= 'class="first-child"';
+                                                                              }
+
+                                                                              $sImageUrl = (!empty($value['image_url'])) ? PATH_NEWS_URL .'/'. $value['image_url'] : '';
+                                                                         ?>
+
+                                                                           <article  <?php echo $classColumn;?> style="background-image:url(<?php echo $sImageUrl;?>);">
+                                                                                <a href="<?php echo BASE_URL; ?>/photo/list/id/<?php echo $value['album_id']; ?>">
+                                                                                        <span class="footer">
+                                                                                                <span class="name"><?php echo $value['name']; ?></span>
+                                                                                                <span class="position">
+
+                                                                                                   <?php
+                                                                                                    if(!empty($value['event_date']) && $value['event_date']>0)
+                                                                                                    {
+                                                                                                          echo date('m/d/Y', $value['event_date']);
+                                                                                                    } 
+                                                                                                   ?>
+                                                                                                </span>
+                                                                                        </span>
+                                                                                </a>
+                                                                            </article>
+
+                                                                        <?php
+                                                                            $index++;
+
+                                                                        }
+                                                               }
+                                                                ?>
+							</section>
+						</div>
+					</div>
+                                         <!-- Span 2 -->
+                                         <div class="pane" style="height:280px">
+						<div class="photo-slider-wrapper">
+							<span id="spanslidephoto22">
+                                                            
+                                                        </span>
+						</div>
+					</div>
+                                        <!-- End Span 2-->
+                                        
+                                        <!-- Span 3 -->
+                                         <div class="pane" style="height:280px">
+						<div class="photo-slider-wrapper">
+							<span id="spanslidephoto23">
+                                                            
+                                                        </span>
+						</div>
+					</div>
+                                        <!-- End Span 3-->	
+				
+				
+				</div>
+			</div>
+        </div>
+    </div>
+</div><!-- end wrapper -->
+
+
+<script language="javascript">
+function showSlidePhoto(type, year, html)
+{
+      $.get("<?php echo BASE_URL;?>/photo/phototype",{type:type,year:year},function(result){
+
+       $('#' + html).html(result);
+   });
+}
+  
+  $(".company22").click(function(){
+         
+      var  year = $(".company22").attr("rel");
+      var type = $("#type").val();
+      
+      showSlidePhoto(type, year, 'spanslidephoto22')    
+  });
+  
+  $(".company23").click(function(){
+         
+      var  year = $(".company23").attr("rel");
+      var type = $("#type").val();
+      
+      showSlidePhoto(type, year, 'spanslidephoto23')    
+  });
+ 
+</script>
+
+<script language="javascript">
+$(document).ready(function() {
+    
+    $(window).scroll(function() {
+       if($(window).scrollTop() == $(document).height() - $(window).height()) {
+             
+            var  page = $('#page').val();
+            var more = $('#more').val();
+            var id = $('#id').val();
+            if(more==1)
+            {
+                
+                 $.get("<?php echo BASE_URL;?>/photo/photolist",{page:page, id:id},function(result){
+                    $("#photo-list-main").append(result.data);
+                    if(result.more ==0)
+                    {
+                        $('#more').val(0);
+                        $('#albumOtherID').css('display','block');
+                    }
+                    else
+                    {
+                        $('#page').val(result.page);
+                    }
+
+
+                  }, 'json');
+                
+            }
+
+            
+       }
+   })
+
+  
+});
+
+</script>
+
+
+                    
+

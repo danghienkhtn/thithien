@@ -1,0 +1,30 @@
+<ul>
+    <li>
+        <a <?php if ($this->controllerName == 'group' && $this->actionName == 'my') {
+            echo 'class="active" ';
+        } ?> href="<?php echo BASE_URL . '/group/my' ?>">
+            My Groups
+        </a>
+    </li>
+    <li>
+        <a <?php if ($this->controllerName == 'group' && $this->actionName == 'index') {
+            echo 'class="active" ';
+        } ?> href="<?php echo BASE_URL; ?>/group">
+            Suggestion Groups
+        </a>
+    </li>
+    <li>
+        <a <?php if ($this->controllerName == 'group' && $this->actionName == 'invitelist') {
+            echo 'class="active" ';
+        } ?> href="<?php echo BASE_URL . '/group/invitelist' ?>">
+            Invitations
+        </a>
+    </li>
+    <li>
+        <a <?php if ($this->controllerName == 'group' && $this->actionName == 'requestedlist') {
+            echo 'class="active" ';
+        } ?> href="<?php echo BASE_URL . '/group/requestedlist' ?>">
+            Requests 
+        </a>
+    </li>
+</ul>

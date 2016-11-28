@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <?php echo $this->headMeta(); ?>
+    <?php echo $this->headTitle(); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->plugins . '/bootstrap-tagsinput/bootstrap-tagsinput.css'; ?>" media="screen">
+    <!--    <link rel="shortcut icon" type="image/x-icon" href="--><?php //echo BASE_URL; ?><!--/favicon.ico" />-->
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/fonts.css' ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->fonts . '/font-awesome/css/font-awesome.css'?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/body.css' ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/main.css' ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/header.css' ?>" media="screen">
+    <!-- <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/menu-left.css' ?>" media="screen"> -->
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/menu-left-02.css' ?>" media="screen">
+
+
+    <link rel="stylesheet" type="text/css" href="<?= $this->static->backend->js . '/datatable/css/jquery.dataTables.css' ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?= $this->static->backend->js . '/datatable/css/dataTables.tableTools.css' ?>" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?= $this->static->backend->js . '/datatable/css/datatable.responsive.css' ?>" media="screen">
+
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/boostrap.css' ?>" media="screen">
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/jquery.js' ?>"></script>
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/masonry.js'?>"></script>
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/jquery-ui.min.js' ?>"></script>
+    
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/menutoggle.js' ?>"></script>
+<!--    <script type="text/javascript" src="--><?php //echo $this->static->backend->js . '/datatable/js/jquery.dataTables.min.js' ?><!--"></script>-->
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/datatable/js/jquery.dataTables.js' ?>"></script>
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/datatable/js/dataTables.tableTools.js' ?>"></script>
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/datatable/js/datatable.responsive.min.js' ?>"></script>
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/core_common/common.file.js' ?>"></script>
+    <link rel="shortcut icon" href="<?php echo $this->static->backend->images.'/favicon-2.ico'?>" type="image/x-icon">
+    <link rel="icon" href="<?php echo $this->static->backend->images.'/favicon-2.ico'?>" type="image/x-icon">
+    <!-- <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'> -->
+
+    <script type="text/javascript" src="<?php echo $this->static->backend->js .'/moment.min.js'?>"></script>
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/bootstrap.min.js' ?>"></script>
+
+    <script src="<?php echo $this->static->backend->js . '/highchart/highcharts.js'; ?>"></script>
+    <script src="<?php echo $this->static->backend->js . '/highchart/data.js'; ?>"></script>
+    <script src="<?php echo $this->static->backend->js . '/highchart/exporting.js'; ?>"></script>
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->static->backend->css . '/jquery.datetimepicker.css' ?>" media="screen"> 
+    <script type="text/javascript" src="<?php echo $this->static->backend->js . '/jquery.datetimepicker.js' ?>"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#table-content").find("img").addClass("img-responsive img-thumbnail");
+        })
+    </script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var wrapperMasonry = $(".grid");
+            wrapperMasonry.each(function(){
+                $(this).masonry({
+                // options
+                itemSelector: '.grid-item'
+                });
+            });
+            $("#list-photo").masonry({
+                itemSelector:'#photo-item'
+            });
+        });
+    </script>
+ 
+    <script type="text/javascript">
+
+        var baseurl = "<?php echo BASE_ADMIN_URL; ?>";
+//var basefronturl = "<?php //echo BASE_URL; ?>///";
+var baseAvatarUrl = "<?php echo PATH_AVATAR_URL;?>";
+page    = $('body');
+
+
+$(document).ready(function() {
+    $('.date_time_picker').datetimepicker({
+        format:'d-m-Y',
+        timepicker:false,
+mask:true // '9999/19/39 29:59' - digit is the maximum possible for a cell
+});
+
+
+
+    $('body').on('click','[data-action="back-page"]', function(){
+        window.history.back();
+    });
+    $('[data-toggle="tooltip"]').tooltip();
+
+    var container = $('[data-action="search-user"]');
+    $('body').click(function(event) {
+if (!container.is(event.target) // if the target of the click isn't the container...
+&& container.has(event.target).length === 0) // ... nor a descendant of the container
+{
+    container.hide();
+}
+});
+});
+
+
+function hrefRedirect(action){
+    if(typeof action.attr('href') !== 'undefined')
+        window.location =  action.attr('href');
+}
+function showLoading()
+{
+    var overlay = jQuery('<div id="overlay"> <i class="fa fa-spinner fa-spin fa-5x fa-fw margin-bottom light-blue" style="position: relative;left: 50%;top: 50%;"></i></div>');
+    overlay.appendTo(document.body);
+}
+function hideLoading()
+{
+    $('#overlay').remove();
+}
+
+function createDisplayObjectHtml(contentEditAble, idName, className)
+{
+    var display = $('<div>');
+    display.css('left',      contentEditAble.position().left);
+//    display.css('right',     contentEditAble.position().right);
+    display.css('top',       contentEditAble.css('top'));
+//    display.css('top',       contentEditAble..position().top);
+    display.css('bottom',    contentEditAble.css('bottom'));
+    display.css('width',     contentEditAble.css('width'));
+    display.css('position',  'absolute');
+    display.css('background-color','white');
+    display.css('border','1px solid #ddd');
+    display.css('display',   'none');
+    display.css('z-index',   '9999');
+    display.html($('<ul style="list-style-type: none;">'));
+    display.attr('id', idName);
+    display.attr('class', className);
+    contentEditAble.after(display);
+}
+</script>
+
+<!--    <script>-->
+<!--        $(document).ready(function() {-->
+<!--            $('#table-content').DataTable();-->
+<!--        });-->
+<!--    </script>-->
+</head>
+
+<body class="tooltip-invisible">
+    <section style="opacity=1;">
+        <!--    side bar-->
+        <?php echo $this->render('sidebar.phtml'); ?>
+        <!--    end side bar-->
+
+        <div class="main-contain clearfix">
+            <!--       top bar-->
+            <?php echo $this->render('topbar.phtml'); ?>
+            <!--        top bar-->
+            <div class="page-content">
+                <!--            content-->
+                <?php echo $this->layout()->content; ?>
+                <!--            content-->
+            </div>
+            <!-- page-content -->
+        </div>
+        <!-- main-contain -->
+    </section>
+</body>
+
+<script>
+    $(function(){
+        var containerUserSearch = $('.user-search-result');
+        $('body').click(function(event) {
+            if (!containerUserSearch.is(event.target) // if the target of the click isn't the container...
+                && containerUserSearch.has(event.target).length === 0) // ... nor a descendant of the container
+            {
+                containerUserSearch.hide();
+            }
+
+        });
+    })
+</script>
+</html>

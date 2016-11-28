@@ -1,9 +1,9 @@
 <?php
 /**
- * @author      :   Linuxpham
+ * @author      :   DANG HIEN
  * @name        :   index.php
- * @version     :   201004
- * @copyright   :   My company
+ * @version     :   201611
+ * @copyright   :   DAHI
  * @todo        :   Run main php
  */
 
@@ -11,6 +11,8 @@ define('DOCUMENT_ROOT', realpath(dirname(__FILE__)));
 define('APPLICATION_PATH', realpath(DOCUMENT_ROOT.'/../application'));
 define('LIBS_PATH', realpath(DOCUMENT_ROOT . '/../library'));
 define('DATA_PATH', realpath(DOCUMENT_ROOT.'/../data'));
+define('LIBS_ZEND', realpath(DOCUMENT_ROOT . '/../framework/'));
+
 // define('EXCHANGE_PATH', realpath(DOCUMENT_ROOT . '/../exchange'));
 
 //Setup Include Paths
@@ -26,13 +28,13 @@ require_once APPLICATION_PATH . '/configs/defined-'.APP_ENV.'.php';
 require_once APPLICATION_PATH . '/configs/global.php';
 require_once APPLICATION_PATH . '/configs/layout.php';
 require_once APPLICATION_PATH . '/configs/admin.php';
-require_once APPLICATION_PATH . '/../vendor/autoload.php';
+// require_once APPLICATION_PATH . '/../vendor/autoload.php';
 
 //Load bootstrap
 try
 {	    
     //Require library
-    require_once 'Zend/Application.php';
+    require_once LIBS_ZEND.'Zend/Application.php';
 	
 	//Load Application    
     $application = new Zend_Application(

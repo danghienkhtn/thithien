@@ -1,0 +1,394 @@
+<link rel="stylesheet" type="text/css" href="<?= $this->static->frontend->css.'/bootstrap-datetimepicker.css';?>">
+<script type="text/javascript" src="<?php echo $this->static->frontend->js.'/bootstrap-datetimepicker.min.js';?>"></script>
+<script type="text/javascript" src="<?= $this->static->frontend->js.'/show-calendar.js'; ?>"></script>
+<style>
+	#datetimepicker1{
+		display: none;
+	}
+	#datetimepicker1 input{
+	    padding:0.5rem;
+	    border:1px solid #ccc;
+	    border-radius: 3px;
+	    width: 100%;
+  	}
+	.user-profile-wrapper{
+		background: #fff;
+		border-radius: 5px;
+		margin-top:10px;
+		margin-bottom: 1rem;
+	}
+	i.icon-calendar{
+	    background: url(/static/images/icon-calendar-2.png) no-repeat;
+	    background-size: 30px 30px;
+	    background-position-y: 2px;
+	    background-position: 0px 2px;
+  	}
+	.user-profile-wrapper .header-option{
+		border-bottom: 1px solid #ddd;
+		padding: 1rem 1rem 0 1rem;
+	}
+	.user-profile-wrapper section{
+		padding:10px 1rem;
+	}
+	.user-profile-wrapper .gnr-information{
+		margin-top: 1rem;
+	}
+	.user-profile-wrapper .header-option h3{
+		text-transform: uppercase;
+	}
+	.gnr-information-btn{
+		display: inline-block;
+		margin-bottom: 1rem;
+		background: #A6E8F5;
+		padding-right:5px;
+	}
+	.list-gnrinformation{
+		margin-top:0.7rem;
+	}
+	.list-gnrinformation li{
+		margin:1rem;
+		font-weight: 300;
+	}
+	.list-gnrinformation li img{
+		margin-right: 10px;
+	}
+	.job-information-cnt, .personal-information-cnt{
+		margin:0 2rem;
+	}
+	.job-information-cnt ul li, .personal-information ul li{
+		margin:15px 0;
+	}
+	.list-gnrinformation span{
+		padding-bottom: 10px;
+	}
+	.btn{
+		display: none;
+	}
+	.hidden-label{
+		display: none;
+		font-weight: bold;
+	}
+	.personal-information-cnt select{
+		padding: 5px 10px;
+		width: 100%;
+		display: block;
+		border-radius: 5px;
+		borer:1px solid #ddd;
+	}
+	.personal-information-cnt ul li select{
+		display: none;
+	}
+</style>
+<div class="user-profile-wrapper">
+	<div class="header-option">
+		<h3>User Profile</h3>
+	</div>
+
+	<section class="gnr-information">
+		<div class="gnr-information-btn">
+			<img src="../static/images/user-profile/General.png" alt="" width="32" height="30" class="img-reponsive">
+			<strong>General Information</strong>
+		</div>
+		<div class="btn-edit btn-gnr-information pull-right">
+			<img src="../static/images/user-profile/Edit.png" alt="" class="img-responsive" width="32" height="32">
+		</div>
+		<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-md-4">
+						<img src="../static/images/user-profile/ava.png" alt="" class="avatar img-reponsive img-circle center-block" width="150" height="150">
+					</div>
+					<div class="col-md-8">
+						<h3>Nguyễn Thế Hùng</h3>
+						<div class="row">
+							<div class="col-md-5">
+								<ul class="list-gnrinformation">
+									<li>
+										<div class="hidden-label">ID</div>
+										<img src="../static/images/user-profile/ID.png" class="img-reponsive" width="20" height="20" alt="">
+										<span>1990</span>
+									</li>
+									<li>
+										<div class="hidden-label">Birthday</div>
+										<img src="../static/images/user-profile/Birthday.png" class="img-reponsive" width="20" height="20" alt="">
+										<span class="swap-datetime"> 30/07/1991 </span>
+										<div id="datetimepicker1" class="input-append date" style="position:relative;">
+									      <input data-format="dd/MM/yyyy" type="text" data-item="date" value="30/07/1991" />
+									      <span class="add-on">
+									        <i data-time-icon="icon-time" data-date-icon="icon-calendar" style="position:absolute;right:0;top:0;">
+									        </i>
+									      </span>
+									    </div>
+									</li>
+									<li>
+										<div class="hidden-label">Contact Address</div>
+										<img src="../static/images/user-profile/Address.png" class="img-reponsive" width="20" height="20" alt="">
+										<span>Tp. Hồ Chí Minh</span>
+									</li>
+									<li>
+										<div class="hidden-label">Phone</div>
+										<img src="../static/images/user-profile/Phone.png" class="img-reponsive" width="20" height="20" alt="">
+										<span>01223636224</span>
+									</li>
+								</ul>
+							</div>
+							<div class="col-md-7">
+								<ul class="list-gnrinformation">
+									<li>
+										<div class="hidden-label">Working Mail</div>
+										<img src="../static/images/user-profile/Working-mail.png" class="img-reponsive" width="20" height="20" alt="">
+										<span>hung.nhv1868@vn.gnt-global.com</span>
+									</li>
+									<li>
+										<div class="hidden-label">Personal Email</div>
+										<img src="../static/images/user-profile/Personal-mail.png" class="img-reponsive" width="20" height="20" alt="">
+										<span>vhuy257199@gmail.com</span>
+									</li>
+									<li>
+										<div class="hidden-label">Skype</div>
+										<img src="../static/images/user-profile/Skype.png" class="img-reponsive" width="20" height="20" alt="">
+										<span>hung.nt1990</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn-wrapper text-right">
+					<button class="btn btn-primary btn-savePrfuser">Save</button>
+					<button class="btn btn-default btn-cancelEditgnrInfo">Cancel</button>
+				</div>
+	</section>
+
+	<section class="job-information">
+		<div class="gnr-information-btn">
+			<img src="../static/images/user-profile/General.png" alt="" width="32" height="30" class="img-reponsive">
+			<strong>Job Information</strong>
+		</div>
+		<div class="clearfix"></div>
+		<div class="job-information-cnt">
+			<div class="row">
+				<div class="col-md-4">
+					<ul>
+						<li>
+							<strong>Team:</strong> <br>
+							CIO Office
+						</li>
+						<li>
+							<strong>Sub leader:</strong> <br>
+							N/A
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<ul>
+						<li>
+							<strong>Position:</strong> <br>
+							Web designer
+						</li>
+						<li>
+							<strong>Leader:</strong> <br>
+							Đặng Thụy Minh Nhu
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<ul>
+						<li>
+							<strong>Level:</strong> <br>
+							N/A
+						</li>
+						<li>
+							<strong>Manager:</strong> <br>
+							Nguyễn Quang Trung Bill
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="personal-information">
+		<div class="gnr-information-btn">
+			<img src="../static/images/user-profile/General.png" alt="" width="32" height="30" class="img-reponsive">
+			<strong>Personal Information</strong>
+		</div>
+		<div class="btn-edit btn-personal-info pull-right">
+			<img src="../static/images/user-profile/Edit.png" alt="" class="img-responsive" width="32" height="32">
+		</div>
+		<div class="clearfix"></div>
+		<div class="personal-information-cnt">
+			<div class="row">
+				<div class="col-md-6">
+					<ul>
+						<li>
+							<strong>Gender:</strong> <br>
+							<span class="not-switch">Male</span>
+							<select name="" id="">
+								<option value="Male">Male</option>
+								<option value="Female" checked="checked">Female</option>
+							</select>
+						</li>
+						<li>
+							<strong>Hometown:</strong> <br>
+							<span class="not-switch">Tp. Hồ Chí Minh</span>
+							<select name="" id="">
+								<option value="Male">Tp. Hồ Chí Minh</option>
+							</select>
+						</li>
+						<li>
+							<strong>ID Card - Number:</strong> <br>
+							<span>123455678</span>
+						</li>
+						<li>
+							<strong>ID Card - Issued Place:</strong> <br>
+							<span class="not-switch">Tp. Hồ Chí Minh</span>
+							<select name="" id="">
+								<option value="Male">Tp. Hồ Chí Minh</option>
+							</select>
+						</li>
+						<li>
+							<strong>ID Card - Issued Date:</strong> <br>
+							<span>02/06/2015</span>
+						</li>
+						<li>
+							<strong>Social Insurance Book - Number:</strong> <br>
+							<span class="not-switch">34768435465453143</span>
+							<select name="" id="">
+								<option value="Male">_Blank</option>
+							</select>
+						</li>
+						<li>
+							<strong>Bank Account - Bank's Name:</strong> <br>
+							<span>Vietcombank</span>
+						</li>
+						<li>
+							<strong>Bank Account - Number:</strong> <br>
+							<span>2436436436476543654</span>
+						</li>
+						<li>
+							<strong>Number of Children:</strong> <br>
+							<span>0</span>
+						</li>
+						<li>
+							<strong>Emergency Contact Information - Relationship:</strong> <br>
+							<span>Nguyễn Thế Hùng</span>
+						</li>
+
+					</ul>
+				</div>
+				<div class="col-md-6">
+					<ul>
+						<li>
+							<strong>Place Of Birth:</strong> <br>
+							<span class="not-switch">Tp. Hồ Chí Minh</span>
+							<select name="" id="">
+								<option value="Male">Tp. Hồ Chí Minh</option>
+							</select>
+						</li>
+						<li>
+							<strong>Permanent Address:</strong> <br>
+							<span>Tp. Hồ Chí Minh</span>
+						</li>
+						<li>
+							<strong>ID Card - Issued Date:</strong> <br>
+							<span>02/06/2015</span>
+						</li>
+						<li>
+							<strong>Passport - Number:</strong> <br>
+							<span>16467843134564654</span>
+						</li>
+						<li>
+							<strong>Passport - Issued Place:</strong> <br>
+							<span class="not-switch">Tp. Hồ Chí Minh</span>
+							<select name="" id="">
+								<option value="Male">Tp. Hồ Chí Minh</option>
+							</select>
+						</li>
+						<li>
+							<strong>Personal Income Tax Code:</strong> <br>
+							<span>76976143643646434</span>
+						</li>
+						<li>
+							<strong>Bank Account - Branch Name:</strong> <br>
+							<span class="not-switch">Vietcombank Quận 1</span>
+							<select name="" id="">
+								<option value="Male">Tp. Hồ Chí Minh</option>
+							</select>
+						</li>
+						<li>
+							<strong>Marital Status:</strong> <br>
+							<span class="not-switch">Single</span>
+							<select name="" id="">
+								<option value="Male">Tp. Hồ Chí Minh</option>
+							</select>
+						</li>
+						<li>
+							<strong>Emergency Contact Information - Name:</strong> <br>
+							<span>Nguyễn Thế Hùng</span>
+						</li>
+						<li>
+							<strong>Emergency Contact Information - Contact:</strong> <br>
+							<span>0933676691</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="btn-wrapper text-right">
+				<button class="btn btn-primary btn-savePrfuser">Save</button>
+				<button class="btn btn-default btn-cancelEditPrfUser">Cancel</button>
+			</div>
+			 
+		</div>
+	</section>
+</div>
+<script>
+	$('.btn-edit.btn-personal-info').on('click', function(e){
+		e.preventDefault();
+		$(this).parents('section.personal-information').find('.col-md-6 ul li span:not(.not-switch)').each(function(el){
+			$(this).replaceWith('<input type="text" class="form-control" data-value="'+ $(this).text() +'" value="'+ $(this).text() +'"/>')
+		});
+		$(this).parents('section.personal-information').find('.col-md-6 ul li select').show();
+		$(".not-switch").hide();
+		$('.btn').show();
+	});
+
+	$('.btn-edit.btn-gnr-information').on('click', function(e){
+		e.preventDefault();
+		$(this).parents('section.gnr-information').find('ul.list-gnrinformation li span:not(.swap-datetime, .add-on)').each(function(el){
+			$(this).replaceWith('<input type="text" class="form-control" data-value="'+ $(this).text() +'" value="'+ $(this).text() +'"/>')
+		});
+		$("#datetimepicker1").show();
+		$(".swap-datetime").hide();
+		$(".list-gnrinformation li:first-child").find('input').prop("disabled", true);
+		$(this).parents('section.gnr-information').find('ul.list-gnrinformation li img').hide();
+		$(this).parents('section.gnr-information').find('ul.list-gnrinformation li .hidden-label').show();
+		$('.btn').show();
+	});
+	
+	$('.btn-cancelEditPrfUser').on('click', function(e){
+		e.preventDefault();
+		$(this).parents('section').find('.col-md-6 ul li input').each(function(el){
+			$(this).replaceWith('<span>'+ $(this).val() +'</span>');
+		});
+		$(this).parents('section.personal-information').find('.col-md-6 ul li select').hide();
+		$(".not-switch").show();
+		$('.btn').hide();
+	});
+
+	$('.btn-cancelEditgnrInfo').on('click', function(e){
+		e.preventDefault();
+		$(this).parents('section').find('ul.list-gnrinformation li input').each(function(el){
+			$(this).replaceWith('<span>'+ $(this).val() +'</span>');
+		});
+		$("#datetimepicker1").hide();
+		$(".swap-datetime").show();
+		$(this).parents('section.gnr-information').find('ul.list-gnrinformation li img').show();
+		$(this).parents('section.gnr-information').find('ul.list-gnrinformation li .hidden-label').hide();
+		$('.btn').hide();
+	});
+
+	var dDate = $('#datetimepicker1').datetimepicker({
+        pickTime: false,
+        language: 'pt-BR',
+    });
+</script>

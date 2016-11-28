@@ -1,0 +1,165 @@
+<?php
+$arrTypes   = $this->albumTypes;
+$arrAlbum     = $this->albums;
+$groups     = $this->groups;
+$arrTypes   = array_flip($arrTypes);
+?>
+
+    <script type="text/javascript">
+
+        var baselinkimage = "<?php echo PATH_IMAGES_URL;?>";
+        var baseAdminUrl = "<?php echo BASE_ADMIN_URL;?>";
+    </script>
+<div class="title-page mar-bot15">
+    <h4>
+        <i class="fa fa-picture-o"></i>
+        <span class="capitalize">Album</span>
+    </h4>
+</div><!-- title-page -->
+<style>
+.scale-thumbnail{
+    max-width: 180px;
+    max-height: 180px;
+}
+</style>
+<?php foreach($arrTypes as $key=>$type) {
+//    var_dump($arrAlbum);echo'--------------'.$type.'-----<br/>';
+    $albums = Album::getInstance()->getAlbumList('',0,$key,11,0,0,MAX_QUERY_LIMIT);
+    $groups = Group::getInstance()->getGroupAlls(11,$key, 0, 4);
+//    var_dump($groups);echo '<br/>';
+    echo $this->partial('lstalbum.phtml',array('albums'=>$albums,'groups'=>$groups,'typeName'=>$type,'typeId'=>$key));
+}?>
+
+<div class="md-overlay"></div>             
+<nav id="cbp-spmenu-s2" class="contain-add-album cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right project-panel">
+    <div class="rmv-pushright pull-right">
+        <i class="fa fa-times"></i>
+    </div>
+    <h3>Create Album</h3>
+
+    <div class="form-group">
+        <label for="album-name">Album name</label>
+        <input type="text" class="form-control" id="album_name" name="album_name" value="">
+    </div>
+    <div class="form-group">
+        <label for="album-desc">Description</label>
+        <textarea rows="1" type="text" class="form-control" id="desc" name="desc" style="resize:none;"></textarea>
+    </div>
+    <div class="form-group">
+        <div id="drop">
+            <form id="upload" method="post" action="<?php echo BASE_ADMIN_URL;?>/upload/upload5" enctype="multipart/form-data">
+                <input type="file" name="chosenImage" multiple />
+            </form>
+        </div>
+    </div>
+    <div class="img-add-album">
+        <ul id="imageUploadList" class="clearfix">
+        </ul>
+    </div>
+    <div class="button-group share fr">
+        <select name="team_id_to" id="team_id_to">
+            <?php
+                foreach ($this->arrGroupMember as $group){?>
+
+                    <option value="<?php echo $group['group_id'];?>"><?php echo $group['group_name'];?></option>
+
+                <?php }?>
+        </select> 
+        <button type="button" class="btn btn-success" name="post" value="Post" id="post">Post</button>
+        <button class="btn btn-default clear-data-upload"><i class="fa fa-trash"></i></button>
+    </div>
+</nav>
+<!-- <link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/upload_style_base.css'; ?>" media="screen">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->static->frontend->css . '/upload_style_image.css'; ?>" media="screen"> -->
+
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.knob.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.ui.widget.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.iframe-transport.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.fileupload.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->static->frontend->js . '/jquery.upload.script.js'; ?>"></script>
+
+
+<script type="text/javascript">
+
+//show popup create album
+$(".create-album-btn").each(function(){
+    $(this).click(function(){
+    
+    $("#cbp-spmenu-s2").addClass("cbp-spmenu-open");
+    $(".md-overlay").addClass("md-show"); 
+});
+});
+
+
+
+//hide popup create album
+$(".md-overlay").click(function(){
+    $(this).removeClass("md-show");
+    $("#cbp-spmenu-s2").removeClass("cbp-spmenu-open");
+});
+
+$(".rmv-pushright").click(function(){
+    $(".md-overlay").removeClass("md-show");
+    $("#cbp-spmenu-s2").removeClass("cbp-spmenu-open");
+});
+</script>
+<script type="text/javascript">
+    //upload images.
+    var imgNames = [];
+    var descs = [];
+
+    $(document).ready(function() {
+        $('body').on("click",'#post',function(e){
+
+            //loop li get image
+            getImageFile();
+
+            if(imgNames.length > 0){
+
+                var photos = {};
+
+                photos['name'] = $("#album_name").val();
+                photos['desc'] = $("#desc").val();
+                photos['team_id_to'] = $("#team_id_to").val();
+                photos['teamName'] =  $('#team_id_to option:selected').text();
+                photos['imageNames'] = imgNames;
+                photos['descImages'] = descs;
+
+                $.post(baseAdminUrl+"/album/add",{
+                    data:JSON.stringify(photos)
+                }, function(data){
+                    //console.log(data);
+                    if(data.error == 0){
+                        window.location.href = baseAdminUrl + '/album';
+                    }else{
+                        alert('create album error');
+                    }
+
+                },'json');
+            }else{
+                alert('please select a Photo');
+            }
+        });
+
+    });
+
+    function getImageFile(){
+        $( "#imageUploadList li" ).each(function( index ) {
+            var imageName = $(this).find('img').attr('data-f');
+            var desc = $(this).find('textarea').val();
+
+            imgNames.push(imageName);
+            descs.push(desc);
+        });
+    }
+//     //remove image upload 
+$(document).on('click','.center-img-album i', function(){
+  $(this).closest('li').remove();
+});
+// clear form upload
+$(document).on('click','.clear-data-upload', function(){
+  $("input[name='album_name']").val('');
+  $("#desc").val('');
+  $(".img-add-album").empty();
+});
+</script>

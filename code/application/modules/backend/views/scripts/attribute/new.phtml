@@ -1,0 +1,119 @@
+
+
+<div class="asideCont borPaddNon clearfix" id="newproduct">
+    <table width="100%" cellspacing="0" cellpadding="0" border="1" class="tblComm">
+        <tbody>
+            <tr>
+                <th align="left" colspan="2">ADD ATTRIBUTE</th>
+            </tr>
+          
+            <tr>
+                <td valign="top">
+                    <div class="padLefRig20">
+                        
+                        <ul class="ulListIfSch">
+                             <li>
+                                <p class="titleDes"><label>Name</label></p>
+                                <input type="text" id="gName" name="gName" placeholder="Enter name">
+                                <p class="error" id="gNameError" ></p>
+                            </li>
+                            <li>                        
+                                <p class="titleDes"><label>Type</label></p>
+                                <select id="gType" name="gType" class="seleComm width270">
+                                    <?php foreach ($this->arrAttributeType as $key => $value): ?>
+                                    <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <p class="error" id="gTypeError" ></p>
+                            </li>
+                           
+                            <li>
+                                <p class="titleDes"><label>Sort Order</label></p>
+                                <input type="text" id="gSort" name="gSort" placeholder="Sort order">
+                                <p class="error" id="gSortError" ></p>
+                            </li>
+                            <li>                        
+                                <p class="titleDes"><label>Active</label></p>
+                                <div class="product-display">
+                                    <label class="radio">
+                                        <input type="radio" name="gDisplay" value="1" checked>Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="gDisplay" value="0">No
+                                    </label>
+                                </div>
+                                <p class="error" id="gDisplayError" ></p>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </td>
+                
+            </tr>                  
+
+            <tr>
+                <td valign="top" colspan="2">
+                    <div class="floatleft mLeft10 mTop10">
+                        <a href="javascript:void(0)"  id="btnAdd1" class="button green">Add</a>
+                    </div>                    
+                </td>                    
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div style="height: 30px"></div>
+
+<div id="toTop">^ Back to Top</div> 
+<script type="text/javascript">
+    
+    $(function() {
+	$(window).scroll(function() {
+            if($(this).scrollTop() != 0) {
+                    $('#toTop').fadeIn();	
+            } else {
+                    $('#toTop').fadeOut();
+            }
+	});
+ 
+	$('#toTop').click(function() {
+		$('body,html').animate({scrollTop:0},800);
+	});	
+    });
+    
+    
+    $('#btnAdd1').click(function() {
+
+        var name  = $('#gName').val(); 
+        var gSort  = $('#gSort').val(); 
+        var gType  = $('#gType').val(); 
+        var active = $("input:radio[name='gDisplay']:checked").val();
+        
+        if (name =='') {
+            alert('Please input Name!');
+            return;
+        }
+
+
+        var params = {
+            active:active,
+            sort: gSort,
+            type: gType,
+            name:name,
+            id:0
+        };
+
+        $.post("<?php echo BASE_ADMIN_URL; ?>/attribute/add", params, function(result){
+            if(result.error == 0)
+            {
+                window.location= '<?php echo BASE_ADMIN_URL; ?>/attribute/index/page/<?php echo $this->iPage;?>';
+            }
+            else
+            {
+                alert(result.message);
+            }
+        },'json');
+        
+    });
+  
+   
+</script>

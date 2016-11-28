@@ -1,0 +1,150 @@
+<div class="wrapper gnt-products">
+	<div class="inner">
+                 <?php 
+                    echo $this->render('partials/slogan.phtml');
+                 ?>
+		<h2 class="page-title"><i class="icon"></i><span class="txt">Products</span></h2>
+		<div class="content-wrapper">
+			<ul class="products-list" id="product-main">
+                             <?php
+                             if(!empty($this->paginator))
+                             {
+                                $index=0;
+                                $countItem= count($this->paginator);
+                                
+                                foreach ($this->paginator as $value)
+                                {
+                                     $classColum= '';
+                                     
+                                      if($index%3==0)
+                                      {
+                                          $classColum = 'first';
+                                          
+                                       ?>
+                                           <li class="product-item">
+                                                 <ul class="product-row">
+                                        <?php  
+                                      }
+                                      
+                                      if($index%3==2)
+                                      {
+                                           $classColum = 'last';
+                                      }
+                                      
+                                      $sImageUrl = (!empty($value['image_url'])) ? PATH_NEWS_URL .'/'. $value['image_url'] : '';
+                                                     
+                                      ?>
+                                      
+                                      
+                                        <li class="product <?php echo $classColum;?>">
+                                                <a class="imgs" href="<?php echo BASE_URL; ?>/product/detail/id/<?php echo $value['product_id']; ?>">
+                                                    <img src="<?php echo $sImageUrl;?>" />
+                                                    <span class="footer">
+                                                           <span class="position">
+                                                                    <?php
+                                                                        if(($value['device_type']&1)>0)
+                                                                        {
+                                                                         ?>
+                                                                             <i class="icon icon-apple-xs"></i>
+                                                                        <?php
+                                                                        }
+                                                                       
+                                                                             
+                                                                        if(($value['device_type']&2)>0)
+                                                                        {
+                                                                         ?>
+                                                                              <i class="icon icon-android-xs"></i>
+                                                                        <?php
+                                                                        }
+                                                                        
+                                                                        if(($value['device_type']&4)>0)
+                                                                        {
+                                                                         ?>
+                                                                              <i class="icon icon-windowphone-xs"></i>
+                                                                        <?php
+                                                                        }
+                                                                        
+                                                                        
+                                                                        if(($value['device_type']&4)>0)
+                                                                        {
+                                                                         ?>
+                                                                             <i class="icon icon-computer-xs"></i>
+                                                                        <?php
+                                                                        }
+                                                                        
+                                                                        ?>
+                                                                  
+                                                           </span>
+                                                   </span>
+                                                 </a>
+                                                <a class="name" href="<?php echo BASE_URL; ?>/product/detail/id/<?php echo $value['product_id']; ?>"><?php echo Core_Common::SubFullStrings($value['name'], 0,10); ?></a>
+                                                <div class="ver"><?php echo isset($this->arrProductType[$value['type']])?$this->arrProductType[$value['type']]:'';?></div>
+                                                <div class="info"><?php echo Core_Common::SubFullStrings(strip_tags($value['content']), 0, 80);?></div>
+                                        </li>
+                                        
+                                        
+                                    
+                                                
+                                      <?php
+                                      
+                                      $index++;
+                                      
+                                      if($index%3==0 || $countItem<= $index)
+                                      {
+                                          ?>
+                                                     
+                                                 </ul>
+                                           </li>
+                                                     
+                                          <?php
+                                      }   
+                                    
+                                 }
+                             }
+                             ?> 
+			</ul>
+        </div>
+        
+        <div class="clear"></div>
+                     
+        <div id="divMoreID" style="text-align:center;padding-top:5px;">
+            <input type="hidden" name="page" id="page" value="<?php echo ($this->iPage +1);?>">
+            <input type="hidden" name="more" id="more" value="<?php echo $this->iMore;?>">
+        </div>
+                              
+    </div>
+</div><!-- end wrapper -->
+
+<script language="javascript">
+$(document).ready(function() {
+    
+    $(window).scroll(function() {
+       if($(window).scrollTop() == $(document).height() - $(window).height()) {
+             
+            var  page = $('#page').val();
+            var more = $('#more').val();
+            if(more==1)
+            {
+                
+                 $.get("<?php echo BASE_URL;?>/product/index",{page:page},function(result){
+                    $("#product-main").append(result.data);
+                    if(result.more ==0)
+                    {
+                        $('#more').val(0);
+                    }
+                    else
+                    {
+                        $('#page').val(result.page);
+                    }
+
+
+                  }, 'json');
+                
+            }
+
+            
+       }
+   })
+
+});
+</script>

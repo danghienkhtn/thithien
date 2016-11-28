@@ -1,0 +1,226 @@
+<?php
+// account info
+$accountInfo    =  $this->arrAccountInfo;
+
+
+//var_dump($accountInfo);
+?>
+<div class="title-page mar-bot15">
+    <h4>
+        <i class="fa fa-user"></i>
+        <span class="capitalize">User</span>
+    </h4>
+</div><!-- title-page -->
+<div class="container-content">
+    <!-- <div class="title-content bg-blue clearfix">
+        <h5 class="white bold pull-left capitalize">User <?php echo $accountInfo['name']; ?></h5>
+    </div> --><!-- title-content -->
+    <div class="widget-content-user">
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-sm-3 border-right">
+                    <?php echo $this->render('usersearch.phtml'); ?>
+                </div>
+                <div class="col-sm-9">
+                    <div class="all-info-user">
+                        <ul class="tabs-menu-info mar-bot20 clearfix">
+                            <li><a href="<?php echo BASE_ADMIN_URL.'/user/summary?account_id='.$accountInfo['account_id'];?>">Summary</a></li>
+                            <li><a href="<?php echo BASE_ADMIN_URL.'/user/general?account_id='.$accountInfo['account_id'];?>">General</a></li>
+                            <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a href="javascript:void(0);">Personal</a></li>
+                            <li><a href="<?php echo BASE_ADMIN_URL.'/user/jobuser?account_id='.$accountInfo['account_id'];?>">Job</a></li>
+                            <li><a href="#">Achivement</a></li>
+                        </ul><!-- tabs-menu-info -->
+                        <div class="tabs-child">
+                            <form id="submit_form" action="<?php echo BASE_ADMIN_URL.'/user/personal'?>" method="post">
+                                <input type="hidden" name="account_id" value="<?php echo $accountInfo['account_id']?>"/>
+
+                            <div id="personal" class="personal">
+                                            	<ul>
+                                                	<li class="clearfix">
+                                                    	<h6 class="bold pull-left">Gender</h6>
+                                                    	<div class="combobox w500 pull-left">
+				                                            <span class="arrow"></span>
+				                                            <select name="gender" class="combobox-group bor-raduis4"> 
+				                                                <?php foreach($this->arrGender as $key=>$position) { ?>
+				                                                    <option value="<?php echo $key; ?>"
+				                                                        <?php if( $accountInfo['gender'] == $key) {echo 'selected'; } ?> >
+				                                                        <?php echo $position; ?>
+				                                                    </option>
+				                                                <?php }?>
+				                                            </select>
+				                                        </div><!-- bombobox -->
+                                                    </li> 
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Place of birth</h6>
+                                                    	<div class="combobox w500 pull-left">
+				                                            <span class="arrow"></span>
+				                                            <select name="place_of_birth" class="combobox-group bor-raduis4">
+				                                                <?php foreach($this->arrProvince as $key=>$position) { ?>
+				                                                    <option value="<?php echo $key; ?>"
+				                                                        <?php if( $accountInfo['place_of_birth'] == $key) {echo 'selected'; } ?> >
+				                                                        <?php echo $position; ?>
+				                                                    </option>
+				                                                <?php }?>
+				                                            </select>
+				                                        </div><!-- bombobox -->
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Hometown</h6>
+                                                    	<div class="combobox w500 pull-left">
+				                                            <span class="arrow"></span>
+				                                            <select name="home_town" class="combobox-group bor-raduis4">
+				                                                <?php foreach($this->arrProvince as $key=>$position) { ?>
+				                                                    <option value="<?php echo $key; ?>"
+				                                                        <?php if( $accountInfo['home_town'] == $key) echo 'selected';  ?> >
+				                                                        <?php echo $position; ?>
+				                                                    </option>
+				                                                <?php }?>
+				                                            </select>
+				                                        </div><!-- bombobox -->
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Permanent address</h6>
+                                                        <input name="address" type="text" class="w500" value="<?php echo $this->arrAccountInfo['address'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">ID card - no</h6>
+                                                        <input name="identity" type="text" class="w500" value="<?php echo $this->arrAccountInfo['identity'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">ID card - issued date</h6>
+                                                        <input class="date_time_picker"  onkeypress="return false" name="identity_date" type="text" class="w500" value="<?php echo $this->arrAccountInfo['identity_date'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">ID card - issued place</h6>
+                                                    	<div class="combobox w500 pull-left">
+				                                            <span class="arrow"></span>
+				                                            <select name="identity_place" class="combobox-group bor-raduis4">
+				                                                <?php foreach($this->arrProvince as $key=>$position) { ?>
+				                                                    <option value="<?php echo $key; ?>"
+				                                                        <?php if( $accountInfo['identity_place'] == $key) echo 'selected';  ?> >
+				                                                        <?php echo $position; ?>
+				                                                    </option>
+				                                                <?php }?>
+				                                            </select>
+				                                        </div><!-- bombobox -->
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Passport - no</h6>
+                                                        <input name="passport" type="text" class="w500" value="<?php echo $this->arrAccountInfo['passport'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Passport - issued date</h6>
+                                                        <input class="date_time_picker"  onkeypress="return false" name="passport_date" type="text" class="w500" value="<?php echo $this->arrAccountInfo['passport_date'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Passport - issued place</h6>
+                                                    	<div class="combobox w500 pull-left">
+				                                            <span class="arrow"></span>
+				                                            <select name="passport_place" class="combobox-group bor-raduis4">
+				                                                <?php foreach($this->arrProvince as $key=>$position) { ?>
+				                                                    <option value="<?php echo $key; ?>"
+				                                                        <?php if( $accountInfo['passport_place'] == $key) echo 'selected';  ?> >
+				                                                        <?php echo $position; ?>
+				                                                    </option>
+				                                                <?php }?>
+				                                            </select>
+				                                        </div><!-- bombobox -->
+
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Social Insurance Book No.</h6>
+                                                        <input name="social_insurance" type="text" class="w500" value="<?php echo $this->arrAccountInfo['social_insurance'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Personal Income Tax code</h6>
+                                                        <input name="tax_code" type="text" class="w500" value="<?php echo $this->arrAccountInfo['tax_code'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Bank Account Information - No.</h6>
+                                                        <input name="bank_account" type="text" class="w500" value="<?php echo $this->arrAccountInfo['bank_account'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Bank Account Information - Bank's name</h6>
+                                                    	<div class="combobox w500 pull-left">
+				                                            <span class="arrow"></span>
+				                                            <select name="bank_account_id" class="combobox-group bor-raduis4">
+				                                                <?php foreach($this->arrBank as $key=>$position) { ?>
+				                                                    <option value="<?php echo $key; ?>"
+				                                                        <?php if( $accountInfo['bank_account_id'] == $key) echo 'selected';  ?> >
+				                                                        <?php echo $position; ?> 
+				                                                    </option>
+				                                                <?php }?>
+				                                            </select>
+				                                        </div><!-- bombobox -->
+                                                    </li> 
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Bank Account Information - Branch name</h6>
+                                                    	<div class="combobox w500 pull-left">
+				                                            <span class="arrow"></span>
+				                                            <select name="bank_account_branch" class="combobox-group bor-raduis4">
+				                                                <?php foreach($this->arrProvince as $key=>$position) { ?>
+				                                                    <option value="<?php echo $key; ?>"
+				                                                        <?php if( $accountInfo['bank_account_branch'] == $key) echo 'selected';  ?> >
+				                                                        <?php echo $position; ?>
+				                                                    </option>
+				                                                <?php }?>
+				                                            </select>
+				                                        </div><!-- bombobox -->
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Marital status</h6>
+                                                    	<div class="combobox w500 pull-left">
+				                                            <span class="arrow"></span>
+				                                            <select name="marital_status" class="combobox-group bor-raduis4">
+				                                                <?php foreach($this->arrMarital as $key=>$position) { ?>
+				                                                    <option value="<?php echo $key; ?>"
+				                                                        <?php if( $accountInfo['marital_status'] == $key) echo 'selected';  ?> >
+				                                                        <?php echo $position; ?>
+				                                                    </option>
+				                                                <?php }?>
+				                                            </select>
+				                                        </div><!-- bombobox -->
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">No. of children</h6>
+                                                        <input name="no_of_children" type="text" class="w500" value="<?php echo $accountInfo['no_of_children'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Emergency Contact Information - Name</h6>
+                                                        <input name="contact_name" type="text" class="w500" value="<?php echo $accountInfo['contact_name'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Emergency Contact Information - Relationship</h6>
+                                                        <input name="contact_relationship" type="text" class="w500" value="<?php echo $accountInfo['contact_relationship'];?>">
+                                                    </li>
+                                                    <li class="clearfix">
+                                                    	<h6 class="bold pull-left">Emergency Contact Information - Contact</h6>
+                                                        <input name="contact_address" type="text" class="w500" value="<?php echo $accountInfo['contact_address'];?>">
+                                                    </li>
+                                                </ul>
+                                                <div class="footer-btn-tab clearfix">
+                                                	<a href="javascript:void(0);" class="back grey bor-raduis4" data-action="back-page">Back</a>
+                                                    <a href="javascript:void(0);" class="save white bor-raduis4 bg-blue" onclick="submitForm(); return false;">Save change</a>
+                                                </div><!--footer-btn-tab-->
+                                            </div><!-- summary -->
+                            </form>
+                        </div><!-- tabs-child -->
+                    </div><!-- all-info-user -->
+                </div>
+            </div><!-- row -->
+        </div><!-- container-fluid -->
+    </div><!-- widget-content -->
+</div><!-- container-content -->
+<script>
+    /*check file type*/
+    function submitForm() {
+    	$("#submit_form").submit();
+       
+    }
+
+ 
+    
+    
+
+
+</script>

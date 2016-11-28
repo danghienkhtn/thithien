@@ -1,0 +1,40 @@
+<div class="header-menu-team clearfix">
+	                        	<div class="title-team">
+	                                <i class="fa fa-group"></i>
+	                                <span><?= $this->arrGroup['group_name'] ?></span>
+	                            </div>
+	                            <ul class="function-menu-team">
+	                            	<li>
+	                                	<a class='<?php if($this->controllerName == 'user' && $this->actionName == 'feed'){ echo "active";} ?>' href="<?= BASE_URL;?>/user/feed/groupid/<?= $this->groupid;?>">
+	                                    	<i class="fa fa-area-chart"></i>
+	                                        <span><?= $this->locales->group->activitystream;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a class='<?php if($this->controllerName == 'group' && $this->actionName == 'document'){ echo "active";} ?>' href="<?= BASE_URL;?>/group/document/g/<?= $this->groupid;?>">
+	                                    	<i class="fa fa-folder-open"></i>
+	                                        <span><?= $this->locales->group->document;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a class='<?php if($this->controllerName == 'group' && $this->actionName == 'calendar'){ echo "active";} ?>' href="<?= BASE_URL;?>/group/calendar/groupid/<?= $this->groupid;?>/group-type/<?= $this->groupType ?>">
+	                                    	<i class="fa fa-calendar"></i>
+	                                        <span><?= $this->locales->group->calendar;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a class='<?php if($this->controllerName == 'user' && $this->actionName == 'index'){ echo "active";} ?>' href="<?= BASE_URL;?>/user/index/groupid/<?= $this->groupid;?>">
+	                                    	<i class="fa fa-user"></i>
+	                                        <span><?= $this->locales->group->member;?></span>
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                	<a class='<?php if($this->controllerName == 'group' && ($this->actionName == 'update' || $this->actionName == 'settingrequest')){ echo "active";} ?>' href="<?= BASE_URL;?>/group/update/id/<?= $this->groupid;?>">
+	                                    	<i class="fa fa-cog"></i>
+	                                        <span><?= $this->locales->group->setting;?></span>
+	                                    </a>
+	                                </li>
+	                            </ul>
+                            
+                        	</div>
+                        	

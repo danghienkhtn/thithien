@@ -1,0 +1,75 @@
+192.168.38.200(data)
+{
+mysql + mongo :
+portal.gnt-global.com
+dev.portal.gnt-global.com
+beta.portal.gnt-global.com
+	usr/local/src/www/Portal
+	account/pass (lDap)
+}
+
+192.168.30.104(beta.portal.gnt-global.com)
+{
+	usr/local/src/www/Portal
+	account/pass (lDap)
+}
+
+
+192.168.38.227(dev.backend.portal.gnt-global.com)
+{
+	usr/local/src/www/Portal
+	account/pass (lDap)
+}
+
+
+192.168.38.204(backend.portal.gnt-global.com)
+{
+	usr/local/src/www/Portal
+	account/pass (lDap)
+}
+
+
+192.168.30.169(gnt.co.jp)// gianty
+{
+	var/www/gnt.co.jp
+	account/pass (lDap)
+}
+
+192.168.38.146(dev.gnt.co.jp)// gianty
+{
+	var/www/gnt.co.jp/gnt.co.jp
+	account/pass (lDap)
+}
+
+192.168.38.227(test.gnt.co.jp)// sexy-police
+{
+	usr/local/src/www/Gnt_Co_Jp
+	account/pass (lDap)
+	
+}
+
+
+
+192.168.200.208 (icj.jp):
+{
+	usr/local/src/www/icj_homepage/ICJ_HOMEPAGE/public_html
+ 	sh /var/svn_update.sh
+ 
+	u: xm.dev
+	p: Xm3s123!
+}
+
+192.168.38.184(offshore.gnt.com.vn)(Da Thu Hoi ngay 15-06-2016)
+{
+	source/gnt_com_vn
+	u-web :gianty
+	p-web :gianty
+
+	account/pass (lDap)
+}
+
+192.168.38.204(it-report.gnt-global.com)
+{
+	usr/local/src/www/it-report
+	account/pass (lDap)
+}
