@@ -9,7 +9,7 @@ app.controller('TTCtrl', function($scope) {
 	}
 	$scope.chosenDM = function(item) {
 		$(".cat-name-dm").text(item.name);		
-		$scope.cbDanhMuc = item.id;
+		$scope.cbDanhMuc = item;
 	}
 	$scope.chosenTT = function(item) {
 		$(".cat-name-tt").text(item.name);		
@@ -62,7 +62,7 @@ app.controller('TTCtrl', function($scope) {
 		$scope.cbNganhNghe = item;
 		$(".chosen-nganhnghe .cat-name-tt").text(item.name);
 		$(".chosen-nganhnghe .chosen-container").toggleClass("chosen-with-drop");		
-	}
+	}	
 	/*$scope.gioitinhClick = function(e){
 		$scope.gioitinh = GioiTinh;
 		$(e.target.parentNode).toggleClass("chosen-with-drop");
@@ -118,7 +118,8 @@ app.controller('TTCtrl', function($scope) {
 	}*/
 	$scope.chosenPhuongXa = function(item){			
 		$(".chosen-phuongxa .cat-name-tt").text(item.name);
-		$(".chosen-phuongxa .chosen-container").toggleClass("chosen-with-drop");		
+		$(".chosen-phuongxa .chosen-container").toggleClass("chosen-with-drop");
+		$scope.cbPhuongXa = item;		
 	}
 	/*$scope.loaibdsClick = function(e){		
 		$(e.target.parentNode).toggleClass("chosen-with-drop");
@@ -126,12 +127,48 @@ app.controller('TTCtrl', function($scope) {
 	$scope.chosenLoaiBDS = function(item){				
 		$(".chosen-loaibds .cat-name-tt").text(item.name);
 		$(".chosen-loaibds .chosen-container").toggleClass("chosen-with-drop");
-		$scope.cbLoaiBDS = item.id;
+		$scope.cbLoaiBDS = item;
 		showChiTietBDS($scope, item.id);
 	}
 	$scope.chosenHangXe = function(item){				
 		$(".chosen-hangxe .cat-name-tt").text(item.name);
 		$(".chosen-hangxe .chosen-container").toggleClass("chosen-with-drop");		
+		$scope.cbHangXe = item;
+	}
+	$scope.chosenDongXe = function(item){				
+		$(".chosen-dongxe .cat-name-tt").text(item.name);
+		$(".chosen-dongxe .chosen-container").toggleClass("chosen-with-drop");		
+		$scope.cbDongXe = item;
+	}
+	$scope.chosenNamSX = function(item){		
+		$scope.cbNamSX = item;
+		$(".chosen-namsx .cat-name-tt").text(item.name);
+		$(".chosen-namsx .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.chosenXuatXu = function(item){		
+		$scope.cbXuatXu = item;
+		$(".chosen-xuatxu .cat-name-tt").text(item.name);
+		$(".chosen-xuatxu .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.chosenHopSo = function(item){		
+		$scope.cbHopSo = item;
+		$(".chosen-hopso .cat-name-tt").text(item.name);
+		$(".chosen-hopso .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.chosenKieuDD = function(item){		
+		$scope.cbKieuDD = item;
+		$(".chosen-kieudandong .cat-name-tt").text(item.name);
+		$(".chosen-kieudandong .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.chosenNhienLieu = function(item){		
+		$scope.cbNhienLieu = item;
+		$(".chosen-nhienlieu .cat-name-tt").text(item.name);
+		$(".chosen-nhienlieu .chosen-container").toggleClass("chosen-with-drop");		
+	}
+	$scope.chosenMauXe = function(item){		
+		$scope.cbMauXe = item;
+		$(".chosen-mauxe .cat-name-tt").text(item.name);
+		$(".chosen-mauxe .chosen-container").toggleClass("chosen-with-drop");		
 	}
 	/*$scope.ct3Click = function(e){
 		$scope.huong = Huong;		
@@ -140,6 +177,7 @@ app.controller('TTCtrl', function($scope) {
 	$scope.chosenCT3 = function(item){				
 		$(".chosen-ct3 .cat-name-tt").text(item.name);
 		$(".chosen-ct3 .chosen-container").toggleClass("chosen-with-drop");		
+		$scope.CT3 = item;
 	}
 	$scope.checkLength = function(e, maxLengthAllow){
 		var strLength = $(e.target).val().length;
@@ -163,6 +201,41 @@ app.controller('TTCtrl', function($scope) {
 		//$(e.target.parentNode).toggleClass("chosen-with-drop");
 		$($("."+parentClass +" .chosen-container-active")).toggleClass("chosen-with-drop")
 	} 
+	$scope.tbatChange = function(tbat_id){		
+		// console.log(e);		
+		if(typeof $scope.ThietBiAnToanChecked[tbat_id] !== "undefined"){
+			delete $scope.ThietBiAnToanChecked[tbat_id];			
+		}
+		else {
+			var Otmp = {};
+			Otmp.id = tbat_id;
+			Otmp.name = ThietBiAnToan[tbat_id].name;
+			$scope.ThietBiAnToanChecked[tbat_id] = Otmp; 
+		}			
+		// console.log($scope["ThietBiAnToanChecked"]);	
+	}
+	$scope.tnChange = function(tn_id){
+		// console.log(e);		
+		if(typeof $scope.TienNghiChecked[tn_id] !== "undefined"){
+			delete $scope.TienNghiChecked[tn_id];			
+		}
+		else {
+			var Otmp = {};
+			Otmp.id = tn_id;
+			Otmp.name = TienNghi[tn_id].name;
+			$scope.TienNghiChecked[tn_id] = Otmp; 
+		}
+		// console.log($scope.TienNghiChecked);	
+	}
+	$scope.GotoStep2 = function() {
+		$(".post-step-1").hide();
+		$(".post-step-2").show();
+		showReviewBlock($scope, $scope.SubCatItemSelected.id);
+	}
+	$scope.GotoStep1 = function() {
+		$(".post-step-1").show();
+		$(".post-step-2").hide();
+	}
 	/*$scope.catnamettClick = function(e){
 		console.log("cat name tt");
 		console.log(e);
@@ -181,6 +254,7 @@ var showHangSanXuat = function($scope, hangSXId){
 		$(".hang-san-xuat").hide();	
 	}
 }
+
 var showRelateBlock = function(scope, subCatId) {
 	if(typeof(blockDisplay[subCatId]) !== 'undefined'){
 		$(".dang-tin-bds").css("display",blockDisplay[subCatId]["dang-tin-bds"]);
@@ -195,7 +269,9 @@ var showRelateBlock = function(scope, subCatId) {
 			scope.mauxe = MauXe;
 			scope.thietbiantoan = ThietBiAnToan;
 			scope.tiennghi = TienNghi;
-			scope.hangxe = HangXe[subCatId];			
+			scope.hangxe = HangXe[subCatId];
+			scope.ThietBiAnToanChecked = {};			
+			scope.TienNghiChecked = {};
 			$(".hang-xe").css("display",blockDisplay[subCatId]["hang-xe"]);
 			$(".dang-tin-xe").css("display",blockDisplay[subCatId]["dang-tin-xe"]);
 		}
@@ -256,3 +332,33 @@ var showChiTietBDS = function(scope, loaibds){
 	}
 }		
 
+var showReviewBlock = function(scope, subCatId) {
+	if(typeof(reviewDisplay[subCatId]) !== 'undefined'){
+		$(".rv-dang-tin-bds").css("display",reviewDisplay[subCatId]["rv-dang-tin-bds"]);
+		if(reviewDisplay[subCatId]["rv-dang-tin-xe"] == "block"){			
+			// $(".rv-hang-xe").css("display",reviewDisplay[subCatId]["rv-hang-xe"]);
+			$(".rv-dang-tin-xe").css("display",reviewDisplay[subCatId]["rv-dang-tin-xe"]);
+			//chi dung cho dang tin ban xe máy, oto
+			if((subCatId === "3.1" || subCatId === "4.1") && reviewDisplay[subCatId]["rv-hang-xe"] == "block"){			
+				$(".rv-hang-xe").css("display",reviewDisplay[subCatId]["rv-hang-xe"]);
+			}
+			else $(".rv-hang-xe").css("display",reviewDisplay[subCatId]["rv-hang-xe"]);
+		}		
+		
+		if(reviewDisplay[subCatId]["rv-dang-tin-viec-lam"] == "block"){			
+			$(".rv-dang-tin-viec-lam").css("display",reviewDisplay[subCatId]["rv-dang-tin-viec-lam"]);
+		}	
+		// console.log(reviewDisplay[subCatId]["dang-tin-viec-lam"]);
+		if(typeof(reviewDisplay[subCatId]["rv-gia"]) !== 'undefined'){
+			$(".rv-gia").css("display",reviewDisplay[subCatId]["rv-gia"]);
+		}
+		//chi danh cho viec tim nguoi
+		if(typeof(reviewDisplay[subCatId]["rv-dotuoi"]) !== 'undefined'){
+			$(".rv-dotuoi").css("display",reviewDisplay[subCatId]["rv-dotuoi"]);
+		}
+		//chi danh cho bds
+		if(typeof(reviewDisplay[subCatId]["rv-loaibds"]) !== 'undefined'){
+			$(".rv-loaibds").css("display",reviewDisplay[subCatId]["rv-loaibds"]);
+		}	
+	}				
+}

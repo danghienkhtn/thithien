@@ -1,66 +1,3 @@
-/*var DanhMuc = {
-	batdongsan:
-		{
-			id:"1",
-			name:"Bất động sản",
-			icon:"",
-			vitri:"1"
-		},
-	vieclamtuyensinh: {
-		id:"2",
-		name:"Việc làm, Tuyển sinh",
-		icon:"",
-		vitri:"2"
-	},
-	oto:{
-		id:"3",
-		name:"Ôtô",
-		icon:"",
-		vitri:"3"
-	},
-	xemay:{
-		id:"4",
-		name:"Xe máy",
-		icon:"",
-		vitri:"4"
-	},
-	dichvu:{
-		id:"5",
-		name:"Dịch vụ",
-		icon:"",
-		vitri:"5"
-	},
-	dodientu:{
-		id:"6",
-		name:"Đồ điện tử",
-		icon:"",
-		vitri:"6"
-	},
-	dienmaygiadung:{
-		id:"7",
-		name:"Điện máy, Đồ gia dụng",
-		icon:"",
-		vitri:"7"
-	},
-	sothichmathangkhac:{
-		id:"8",
-		name:"Sở thích, Mặt hàng khác",
-		icon:"",
-		vitri:"8"
-	},
-	thoitrangmypham:{
-		id:"9",
-		name:"Thời trang, Mỹ phẩm",
-		icon:"",
-		vitri:"9"
-	},
-	doitaccongdong:{
-		id:"10",
-		name:"Đối tác, Cộng đồng",
-		icon:"",
-		vitri:"10"
-	}
-};*/
 var blockDisplay = {
 	"3.1":{"dang-tin-xe":"block","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"block","hang-xe":"block"},
 	"3.2":{"dang-tin-xe":"none","dang-tin-bds":"none","dang-tin-viec-lam":"none","gia":"none","hang-xe":"none"},
@@ -124,6 +61,71 @@ var blockDisplay = {
 	"10.4":{"gia":"none"},
 	"10.5":{"gia":"none"},
 }
+
+var reviewDisplay = {
+	"3.1":{"rv-dang-tin-xe":"block","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-hang-xe":"block"},
+	"3.2":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-hang-xe":"none"},
+	"3.3":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-hang-xe":"none"},
+	"3.4":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-hang-xe":"none"},
+	"3.5":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-hang-xe":"none"},
+	"3.6":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-hang-xe":"none"},
+	"4.1":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-hang-xe":"block"},
+	"4.2":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-hang-xe":"none"},
+	"4.3":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-hang-xe":"none"},
+	"4.4":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-hang-xe":"none"},
+	"4.5":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-hang-xe":"none"},
+	"4.6":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-hang-xe":"none"},
+	"2.1":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"block","rv-gia":"none","rv-dotuoi":"block"},
+	"2.2":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"block","rv-gia":"none","rv-dotuoi":"none"},
+	"2.3":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none"},
+	"2.4":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none"},
+	"1.1":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"block","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-loaibds":"block"},
+	"1.2":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"block","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-loaibds":"block"},
+	"1.3":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"block","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-loaibds":"block"},
+	"1.4":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"block","rv-dang-tin-viec-lam":"none","rv-gia":"block","rv-loaibds":"block"},
+	"1.5":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-loaibds":"none"},
+	"1.6":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-loaibds":"none"},
+	"1.7":{"rv-dang-tin-xe":"none","rv-dang-tin-bds":"none","rv-dang-tin-viec-lam":"none","rv-gia":"none","rv-loaibds":"none"},
+	"6.1":{"rv-gia":"block"},
+	"6.2":{"rv-gia":"block"},
+	"6.3":{"rv-gia":"block"},
+	"6.4":{"rv-gia":"block"},
+	"6.5":{"rv-gia":"block"},
+	"6.6":{"rv-gia":"block"},
+	"6.7":{"rv-gia":"block"},
+	"6.8":{"rv-gia":"block"},
+	"6.9":{"rv-gia":"none"},
+	"7.1":{"rv-gia":"block"},
+	"7.2":{"rv-gia":"block"},
+	"7.3":{"rv-gia":"block"},
+	"7.4":{"rv-gia":"block"},
+	"7.5":{"rv-gia":"block"},
+	"7.6":{"rv-gia":"block"},
+	"7.7":{"rv-gia":"none"},
+	"8.1":{"rv-gia":"block"},
+	"8.2":{"rv-gia":"block"},
+	"8.3":{"rv-gia":"block"},
+	"8.4":{"rv-gia":"block"},
+	"8.5":{"rv-gia":"block"},
+	"8.6":{"rv-gia":"block"},
+	"8.7":{"rv-gia":"block"},
+	"8.8":{"rv-gia":"block"},
+	"8.9":{"rv-gia":"block"},
+	"8.10":{"rv-gia":"none"},
+	"8.11":{"rv-gia":"block"},
+	"9.1":{"rv-gia":"block"},
+	"9.2":{"rv-gia":"block"},
+	"9.3":{"rv-gia":"block"},
+	"9.4":{"rv-gia":"block"},
+	"9.5":{"rv-gia":"none"},
+	"9.6":{"rv-gia":"block"},
+	"10.1":{"rv-gia":"none"},
+	"10.2":{"rv-gia":"none"},
+	"10.3":{"rv-gia":"none"},
+	"10.4":{"rv-gia":"none"},
+	"10.5":{"rv-gia":"none"},
+}
+
 var DanhMuc = {
 	"1":{
 			"id":"1",
@@ -649,7 +651,8 @@ var DanhMuc = {
 			}
 		}	
 	}
-};
+}
+
 //var DanhMuc={1:{id:"1",name:"Bất động sản",icon:"",vitri:"1",danhmuccon:{1.1:{id:"1.1",name:"Bán đất",icon:"",vitri:"1"},1.2:{id:"1.2",name:"Bán nhà, Căn hộ",icon:"",vitri:"2"},1.3:{id:"1.3",name:"Sang nhượng mặt bằng, cửa hàng",icon:"",vitri:"3"},1.4:{id:"1.4",name:"Cho thuê đất",icon:"",vitri:"4"},1.5:{id:"1.5",name:"Cần mua nhà đất",icon:"",vitri:"5"},1.6:{id:"1.6",name:"Cần thuê đất",icon:"",vitri:"6"},1.7:{id:"1.7",name:"Dịch vụ nhà đất",icon:"",vitri:"7"}}},2:{id:"2",name:"Việc làm, Tuyển sinh",icon:"",vitri:"2",danhmuccon:{2.1:{id:"2.1",name:"Việc tìm người",icon:"",vitri:"1"},2.2:{id:"2.2",name:"Người tìm việc",icon:"",vitri:"2"},2.3:{id:"2.3",name:"Dịch vụ lao động",icon:"",vitri:"3"},2.4:{id:"2.4",name:"Tuyển sinh, Du học, Đào tạo",icon:"",vitri:"4"}}},3:{id:"3",name:"Ôtô",icon:"",vitri:"3",danhmuccon:{3.1:{id:"3.1",name:"Bán ôtô",icon:"",vitri:"1"},3.2:{id:"3.2",name:"Mua ôtô",icon:"",vitri:"2"},3.3:{id:"3.3",name:"Cho thuê ôtô",icon:"",vitri:"3"},3.4:{id:"3.4",name:"Cần thuê ôtô",icon:"",vitri:"4"},3.5:{id:"3.5",name:"Phụ kiện ôtô",icon:"",vitri:"5"},3.6:{id:"3.6",name:"Dịch vụ sửa chữa",icon:"",vitri:"6"}}},4:{id:"4",name:"Xe máy",icon:"",vitri:"4",danhmuccon:{4.1:{id:"4.1",name:"Bán xe máy",icon:"",vitri:"1"},4.2:{id:"4.2",name:"Mua xe máy",icon:"",vitri:"2"},4.3:{id:"4.3",name:"Cho thuê xe máy",icon:"",vitri:"3"},4.4:{id:"4.4",name:"Cần thuê xe máy",icon:"",vitri:"4"},4.5:{id:"4.5",name:"Phụ kiện xe máy",icon:"",vitri:"5"},4.6:{id:"6.6",name:"Dịch vụ sửa chữa",icon:"",vitri:"6"}}},5:{id:"5",name:"Dịch vụ",icon:"",vitri:"5",danhmuccon:{5.1:{id:"5.1",name:"Xây dựng, Nội thất, Phong Thủy",icon:"",vitri:"1"},5.2:{id:"5.2",name:"Điện, Điện tử, Điện lạnh",icon:"",vitri:"2"},5.3:{id:"5.3",name:"Nước, Vệ sinh, Cầu cống",icon:"",vitri:"3"},5.4:{id:"5.4",name:"Vận chuyển, Dọn nhà, Văn Phòng",icon:"",vitri:"4"},5.5:{id:"5.5",name:"In ấn, Dịch thuật",icon:"",vitri:"5"},5.6:{id:"5.6",name:"Tổ chức sự kiện",icon:"",vitri:"6"},5.7:{id:"5.7",name:"Tư vấn thuế, tài chính",icon:"",vitri:"7"},5.8:{id:"5.8",name:"Thẩm mỷ, Y tế",icon:"",vitri:"8"},5.9:{id:"5.9",name:"Thiết kế web, phần mềm",icon:"",vitri:"9"},"5.10":{id:"5.10",name:"Du lịch, Khách sạn, Vé",icon:"",vitri:"10"},5.11:{id:"5.11",name:"Cầm đồ",icon:"",vitri:"11"},5.12:{id:"5.12",name:"Tư vấn luật, Thủ tục",icon:"",vitri:"12"},5.13:{id:"5.13",name:"Dịch vụ khác",icon:"",vitri:"13"}}},6:{id:"6",name:"Đồ điện tử",icon:"",vitri:"6",danhmuccon:{6.1:{id:"6.1",name:"Điện thoại di động",icon:"",vitri:"2"},6.2:{id:"6.2",name:"Máy tính bảng",icon:"",vitri:"2"},6.3:{id:"6.3",name:"Laptop, Máy để bàn, Máy chủ",icon:"",vitri:"3"},6.4:{id:"6.4",name:"Máy ảnh, Máy quay",icon:"",vitri:"4"},6.5:{id:"6.5",name:"Tivi, Loa, Amply, Máy nghe nhạc",icon:"",vitri:"5"},6.6:{id:"6.6",name:"Sim, thẻ điện thoại",icon:"",vitri:"6"},6.7:{id:"6.7",name:"Linh kiện, Phụ kiện",icon:"",vitri:"7"},6.8:{id:"6.8",name:"Đồ điện tử khác",icon:"",vitri:"8"},6.9:{id:"6.9",name:"Cần mua",icon:"",vitri:"9"}}},7:{id:"7",name:"Điện máy, Đồ gia dụng11",icon:"",vitri:"7",danhmuccon:{7.1:{id:"7.1",name:"Đồ điện máy",icon:"",vitri:"2"},7.2:{id:"7.2",name:"Đồ nhà bếp",icon:"",vitri:"2"},7.3:{id:"7.3",name:"Nội ngoại thất",icon:"",vitri:"3"},7.4:{id:"7.4",name:"Đồ dùng gia đình",icon:"",vitri:"4"},7.5:{id:"7.5",name:"Đồ dùng văn phòng",icon:"",vitri:"5"},7.6:{id:"7.6",name:"Cho thuê",icon:"",vitri:"6"},7.7:{id:"7.7",name:"Cần mua",icon:"",vitri:"7"}}},8:{id:"8",name:"Sở thích, Mặt hàng khác",icon:"",vitri:"8",danhmuccon:{8.1:{id:"8.1",name:"Thú nuôi, Cây cảnh",icon:"",vitri:"1"},8.2:{id:"8.2",name:"Nhạc cụ, Sách, Đồ dùng học tập",icon:"",vitri:"2"},8.3:{id:"8.3",name:"Đồ thể thao, Xe đạp, Đồ chơi",icon:"",vitri:"3"},8.4:{id:"8.4",name:"Mẹ & Bé",icon:"",vitri:"4"},8.5:{id:"8.5",name:"Thuốc, Sức khỏe",icon:"",vitri:"5"},8.6:{id:"8.6",name:"Đặc sản các miền",icon:"",vitri:"6"},8.7:{id:"8.7",name:"Đồ trang trí, Tranh, Ảnh",icon:"",vitri:"7"},8.8:{id:"8.8",name:"Đồ cổ, Sưu tập, Hàng độc",icon:"",vitri:"8"},8.9:{id:"8.9",name:"Mặt hàng khác",icon:"",vitri:"9"},"8.10":{id:"8.10",name:"Cần mua",icon:"",vitri:"10"},8.11:{id:"8.11",name:"Cho thuê",icon:"",vitri:"11"}}},9:{id:"9",name:"Thời trang, Mỹ phẩm",icon:"",vitri:"9",danhmuccon:{9.1:{id:"9.1",name:"Quần áo",icon:"",vitri:"2"},9.2:{id:"9.2",name:"Giầy, dép, túi xách",icon:"",vitri:"2"},9.3:{id:"9.3",name:"Mỹ phẩm",icon:"",vitri:"3"},9.4:{id:"9.4",name:"Trang sức, Phụ kiện",icon:"",vitri:"4"},9.5:{id:"9.5",name:"Cần mua",icon:"",vitri:"5"},9.6:{id:"6.6",name:"Cho thuê",icon:"",vitri:"6"}}},10:{id:"10",name:"Đối tác, Cộng đồng",icon:"",vitri:"10",danhmuccon:{10.1:{id:"10.1",name:"Quần áo",icon:"",vitri:"2"},10.2:{id:"10.2",name:"Giầy, dép, túi xách",icon:"",vitri:"2"},10.3:{id:"10.3",name:"Mỹ phẩm",icon:"",vitri:"3"},10.4:{id:"10.4",name:"Trang sức, Phụ kiện",icon:"",vitri:"4"},10.5:{id:"10.5",name:"Cần mua",icon:"",vitri:"5"}}}};
 var TinhThanh = {
 	'1':{'id':'1','name':'Thành phố Cần Thơ','icon':'','vitri':'1','quanhuyen':{'66':{'id':'66','name':'Huyện Cờ Đỏ','icon':'','vitri':'1'},'67':{'id':'67','name':'Huyện Phong Điền','icon':'','vitri':'2'},'68':{'id':'68','name':'Huyện Thới Lai','icon':'','vitri':'3'},'69':{'id':'69','name':'Huyện Vĩnh Thạnh','icon':'','vitri':'4'},'70':{'id':'70','name':'Quận Bình Thủy','icon':'','vitri':'5'},'71':{'id':'71','name':'Quận Cái Răng','icon':'','vitri':'6'},'72':{'id':'72','name':'Quận Ninh Kiều','icon':'','vitri':'7'},'73':{'id':'73','name':'Quận Ô Môn','icon':'','vitri':'8'},'74':{'id':'74','name':'Quận Thốt Nốt','icon':'','vitri':'9'},},},
@@ -1036,6 +1039,68 @@ var DenDoTuoi = function(x){
 	// console.log(Tmp1);	
 	return Tmp1;	
 }
+
+var JobFields = {
+    "rv-gioitinh":"cbGioiTinh",
+    "rv-namsinh":"cbNamSinh",
+    "rv-hinhthuclv":"cbHinhThucLV",
+    "rv-nganhnghe":"cbNganhNghe",
+    "rv-tuoitu":"cbTuoiTu",
+    "rv-tuoiden":"cbTuoiDen",
+    "rv-namkinhnghiem":"NamKinhNghiem",
+    "rv-mucluongtu":"MucLuongTu",
+    "rv-mucluongtu":"MucLuongDen"
+}
+
+var CarFields ={
+    "rv-tenxe":"TenXe",
+    "rv-hangxe":"cbHangXe",
+    "rv-dongxe":"cbDongXe", 
+    "rv-namsx":"cbNamSX", 
+    "rv-xuatxu":"cbXuatXu", 
+    "rv-xemoi":"XeMoi", 
+    "rv-hopso":"cbHopSo", 
+    "rv-kieudd":"cbKieuDD", 
+    "rv-nhienlieu":"cbNhienLieu", 
+    "rv-mauxe":"cbMauXe", 
+    "rv-tbat":"ThietBiAnToanChecked",
+    "rv-tn":"TienNghiChecked",
+}
+
+var PropertieFields = {
+	"rv-loaibds":"cbLoaiBDS",
+    "rv-sonha":"SoNha",
+    "rv-phuongxa":"cbPhuongXa",
+    "rv-thuocduan":"ThuocDuAn",
+    "rv-ct1":"CT1",
+    "rv-ct2":"CT2",
+    "rv-ct3":"CT3",
+    "rv-ct4":"CT4",
+    "rv-ct5":"CT5",
+    "rv-ct6":"CT6",
+    "rv-ct7":"CT7",  
+}
+
+var formFields = {
+    "tieude":"tieude",
+    "CatItemSelected":"CatItemSelected",
+    "SubCatItemSelected":"SubCatItemSelected",
+    "cbHangSX":"cbHangSX",
+    "TenXe":"TenXe",
+    "TenSP":"TenSP",
+    "cbQuanHuyen":"cbQuanHuyen",
+    "cbTinhThanh":"cbTinhThanh",
+    "gia":"gia",
+    "NguoiLienHe":"NguoiLienHe",
+    "SoDiDong":"SoDiDong",
+    "Email":"Email",
+    "DiaChi":"DiaChi",
+    "NoiDung":"NoiDung",
+    "PropertieFields": "PropertieFields",
+    "CarFields":"CarFields",
+    "JobFields":"JobFields",
+}
+console.log(formFields);
 
 var PhuongXa = {
 	"0": {"id":"0","name":"Phuong A","icon":"","vitri":"1"},

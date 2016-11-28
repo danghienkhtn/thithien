@@ -381,14 +381,14 @@
                 <div class="form-group clearfix">
                     <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Xe mới</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                     <div class="col-md-8 col-sm-8 col-xs-12">
-                        <input type="text" placeholder="Xe mới(%)" class="form-control" maxlength="3" />
+                        <input ng-model="XeMoi" name="xemoi" type="text" placeholder="Xe mới(%)" class="form-control" maxlength="3" />
                         <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
                 <div class="form-group clearfix">
                     <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Hộp số</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                     <div class="col-md-8 col-sm-8 col-xs-12 chosen-hopso">
-                        <input ng-model="cbHopSo" type="text" value="{{cbHopSo.id}}" class="hide" />
+                        <input ng-model="cbHopSo" name="cbHopSo" type="text" value="{{cbHopSo.id}}" class="hide" />
                         <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
                           <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-hopso')">
                             <span class="drop-cat">                    
@@ -491,7 +491,7 @@
                     <div class="col-md-12 col-sm-12">                        
                         <div ng-repeat="x in thietbiantoan" class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
                             <label style="width:100%; font-weight:normal;font-size:13px;">
-                                <input class="tbat_{{x.id}}" name="tbat_{{x.id}}" type="checkbox" />
+                                <input  class="tbat_{{x.id}}" name="tbat_{{x.id}}" type="checkbox" ng-click="tbatChange(x.id)" />
                                 <span style="position:relative; top:-2px">{{x.name}}</span>
                             </label>
                         </div>
@@ -504,7 +504,7 @@
                     <div class="col-md-12 col-sm-12">                        
                         <div ng-repeat="x in tiennghi" class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
                             <label style="width:100%; font-weight:normal;font-size:13px;">
-                                <input class="tn_{{x.id}}" name="tn_{{x.id}}" type="checkbox" />
+                                <input class="tn_{{x.id}}" name="tn_{{x.id}}" type="checkbox" ng-click="tnChange(x.id)" />
                                 <span style="position:relative; top:-2px">{{x.name}}</span>
                             </label>
                         </div>
@@ -568,7 +568,7 @@
                 <div class="form-group clearfix loaibds" style="display:none;">
                     <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label">Loại bất động sản&nbsp;(<span class="requiredMessage">*</span>)</label>
                     <div class="col-md-8 col-sm-8 col-xs-12 chosen-loaibds">
-                        <input ng-model="cbLoaiBDS" type="text" class="hide" />
+                        <input ng-model="cbLoaiBDS" name="cbLoaiBDS" type="text" value={{cbLoaiBDS.id}} class="hide" />
                         <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
                           <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-loaibds')">
                             <span class="drop-cat">                    
@@ -622,7 +622,7 @@
                             <span class="ct4-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span>
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12 chosen-ct4">
-                            <input ng-model="ct4" value="{{ct4.id}}" class="hide" />
+                            <input ng-model="CT4" value="{{CT4.id}}" class="hide" />
                             <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
                               <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-ct4')">
                                 <span class="drop-cat">                    
@@ -660,7 +660,7 @@
                 </div>
                 <div class="form-group clearfix ttmr-text" style="display:none;">
                     <span class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="#s" class="float-right mbn-bold" ng-click="thongtinmorongbdsClick('{{cbLoaiBDS}}')">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
+                        <a href="#s" class="float-right mbn-bold" ng-click="thongtinmorongbdsClick('{{cbLoaiBDS.id}}')">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
                     </span>
                 </div>
                 <!--khu vục collspan-->
@@ -689,7 +689,7 @@
                         <div class="form-group">
                             <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span class="ct3-name"></span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                             <div class="col-md-8 col-sm-8 col-xs-12 chosen-ct3">
-                                <input ng-model="ct3" value="{{ct3.id}}" class="hide" />
+                                <input ng-model="ct3" value="{{CT3.id}}" class="hide" />
                                 <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
                                   <a class="chosen-single" tabindex="-1" ng-click="chosensingleClick('chosen-ct3')">
                                     <span class="drop-cat">                    
@@ -959,7 +959,7 @@
               <div class="form-group clearfix" data-bind="with:Body">                    
                 <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Nội dung</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                    <textarea ng-model="noidung" name="noidung" type="text" class="form-control noi-dung" rows="8" maxlength="2010" ng-keydown="checkLength($event, 2010)" placeholder="Vui lòng nhập tiếng Việt có dấu"></textarea>
+                    <textarea ng-model="NoiDung" name="noidung" type="text" class="form-control noi-dung" rows="8" maxlength="2010" ng-keydown="checkLength($event, 2010)" placeholder="Vui lòng nhập tiếng Việt có dấu"></textarea>
                     <div class="clearfix"><span class="validationMessage"></span></div>
                     <div style="font-size:12px; margin-top:5px; font-style:italic">
                         Đã nhập: <span style="color:blue">0</span>/2010 ký tự 
@@ -1024,7 +1024,7 @@
                 <div class="form-group clearfix nguoi-lien-he" style="margin-top:20px;">
                     <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Người liên hệ</span><span >&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                     <div class="col-md-8 col-sm-8 col-xs-12">
-                        <input type="text" class="form-control" maxlength="99" />
+                        <input ng-model="NguoiLienHe" name="nguoilienhe" type="text" class="form-control" maxlength="99" />
                         <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
@@ -1032,9 +1032,9 @@
                     <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Số di động</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                     <div class="col-md-8 col-sm-8 col-xs-12">
                         <div class="input-group">
-                            <input type="text" class="form-control" maxlength="15" />
+                            <input ng-model="SoDiDong" name="sodidong" type="text" class="form-control" maxlength="15" />
                             <span class="input-group-addon">
-                                <label style="font-weight:normal; font-size:12px"><input type="checkbox" id="chkShowMobile" checked="checked" style="position:absolute; top:8px" /> <span style="padding-left:20px; ">Hiển thị số ĐT</span></label>
+                                <label style="font-weight:normal; font-size:12px"><input ng-model="chkHiendiDong" type="checkbox" name="chkhiendidong" checked="checked" style="position:absolute; top:8px" /> <span style="padding-left:20px; ">Hiển thị số ĐT</span></label>
                             </span>
                         </div>
                         <div class="clearfix"><span class="validationMessage"></span></div>
@@ -1043,7 +1043,7 @@
                 <div class="form-group clearfix dia-chi">
                     <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"><span>Địa chỉ</span><span>&nbsp;(<span class="requiredMessage">*</span>)</span></label>
                     <div class="col-md-8 col-sm-8 col-xs-12">
-                        <input ng-model="diachi" type="text" class="form-control" maxlength="256" />
+                        <input ng-model="DiaChi" name="diachi" type="text" class="form-control" maxlength="256" />
                         <div class="clearfix"><span class="validationMessage"></span></div>
                     </div>
                 </div>
@@ -1071,7 +1071,7 @@
                 <div class="form-group">
                     <label class="col-md-4 col-sm-4 col-xs-12 control-label contact-label"> </label>
                     <div class="col-md-8 col-sm-8 col-xs-12 group-cmd">
-                        <button class="btn btn-primary cmd-next">Tiếp tục <i class="fa fa-angle-right"></i></button>
+                        <button class="btn btn-primary cmd-next" ng-click="GotoStep2()">Tiếp tục <i class="fa fa-angle-right"></i></button>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12 summary-valid clearfix">
@@ -1128,7 +1128,7 @@
             <div class="col-md-3 col-sm-3 col-xs-3 re-label">Chuyên mục:</div>
             <div class="col-md-9 col-sm-9 col-xs-9 re-value">
                 <span>{{CatItemSelected.name}}</span>&nbsp;<i class="fa fa-angle-right"></i>&nbsp;
-                <span>{{CatItemSelected.name}}</span>
+                <span>{{SubCatItemSelected.name}}</span>
                 <span>
                     &nbsp;<i class="fa fa-angle-right"></i>&nbsp;
                     <span>{{cbHangXe.name}}{{cbHangSX.name}}</span>
@@ -1166,7 +1166,7 @@
                 <span>{{gia}}</span>
             </div>
         </div>
-        <div class="margintop clearfix">
+        <div class="margintop clearfix rv-mucluongtu" style="display:none;">
             <div class="col-md-3 col-sm-3 col-xs-3 re-label">Mức lương:></div>
             <div class="col-md-8 col-sm-9 col-xs-9 re-price">
                 <span>{{MucLuongTu}} - {{MucLuongDen}}</span>
@@ -1196,64 +1196,64 @@
             <div>{{NoiDung}}</div>
         </div>
         <!-- tim viec -->
-        <div class="clearfix">
+        <div class="clearfix rv-dang-tin-viec-lam" style="display:none;">
             <div class="margintop po-re-line clearfix"></div>
             <div class="clearfix">
-                <div class="margintop">
-                    <div class="col-md-3 col-sm-3 col-xs-3 re-label">Tên CV---chua biet</div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                    <div class="col-md-3 col-sm-3 col-xs-3 re-label"></div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value"></div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="margintop">
+                <div class="margintop rv-gioitinh">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Giới tính</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbGioiTinh.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="margintop">
+                <div class="margintop rv-namsinh">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Năm sinh</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbNamSinh.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="margintop">
+                <div class="margintop rv-hinhthuclv">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Hình thức làm việc</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbHinhThucLV.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="margintop">
+                <div class="margintop rv-nganhnghe">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Ngành nghề</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbNganhNghe.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="margintop">
+                <div class="margintop rv-tuoitu">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Độ tuổi từ</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbTuoiTu.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="margintop">
+                <div class="margintop rv-tuoiden">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Độ tuổi đến</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{cbTuoiDen.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="margintop">
+                <div class="margintop rv-namkinhnghiem">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Kinh nghiệm (năm)</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{NamKinhNghiem}}</div>
                 </div>
             </div>
             <div class="clearfix" data-bind="with: SalaryFrom" style="display:none">
-                <div class="margintop">
+                <div class="margintop rv-mucluongtu">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Mức lương từ</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{MucLuongTu}}</div>
                 </div>
             </div>
             <div class="clearfix" style="display:none">
-                <div class="margintop">
+                <div class="margintop rv-mucluongtu">
                     <div class="col-md-3 col-sm-3 col-xs-3 re-label">Mức lương đến</div>
                     <div class="col-md-9 col-sm-9 col-xs-9 re-value">{{MucLuongDen}}</div>
                 </div>
@@ -1261,56 +1261,56 @@
 
         </div>
         <!-- nha dat bds -->
-        <div class="clearfix">
+        <div class="clearfix rv-dang-tin-bds" style="display:none;">
             <div class="margintop po-re-line clearfix"></div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
-                    <div class="col-md-4 col-sm-4 col-xs-4 re-label"></div>
-                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"></div>
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-loaibds" style="padding:0px">
+                    <div class="col-md-4 col-sm-4 col-xs-4 re-label">Loại bất động sản</div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbLoaiBDS.name}}</div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-sonha" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Địa chỉ</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{SoNha}} {{TenDuong}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-phuongxa" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Phường/Xã</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbPhuongXa.name}}</div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-thuocduan" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Thuộc dự án</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{ThuocDuAn}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-ct1" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Diện tích đất</div>
-                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct1}}</span></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{CT1}}</span></div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-ct2" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Diện tích sử dụng</div>
-                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct2}}</span></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{CT2}}</span></div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-ct6" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Số phòng ngủ</div>
-                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct6}}</span></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{CT6}}</span></div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-ct7" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Số toilet</div>
-                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct7}}</span></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{CT7}}</span></div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-ct3" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Hướng</div>
-                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct3.name}}</span></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{CT3.name}}</span></div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-ct4" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Pháp lý</div>
-                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{ct4.name}}</span></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 re-value"><span>{{CT4.name}}</span></div>
                 </div>
             </div>
             <div class="margintop clearfix">
@@ -1322,90 +1322,69 @@
 
         </div>
         <!-- rao xe oto-->
-        <div class="clearfix">
+        <div class="clearfix rv-dang-tin-xe" style="display:none;">
             <div class="margintop po-re-line clearfix"></div>
-            <div class=" clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+            <div class="clearfix">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-tenxe" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Tên xe</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{TenXe}}</div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop" style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-hangxe" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Hãng xe</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbHangXe.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-dongxe" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Dòng xe</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbDongXe.name}}</div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-namsx" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Năm sản xuất</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbNamSX.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-xuatxu" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Xuất xứ</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbXuatXu.name}}</div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-xemoi" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Xe mới</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{XeMoi}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-hopso" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Hộp số</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbHopSo.name}}</div>
                 </div>
 
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-kieudd" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Kiểu dẩn động</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbKieuDD.name}}</div>
                 </div>
             </div>
             <div class="clearfix">
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-nhienlieu" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Nhiên liệu</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbNhienLieu.name}}</div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 margintop " style="padding:0px">
+                <div class="col-md-6 col-sm-12 col-xs-12 margintop rv-mauxe" style="padding:0px">
                     <div class="col-md-4 col-sm-4 col-xs-4 re-label">Màu xe</div>
                     <div class="col-md-8 col-sm-8 col-xs-8 re-value">{{cbMauXe.name}}</div>
                 </div>
             </div>
-            <div class="clearfix">
+            <div class="clearfix rv-tbat">
                 <div>
                     <div class="margintop po-re-line clearfix"></div>
                     <div class="margintop re-label">Thiết bị an toàn</div>
                     <div class="margintop re-value">
-                      <ul class="ct-safe-list clearfix">
-                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                      <ul class="ct-safe-list clearfix">                        
+                        <li ng-repeat="x in ThietBiAnToanChecked" class="col-md-6 col-sm-12 col-xs-12 tect-item">
                           <div class="clearfix">
                             <div class="col-md-12 col-sm-12 col-xs-12 item-value">
-                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Khoá động cơ
-                            </div>
-                          </div>
-                        </li>
-                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
-                          <div class="clearfix">
-                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
-                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Chống bó cứng phanh (ABS)
-                            </div>
-                          </div>
-                        </li>
-                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
-                          <div class="clearfix">
-                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
-                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Phân bố lực phanh điện tử (EBD)
-                            </div>
-                          </div>
-                        </li>
-                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
-                          <div class="clearfix">
-                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
-                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Trợ lực phanh khẩn cấp (EBA)
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>{{x.name}}
                             </div>
                           </div>
                         </li>
@@ -1413,40 +1392,19 @@
                     </div>
                 </div>
             </div>
-            <div class="margintop clearfix">
+            <div class="margintop clearfix rv-tn">
                 <div>
                     <div class="margintop po-re-line clearfix"></div>
                     <div class="margintop re-label">Tiện nghi</div>
                     <div class="margintop re-value">
                       <ul class="ct-safe-list clearfix">
-                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
+                        <li ng-repeat="x in TienNghiChecked" class="col-md-6 col-sm-12 col-xs-12 tect-item">
                           <div class="clearfix">
                             <div class="col-md-12 col-sm-12 col-xs-12 item-value">
-                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Khoá động cơ
+                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>{{x.name}}
                             </div>
                           </div>
-                        </li>
-                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
-                          <div class="clearfix">
-                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
-                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Chống bó cứng phanh (ABS)
-                            </div>
-                          </div>
-                        </li>
-                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
-                          <div class="clearfix">
-                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
-                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Phân bố lực phanh điện tử (EBD)
-                            </div>
-                          </div>
-                        </li>
-                        <li class="col-md-6 col-sm-12 col-xs-12 tect-item">
-                          <div class="clearfix">
-                            <div class="col-md-12 col-sm-12 col-xs-12 item-value">
-                              <i class="fa fa-check-square-o" style="color: #ff6500"></i>Trợ lực phanh khẩn cấp (EBA)
-                            </div>
-                          </div>
-                        </li>
+                        </li>                        
                       </ul>
                     </div>
                 </div>
@@ -1454,7 +1412,7 @@
         </div>
 
         <div class="margintop clearfix" style="margin-top:40px">
-            <button class="btn btn-default" style="width:100px;" data-bind="click: GotoStep1"><i class="fa fa-angle-left"></i> Quay lại</button>
+            <button class="btn btn-default" style="width:100px;" ng-click="GotoStep1()"><i class="fa fa-angle-left"></i> Quay lại</button>
             <button class="btn btn-primary" style="width:150px;" data-bind="click: QueuePublish, activity: IsExcutingQueue, attr:{id: PostingFinish()==false?'posting-finish':'posting-finish-publish'}">Tiếp tục <i class="fa fa-angle-right"></i></button>
         </div>
     </div>  

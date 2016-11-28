@@ -491,7 +491,7 @@
                     <div class="col-md-12 col-sm-12">                        
                         <div ng-repeat="x in thietbiantoan" class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
                             <label style="width:100%; font-weight:normal;font-size:13px;">
-                                <input class="tbat_{{x.id}}" name="tbat_{{x.id}}" type="checkbox" />
+                                <input class="tbat_{{x.id}}" name="tbat_{{x.id}}" type="checkbox" ng-click="tbatChange(x.id)"  />
                                 <span style="position:relative; top:-2px">{{x.name}}</span>
                             </label>
                         </div>
@@ -504,7 +504,7 @@
                     <div class="col-md-12 col-sm-12">                        
                         <div ng-repeat="x in tiennghi" class="col-md-4 col-sm-4 col-xs-12" style="padding-left:0px">
                             <label style="width:100%; font-weight:normal;font-size:13px;">
-                                <input class="tn_{{x.id}}" name="tn_{{x.id}}" type="checkbox" />
+                                <input class="tn_{{x.id}}" name="tn_{{x.id}}" type="checkbox" ng-click="tnChange(x.id)"  />
                                 <span style="position:relative; top:-2px">{{x.name}}</span>
                             </label>
                         </div>
@@ -660,7 +660,7 @@
                 </div>
                 <div class="form-group clearfix ttmr-text" style="display:none;">
                     <span class="col-md-12 col-sm-12 col-xs-12">
-                        <a href="#s" class="float-right mbn-bold" ng-click="thongtinmorongbdsClick('{{cbLoaiBDS}}')">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
+                        <a href="#s" class="float-right mbn-bold" ng-click="thongtinmorongbdsClick('{{cbLoaiBDS.id}}')">Thông tin mở rộng <i class="fa fa-angle-down"></i></a>
                     </span>
                 </div>
                 <!--khu vục collspan-->

@@ -1476,6 +1476,7 @@ label {
 .post-step-2 {
     margin-top: 70px;
     width: 672px;
+    padding-bottom: 20px;
 }
 .post-step-2 .title-review {
     font-family: Arial;
@@ -1514,8 +1515,17 @@ label {
     color: #1c60a7;
     font-size: 18px;
 }
-
-
+.post-step-2 .ct-safe-list>li {
+    float: left;
+    margin: 5px 0 5px 0;
+    padding: 0;
+    display: block;
+}
+.post-step-2 .ct-safe-list .tect-item .item-value {
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
 
 
 .btn {
