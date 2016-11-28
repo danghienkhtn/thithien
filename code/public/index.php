@@ -11,7 +11,9 @@ define('DOCUMENT_ROOT', realpath(dirname(__FILE__)));
 define('APPLICATION_PATH', realpath(DOCUMENT_ROOT.'/../application'));
 define('LIBS_PATH', realpath(DOCUMENT_ROOT . '/../library'));
 define('DATA_PATH', realpath(DOCUMENT_ROOT.'/../data'));
-define('LIBS_ZEND', realpath(DOCUMENT_ROOT . '/../framework/'));
+// define('LIBS_ZEND', realpath(DOCUMENT_ROOT . '/../framework/'));
+
+ini_set('include_path', DOCUMENT_ROOT . '/../framework');
 
 // define('EXCHANGE_PATH', realpath(DOCUMENT_ROOT . '/../exchange'));
 
@@ -34,7 +36,7 @@ require_once APPLICATION_PATH . '/configs/admin.php';
 try
 {	    
     //Require library
-    require_once LIBS_ZEND.'Zend/Application.php';
+    require_once 'Zend/Application.php';
 	
 	//Load Application    
     $application = new Zend_Application(

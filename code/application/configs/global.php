@@ -179,10 +179,10 @@ $globalConfig['menu']  = array(
                 "icon"          => "iconUser",
                 "isshow"        => 0
                 ),
-   
+        */
    
        );
-        */
+   
 
 /* For absence */
 
@@ -305,7 +305,6 @@ $globalConfig['action_log_type'] = array(
         13 => 'album',
         14 => 'special day',
 		15 => 'admin'
-
 );
 
 // acction log

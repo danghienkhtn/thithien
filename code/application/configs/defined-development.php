@@ -340,7 +340,7 @@ define('ABSENCE_REJECT_STATUS', 4);*/
 define('LANGUAGE_EN', 'en');
 define('LANGUAGE_JP', 'ja');
 define('LANGUAGE_VI', 'vi');
-define('DEFAULT_LANGUAGE', LANGUAGE_VN);
+define('DEFAULT_LANGUAGE', LANGUAGE_VI);
 
 //define for user config
 define('USER_CONFIG_LANGUAGE', 1);
