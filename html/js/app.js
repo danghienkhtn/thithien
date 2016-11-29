@@ -135,6 +135,11 @@ app.controller('TTCtrl', function($scope) {
 		$(".chosen-hangxe .chosen-container").toggleClass("chosen-with-drop");		
 		$scope.cbHangXe = item;
 	}
+	$scope.chosenHangSX = function(item){				
+		$(".chosen-hangsx .cat-name-tt").text(item.name);
+		$(".chosen-hangsx .chosen-container").toggleClass("chosen-with-drop");		
+		$scope.cbHangSX = item;
+	}
 	$scope.chosenDongXe = function(item){				
 		$(".chosen-dongxe .cat-name-tt").text(item.name);
 		$(".chosen-dongxe .chosen-container").toggleClass("chosen-with-drop");		
@@ -280,7 +285,7 @@ var showRelateBlock = function(scope, subCatId) {
 			scope.hangxe = HangXe[subCatId];
 			$(".hang-xe").css("display",blockDisplay[subCatId]["hang-xe"]);
 		}
-		else $(".hang-xe").css("display",blockDisplay[subCatId]["hang-xe"]);
+		else $(".hang-xe").css("display","none");
 		
 		if(blockDisplay[subCatId]["dang-tin-viec-lam"] == "block"){
 			scope.hinhthuclv = HinhThucLV;
@@ -291,17 +296,18 @@ var showRelateBlock = function(scope, subCatId) {
 			$(".dang-tin-viec-lam").css("display",blockDisplay[subCatId]["dang-tin-viec-lam"]);
 		}	
 		// console.log(blockDisplay[subCatId]["dang-tin-viec-lam"]);
-		if(typeof(blockDisplay[subCatId]["gia"]) !== 'undefined'){
+		if(typeof(blockDisplay[subCatId]["gia"]) !== 'undefined')
 			$(".gia").css("display",blockDisplay[subCatId]["gia"]);
-		}
+		else $(".gia").css("display","none");
 		//chi danh cho viec tim nguoi
-		if(typeof(blockDisplay[subCatId]["dotuoi"]) !== 'undefined'){
+		if(typeof(blockDisplay[subCatId]["dotuoi"]) !== 'undefined')
 			$(".dotuoi").css("display",blockDisplay[subCatId]["dotuoi"]);
-		}
+		else $(".dotuoi").css("display","none");
 		//chi danh cho bds
-		if(typeof(blockDisplay[subCatId]["loaibds"]) !== 'undefined'){
+		if(typeof(blockDisplay[subCatId]["loaibds"]) !== 'undefined')
 			$(".loaibds").css("display",blockDisplay[subCatId]["loaibds"]);
-		}	
+		else
+			$(".loaibds").css("display","none"); 	
 	}
 	// console.log(LoaiBDS);
 	//hien thi loai bds
@@ -334,7 +340,24 @@ var showChiTietBDS = function(scope, loaibds){
 
 var showReviewBlock = function(scope, subCatId) {
 	if(typeof(reviewDisplay[subCatId]) !== 'undefined'){
-		$(".rv-dang-tin-bds").css("display",reviewDisplay[subCatId]["rv-dang-tin-bds"]);
+		if(reviewDisplay[subCatId]["rv-dang-tin-bds"] === "block"){
+			$(".rv-dang-tin-bds").css("display",reviewDisplay[subCatId]["rv-dang-tin-bds"]);
+			for(x in PropertieFields){
+				console.log(x);
+				var field = PropertieFields[x];
+				if(typeof scope[field] !== "undefined" && scope[field] !== "")
+					$("." + x).show();
+				else $("." + x).hide(); 	
+				console.log(field);
+			}
+		}
+		else {
+			$(".rv-dang-tin-bds").css("display","none");
+			for(x in PropertieFields){
+				var field = PropertieFields[x];
+				$("." + x).hide();  	
+			}
+		}	
 		if(reviewDisplay[subCatId]["rv-dang-tin-xe"] == "block"){			
 			// $(".rv-hang-xe").css("display",reviewDisplay[subCatId]["rv-hang-xe"]);
 			$(".rv-dang-tin-xe").css("display",reviewDisplay[subCatId]["rv-dang-tin-xe"]);
@@ -343,10 +366,38 @@ var showReviewBlock = function(scope, subCatId) {
 				$(".rv-hang-xe").css("display",reviewDisplay[subCatId]["rv-hang-xe"]);
 			}
 			else $(".rv-hang-xe").css("display",reviewDisplay[subCatId]["rv-hang-xe"]);
+			// hien thi nhung field co dien thong tin
+			for(x in CarFields){
+				var field = CarFields[x];
+				if(typeof scope[field] !== "undefined" && scope[field] !== "")
+					$("." + x).show();
+				else $("." + x).hide(); 	
+			}
 		}		
-		
+		else {
+			$(".rv-dang-tin-xe").css("display","none");
+			for(x in CarFields){
+				var field = CarFields[x];
+				$("." + x).hide();  	
+			}
+		}	
 		if(reviewDisplay[subCatId]["rv-dang-tin-viec-lam"] == "block"){			
 			$(".rv-dang-tin-viec-lam").css("display",reviewDisplay[subCatId]["rv-dang-tin-viec-lam"]);
+			for(x in JobFields){
+				console.log(x);
+				var field = JobFields[x];
+				if(typeof scope[field] !== "undefined" && scope[field] !== "")
+					$("." + x).show();
+				else $("." + x).hide(); 	
+				console.log(field);
+			}
+		}
+		else {
+			$(".rv-dang-tin-viec-lam").css("display","none");	
+			for(x in JobFields){
+				var field = JobFields[x];
+				$("." + x).hide();  	
+			}
 		}	
 		// console.log(reviewDisplay[subCatId]["dang-tin-viec-lam"]);
 		if(typeof(reviewDisplay[subCatId]["rv-gia"]) !== 'undefined'){
@@ -359,6 +410,10 @@ var showReviewBlock = function(scope, subCatId) {
 		//chi danh cho bds
 		if(typeof(reviewDisplay[subCatId]["rv-loaibds"]) !== 'undefined'){
 			$(".rv-loaibds").css("display",reviewDisplay[subCatId]["rv-loaibds"]);
-		}	
+		}
+		//chi danh cho hang dien tu
+		if(typeof HangSXDienTu[subCatId] !== "undefined")
+			$(".rv-hangsx").css("display","block");	
+		else $(".rv-hangsx").css("display","none");		
 	}				
 }
