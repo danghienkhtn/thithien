@@ -7,7 +7,7 @@ class Api_IndexController extends Zend_Controller_Action
     
     public function  indexAction()
     {
-        echo 'hi api';
+        echo 'hi api1';
         exit;
     }
 }
