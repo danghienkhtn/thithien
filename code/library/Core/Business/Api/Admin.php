@@ -1,9 +1,9 @@
-<?php
+l<?php
 
 /**
- * @author      :   Cang Ta
+ * @author      :   DANG HIEN
  * @name        :   Core_Business_Api_Event
- * @version     :   20130502
+ * @version     :   20161206
  * @copyright   :   My company
  * @todo        :   Using for event service
  */
@@ -36,9 +36,6 @@ class Core_Business_Api_Admin {
         // return instance
         return self::$_instance;
     }
-    
-    /**
-     
      
      
     /**
@@ -48,22 +45,23 @@ class Core_Business_Api_Admin {
      */
     public function removeAdmin($iUserID) {
         try {
-            # Get Data Master Global
+            // Get Data Master Global
             $storage = Core_Global::getDbGlobalMaster();
-
-            # Prepare store procude
-            $stmt = $storage->prepare("CALL sp_admin_delete(:p_account_id, @p_RowCount)");
-            $stmt->bindParam('p_account_id', $iUserID, PDO::PARAM_INT);
+            $sql = "DELETE FROM `admin`
+                    WHERE `account_id` = :p_account_id
+                    LIMIT 1";
+            // Prepare store procude
+            $stmt = $storage->prepare($sql);
+            $stmt->bindParam(':p_laccount_id', $iUserID, PDO::PARAM_INT);
             $stmt->execute();
 
-            # Fetch All Result
-            $stmt = $storage->query("SELECT @p_RowCount");
-            $result = $stmt->fetchColumn();
+            // Fetch All Result
+            $result = 1;
 
-            # Free cursor
+            // Free cursor
             $stmt->closeCursor();
         } catch (Exception $ex) {
-            ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $iUserID);
+            // ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $iUserID);
             $result = -1;
         }
 
@@ -81,24 +79,34 @@ class Core_Business_Api_Admin {
     	$result = -1;
     	
     	try {
-    		# Get Data Master Global
+    		// Get Data Master Global
     		$storage = Core_Global::getDbGlobalMaster();
-    
-    		# Prepare store procude
-    		$stmt = $storage->prepare("CALL sp_admin_update(:p_admin_id, :p_role_id, :p_updated, @p_RowCount)");
-    		$stmt->bindParam('p_admin_id', $arrAdmin['admin_id'], PDO::PARAM_INT);
-    		$stmt->bindParam('p_updated', $arrAdmin['update_date'], PDO::PARAM_INT);
-    		$stmt->bindParam('p_role_id', $arrAdmin['role_id'], PDO::PARAM_STR);
+            $sql = "UPDATE `admin` SET 
+                        `modules` = :p_modules,
+                        `roles` = :p_roles,
+                        `super_admin` = :p_super_admin,
+                        `active` = :p_active,
+                        `update_date` = :p_update_date
+                    WHERE `admin_id` = :p_admin_id
+                    LIMIT 1     
+                        ";
+    		// Prepare store procude
+    		$stmt = $storage->prepare($sql);
+    		$stmt->bindParam(':p_admin_id', $arrAdmin['admin_id'], PDO::PARAM_INT);
+    		$stmt->bindParam(':p_update_date', time(), PDO::PARAM_INT);
+    		$stmt->bindParam(':p_roles', $arrAdmin['roles'], PDO::PARAM_STR);
+            $stmt->bindParam(':p_modules', $arrAdmin['modules'], PDO::PARAM_STR);
+            $stmt->bindParam(':p_super_admin', $arrAdmin['super_admin'], PDO::PARAM_INT);
+            $stmt->bindParam(':p_active', $arrAdmin['active'], PDO::PARAM_INT);
     		$stmt->execute();
     
-    		# Fetch All Result
-    		$stmt = $storage->query("SELECT @p_RowCount");
-    		$result = $stmt->fetchColumn();
+    		// Fetch All Result    		
+    		$result = $stmt->rowCount();
     
-    		# Free cursor
+    		// Free cursor
     		$stmt->closeCursor();
     	} catch (Exception $ex) {
-    		ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $arrAdmin['account_id']);
+    		// ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $arrAdmin['account_id']);
     		$result = -1;
     	}
     
@@ -114,52 +122,55 @@ class Core_Business_Api_Admin {
      * @param int $iLimit
      * @return array('total' => int, 'data' => array)
      */
-    public function select($sName, $sRoleID, $iOffset, $iLimit) {
+    public function select($sName, $sRoles, $iOffset = 0, $iLimit = 20) {
     	 
     	$arrResult = array();
     	 
     	try {
     
-    		# Get Data Master Global
+    		// Get Data Master Global
     		$storage = Core_Global::getDbGlobalSlave();
-    
-    		# Prepare store procude
-    		$stmt = $storage->prepare("CALL sp_admin_account_info_select(:p_name, :p_role_id, :p_offset, :p_limit, @p_RowCount)");
+            $sql = "SELECT `name`, 
+                            `username`, 
+                            `email`, 
+                            `modules`, 
+                            `roles`, 
+                            `super_admin`, 
+                            `active`, 
+                            `create_date`, 
+                            `update_date`
+                    FROM admin ad, account_info ac ";
+            $sqlWhere = " WHERE ad.`account_id` = ac.`account_id` ";
+            $arrParams = array();
+            if(!empty($sName))
+            {
+                $sqlWhere .= "AND ac.`name` LIKE :p_name ";
+                $arrParams[':p_name'] = "%".$sName."%";
+            }    
+            if(!empty($sRoles))
+            {
+                $sqlWhere .= "AND ac.`name` LIKE :p_roles ";
+                $arrParams[':p_roles'] = "%".$sRoles."%";
+            }
+
+            $sql .= " LIMIT :p_offset, :p_limit ";
+            $arrParams[":p_offset"] = $iOffset;
+            $arrParams[":p_limit"] = $iLimit;
+
+    		// Prepare store procude
+    		$stmt = $storage->prepare($sql);    		    		
     		
-    		$stmt->bindParam('p_name', $sName, PDO::PARAM_STR);
-    		$stmt->bindParam('p_role_id', $sRoleID, PDO::PARAM_STR);
-    		$stmt->bindParam('p_offset', $iOffset, PDO::PARAM_INT);
-    		$stmt->bindParam('p_limit', $iLimit, PDO::PARAM_INT);
-    		
-    		$stmt->execute();
+    		$stmt->execute($arrParams);
     
-    		# Fetch All Result
+    		// Fetch All Result
     		$arrResult = $stmt->fetchAll();
     
-    		# Free cursor
+    		// Free cursor
     		$stmt->closeCursor();
     
-    		//Fetch Total Result
-    		$stmt = $storage->query("SELECT @p_RowCount");
-    
-    		//Get total data
-    		$iTotal = $stmt->fetchColumn();
-    
-    				//Free cursor
-    				$stmt->closeCursor();
-    
-    				//Return data
-    				$arrResult = array(
-	    				'total' => $iTotal,
-	    				'data' => $arrResult
-    				);
-    
-    
-    
-    				# Free cursor
-    				$stmt->closeCursor();
     	} catch (Exception $ex) {
-    			ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage());
+    			// ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage());
+            $arrResult = array();
     	}
     
     	// return data
@@ -174,22 +185,23 @@ class Core_Business_Api_Admin {
     public function deleteAdminByAdminID($iAdminID) {
     	$result = 0;
     	try {
-    		# Get Data Master Global
+    		// Get Data Master Global
     		$storage = Core_Global::getDbGlobalMaster();
-    
-    		# Prepare store procude
-    		$stmt = $storage->prepare("CALL sp_admin_delete_by_admin_id(:p_admin_id, @p_RowCount)");
-    		$stmt->bindParam('p_admin_id', $iAdminID, PDO::PARAM_INT);
+            $sql = "DELETE FROM `admin` 
+                    WHERE `admin_id` = :p_admin_id
+                    LIMIT 1";
+    		// Prepare store procude
+    		$stmt = $storage->prepare($sql);
+    		$stmt->bindParam(':p_admin_id', $iAdminID, PDO::PARAM_INT);
     		$stmt->execute();
+        	
+    		$result = 1;
     
-    		# Fetch All Result
-    		$stmt = $storage->query("SELECT @p_RowCount");
-    		$result = $stmt->fetchColumn();
-    
-    		# Free cursor
+    		// Free cursor
     		$stmt->closeCursor();
     	} catch (Exception $ex) {
-    		ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $iAdminID);
+    		// ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $iAdminID);
+            $result = 0;
     	}
     
     	// return data
@@ -199,28 +211,32 @@ class Core_Business_Api_Admin {
     /**
      * account_id, GROUP_CONCAT(role_id)
      */
+    
      public function getAdminByID($iUserID) {
      	
      	$arrResult = array();
      	
         try {
 
-            # Get Data Master Global
+            // Get Data Master Global
             $storage = Core_Global::getDbGlobalSlave();
-
-            # Prepare store procude
-            $stmt = $storage->prepare("CALL sp_admin_selectbyid(:p_account_id)");
-            $stmt->bindParam('p_account_id', $iUserID, PDO::PARAM_INT);
+            $sql = "SELECT * 
+                    FROM `admin`
+                    WHERE account_id = :p_account_id
+                    LIMIT 1";
+            // Prepare store procude
+            $stmt = $storage->prepare($sql);
+            $stmt->bindParam(':p_account_id', $iUserID, PDO::PARAM_INT);
             $stmt->execute();
 
-            # Fetch All Result
+            // Fetch All Result
             $arrResult = $stmt->fetch();
-            # Free cursor
+            // Free cursor
             $stmt->closeCursor();
             
         } catch (Exception $ex) {
-            ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $iUserID);
-            $arrResult = '';
+            // ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $iUserID);
+            $arrResult = array();
         }
 
         // return data
@@ -238,22 +254,25 @@ class Core_Business_Api_Admin {
     
     	try {
     
-    		# Get Data Master Global
+    		// Get Data Master Global
     		$storage = Core_Global::getDbGlobalSlave();
-    
-    		# Prepare store procude
-    		$stmt = $storage->prepare("CALL sp_admin_select_by_admin_id(:p_admin_id)");
-    		$stmt->bindParam('p_admin_id', $iAdminID, PDO::PARAM_INT);
+            $sql = "SELECT * 
+                    FROM `admin`
+                    WHERE admin_id = :p_admin_id
+                    LIMIT 1";
+    		// Prepare store procude
+    		$stmt = $storage->prepare($sql);
+    		$stmt->bindParam(':p_admin_id', $iAdminID, PDO::PARAM_INT);
     		$stmt->execute();
     
-    		# Fetch All Result
+    		// Fetch All Result
     		$arrResult = $stmt->fetch();
-    		# Free cursor
+    		// Free cursor
     		$stmt->closeCursor();
     
     	} catch (Exception $ex) {
-    		ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $iAdminID);
-    		$arrResult = '';
+    		// ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(), $iAdminID);
+    		$arrResult = array();
     	}
     
     	// return data
@@ -271,24 +290,27 @@ class Core_Business_Api_Admin {
         $result = 0;
         
         try {
-            # Get Data Master Global
+            // Get Data Master Global
             $storage = Core_Global::getDbGlobalMaster();
 
-            $sql = 'INSERT INTO admin(account_id, role_id, super_admin, active, create_date, update_date) VALUES(:account_id, :role_id, :super_admin, :active, :create_date, :update_date)';
-            # Prepare store procude
+            $sql = 'INSERT INTO `admin` (
+                            `account_id`, `modules`, `roles`, `super_admin`, `active`, `create_date`, `update_date` ) 
+                    VALUES(:p_account_id, :p_roles, :p_super_admin, :p_active, :p_create_date, :p_update_date)';
+            // Prepare store procude
             $stmt = $storage->prepare($sql);
             
             $stmt->execute(array(
-                ':account_id'       => $userInfo['account_id'],
-                ':role_id'          => $userInfo['role_id'],
-                ':super_admin'      => $userInfo['super_admin'],
-                ':active'           => $userInfo['active'],
-                ':create_date'      => $userInfo['create_date'],
-                ':update_date'      => $userInfo['update_date'],
+                ':p_account_id'       => $userInfo['account_id'],
+                ':p_modules'            => $userInfo['modules'],
+                ':p_roles'            => $userInfo['roles'],
+                ':p_super_admin'      => $userInfo['super_admin'],
+                ':p_active'           => $userInfo['active'],
+                ':p_create_date'      => $userInfo['create_date'],
+                ':p_update_date'      => $userInfo['update_date'],
             ));
 
             $result = $storage->lastInsertId(); 
-            # Free cursor
+            // Free cursor
             $stmt->closeCursor();
         } catch (Exception $ex) {
             ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage(),$iUserID);
@@ -296,4 +318,5 @@ class Core_Business_Api_Admin {
  
         // return data
         return $result;
-    }}
+    }
+}

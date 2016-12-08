@@ -1,8 +1,8 @@
 <?php
 /**
  * @author      :   Hien.nd
- * @version     :   20160712
- * @copyright   :   Gianty
+ * @version     :   20161207
+ * @copyright   :   Dahi
  * @todo        :   Token model
  */
 class Token
@@ -73,14 +73,11 @@ class Token
      * @param array $arrFileIds
      * return  array('total' => $iTotal, 'data' => $cursor);
      */
-    public function getToken($iAccountID, $sUsername, $sPs, $sIpClient)
+    public function getToken($skey = "", $iType = "", $iAccountID = "", $sUsername = "", $sPs = "", $sIpClient = "")
     {
         //Get data
-        $iResult = $this->_modeParent->getToken($iAccountID, $sUsername, $sPs, $sIpClient);
-
-        if($iResult === ""){
-            $i
-        }
+        $iResult = $this->_modeParent->select($iType, $iAccountID, $sUsername, $sPs, $sIpClient, $skey);
+// echo Zend_Json::encode($iResult);
         //Return result data
         return $iResult;
     }
@@ -91,44 +88,13 @@ class Token
      * @param array $arrFileIds
      * return  array('total' => $iTotal, 'data' => $cursor);
      */
-    public function generateToken($iType="docs", $iAccountID, $iUsername="", $sAvatar = "", $iPs="", $iIPOwner="", $iIPClient="", $iExpired = 3600)
-    {
-        $query = array();                                        
-        //search type
-        if(!empty($iType)){
-            $query['type'] = $iType;
-        }
-        
-        //search accountId
-        if(!empty($iAccountID)){
-            $query['account_id'] = $iAccountID;
-        }
-
-        //search username
-        if(!empty($iUsername)){
-            $query['username'] = $iUsername;
-        }
-
-        //search ps
-        if(!empty($iPs)){
-            $query['ps'] = $iPs;
-        }
-
-        //IP Client
-        if(!empty($iIPClient)){
-            $query['IPClient'] = $iIPClient;
-        }
-        
-        //IP owner
-        if(!empty($iIPOwner)){
-            $query['IPOwner'] = $iIPOwner;
-        }
-                
-        $arrToken = $this->_modeParent->select($query);
+    public function generateToken($iType="user", $iAccountID, $iUsername="", $sAvatar = "", $iPs="", $iIPOwner="", $iIPClient="", $iExpired = 3600)
+    {                        
+        $arrToken = $this->_modeParent->select($iType, $iAccountID, $sUsername, $iPs, $sIPClient, $sKey = "");
         if(sizeof($arrToken) > 0){
             $currTime = time();
-            if($currTime < $arrToken['expired']->sec){//token is not expired                
-                $this->update(array("key"=>$arrToken["key"]), array("expired" => new MongoDate($currTime + (int)$iExpired)));
+            if($currTime < $arrToken['expired'] + $arrToken['update_date'] ){//token is not expired                
+                $this->update($iAccountID, $iUsername, $arrToken["key"]);
                 return $arrToken["key"];
             }
             else{
@@ -136,7 +102,7 @@ class Token
             }                
         }
         else{
-            $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "Documents", Core_Utility::getAltIp());
+            $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "user", Core_Utility::getAltIp());
             $inserted = $this -> insert($sToken, $iType, $iAccountID, $iUsername, $sAvatar, $iPs, $iIPOwner, $iIPClient, $iExpired);
             if($inserted)
                 return $sToken;

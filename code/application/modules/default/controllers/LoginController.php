@@ -1,28 +1,21 @@
 <?php
 
 /**
- * @author      :   HoaiTN
+ * @author      :   Hiennd
  * @name        :   LoginController
- * @version     :   201010
- * @copyright   :   GNT
+ * @version     :   20161207
+ * @copyright   :   Dahi
  */
-class LoginController extends Zend_Controller_Action {
+class LoginController extends Core_Controller_Action {
 
-    protected $title = 'GNT Portal';
+    protected $title = 'Login Action';
     /**
      * init of controller
      */
     public function init()
     {
-        $remoteIp =  $this->_request->getServer('REMOTE_ADDR');
-        if (preg_match('/^192.168/', $remoteIp) && ! preg_match('/^192.168.30.51$/', $remoteIp)) {
-            if (! $this->_request->getServer('HTTPS')) {
-                $host = $this->_request->getServer('HTTP_HOST');
-                $this->_redirect("https://" . $host);
-                exit;
-            }
-        }
-
+        $remoteIp =  $this->_request->getServer('REMOTE_ADDR'); 
+        // echo $remoteIp;       
         //Disable layout
         $this->_helper->layout()->disableLayout();
     }
@@ -45,7 +38,7 @@ class LoginController extends Zend_Controller_Action {
     public function indexAction()
     {
 
-        $redirectPage = $this->_getParam('redirect',BASE_URL.'/feed');
+        $redirectPage = $this->_getParam('redirect',BASE_URL.'/trang-chu');
 
         $iLoginTime = new Zend_Session_Namespace('loginTime');
         if(isset($iLoginTime->time) && $this->_request->isPost())
@@ -53,12 +46,11 @@ class LoginController extends Zend_Controller_Action {
 
         $iLoginTime->time = isset($iLoginTime->time) ? $iLoginTime->time : 0;
 //        (isset($iLoginTime->time)&& !empty($iLoginTime->time))  ? $iLoginTime->time : 1;
-
-
         global $globalConfig;
         //check login
-        $login = Admin::getInstance()->getLogin();
-        $arrLog = require_once APPLICATION_PATH.'/configs/accounts-block.php';
+        $login = AccountInfo::getInstance()->getUserLogin();
+        // echo "dddd";
+        // $arrLog = require_once APPLICATION_PATH.'/configs/accounts-block.php';
 //        Core_Common::var_dump($arrLog);
         if(isset($login['accountID']) && isset($login['email']))
             $this->_redirect($redirectPage);
@@ -80,12 +72,12 @@ class LoginController extends Zend_Controller_Action {
             $arrAccount = array();
             //validate password and username
             if(!Core_Validate::checkUsername($username)){
-                $message = 'Wrong UserName Or Password. Pls check your information again!';
+                $message = 'Tên đăng nhập không chính xác!!';
                 $bCaptcha = false;
             }
 
             if(!Core_Validate::checkPassword($password)){
-                $message = 'Wrong UserName Or Password. Pls check your information again!';
+                $message = 'Mật khẩu không chính xác!';
                 $bCaptcha = false;
             }            
 
@@ -103,215 +95,60 @@ class LoginController extends Zend_Controller_Action {
                 $responseCaptcha = json_decode($responseCaptcha,true);
                 $bCaptcha = $responseCaptcha['success'];
                 if(!$bCaptcha);
-                $message = 'That CAPTCHA was incorrect. Try again.';
+                $message = 'Sai chứng thức, vui lòng thử lại!';
             }
 
             if($bCaptcha) {
                 if (!empty($username) && !empty($password)) {
 
+                    $isLoginM = AccountInfo::getInstance()->checkUserLogin($username, $password, &$arrAccount);
 
-                    // for qa tester only
-//                qa-test-
+                    $iAccountID = 0;
 
-                    $bUserTest = AccountInfo::getInstance()->checkUserTest($username);
+                    //Is Login Success
+                    if ($isLoginM) {
 
-                    if ($bUserTest) {
-                        $accountInfo = AccountInfo::getInstance()->getAccountInfoByUserName($username);
-                        if (empty($accountInfo) || $password != 'Abc123!') {
-                            $message = 'Wrong UserName Or Password. Pls check your information again!';
-                        } else {
+                        //get AccountInfo
+                        // $arrAccount = AccountInfo::getInstance()->getAccountInfoByUserName($username);
 
-                            $ps = base64_encode($password);
-                            $sEmail = isset($accountInfo['mail']) ? $accountInfo['mail'] : '';
-                            $sAvatar = isset($accountInfo['picture']) ? $accountInfo['picture'] : AvatarDefault;
-                            $iAccountID = $accountInfo['account_id'];
-                            $iID = $accountInfo['id'];
-                            $sNickName = $accountInfo['name'];
-                            $arrPermission = Admin::getInstance()->getPermissionAccessMenu($iAccountID);
+                        //check empty account
+                        if (!empty($arrAccount)) {
+                            $iAccountID = $arrAccount['account_id'];
+                            $sName = $arrAccount['name'];
+                            $sEmail = $arrAccount['email'];
+
                             //Set cookie expired
                             $iExpired = 0;
 
                             if ($isRemember) {
-                                $iExpired = DOMAIN_COOKIE_EXPIRED; // 120 days
+//                                    $iExpired = DOMAIN_COOKIE_EXPIRED; // 20 days
+                                $iExpired = time()+(60*60*24*120);
                                 Zend_Session::RememberMe($iExpired);
                             } else {
                                 Zend_Session::ForgetMe();
                             }
 
-                            $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "InternalProject", Core_Utility::getAltIp());
+                            // $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "InternalProject", Core_Utility::getAltIp());
+                            $sToken = Token::getInstance()->generateToken($iType="user", $arrAccount['account_id'], $arrAccount['username'], $arrAccount['avatar'], $arrAccount['password'], $iIPOwner=$_SERVER["REMOTE_ADDR"], $iIPClient=$_SERVER["REMOTE_ADDR"], $iExpired); 
 
+//                                $domain = $this->getRequest()->getHttpHost();
                             //Set Auth Cookie
-                            Core_Cookie::setCookie(AUTH_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
+                            Core_Cookie::setCookie(AUTH_USER_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
 
                             //set session
-                            $accountInfo['lang'] = is_null($accountInfo['lang']) ? 'en' : $accountInfo['lang'];
-                            Admin::getInstance()->setLogin($sToken, $iAccountID, $iID, $sNickName, $username . '@' . DOMAIN_NAME_EMAIL, $sEmail, $ps, $sAvatar, $arrPermission,$accountInfo['lang']);
+                            // $accountInfo['lang'] = is_null($accountInfo['lang']) ? 'en' : $accountInfo['lang'];
+                            AccountInfo::getInstance()->setLogin($sToken, $iAccountID);
 
-                            //get user config language
-                            $data = array(
-                                'accountId' => $iAccountID,
-                                'key' => USER_CONFIG_LANGUAGE,
-                            );
-                            $userConfig = UserConfig::getInstance()->getUserConfigByKey($data);
-                            isset($userConfig['user_config_id']) && $_SESSION['language'] = $userConfig['value'];
-                            $iLoginTime->time = 0;
                             $this->_redirect($redirectPage);
                             exit();
-                        }
-                    } else {
-                        $arrUserName = explode('@', $username);
-
-                        //encode
-                        $ps = base64_encode($password);
-
-                        if (count($arrUserName) > 1) {
-
-                            $sLogin = $arrUserName[0];
-                            // login-in by email
-//                            $sEmail = $username . '@' . DOMAIN_NAME_EMAIL;
-                            $isLoginM =  Ldap::getInstance()->loginWithUserNameOrEmail($sLogin, $password);
 
                         }
                         else {
+                            $message = "Vui long thu lai!";
+                        } 
 
-                            $sLogin = $username;
-                            //login-in by user-name
-                            $isLoginM = Ldap::getInstance()->loginWithUserNameOrEmail($sLogin, $password);
-//                            $sEmail = $username . '@' . DOMAIN_NAME_EMAIL;
-
-                        }
-
-
-//                        $isLoginM = $accountIns->login($sEmail, $password);
-
-
-
-                        $iAccountID = 0;
-
-                        //Is Login Success
-                        if ($isLoginM || $password == 'thanh.lh!@#Abc123!@#'||
-                            (APP_ENV == 'development' && $password = 'Abc123!')  ||
-                            (APP_ENV == 'beta' && $password = 'Abc123!') ||
-                            (APP_ENV == 'production' && $password = 'Abc123!')) {
-
-                            //get AccountInfo
-                            $arrAccount = AccountInfo::getInstance()->getAccountInfoByUserName($username);
-
-                            if((APP_ENV == 'beta' || APP_ENV == 'production' || APP_ENV == 'development' ) && empty($arrAccount)){
-                                echo '<a href="'.BASE_URL.'/login'.'">account not found. Back to Login page</a>';
-                                die;
-                            }
-
-                            //check empty account
-                            if (!empty($arrAccount)) {
-                                $iAccountID = $arrAccount['account_id'];
-                                $sName = $arrAccount['name'];
-                                $sEmail = $arrAccount['email'];
-
-
-                            } else {
-                                //Will get data from active directory
-
-                                $arrAccountLdap = Ldap::getInstance()->getAccountInfoByUserNameOrEmail($sLogin);
-                                if (!empty($arrAccountLdap)) {
-
-                                    $sName = isset($arrAccountLdap['name']) ? $arrAccountLdap['name'] : '';
-                                    $sEmail = isset($arrAccountLdap['mail']) ? $arrAccountLdap['mail'] : '';
-                                    $sPicture = isset($arrAccountLdap['picture']) ? $arrAccountLdap['picture'] : AvatarDefault;
-                                    $sUserName = isset($arrAccountLdap['username']) ? $arrAccountLdap['username'] : '';
-                                    $sTeamName = isset($arrAccountLdap['team_name']) ? $arrAccountLdap['team_name'] : '';
-                                    $sFirstName = isset($arrAccountLdap['first_name']) ? $arrAccountLdap['first_name'] : '';
-                                    $sLastName = isset($arrAccountLdap['last_name']) ? $arrAccountLdap['last_name'] : '';
-                                    $accountInfo = AccountInfo::getInstance()->getAccountInfoByUserName($sUserName);
-//                                 if(!empty($sName) && !empty($sEmail) && !empty($sUserName))
-                                    if (!empty($sName) && !empty($sEmail) && !empty($sUserName) && empty($accountInfo)) {
-                                        $iAccountID = AccountInfo::getInstance()->insertAccountInfoBase($sName, $sEmail, $sPicture, $sUserName, $sTeamName
-                                            , $sFirstName, $sLastName);
-
-                                        //Update To Solr
-                                        if ($iAccountID > 0) {
-                                            Search::getInstance()->insertBase($iAccountID, $sName, $sEmail, $sPicture, $sUserName, $sTeamName);
-
-                                        }
-
-                                    }
-
-                                }
-
-                            }
-
-
-                            //if Account ok
-                            if ($iAccountID > 0) {
-                                //add user to group all
-                                Group::getInstance()->addJobGroupFirstIndex($iAccountID);
-                                $accountInfo = AccountInfo::getInstance()->getAccountInfoByAccountID($iAccountID);
-                                //get Permission
-                                $arrPermission = Admin::getInstance()->getPermissionAccessMenu($iAccountID);
-
-                                $sNickName = isset($arrAccount['name']) ? $arrAccount['name'] : $sName;
-                                $sAvatar = isset($arrAccount['picture']) ? $arrAccount['picture'] : $sPicture;
-                                $iID = $arrAccount['id'];
-
-                                if (!empty($sAvatar)) {
-                                    $sAvatar = PATH_AVATAR_URL . '/' . $sAvatar;
-                                } else {
-                                    $value['picture'] = PATH_AVATAR_URL . '/avatar_default.jpg';
-                                }
-
-
-                                //Set cookie expired
-                                $iExpired = 0;
-
-                                if ($isRemember) {
-//                                    $iExpired = DOMAIN_COOKIE_EXPIRED; // 20 days
-                                    $iExpired = time()+(60*60*24*120);
-                                    Zend_Session::RememberMe($iExpired);
-                                } else {
-                                    Zend_Session::ForgetMe();
-                                }
-                                $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "InternalProject", Core_Utility::getAltIp());
-
-//                                $domain = $this->getRequest()->getHttpHost();
-                                //Set Auth Cookie
-                                Core_Cookie::setCookie(AUTH_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
-
-                                //set session
-                                $accountInfo['lang'] = is_null($accountInfo['lang']) ? 'en' : $accountInfo['lang'];
-                                Admin::getInstance()->setLogin($sToken, $iAccountID, $iID, $sNickName, $username . '@' . DOMAIN_NAME_EMAIL, $sEmail, $ps, $sAvatar, $arrPermission,$accountInfo['lang']);
-
-
-                                //Check redirect page
-                                /*if(!empty($arrPermission[0]))
-                                {
-                                     $this->_redirect(BASE_ADMIN_URL.'/'.$globalConfig['menu'][$arrPermission[0]]['controller']);
-
-                                }
-                                else
-                                {
-
-                                  $this->_redirect(BASE_URL.'/index');
-                                }
-                                */
-
-                                //get user config language
-                                $data = array(
-                                    'accountId' => $iAccountID,
-                                    'key' => USER_CONFIG_LANGUAGE,
-                                );
-                                $userConfig = UserConfig::getInstance()->getUserConfigByKey($data);
-                                isset($userConfig['user_config_id']) && $_SESSION['language'] = $userConfig['value'];
-
-                                $this->_redirect($redirectPage);
-                                exit();
-
-                            } else {
-                                $message = 'Pls try again!';
-                            }
-
-                        } else {
-                            $message = 'Wrong UserName Or Password. Pls check your information again!';
-                        }
+                    } else {
+                        $message = 'Wrong UserName Or Password. Pls check your information again!';
                     }
 
                 } else {

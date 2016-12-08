@@ -1,4 +1,4 @@
-l<?php
+<?php
 /**
 
  * @todo        :   Using for account service
@@ -76,9 +76,8 @@ class Core_Business_Api_Token
             $stmt->bindParam($iUpdateDate, PDO::PARAM_INT);
             $stmt->bindParam($iUpdateDate, PDO::PARAM_INT);
             $stmt->execute();
-
-            # Fetch All Result        
-            $result = $stmt->fetchColumn();
+            
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             # Free cursor
             $stmt->closeCursor();
@@ -113,7 +112,7 @@ class Core_Business_Api_Token
                     WHERE `key` = ?
                     AND `account_id` = ?
                     AND `username` = ?
-                    LIMIT 1;";                
+                    LIMIT 1";                
             # Prepare store procude
             $stmt = $storage->prepare($sql);
 
@@ -154,7 +153,7 @@ class Core_Business_Api_Token
 
             $sql = "DELETE FROM `token` 
                     WHERE `key` = ?
-                    LIMIT 1;";
+                    LIMIT 1";
             # Prepare store procude
             $stmt = $storage->prepare($sql);
             $stmt->bindParam($iKey, PDO::PARAM_INT);
@@ -174,37 +173,72 @@ class Core_Business_Api_Token
         return $result;    	    	
     }        
     
-    public function select($sKey)
+    public function select($iType = "", $iAccountID = "", $sUsername = "", $iPs = "", $sIPClient = "", $sKey = "")
     {
-    
-    	$arrResult = array();
+        $queryWhere = " WHERE 1=1 ";        
+        $arrParamsWhere = array();
+        //search type
+        if(!empty($iType)){
+            $queryWhere .= " AND `type` = :iType";
+            $arrParamsWhere[":iType"] = $iType;
+        }
+        
+        //search accountId
+        if(!empty($iAccountID)){
+            $queryWhere .= " AND `account_id` = :iAccountID";
+            $arrParamsWhere[":iAccountID"] = $iAccountID;
+        }
+
+        //search username
+        if(!empty($sUsername)){
+            $queryWhere .= " AND `username` = :sUsername";
+            $arrParamsWhere[":sUsername"] = $sUsername;
+        }
+
+        //search ps
+        if(!empty($iPs)){
+            $queryWhere .= " AND `ps` = :iPs";
+            $arrParamsWhere[":iPs"] = $iPs;
+        }
+
+        //IP Client
+        if(!empty($sIPClient)){
+            $queryWhere .= " AND (`IPClient` = :sIPClient OR `IPOwner` = :sIPOwner)";
+            $arrParamsWhere[":sIPClient"] = $sIPClient;
+            $arrParamsWhere[":sIPOwner"] = $sIPClient;
+        }                
+
+        //search skey
+        if(!empty($sKey)){
+            $queryWhere .= " AND `key` = :sToken";
+            $arrParamsWhere[":sToken"] = $sKey;
+        }
+
+    	// $arrResult = array();
 
         try {
-
             # Get Data Master Global
             $storage = Core_Global::getDbGlobalSlave();
-
             $sql = "SELECT *
-                    FROM `token`
-                    WHERE `key` = ?
-                    LIMIT 1;";
+                    FROM `token`";
+            $sql .= $queryWhere . " LIMIT 1 ";        
+// echo $sql;
+// echo Zend_Json::encode($arrParamsWhere);
             # Prepare store procude
-            $stmt = $storage->prepare($sql);
+            $stmt = $storage->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-            $stmt->bindParam($sKey, PDO::PARAM_STR);
-            $stmt->execute();
+            // $stmt->bindParam($sKey, PDO::PARAM_STR);
+            $stmt->execute($arrParamsWhere);
 
             # Fetch All Result
-            $arrResult = $stmt->fetchColumn();
+            $arrResult = $stmt->fetch();
 
             # Free cursor
-            $stmt->closeCursor();
-
-            //Return data
-            $arrResult = $arrResult            
+            $stmt->closeCursor();                      
 
         } catch (Exception $ex) {
             //ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage());
+            error_log("error here $ex");
             return array();
         }
 
@@ -228,8 +262,8 @@ class Core_Business_Api_Token
                     AND `username` = ?
                     AND `ps` = ?
                     AND (`IPClient` = ? OR `IPOwner` = ?)
-                    AND NOW() >= `update_date` + `expired`
-                    LIMIT 1;";
+                    AND NOW() <= `update_date` + `expired`
+                    LIMIT 1";
             # Prepare store procude
             $stmt = $storage->prepare($sql);
 

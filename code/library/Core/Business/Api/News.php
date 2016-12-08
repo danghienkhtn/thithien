@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author      :   HoaiTN
+ * @author      :   HIennd
  * @name        :   Core_Business_Api_General
  * @version     :   20101111
  * @copyright   :   My company

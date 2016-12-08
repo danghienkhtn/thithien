@@ -184,26 +184,25 @@ class Admin {
 
     }
     
-    public function setLogin($sAuthToken, $iAccountID, $iID, $sNickName, $sEmail,$sEmailProfile='',$ps,$sAvatar ='', $arrPermission = array(), $lang= 'en')
+    public function setLogin($sAuthToken, $iAccountID)
     {
 
         $accountInfo = AccountInfo::getInstance()->getAccountInfoByAccountID($iAccountID);
         $_SESSION[$sAuthToken] = array(
-            'accountID'      => $iAccountID,
-        	'id'			 => $iID,
-            'nickName'       => $sNickName,
-            'image_tag'         => Core_Common::avatarProcess($sAvatar),
+            'account_id'      => $iAccountID,
+        	// 'id'			 => $iID,
+            'name'       => $accountInfo['name'],
+            'avatar'         => Core_Common::avatarProcess($accountInfo['avatar']),
             'token'          => $sAuthToken,
-            'permission'     => $arrPermission,
-            'email'          => $sEmail,
-            'emailProfile'   => $sEmailProfile,
+            'is_admin'     => $accountInfo['is_admin'],
+            'email'          => $accountInfo['email'],
+            'email1'   => $accountInfo['email1'],
             'username'   => $accountInfo['username'],
-            'team_id'   => $accountInfo['team_id'],
-            'team_name'   => $accountInfo['team_name'],
+            'last_login_date'   => $accountInfo['last_login_date'],
+            'update_date'   => $accountInfo['update_date'],
             'active'   => $accountInfo['active'],
-            'avatar'   => $accountInfo['avatar'],
-            'ps'             => $ps,
-            'lang'             => $lang
+            // 'avatar'   => $accountInfo['avatar'],
+            'ps'             => $accountInfo['ps']
         );
 
 

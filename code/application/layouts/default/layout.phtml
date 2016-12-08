@@ -4,579 +4,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta http-equiv="X-Frame-Options" content="allow"> 
-    <title>Gianty Portal 2.0</title>
-    <link href="<?= $this->static->frontend->css ;?>/v2/font-awesome.min.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/bootstrap.min.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/jquery.mCustomScrollbar.min.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/ng-emoticons.min.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/top-module.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/left-module.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/right-module.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/default.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/angular-toastr.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/sweetalert.css" rel="stylesheet" type='text/css'>
-    <link href="<?= $this->static->frontend->css ;?>/v2/stixchat.css" rel="stylesheet" type='text/css'>
+    <title>Thi Thien </title>
+    <link href="<?= $this->static->frontend->css ;?>/font-awesome.min.css" rel="stylesheet" type='text/css'>
+    <link href="<?= $this->static->frontend->css ;?>/bootstrap.min.css" rel="stylesheet" type='text/css'>
+    <link href="<?= $this->static->frontend->css ;?>/thithien.css" rel="stylesheet" type='text/css'>
     
-    <script src="<?= $this->static->frontend->js ;?>/v2/jquery.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/bootstrap.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/jquery.mCustomScrollbar.concat.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/angular.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/mentio.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/angular-sanitize.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/highlight.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/ng-emoticons.min.1.7.js"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/ng-flow-standalone.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/moment.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/angular-moment.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/ng-infinite-scroll.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/angular-toastr.tpls.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/sweetalert.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/ng-sweet-alert/SweetAlert.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/textAngular/textAngular-rangy.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/textAngular/textAngular-sanitize.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/textAngular/textAngular.min.js?v=1.5.6"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/app.js"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/groupController.js"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/feedService.js"></script>  
-    <script src="<?= $this->static->frontend->js ;?>/v2/docService.js"></script>        
-    <script src="<?= $this->static->frontend->js ;?>/v2/angular-route.js"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/iscroll.js"></script>
-    <script src="<?= $this->static->frontend->js ;?>/v2/stixchat.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/jquery.min.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/bootstrap.min.js"></script>    
+    <script src="<?= $this->static->frontend->js ;?>/thithien.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/banner.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/category.js"></script>
     <script type="text/javascript">
-        var sessionAccountId = "<?php echo $this->arrLogin['accountID']; ?>";  
+        /*var sessionAccountId = "<?php echo $this->arrLogin['accountID']; ?>"; */ 
     </script>
 </head>
-<body flow-prevent-drop  ng-app="app" class="ng-cloak" ng-controller="appCtrl" onload="loaded()">
-    <script> baseurl = '<?php echo 'https://' . $_SERVER['HTTP_HOST']; ?>'</script>
-    <!--top header navigation-->
-    <nav class="top-navbar" ng-controller="topModule" ng-init="baseURL='<?= BASE_URL?>'">
-        <div class="img-logo">
-            <a href="#" ng-click="setToggleAside();">
-                <i class="fa fa-bars m-r-20"></i>
+<body ng-app="TTApp" ng-controller="TTCtrl">
+<!-- navbar -->
+<div class="navbar-tt clearfix" id="navbar-tt">
+  <nav class="navbar navbar-tt navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <!-- menu mobile -->
+        <div class="visible-xs text-right">
+          <div class="navbar-dropdown-mobile">
+            <a onclick="openNav();" href="javascript:void(0)">
+            <span class="fa fa-bars fa-2x"></span></a>            
+          </div>  
+          <span class="logo-w">
+            <a href="/">              
+              <img src="<?= $this->static->frontend->images ?>/logo.png" width="140" height="30" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" />
             </a>
-            <a href="<?= BASE_URL ?>" class="logognt">
-                <img ng-src="<?= $this->static->frontend->images ?>/v2/Logo.png" alt="" class="m-r-20">
-                <img ng-src="<?= $this->static->frontend->images ?>/v2/bt_dt.png" alt="" class="bt_dt">
-            </a>
-            <div class="opt-left m-l-20">
-                <a class="m-r-30">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                </a>
-                <a class="m-r-30 workgroup-act" ng-class="{active: showGroup === true}"  ng-click="toggleGroup();">
-                    <i class="fa fa-users _grpUser" aria-hidden="true"></i>
-                </a>
-            </div>
-            <div class="workgroup-wrapper" ng-if="showGroup"  custom-scroll="{ 'theme': 'dark-3', 'autoHide': true}">
-                <h4 class="m-l-20">WorkGroup</h4>
-                <div id="containerMyGroup" ng-controller="groupController">
-                    <div class="row" >
-                        <div class="col-lg-12 title_group"><span>{{arrFavorite.name}}</span> <span>({{arrFavorite.total}})</span></div>
-                        <div class="col-md-3" ng-repeat="groupFa in arrFavorite.data" data-item="group">
-                            <div class="media  _itemgroup clearfix">
-                                <div class="media-body">
-                                    <div class="pull-left">
-                                        <a ng-href="/feed/feed-group/group-id/{{groupFa.group_id}}">
-                                            <img  width="80px" height="80px" class="imgs-sub-circle" ng-src="../upload/group/200x200/{{groupFa.image_url}}">
-                                        </a>
-                                    </div>
-                                    <div class="wrap-content-group">
-                                        <div class="btn-group">
-                                            <div class="name-group" title="{{groupFa.group_name}}">
-                                                <a ng-href="/feed/feed-group/group-id/{{groupFa.group_id}}">{{groupFa.group_name}}</a>
-                                            </div>
-                                            <div class="toggle_sub dropdown-toggle iconToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                 <span class="caret"></span>
-                                            </div>
-                                            <ul class="dropdown-menu">
-                                                <li ng-if="optionRemoveFavorite(groupFa)"><a href="javascript:;" ng-click="removeFavoriteFunc(groupFa, myFavorite)">Remove to Favorites</a></li>
-                                                <li><a href="javascript:;">Turn Off Notification</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="_tsrs">
-                                            <span class="text-muted">{{groupFa.total}} members</span>
-                                        </div>
-                                    </div> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" ng-repeat="group in arrGroup">
-                        <div class="col-lg-12 title_group"><span>{{group.name}}</span> <span>({{group.total}})</span></div>
-                        <div class="col-md-3" data-item="group" ng-show="group.createGroup">
-                            <div class="media  _itemgroup clearfix boxCreateGroup" >
-                                <div class="media-body">
-                                    <div class="wrap-content-group">
-                                        <div class="btn-group  btn-search-join">
-                                            <div class="name-group fl btnCreateGroup" title="Create Group">
-                                                <a href="javascript:void(0);" ng-click="showPopupCreate()">
-                                                    <span class="icon"><i class="fa fa-plus"></i></span>
-                                                    <span>Create Group</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3" ng-repeat="myGroup in group.data" data-item="group">
-                            <div class="media  _itemgroup clearfix">
-                                <div class="media-body">
-                                    <div class="pull-left">
-                                        <a ng-href="/feed/feed-group/group-id/{{myGroup.group_id}}">
-                                            <img  width="80px" height="80px" class="imgs-sub-circle" ng-src="../upload/group/200x200/{{myGroup.image_url}}">
-                                        </a>
-                                    </div>
-                                    <div class="wrap-content-group">
-                                        <div class="btn-group">
-                                            <div class="name-group" title="{{myGroup.group_name}}">
-                                                <a ng-href="/feed/feed-group/group-id/{{myGroup.group_id}}" class="groupNameText">{{myGroup.group_name}}</a>
-                                            </div>
-                                            <div class="toggle_sub dropdown-toggle iconToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                 <span class="caret"></span>
-                                            </div>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="javascript:;" ng-click="addFavoriteFunc(myGroup, group)">Add to Favorites</a></li>
-                                                <li><a href="javascript:;">Turn Off Notification</a></li>
-                                                <li ng-if="optionEditDelete(myGroup)" role="separator"><span class="divider"></span></li>
-                                                <li ng-if="optionEditDelete(myGroup)" ng-click="showPopupEdit(myGroup)"><a href="javascript:void(0);">Edit</a></li>
-                                                <li ng-if="optionEditDelete(myGroup)" ng-click="showPopupConfirm(myGroup, group)"><a href="javascript:void(0);">Delete</a></li>
-                                                <li ng-if="optionLeaveGroup(myGroup)" role="separator"><span class="divider"></span></li>
-                                                <li ng-if="optionLeaveGroup(myGroup)" ng-click="showPopupLeave(myGroup, group)"><a href="javascript:void(0);">Leave Group</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="_tsrs">
-                                            <span class="text-muted">{{myGroup.total}} members</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>    
-                    
-            </div>
+          </span>
+          <span class="top-search-mobile">
+                <a href="/tim-kiem-di-dong"><i class="fa fa-search fa-2x"></i></a>
+          </span>          
         </div>
-        <div class="top-search">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            <input type="text" placeholder="Type here for search">
+        <!-- end menu mobile -->
+        <div class="logo-tt">
+          <a class="logo hidden-xs" href="/">
+            <h1><img src="<?= $this->static->frontend->images ?>/logo.pnga" alt="Bao mua ban rao vat" title="Báo mua bán rao vặt" width="190" height="43" /></h1>
+          </a>
+          <a href="https://muaban.net/app?source=mbn-banner-top" class="banner-top-qc visible-lg">
+              <img src="<?= $this->static->frontend->images ?>/banner/top.gif" />
+          </a>          
+        </div>        
+      </div>
+      <ul class="nav navbar-nav navbar-right hidden-xs">
+        <li class="active"><a href="#">Dang Nhap</a></li>
+        <li class="dropdown navbar-dropdown-right">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <span class="fa fa-bars fa-2x"></span></a>
+          <ul class="dropdown-menu dropdown-menu-tt " style="left:0px;top:45px">
+            <li ng-repeat="item in danhmuc"><a href="#">{{item.name}}</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="/dang-tin"><span class="nav-post-news text"><i class="fa fa-newspaper-o" style="color:#ffffff;"></i>&nbsp;ĐĂNG TIN MIỄN PHÍ</span></a>
+        </li> 
+      </ul>
+    </div>
+  </nav>
+</div>  
+<!-- end header decktop -->
+<!-- start header mobile -->
+<div id="slidemenumobile" class="visible-sm visible-xs">
+  <ul class="nav navbar-nav navbar-right">
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/">
+            <i class="fa fa-home"></i> Trang chủ
+        </a>
+    </li>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/tim-kiem-di-dong">
+            <i class="fa fa-search"></i> Tìm kiếm
+        </a>
+    </li>
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/dang-tin">
+            <i class="icon icon-laptop60"></i> Đăng tin miễn phí
+        </a>
+    </li>
+
+    <li class="col-sm-12 col-xm-12 menu-home">
+        <a href="/trang-ca-nhan/MyFavorite">
+            <i class="icon icon-common_star_favorite_bookmark_" style="font-size:18px;"></i> Tin yêu thích
+        </a>
+    </li>
+    <li class="menu-line"></li>
+    <li class="col-sm-12 col-xm-12">
+      <a href="/trang-ca-nhan/SignIn">Đăng nhập</a></li>
+    <li class="col-sm-12 col-xm-12">
+      <a href="/trang-ca-nhan/SignUp">Đăng ký</a></li>
+  </ul>
+</div>
+<!-- End header mobile -->
+<!-- end navbar -->
+
+<!-- Start Body Contentner -->
+<div class="main-container">            
+  <!-- Start page_content clearfix -->
+  <div id="pageContent" class="clearfix">
+        <?= $this->layout()->content;?>  
+  </div>
+</div>
+
+
+<!-- Start Body bottom -->
+<div class="tt-bottom">
+  <div class="tt-bottom-contact text-center">
+    <div class="container">
+      <div class="contact-info col-md-12 col-sm-12 col-xs-12">
+        <div class="social-icon">
+          <a href="https://www.facebook.com/thithien"><span class="fa fa-facebook fa-x2"></span></a>
+          <a href="http://youtube.com/c/thithien"><span class="fa fa-youtube fa-x2"></span></a>
+          <a href="https://twitter.com/thithien"><span class="fa  fa-twitter fa-x2"></span></a>
+          <div class="clearfix"></div>
         </div>
-        <div class="opt-right">
-            <div class="nofitication dropdown" ng-class="{'open': activeDropdown}" ng-click="loadNotification()">
-                <a href class="notifyBell" ng-click="toggleNotify($event)">
-                    <span class="label label-danger nb-notifi" ng-if="totalNoti !== 0">{{totalNoti}}</span>
-                    <i class="fa fa-bell-o" aria-hidden="true"></i>
-                </a>
-                <div class="dropdown-menu dropdown_noti">
-                    <div class="_header">
-                        <span>Notifications</span> <span class="l_dgetLink _notifi" ng-if="loadingNoti"></span>
-                    </div>
-                    <div class="_tabnoti">
-                        <div class="_activity active"><span>Activity</span> <span class="label label-danger m-l-5">2</span></div>
-                        <div class="_tool"><span>Tools</span> <span class="label label-danger m-l-5">5</span></div>
-                    </div>
-                    <div class="text-right _mkread">
-                        <span ng-click="markAllRead($event)">Mark all as read <i class="fa fa-bell-o m-l-5"></i></span>
-                    </div>
-                    <div class="_notiWf28" custom-scroll="{ 'theme': 'minimal-dark', 'autoHide': true, 'height': 360}">
-                        <div class="_itnoti" ng-repeat="k in listNotifi"  ng-class="{active : !k.read}" ng-click="openLinkNoti(k);">
-                            <div class="_sttnoti">
-                                <div class="_read">
-                                    <i class="fa fa-circle-thin" aria-hidden="true" ng-if="k.read"></i>
-                                    <i class="fa fa-circle" aria-hidden="true" ng-if="!k.read"></i>
-                                </div>
-                            </div>
-                            <div class="_avtnoti">
-                                <img ng-src="{{k.image}}" alt="" width="40" height="40" class="img-circle">
-                            </div>
-                            <div class="_ntct">
-                                <div class="t_" ng-bind-html="k.message_en"></div>
-                                <div class="b_">
-                                <img src="<?= $this->static->frontend->images.'/v2/Comment.png'?>" alt="" width="20" height="15" class="m-r-10" ng-if="k.type && k.type === 11">
-                                <img src="<?= $this->static->frontend->images.'/v2/Comment.png'?>" alt="" width="20" height="15" class="m-r-10" ng-if="k.type && k.type === 22">
-                                <img src="<?= $this->static->frontend->images.'/v2/Post.png'?>" alt="" width="20" height="20" class="m-r-10" ng-if="k.type && k.type === 1">
-                                <img src="<?= $this->static->frontend->images.'/v2/Like.png'?>" alt="" width="20" height="20" class="m-r-10" ng-if="k.type && k.type === 111">
-                                <img src="<?= $this->static->frontend->images.'/v2/Like.png'?>" alt="" width="20" height="20" class="m-r-10" ng-if="k.type && k.type === 222">
-                                <img src="<?= $this->static->frontend->images.'/v2/Share.png'?>" alt="" width="20" height="20" class="m-r-10" ng-if="k.type && k.type === 1111">
-                                <img src="<?= $this->static->frontend->images.'/v2/Tag.png'?>" alt="" width="20" height="20" class="m-r-10" ng-if="k.type && k.type === 11111">
-                                <img src="<?= $this->static->frontend->images.'/v2/Tag.png'?>" alt="" width="20" height="20" class="m-r-10" ng-if="k.type && k.type === 111111">
-                                    <span class="time text-grey" am-time-ago="k.created | amFromUnix"></span>
-                                    <!-- Invite group -->
-                                    <span class="label label-success m-r-10" ng-if="k.type && k.type === 55" 
-                                    ng-click="actionGroup(k, k.link.accept)">
-                                        Accept
-                                    </span>
-                                    <span class="label label-default" ng-if="k.type && k.type === 55"
-                                    ng-click="actionGroup(k, k.link.not_now)">
-                                        Deny
-                                    </span>
-                                    <!-- Request join group -->
-                                    <span class="label label-success m-r-10" ng-if="k.type && k.type === 555"
-                                    ng-click="actionGroup(k, k.link.accept)">
-                                        Approve
-                                    </span>
-                                    <span class="label label-default" ng-if="k.type && k.type === 555"
-                                    ng-click="actionGroup(k, k.link.not_now)">
-                                        Reject
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="#" class="">
-                <i class="fa fa-envelope-o"></i>
-            </a>
-            <div class="inf-user m-l-20">
-                <div class="dropdown m-r-10">
-                    <a href="#" class="username dropdown" u-tk="<?= $this->arrLogin['token']?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="userinf" u-accId="<?= $this->arrLogin['accountID']?>">
-                        <?= $this->arrLogin['nickName'];?>
-                        <span class="caret"></span>
-                    </a>    
-                    <ul class="dropdown-menu bg-primary" aria-labelledby="userinf">
-                        <li><a href>Settings</a></li>
-                        <li><a href="https://portal-devbe.gnt-global.com">Backend</a></li>
-                        <li><a href="/logout">Log out</a></li>
-                    </ul>
-                </div>
-                <img src="<?php echo $this->arrLogin['image_tag']; ?>" id="avt_user" alt="" class="img-circle" width="40" height="40">
-                <div class="iconChat">
-                    <button type="button" class="btnChat">Simple collapsible</button>
-                </div>
-                <!-- <a href="#" class="m-l-20" ng-click="toggleAsideRight();"><i class="fa fa-indent"></i></a> -->
-            </div>
-        </div>
-        <image-carousel info="carouselImage" ng-if="activeCarousel"></image-carousel>
-    </nav>
-    <section class="main-wrapper">
-        <!--left navigation -->
-        <aside class="left-navbar" ng-class="{off: toggle}" ng-controller="leftModule" class="ng-cloak" 
-        ng-mouseenter="setToggleFalse()" ng-mouseleave="setToggleTrue()">
-            <div class="item-navbar" ng-repeat="l in leftnavItem">
-                <h4 class="hidden_menu">{{l.title}}</h4>
-                <ul>
-                    <li ng-repeat="k in l.items">
-                        <a href="/{{k.link}}" ng-class="{'active': location === k.path}">
-                            <i class="fa {{k.icons}} fa-fw m-r-20"></i><span class="hidden_menu">{{k.name}}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </aside>
-        <?= $this->layout()->content;?>
-        <!-- Toolbar skype-->
-        <article class="hiddenChat">
-            chattttttt
-        </article>
-        <article class="chat-wrapper">
-            chattttttt
-        </article>
-        <article class="articleChat">
-            <div class="boxSetting">
-                <div class="subSearch">
-                    <button type="button" class="btnSearch"></button>
-                    <input type="text" placeholder="Type here for search">
-                </div>
-                <div class="subContact active">
-                    <span class="icon"></span>
-                    <span class="text">Contacts</span>
-                </div>
-                <div class="subSetting">
-                    <span class="icon"></span>
-                    <span class="text">Settings</span>
-                </div>
-                <div class="subAddNew">
-                    <span class="icon"></span>
-                    <span class="text">New Chat</span>
-                </div>
-            </div>
-            <div id="scrollerWrapper">
-                <div class="panelPerson" id="scroller">
-                    <p class="lineFavor">
-                        <span class="line">line</span>
-                        <span class="icon">star</span>
-                    </p>
-                    <div class="boxPersonChat">
-                        <div class="personChat active">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/1.png"/>
-                                <span class="statusChat online"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Trường Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/2.png"/>
-                                <span class="statusChat away"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Huy Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/3.png"/>
-                                <span class="statusChat offline"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Thanh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/4.png"/>
-                                <span class="statusChat disturb"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Dũng Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/5.png"/>
-                                <span class="statusChat calling"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Oanh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="lineFavor lineAway">
-                        <span class="line">line</span>
-                        <span class="icon">away</span>
-                    </p>
-                    <div class="boxPersonChat">
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/1.png"/>
-                                <span class="statusChat online"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Trường Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/2.png"/>
-                                <span class="statusChat away"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Huy Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/3.png"/>
-                                <span class="statusChat offline"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Thanh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/4.png"/>
-                                <span class="statusChat disturb"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Dũng Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/5.png"/>
-                                <span class="statusChat calling"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Oanh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/1.png"/>
-                                <span class="statusChat online"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Trường Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/2.png"/>
-                                <span class="statusChat away"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Hien Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/3.png"/>
-                                <span class="statusChat offline"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Nhu Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/4.png"/>
-                                <span class="statusChat disturb"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Ngoc Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/5.png"/>
-                                <span class="statusChat calling"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Minh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/3.png"/>
-                                <span class="statusChat offline"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Nhu Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/4.png"/>
-                                <span class="statusChat disturb"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Ngoc Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/5.png"/>
-                                <span class="statusChat calling"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Minh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/3.png"/>
-                                <span class="statusChat offline"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Nhu Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/4.png"/>
-                                <span class="statusChat disturb"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Ngoc Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/5.png"/>
-                                <span class="statusChat calling"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Minh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/3.png"/>
-                                <span class="statusChat offline"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Nhu Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/4.png"/>
-                                <span class="statusChat disturb"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Ngoc Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/5.png"/>
-                                <span class="statusChat calling"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Minh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/3.png"/>
-                                <span class="statusChat offline"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Nhu Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/4.png"/>
-                                <span class="statusChat disturb"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Ngoc Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                        <div class="personChat">
-                            <div class="avatarChat">
-                                <img src="<?= $this->static->frontend->images ?>/v2/5.png"/>
-                                <span class="statusChat calling"></span>
-                            </div>
-                            <div class="captionChat">
-                                <span class="nameChat">Minh Nguyễn</span>
-                                <span class="noteChat">We don't talk anymore</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>       
-            </div>            
-        </article>
-    </section>
+        <div> <span style="font-weight:bold"> CTY TNHH TM DV THI THIÊN SHALOM</span>. MST: 0313684679. SĐT: 08-xxxxxxxx</div>
+        <div><span style="font-weight:bold">10 Lê Quốc Trinh, Phú Thọ Hòa, Tân Phú, Hcm</div>
+        <div><span style="font-weight:bold">Giấy phép hoạt động số</span> XX/GXN-TTĐT do Bộ VHTT cấp xx/xx/xxxx.</div>
+        <div>thithien.com có trách nhiệm chuyển tải thông tin. Không chịu bất kỳ trách nhiệm nào từ các tin này. <a href="#"> xem chi tiết</a> </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end body bottom -->
+
+<script>
+
+function openNav() {
+    document.getElementById("slidemenumobile").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("slidemenumobile").style.width = "0";
+}
+</script>
 </body>
 </html>
