@@ -1067,7 +1067,7 @@ var CarFields ={
     "rv-tn":"TienNghiChecked",
 }
 
-var PropertieFields = {
+var PropertiesFields = {
 	"rv-loaibds":"cbLoaiBDS",
     "rv-sonha":"SoNha",
     "rv-phuongxa":"cbPhuongXa",
@@ -1096,7 +1096,7 @@ var formFields = {
     "Email":"Email",
     "DiaChi":"DiaChi",
     "NoiDung":"NoiDung",
-    "PropertieFields": "PropertieFields",
+    "PropertiesFields": "PropertiesFields",
     "CarFields":"CarFields",
     "JobFields":"JobFields",
 }
