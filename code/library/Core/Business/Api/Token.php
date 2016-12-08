@@ -1,4 +1,4 @@
-<?php
+l<?php
 /**
 
  * @todo        :   Using for account service
@@ -38,23 +38,58 @@ class Core_Business_Api_Token
    /**
      * @return <int>
      */
-    public function insert($arrData) 
+    public function insert($sKey, $iType, $iAccountID, $sUsername, $sAvatar, $sPs, $sIPOwner, $sIPClient, $iExpired) 
     {
+        $result = 0;
         try {
-            $arrData = Validate::encodeValues($arrData);
-        	//connect mongo
-        	$connection = Core_Global::getMongoInstance();
-        	$collection = Core_Common::getCollection($connection,'Token');
+            $iUpdateDate = time();
 
-        	$collection->insert($arrData);
+            # Get Data Master Global
+            $storage = Core_Global::getDbGlobalMaster();
+
+            $sql = "INSERT INTO `token`(
+                        `key`,
+                        `type`,
+                        `account_id`,
+                        `username`,
+                        `avatar`,
+                        `ps`,
+                        `IPOwner`,
+                        `IPClient`,
+                        `expired`,
+                        `create_date`,
+                        `update_date`,
+                    )
+                    VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";                
+            # Prepare store procude
+            $stmt = $storage->prepare($sql);
+
+            $stmt->bindParam($sKey, PDO::PARAM_STR);
+            $stmt->bindParam($iType, PDO::PARAM_INT);
+            $stmt->bindParam($iAccountID, PDO::PARAM_INT);
+            $stmt->bindParam($sUsername, PDO::PARAM_STR);
+            $stmt->bindParam($sAvatar, PDO::PARAM_STR);
+            $stmt->bindParam($sPs, PDO::PARAM_STR);
+            $stmt->bindParam($sIPOwner, PDO::PARAM_STR);
+            $stmt->bindParam($sIPClient, PDO::PARAM_STR);
+            $stmt->bindParam($iExpired, PDO::PARAM_INT);    
+            $stmt->bindParam($iUpdateDate, PDO::PARAM_INT);
+            $stmt->bindParam($iUpdateDate, PDO::PARAM_INT);
+            $stmt->execute();
+
+            # Fetch All Result        
+            $result = $stmt->fetchColumn();
+
+            # Free cursor
+            $stmt->closeCursor();
 
         } catch (Exception $ex) {
-            ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),'','');
-            return false;
+            // ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),'','');
+            return $result;
         }
 
         // return data
-        return true;
+        return $result;
     }
     
     /**
@@ -63,30 +98,45 @@ class Core_Business_Api_Token
      * @param array $update
      * @return boolean
      */
-    public function update($query, $update)
+    public function update($iAccountID, $sUsername, $sKey)
     {
-    	$flag = FALSE;
+    	$result = FALSE;
     	try {
     
-    		//connect mongo
-    		$connection = Core_Global::getMongoInstance();
-    		$collection = Core_Common::getCollection($connection,'Token');
-    
-    		$result = $collection->update(
-    				$query,
-    				array('$set' => $update)
-    		);
-    		
-    		if(empty($result['err'])){
-    			$flag = TRUE;
-    		}
+    		$iUpdateDate = time();
+
+            # Get Data Master Global
+            $storage = Core_Global::getDbGlobalMaster();
+
+            $sql = "UPDATE `token` SET                        
+                        `update_date` = ?
+                    WHERE `key` = ?
+                    AND `account_id` = ?
+                    AND `username` = ?
+                    LIMIT 1;";                
+            # Prepare store procude
+            $stmt = $storage->prepare($sql);
+
+            $stmt->bindParam($iUpdateDate, PDO::PARAM_INT);
+            $stmt->bindParam($sKey, PDO::PARAM_STR);
+            $stmt->bindParam($iAccountID, PDO::PARAM_INT);
+            $stmt->bindParam($sUsername, PDO::PARAM_STR);
+            
+            $stmt->execute();
+
+            # Fetch All Result        
+            $result = $stmt->fetchColumn();
+
+            # Free cursor
+            $stmt->closeCursor();
     
     	} catch (Exception $ex) {
             Core_Common::var_dump($ex);
-    		ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),'','');
+    		// ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),'','');
+            return $result; 
     	}
     	
-    	return $flag;
+    	return $result;
     }
     
     /**
@@ -97,49 +147,113 @@ class Core_Business_Api_Token
      */
     public function delete($iKey){
     	
-    	$flag = FALSE;
-    	
-    	try {
-    	
-    		//connect mongo
-    		$connection = Core_Global::getMongoInstance();
-    		$collection = Core_Common::getCollection($connection,'Token');
-    	
-    		$flag = $collection->remove(array('key' => $iKey));
-    	
-    	} catch (Exception $ex) {
-    		ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),'','');
-    	}
-    	 
-    	return $flag;
-    	
-    	
+    	$result = 0;
+        try {
+            # Get Data Master Global
+            $storage = Core_Global::getDbGlobalMaster();
+
+            $sql = "DELETE FROM `token` 
+                    WHERE `key` = ?
+                    LIMIT 1;";
+            # Prepare store procude
+            $stmt = $storage->prepare($sql);
+            $stmt->bindParam($iKey, PDO::PARAM_INT);
+            $stmt->execute();
+
+            # Fetch All Result
+            $result = $stmt->fetchColumn();
+
+            # Free cursor
+            $stmt->closeCursor();
+        } catch (Exception $ex) {
+            // ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage());
+            print_r($ex->getMessage());
+        }
+
+        // return data
+        return $result;    	    	
     }        
     
-    public function select($query = array())
+    public function select($sKey)
     {
     
-    	$arrResult = array();    	
-    
-    	try {
-    
-    		//connect mongo
-    		$connection = Core_Global::getMongoInstance();
-			$collection = Core_Common::getCollection($connection,'Token');
-    		    		
-    		$arrResult = $collection->findOne($query);
-            $arrResult = is_null($arrResult) ? array() : $arrResult;
-    
-    
-    	} catch (Exception $ex) {
-    		ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),'','');
-    	}
-    
-    	// return data
-    	return $arrResult;
+    	$arrResult = array();
+
+        try {
+
+            # Get Data Master Global
+            $storage = Core_Global::getDbGlobalSlave();
+
+            $sql = "SELECT *
+                    FROM `token`
+                    WHERE `key` = ?
+                    LIMIT 1;";
+            # Prepare store procude
+            $stmt = $storage->prepare($sql);
+
+            $stmt->bindParam($sKey, PDO::PARAM_STR);
+            $stmt->execute();
+
+            # Fetch All Result
+            $arrResult = $stmt->fetchColumn();
+
+            # Free cursor
+            $stmt->closeCursor();
+
+            //Return data
+            $arrResult = $arrResult            
+
+        } catch (Exception $ex) {
+            //ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage());
+            return array();
+        }
+
+        // return data
+        return $arrResult;
     }
     
+    public function getToken($iAccountID, $sUsername, $sPs, $sIpClient)
+    {
     
+        $arrResult = array();
+
+        try {
+
+            # Get Data Master Global
+            $storage = Core_Global::getDbGlobalSlave();
+
+            $sql = "SELECT `key`
+                    FROM `token`
+                    WHERE `account_id` = ?
+                    AND `username` = ?
+                    AND `ps` = ?
+                    AND (`IPClient` = ? OR `IPOwner` = ?)
+                    AND NOW() >= `update_date` + `expired`
+                    LIMIT 1;";
+            # Prepare store procude
+            $stmt = $storage->prepare($sql);
+
+            $stmt->bindParam($iAccountID, PDO::PARAM_INT);
+            $stmt->bindParam($sUsername, PDO::PARAM_STR);
+            $stmt->bindParam($sPs, PDO::PARAM_STR);
+            $stmt->bindParam($sIPClient, PDO::PARAM_STR);
+            $stmt->bindParam($sIPClient, PDO::PARAM_STR);
+            $stmt->execute();
+
+            # Fetch All Result
+            $arrResult = $stmt->fetchColumn();
+
+            # Free cursor
+            $stmt->closeCursor();            
+
+        } catch (Exception $ex) {
+            // ErrorLog::getInstance()->insert(__CLASS__, __FUNCTION__, $ex->getMessage());
+            return "";
+        }
+
+        // return data
+        return $arrResult;
+    }
     
 
   

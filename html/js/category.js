@@ -447,7 +447,7 @@ var DanhMuc = {
 	},
 	"7":{
 		"id":"7",
-		"name":"Điện máy, Đồ gia dụng11",
+		"name":"Điện máy, Đồ gia dụng",
 		"icon":"",
 		"vitri":"7",
 		"danhmuccon": {

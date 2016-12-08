@@ -50,43 +50,19 @@ class Token
     }
     
     /**
-     * insert file
-     * @param string $sName
-     * @param string $sPath
-     * @param int $iType '0: file, 1: folder'
-     * @param int $iParent '0: is parent'
-     * @param int $iOwner 'creater'
-     * @param int $iCreated
-     * @param int $iUpdated
-     * @return int id
+     * insert token
      */
     public function insert($sKey, $iType, $iAccountID, $iUsername, $sAvatar, $iPs, $iIPOwner, $iIPClient, $iExpired = 3600)
     {
-        $time = time();
-        $mongoDate = new MongoDate($time);        
-        $Expired = new MongoDate($time + (int)$iExpired);
-    	$arrData = array(    			
-    			"key" => $sKey,    			
-    			'type' => $iType,// for docs=> type = docs    			
-                "account_id" => $iAccountID,
-    			"username" => $iUsername,
-                "avatar" => $sAvatar,
-                "ps" => $iPs,
-    			"IPOwner" => $iIPOwner, //Ip người tao
-                "IPClient" => $iIPClient,// IP người có thể dùng: *=>all
-                "expired" => $Expired,
-    			"updated" => $mongoDate,
-    			"created" => $mongoDate
-    	
-    	);
-
-    	$iID = $this->_modeParent->insert($arrData);    	    	
-    	return $iID;
+        //Get data
+        $iResult = $this->_modeParent->insert($sKey, $iType, $iAccountID, $iUsername, $sAvatar, $iPs, $iIPOwner, $iIPClient, $iExpired);
+        //Return result data
+        return $iResult;  
     }
 
-    public function update($query,$key)
+    public function update($iAccountID,$username,$key)
     {        
-        return $this->_modeParent->update($query,$key);
+        return $this->_modeParent->update($iAccountID,$username,$key);
     }
     
     /**
@@ -97,33 +73,16 @@ class Token
      * @param array $arrFileIds
      * return  array('total' => $iTotal, 'data' => $cursor);
      */
-    public function select($sKey = '', $iType = "", $iIPClient = "", $iIPOwner = "")
+    public function getToken($iAccountID, $sUsername, $sPs, $sIpClient)
     {
-        $query = array();        
-                
-        //search key
-        if(!empty($sKey)){
-            $query['key'] = $sKey;
-        }
+        //Get data
+        $iResult = $this->_modeParent->getToken($iAccountID, $sUsername, $sPs, $sIpClient);
 
-        //search type
-        if(!empty($iType)){
-            $query['type'] = $iType;
+        if($iResult === ""){
+            $i
         }
-        
-        //IP Client
-        if(!empty($iIPClient)){
-            $query['$or'] = array( array('IPClient' => $iIPClient),  array('IPOwner' => $iIPClient));
-        }
-        
-        //IP owner
-        if(!empty($iIPOwner)){
-            $query['IPOwner'] = $iIPOwner;
-        }
-        
-        $query['expired'] = array('$gte'=> new MongoDate());
-
-        return $this->_modeParent->select($query);
+        //Return result data
+        return $iResult;
     }
 
     /**
