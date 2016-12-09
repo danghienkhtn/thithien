@@ -131,9 +131,14 @@ class Admin {
     	return $data;
     }
     
-    public function checkLogin() {
+    public function adminLogin($username, $password, $arrAccInfo)
+    {
+        return $this->_modeParent->adminLogin($username, $password, &$arrAccInfo);
+    }
     
-    	$sAuthToken = Core_Cookie::getCookie(AUTH_LOGIN_TOKEN);
+    public function checkAdminLogin() {
+    
+    	$sAuthToken = Core_Cookie::getCookie(AUTH_ADMIN_LOGIN_TOKEN);
     
     	if(empty($sAuthToken)) {
     		return false;
@@ -151,7 +156,7 @@ class Admin {
     	if(empty($data)) {
     		return false;
     	} else {
-    		return $data;
+    		return true;
     	}
     
     
@@ -161,7 +166,7 @@ class Admin {
      * get login
      */
     
-    public function getLogin($sAuthToken = '')
+    public function getAdminLogin($sAuthToken = '')
     {
         $sAuthToken = trim($sAuthToken);
           //Check cookie data
@@ -171,20 +176,20 @@ class Admin {
 
         //Check token
         if (empty($sAuthToken)) {
-            return false;
+            return array();
         }
 
         /* Session expired*/
         if(!isset($_SESSION[$sAuthToken]))
         {
-            return false;
+            return array();
         }
         //Return data
         return $_SESSION[$sAuthToken];
 
     }
     
-    public function setLogin($sAuthToken, $iAccountID)
+    public function setAdminLogin($sAuthToken, $iAccountID)
     {
 
         $accountInfo = AccountInfo::getInstance()->getAccountInfoByAccountID($iAccountID);

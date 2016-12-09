@@ -62,6 +62,7 @@ class Core_Plugin_Env extends Zend_Controller_Plugin_Abstract
                     if(isset($arrRequestValue[0]) && isset($arrRequestValue[1]))
                     {
                         $request->setParam($arrRequestValue[0], $arrRequestValue[1]);
+                        // error_log($arrRequestValue[0]."++". $arrRequestValue[1]);
                     }                
                 }
             }

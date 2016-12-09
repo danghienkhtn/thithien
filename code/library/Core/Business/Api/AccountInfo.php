@@ -28,7 +28,6 @@ class Core_Business_Api_AccountInfo
      * 
      */
     public final static function getInstance() {
-        error_log("new insalt");
         // check instance
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
@@ -765,7 +764,7 @@ class Core_Business_Api_AccountInfo
     /*
      * 
      */
-     public function checkUserLogin($sUserName, $sPassword, $arrAccInfo) {
+     public function userLogin($sUserName, $sPassword, $arrAccInfo) {
          
          $result = 0;         
         try {
@@ -801,43 +800,5 @@ class Core_Business_Api_AccountInfo
         // return data
         return $result;
     } 
-
-    public function checkAdminLogin($sUserName, $sPassword, $arrAccInfo) {
-         
-         $result = 0;         
-        try {
-
-            // Get Data Master Global
-            $storage = Core_Global::getDbGlobalSlave();
-            $sql = "SELECT * 
-                    FROM `account_info` acc, `admin` ad
-                    WHERE acc.`account_id` = ad.`account_id`
-                    AND ad.`active` = 1
-                    AND ( acc.`username` = :p_username OR acc.`email` = :p_username )
-                    AND acc.`password` = :p_password                    
-                    LIMIT 1";
-            // Prepare store procude
-            $stmt = $storage->prepare($sql);
-            $stmt->bindParam(':p_username', $sUserName, PDO::PARAM_STR);
-            $stmt->bindParam(':p_password', md5($sPassword), PDO::PARAM_STR);
-            $stmt->execute();
-
-            // Fetch All Result
-            $arrAccInfo = $stmt->fetch();
-
-            // Free cursor
-            $stmt->closeCursor();
-
-            $result = 1;
-        } catch (Exception $ex) {
-            Core_Common::var_dump($ex->getMessage());
-            // ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),0,$sUserName);
-            $arrAccInfo = array();
-            $result = 0;
-        }
-
-        // return data
-        return $result;
-    }
 
 }

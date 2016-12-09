@@ -279,18 +279,12 @@ class AccountInfo
         return $this->_modeParent->countUserActive();
     }
 
-    public function checkUserLogin($username, $password, $arrAccInfo)
+    public function userLogin($username, $password, $arrAccInfo)
     {
-        return $this->_modeParent->checkUserLogin($username, $password, &$arrAccInfo);
-    }
+        return $this->_modeParent->userLogin($username, $password, &$arrAccInfo);
+    }    
 
-    public function checkAdminLogin($username, $password, $arrAccInfo)
-    {
-        return $this->_modeParent->checkUserLogin($username, $password, &$arrAccInfo);
-    }
-
-
-    public function getUserLogin($sAuthToken = '')
+    public function checkUserLogin($sAuthToken = '')
     {
         $sAuthToken = trim($sAuthToken);
           //Check cookie data
@@ -307,6 +301,29 @@ class AccountInfo
         if(!isset($_SESSION[$sAuthToken]))
         {
             return false;
+        }
+        //Return data
+        return true;
+
+    }
+
+    public function getUserLogin($sAuthToken = '')
+    {
+        $sAuthToken = trim($sAuthToken);
+          //Check cookie data
+        if(empty($sAuthToken)) {
+            $sAuthToken = Core_Cookie::getCookie(AUTH_USER_LOGIN_TOKEN);
+        }
+
+        //Check token
+        if (empty($sAuthToken)) {
+            return array();
+        }
+
+        /* Session expired*/
+        if(!isset($_SESSION[$sAuthToken]))
+        {
+            return array();
         }
         //Return data
         return $_SESSION[$sAuthToken];

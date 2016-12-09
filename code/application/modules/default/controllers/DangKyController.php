@@ -14,8 +14,10 @@ class DangKyController extends Core_Controller_Action {
      */
     public function init()
     {
+        parent::init();
+
         $remoteIp =  $this->_request->getServer('REMOTE_ADDR'); 
-        // echo $remoteIp;       
+        // error_log("----". $remoteIp);       
         //Disable layout
         // $this->_helper->layout()->disableLayout();
     }
@@ -38,10 +40,11 @@ class DangKyController extends Core_Controller_Action {
     public function indexAction()
     {
 
-        $redirectPage = $this->_getParam('redirect',BASE_URL.'/trang-chu');
+        $redirectPage = $this->_getParam('returnUrl',BASE_URL);
+        // error_log($this->_getParam("returnUrl")); 
         //check login
-        $login = AccountInfo::getInstance()->getUserLogin();
-        if(isset($login['accountID']) && isset($login['email']))
+        // $login = AccountInfo::getInstance()->getUserLogin();
+        if(isset($this->isLogin) && $this->isLogin === TRUE)
             $this->_redirect($redirectPage);
 
         $iSubmitTime = new Zend_Session_Namespace('RegistTime');
@@ -59,40 +62,56 @@ class DangKyController extends Core_Controller_Action {
         //user login
 
         if($this->_request->isPost())
-        {
+        {            
             $params = $this->_request->getPost();
 
             $username = trim($params["username"]);
             $password = trim($params["password"]);
+            $confirmpassword = trim($params["confirmpassword"]);
             $params["isremember"] = isset($params["isremember"]) ? $params["isremember"]: 'off';
             $isRemember = ($params["isremember"] == 'on') ? true : false;
             $arrAccount = array();
             //validate password and username
             if(!Core_Validate::checkUsername($username)){
-                $message = 'Tên đăng nhập không chính xác!!';
+                $message .= "<br />Nhập lại tên đăng nhập";
+                $bCaptcha = false;
+            }
+
+            if(!Core_Validate::checkEmail($email)){
+                $message .= "<br />Nhập lại email";
                 $bCaptcha = false;
             }
 
             if(!Core_Validate::checkPassword($password)){
-                $message = 'Mật khẩu không chính xác!';
+                $message .= " <br />Nhập lại mật khẩu";
                 $bCaptcha = false;
             }            
+
+            if(!Core_Validate::checkPassword($confirmpassword) || $password !== $confirmpassword){
+                $message .= " <br />Nhập lại xác nhận mật khẩu";
+                $bCaptcha = false;
+            }
 
             $reCaptcha = $this->_getParam('g-recaptcha-response');
             //Get params
             if($iSubmitTime->time >= 4){
 
                 $data = array(
-                    "secret" => "6LdYFh0TAAAAAAL_RVrbhr83qFapwIZrQaOE8jC0",
+                    "secret" => "6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN",
                     "response" => $reCaptcha
                 );
-                $url_send ="https://www.google.com/recaptcha/api/siteverify?secret=6LdYFh0TAAAAAAL_RVrbhr83qFapwIZrQaOE8jC0&response=".$reCaptcha;
+                $url_send ="https://www.google.com/recaptcha/api/siteverify?secret=6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN&response=".$reCaptcha;
                 $str_data = json_encode($data);
                 $responseCaptcha = $this->sendPostData($url_send, $str_data);
                 $responseCaptcha = json_decode($responseCaptcha,true);
                 $bCaptcha = $responseCaptcha['success'];
-                if(!$bCaptcha);
-                $message = 'Sai chứng thức, vui lòng thử lại!';
+                if(!$bCaptcha){
+                    error_log("chung thuc ko dc");
+                    $message .= " <br />Sai chứng thức, vui lòng thử lại!";
+                }
+                else{
+                    error_log("Chung thuc ok");
+                }
             }
 
             if($bCaptcha) {
@@ -141,24 +160,28 @@ class DangKyController extends Core_Controller_Action {
 
                         }
                         else {
-                            $message = "Vui long thu lai!";
+                            $message .= "Vui long thu lai!";
                         } 
 
                     } else {
-                        $message = 'Wrong UserName Or Password. Pls check your information again!';
+                        $message .= 'Wrong UserName Or Password. Pls check your information again!';
                     }
 
                 } else {
-                    $message = 'Pls input UserName Or Password!';
+                    $message .= 'Pls input UserName Or Password!';
                 }
             }
 
         }
-
+// error_log("here_");
+        $this->view->abc=$redirectPage;
         $this->view->iSubmitTime = $iSubmitTime->time;
         $this->view->email = $username;
         $this->view->message  = $message;
         $this->view->redirectPage  = $redirectPage;
+
+
+        // error_log("3. ". Zend_Json::encode($this->view));
     }
 
     public function loginAction()

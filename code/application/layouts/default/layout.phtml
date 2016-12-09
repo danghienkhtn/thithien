@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta http-equiv="X-Frame-Options" content="allow"> 
-    <title>Thi Thien </title>
+    <title>Thi Thien a <?php echo $this->abc; ?> <?= $this->redirectPage; ?> </title>
     <link href="<?= $this->static->frontend->css ;?>/font-awesome.min.css" rel="stylesheet" type='text/css'>
     <link href="<?= $this->static->frontend->css ;?>/bootstrap.min.css" rel="stylesheet" type='text/css'>
     <link href="<?= $this->static->frontend->css ;?>/thithien.css" rel="stylesheet" type='text/css'>
@@ -14,8 +14,9 @@
     <script src="<?= $this->static->frontend->js ;?>/thithien.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
-    <script src="<?= $this->static->frontend->js ;?>/banner.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/banners.js"></script>
     <script src="<?= $this->static->frontend->js ;?>/category.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/app.js"></script>
     <script type="text/javascript">
         /*var sessionAccountId = "<?php echo $this->arrLogin['accountID']; ?>"; */ 
     </script>
@@ -142,5 +143,24 @@ function closeNav() {
     document.getElementById("slidemenumobile").style.width = "0";
 }
 </script>
+<?php if($this->controllerName == "dang-ky"){ ?>
+<script type="text/javascript">
+    var onloadCallback = function() {
+        grecaptcha.render('html_element', {
+          'sitekey' : '6Lc8Ww4UAAAAADex6QFz4YTmWdUW9nB6a6AQTY8z'
+        });
+    };
+    $(document).ready(function(){
+      $('.checkbox').on('click', function(){
+        $(this).toggleClass('checked');
+        var checkBoxes = $('.checkbox input[type="checkbox"]');
+        checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+      });
+    })
+</script>
+ <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer></script>
+<?php } ?>
+
 </body>
 </html>

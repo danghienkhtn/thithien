@@ -1100,7 +1100,7 @@ var formFields = {
     "CarFields":"CarFields",
     "JobFields":"JobFields",
 }
-console.log(formFields);
+// console.log(formFields);
 
 var PhuongXa = {
 	"0": {"id":"0","name":"Phuong A","icon":"","vitri":"1"},

@@ -17,82 +17,48 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
     //Product
     protected $_product = null;
 
+    /*function __construct() {
+        //error_log("construction");
+    }*/
     /**
      * Init
      */
-    public function init() {
+    public function init() {        
         // $this->_helper->layout->disableLayout();
         // $this->_helper->viewRenderer('login/login', null, true);
+        $this->isLogin = FALSE;
+        $this->isAdmin = FALSE;
+        $this->arrLogin = array();
 
-        // $arrLogin = Admin::getInstance()->getLogin();
-        // $adminDetail = Admin::getInstance()->checkLogin();
-        // $isAdmin = ($adminDetail) ? true : false;
-
-        //get and set timetime
-        /*$getTimezoneParam = array(
-            'accountId' => $arrLogin['accountID'],
-            'key' => USER_CONFIG_TIMEZONE,
-        );*/
-
+        $this->isLogin = AccountInfo::getInstance()->checkUserLogin();
+        if($this->isLogin){
+            $this->arrLogin = AccountInfo::getInstance()->getUserLogin();
+            $this->isAdmin = ((is_array($this->arrLogin)) && (sizeof($this->arrLogin) > 0) && $this->arrLogin["is_admin"] == 1) ?  TRUE : FALSE;
+        }     
         $timezone = DEFAULT_TIMEZONE;
         // $timezoneConfig = UserConfig::getInstance()->getUserConfigByKey($getTimezoneParam);
         // isset($timezoneConfig['value']) && $timezone = $timezoneConfig['value'];
-
         date_default_timezone_set($timezone);
 
         $this->view->headTitle()->setSeparator(' - ');
-        // $this->view->isAdmin = $isAdmin;
+        
         $title = empty($this->title) ? 'ThiThien' : $this->title;
         $this->view->headTitle()->append($title);
-        // $this->view->arrLogin = $arrLogin;
-//        if($this->_request->isXmlHttpRequest()){
-//            echo 'ajax';
-//        }
-       
+// error_log(Zend_Json::encode($this->view));        
+// request URL not Ajax
         if(!$this->_request->isXmlHttpRequest()){
             global $globalConfig;
-
             // $arrLogin = Admin::getInstance()->getLogin();
             /**tr
              * Deny call by inner action make by action helper.
              * action helper have param in request is inner
              */
-            if ($this->_request->getParam("inner", "") != "")
-                return;
+            if ($this->_request->getParam("returnUrl", "") != "")
+            {    
+                // error_log("returnUrl here");
+                $this->view->returnUrl = $this->_request->getParam("returnUrl");
+            }    
 
-/*            if (!isset($arrLogin['accountID']) || empty($arrLogin['accountID'])) {
-
-                $this->_redirect("/login");
-                exit();
-            }*/
-
-            /* Check Login
-
-             */
-            //get Login
-//        echo $_SESSION['username'];die;
-//            $arrLogin = Admin::getInstance()->getLogin();
-
-//            if ($this->_request->getControllerName() != "login" && $this->_request->getControllerName() != "logout") {
-//
-////            Core_Common::var_dump($arrLogin);
-////            $arrLogin['avatar'] = !empty($arrLogin['avatar']) ? $arrLogin['avatar'] : PATH_AVATAR_URL.'/avatar_default.png';
-//
-//                $remoteIp = $this->_request->getServer('REMOTE_ADDR');
-//                if (preg_match('/^192.168/', $remoteIp) && !preg_match('/^192.168.30.51$/', $remoteIp)) {
-//                    if (!$this->_request->getServer('HTTPS')) {
-//                        $host = $this->_request->getServer('HTTP_HOST');
-//                        $this->_redirect("https://" . $host);
-//                        exit;
-//                    }
-//                }
-//
-//                if ($this->_request->getActionName() != 'mail') {
-//
-
-//                }
-//
-//            }
 
             /*
             // write logs all action in frontend
@@ -140,14 +106,10 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
 //            $this->view->arrGroupProject = $arrGroupProject;
             $this->view->controllerName = $this->_request->getControllerName();
             $this->view->acctionName = $this->_request->getActionName();
-//            $this->view->arrGroupMember = $arrGroupMember;
-//            $this->view->groupTypes = array_flip($globalConfig['group_type']);
-           // echo "54656";
+            $this->view->isLogin = $isLogin;
+            $this->view->isAdmin = $isAdmin;
+            $this->view->arrLogin = $arrLogin;
         }
-
-
-//        $myGroups = Core_Common::array_sort($arrGroupMember, 'group_type');
-
 
     }
 
