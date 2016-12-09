@@ -51,11 +51,10 @@ try
                 'display_errors'         => (APP_ENV == 'development')?1:0
             )
         )
-    );    
-    
+    );   
     //Init and run boostrap
     $application->bootstrap()->run();   
-    
+    // echo "asdsdd index";
     //Garbage collection
     gc_collect_cycles();
 } 

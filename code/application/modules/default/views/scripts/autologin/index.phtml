@@ -1,9 +1,0 @@
- <form action="https://mail3.gnt-global.com/owa/auth.owa" target="_blank" method="POST" name="logonForm" ENCTYPE="application/x-www-form-urlencoded" id="loginForm">
-      <input type="hidden" id="destination" name="destination" value="https://mail3.gnt-global.com/owa">
-      <input type="hidden" name="username"  value="<?php echo $this->arrLogin['email'];?>" >
-      <input type="hidden" name="password"  value="<?php echo base64_decode($this->arrLogin['ps']);?>">
-      <input type="hidden" name="flags" value="4">
-      <input type="hidden" name="forcedownlevel" value="0">
-      <input type="radio"  name="trusted" value="4" class="rdo" checked>
-      <input type="hidden" name="isUtf8"  value="1">
- </form>

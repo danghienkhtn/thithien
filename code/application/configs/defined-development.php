@@ -210,7 +210,9 @@ $arrGlobalBusinessApplication = array(
     'DOMAIN_COOKIE_NAME' => 'DEV_PREF_PORTAL_MAIN',
     'DOMAIN_COOKIE_EXPIRED' => 60 * 60 * 24 * 120,//20 days
 
+    'AUTH_USER_LOGIN_TOKEN' => "tt_user_token",
     'AUTH_LOGIN_TOKEN' => "tt_auth_token",
+
     'AUTH_LANGUAGE' => "tt_auth_lang",
     'AUTH_SAYHI' => "tt_sayhi",
 

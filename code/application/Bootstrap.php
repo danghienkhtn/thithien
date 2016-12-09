@@ -8,6 +8,7 @@
  * http://framework.zend.com/manual/en/zend.controller.actionhelpers.html
  */
 require_once '../framework/Zend/Loader/Autoloader.php';
+
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 	/**
@@ -82,7 +83,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         //Add dynamic router
         $routers->addRoute('default', $default_router);
-        
+
         //Set new router
         self::$currFrontEnd->setRouter($routers);
     }
@@ -138,7 +139,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         //Check frontController
         if(empty(self::$currFrontEnd))
-        {
+        {            
             self::$currFrontEnd = Zend_Controller_Front::getInstance();
         }
     	
@@ -166,22 +167,23 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         //Add api router
         $this->initApiRouters();
-        
-  
-        //Set controller plugin
+    
+        #Set controller plug
         self::$currFrontEnd->registerPlugin(
             new Core_Plugin_Env(),
             'CORE_PLUGIN_ENV'
         );
                         
         //Set bootstrap params
-        if(null === self::$currFrontEnd->getParam('bootstrap'))
+        if(null === self::$currFrontEnd->getParam('bootstrap'))            
         {
+            // var_dump($this);
             self::$currFrontEnd->setParam('bootstrap', $this);
         }                    
         
         //Dispatch HTML
         self::$currFrontEnd->dispatch();        
+        // exit("s7");        
     }
                     
     /**
@@ -206,9 +208,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     	//Init Application Configuration
     	$this->initAppConfiguration();
-    	
+
     	//Init Front Controller
     	$this->initFrontController();
+        
     }
 }
 

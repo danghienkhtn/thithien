@@ -1,8 +1,8 @@
 <?php
 /**
- * @author      :   Workflow
+ * @author      :   Hiennd
  * @name        :   Model Workflow
- * @version     :   20130502
+ * @version     :   20161207
  * @copyright   :   My company
  * @todo        :   Product model
  */
@@ -22,35 +22,17 @@ class ActionLog
 
 
     // action log action
-    public static $create = 1;
-    public static $update = 2;
-    public static $delete = 3;
-    public static $add    = 4;
+    public static $create = "create";
+    public static $update = "update";
+    public static $delete = "delete";
+    public static $add    = "add";
+    public static $approved    = "approved";
 
 
     // action log type
-    public static $news = 1;
-    public static $photo = 2;
-    public static $profile = 3;
-    public static $comment = 4;
-    public static $like = 5;
-    public static $user = 6;
-    public static $project_member = 7;
-    public static $project = 8;
-    public static $group = 9;
-
-    public static $general = 10;
-    public static $leave_application = 11;
-    public static $feed = 12;
-    public static $album = 13;
-    public static $specialDay = 14;
-    public static $admin = 15;
-    public static $absence = 16;
-    public static $attendance = 17;
-
-    public static $group_member = 18;
-    public static $mail = 18;
-    public static $overtime = 19;
+    public static $news = "post_news";
+    public static $photo = "";
+    public static $profile = "profile";    
 
     /**
      * Constructor of class
@@ -81,17 +63,16 @@ class ActionLog
     /**
      * @todo  Add new GiveAway
      */
-    public function insert($iID, $iAction, $iType, $iAccountID, $sAccountName, $sNote = '')
+    public function insert($iAction, $iType, $iAccountID, $sNote = '')
     {
+        $iCurDate = time();
     	$arrData = array(
-    			"id" => $iID,
-    			"action" => $iAction,
-    			"type" => $iType,
-    			"account_id" => $iAccountID,
-    			"account_name" => $sAccountName,
-    			"note" => Validate::encodeValues($sNote,true,false),
-    			"created" => new MongoDate()
-    			 
+    			"log_action" => $iAction,
+    			"log_type" => $iType,
+    			"log_account_id" => $iAccountID,
+    			"log_ip" => $_SERVER['REMOTE_ADDR'],
+    			"log_note" => Validate::encodeValues($sNote,true,false),
+    			"log_useragent" => $_SERVER['HTTP_USER_AGENT']    			 
     	);
     	
         //Get data
@@ -100,20 +81,14 @@ class ActionLog
         return $iID;
     }
     
-    public function select($sAccountName, $sStartDate, $sEndDate, $iType, $iAction, $iStart, $iLimit)
+    public function count($sAccountID, $sStartDate, $sEndDate, $sType, $sAction)
     {
-    	return $this->_modeParent->select($sAccountName, $sStartDate, $sEndDate, $iType, $iAction, $iStart, $iLimit);
+    	return $this->_modeParent->select($sAccountID, $sStartDate, $sEndDate, $sType, $sAction);
     }
 
-    public function selectById($sId)
+    public function select($sAccountID, $sStartDate, $sEndDate, $sType, $sAction, $iOffset = 0, $iLimit = 20)
     {
-        return $this->_modeParent->selectById($sId);
+        return $this->_modeParent->select($sAccountID, $sStartDate, $sEndDate, $sType, $sAction, $iOffset, $iLimit);
     }
-    
-    public function getActionLog($sAccountId, $iType, $iAction, $iStart, $iLimit)
-    {
-        return $this->_modeParent->getActionLog($sAccountId, $iType, $iAction, $iStart, $iLimit);
-    }
-   
 
 }

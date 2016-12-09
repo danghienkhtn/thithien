@@ -1,0 +1,99 @@
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-left-login">
+      <form class="form" method="post">
+        <input name="__RequestVerificationToken" type="hidden" value="9O7ldQWK_MKZMCA5wwsAtimWZEgQjv8eY9xeK41c8GU8GXs9w5h3yIbEzz0MsX45fO_cmDVBQ70y-xQt27Bwci31JEw1" />
+        <input id="sid" name="sid" type="hidden" value="1769fb039a5045cb9c615b8da2a6c1ab" />
+        <input data-val="true" data-val-number="The field mode must be a number." data-val-required="The mode field is required." id="mode" name="mode" type="hidden" value="0" />
+        <input id="AppName" name="AppName" type="hidden" value="muabannet" />
+        <input id="Services" name="Services" type="hidden" value="mbnv2" />
+        <input id="returnUrl" name="returnUrl" type="hidden" value="https://muaban.net/dang-tin" />
+        <input id="callbackUrl" name="callbackUrl" type="hidden" value="https://muaban.net/trang-ca-nhan/SignInCallback" />
+        <div class="col-md-12 content">
+          <div class="button-social button-google" onclick="javascript:goSocial('google')">
+              <span class="icon-google-plus fa fa-google-plus fa-2x"></span>
+              Đăng ký bằng Google
+          </div>
+          <div class="button-space"></div>
+          <div class="button-social button-facebook" onclick="javascript: goSocial('facebook')">
+              <span class="icon-facebook fa fa-facebook-official fa-2x"></span>
+              Đăng ký bằng Facebook
+          </div>
+          <div class="button-space"></div>
+          <div class="button-social button-yahoo" onclick="javascript: goSocial('yahoo')">
+              <span class="icon-yahoo fa fa-yahoo fa-2x"></span>
+              Đăng ký bằng Yahoo
+          </div>
+          <div class="button-space"></div>
+          <div class="divider">
+              <hr class="left" />Hoặc Đăng ký bằng Email <hr class="right" />
+          </div>
+          <div class="form-group">
+              <input class="form-control" id="UserName" maxlength="256" name="UserName" placeholder="Email / Điện thoại đăng nhập *" type="text" value="" />
+              <span class="field-validation-valid"></span>
+              <span class="field-validation-error">Bạn vui lòng nhập thông tin hợp lệ</span>
+          </div>
+          <div class="form-group">
+              <input class="form-control" id="Password" maxlength="51" name="Password" placeholder="Mật khẩu *" type="password" />
+              <span class="field-validation-valid"></span>
+              <span class="field-validation-error>Bạn vui lòng nhập Mật khẩu</span>
+          </div>
+          <div class="form-group">
+              <input class="form-control" id="ConfirmPassword" maxlength="51" name="ConfirmPassword" placeholder="Mật khẩu *" type="password" />
+              <span class="field-validation-valid"></span>
+              <span class="field-validation-error" id="Error_FullName">Không trùng khớp, bạn vui lòng nhập Mật khẩu</span>
+          </div>          
+          <div class="form-group">
+                <input class="form-control" id="FullName" maxlength="80" name="FullName" placeholder="Họ và tên" type="text" value="">
+                <span class="field-validation-valid"></span>
+                <span class="field-validation-error" id="Error_FullName">Bạn vui lòng nhập Họ và tên</span>
+          </div>
+          <div class="form-group">
+            <div style="vertical-align:middle;">
+                <input autocomplete="off" class="form-control captcha" id="ConfirmCaptcha" name="ConfirmCaptcha" placeholder="Nhập mã bên phải" style="" type="text" value="">
+                <div style="display: inline-block; width: 140px; height:34px; padding-left: 10px;">
+                    <input type="hidden" id="Captcha" name="Captcha" value="24f973d9-81bd-4541-8ced-ff609a316bb2">
+                    <img id="imgCaptcha" src="/captcha.ashx?guid=24f973d9-81bd-4541-8ced-ff609a316bb2&amp;rand=" alt="Captcha" width="100" height="30"> <a href="javascript:void(0);" class="icon-loop2" style="border: none; text-decoration: none;" ng-click="refreshCaptcha()" title="Hiển thị hình khác"></a>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="col-md-12 row">
+                    <span class="field-validation-valid"></span>
+                </div>
+            </div>
+            <span class="field-validation-valid"></span>
+            <span class="field-validation-error">Bạn vui lòng nhập Mã bảo mật</span>
+          </div>
+          <div class="form-group">
+              <div class="btn-submit">
+                  <div id="errorSummary">                
+                  </div>
+                  <input type="submit" onclick="clearValidationSum();" value="Đăng ký" class="button" />&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:goForgot();">Quên mật khẩu</a>?
+              </div>
+          </div>
+          <div class="form-group">
+              <input checked="checked" id="RememberMe" name="RememberMe" type="checkbox" value="true" />
+              <input name="RememberMe" type="hidden" value="false" /> <label for="RememberMe" style="color: #555555; font-weight: normal;">Lưu đăng nhập trên máy này</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 col-right-login">
+      <h4>Thithien.com - Tạo tài khoản</h4>
+      <p>Tạo tài khoản trên Thithien.com để tham gia cộng đồng mua bán hàng đầu.</p>
+      <ul>
+        <li class="fa fa-check-square-o fa-2x">
+          <span>Đăng tin miễn phí</span>
+        </li>
+        <li class="fa fa-check-square-o fa-2x">
+          <span>Hỗ trợ liên tục</span>
+        </li>
+        <li class="fa fa-check-square-o fa-2x">
+          <span>Nổi bật tin đặc biệt</span>
+        </li>
+        <li class="fa fa-check-square-o fa-2x">
+          <span>Mua của người chán, bán cho người cần</span>
+        </li>
+        <li class="fa fa-check-square-o fa-2x">
+          <span>Quảng cáo liên tục và dài hạn</span>
+        </li>
+      </ul>
+    </div>

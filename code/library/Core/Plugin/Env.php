@@ -168,22 +168,22 @@ class Core_Plugin_Env extends Zend_Controller_Plugin_Abstract
         );
         
         //set array
-        $arrLanguage = array(LANGUAGE_EN, LANGUAGE_JP, LANGUAGE_VI);
+        /*$arrLanguage = array(LANGUAGE_EN, LANGUAGE_JP, LANGUAGE_VI);
 
         $sLanguage = isset($_SESSION['language']) 
                 && in_array($_SESSION['language'], $arrLanguage) ? 
                 $_SESSION['language'] : DEFAULT_LANGUAGE;
         
-        $_SESSION['language'] = $sLanguage;
+        $_SESSION['language'] = $sLanguage;*/
         
         //Set register
-        Zend_Registry::set(LANG_CONFIG, $sLanguage);
+        // Zend_Registry::set(LANG_CONFIG, $sLanguage);
 
         //Get locals
-        $arrlocales = new Zend_Config_Ini(DATA_PATH . '/locales/' . $module . '/' . $sLanguage . '.ini');
+        // $arrlocales = new Zend_Config_Ini(DATA_PATH . '/locales/' . $module . '/' . $sLanguage . '.ini');
 
         //Set register
-        Zend_Registry::set(LOCALE_CONFIG, $arrlocales);
+        // Zend_Registry::set(LOCALE_CONFIG, $arrlocales);
 
         //Get current view
         $viewInstance = $layoutInstance->getView();
@@ -208,12 +208,12 @@ class Core_Plugin_Env extends Zend_Controller_Plugin_Abstract
             
         //Set view params
         $arrViewParams = array(
-            'locales'           =>  $arrlocales,
+            // 'locales'           =>  $arrlocales,
             'static'            =>  $defaultConfiguration->app->static,
             'env'               =>  APP_ENV,            
             'actionName'        =>  $action,
             'controllerName'    =>  $controller,
-            'currLangSetting'   =>  $sLanguage . '/' . STATIC_LOCALE_VERSION
+            // 'currLangSetting'   =>  $sLanguage . '/' . STATIC_LOCALE_VERSION
         );
 
         //Set language

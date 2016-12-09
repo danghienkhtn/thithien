@@ -12,15 +12,16 @@ class IndexController extends Core_Controller_Action
      private $arrLogin;
      
      public function init() {
-            
         parent::init();
         
         //Asign login
-        $this->arrLogin = $this->view->arrLogin;
+        // $this->arrLogin = $this->view->arrLogin;
         
         //Get Controller
         $controller = $this->_request->getParam('controller');
         $this->view->controller = $controller;
+
+        // $this->_helper->layout()->disableLayout();
        
     }
 
@@ -33,8 +34,8 @@ class IndexController extends Core_Controller_Action
      */
     public function indexAction()
     {
-       $this->_redirect('/feed');
-       exit();   
+       // $this->_redirect('/feed');
+       // exit();   
     }
     
 

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @author      :   Tin Nguyen - ntin87@gmail.com + TuanN
+ * @author      :   DangHien
  * @name        :   Core_Controller_Action
- * @version     :   201010
- * @copyright   :   My company
+ * @version     :   20161208
+ * @copyright   :   Dahi
  */
 abstract class Core_Controller_Action extends Zend_Controller_Action {
 
@@ -21,46 +21,38 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
      * Init
      */
     public function init() {
-        //        $this->_helper->layout->disableLayout();
-//        $this->_helper->viewRenderer('absence/maintenance', null, true);
+        // $this->_helper->layout->disableLayout();
+        // $this->_helper->viewRenderer('login/login', null, true);
 
-        $arrLogin = Admin::getInstance()->getLogin();
-        $adminDetail = Admin::getInstance()->checkLogin();
-        $isAdmin = ($adminDetail) ? true : false;
+        // $arrLogin = Admin::getInstance()->getLogin();
+        // $adminDetail = Admin::getInstance()->checkLogin();
+        // $isAdmin = ($adminDetail) ? true : false;
 
         //get and set timetime
-        $getTimezoneParam = array(
+        /*$getTimezoneParam = array(
             'accountId' => $arrLogin['accountID'],
             'key' => USER_CONFIG_TIMEZONE,
-        );
+        );*/
 
         $timezone = DEFAULT_TIMEZONE;
-        $timezoneConfig = UserConfig::getInstance()->getUserConfigByKey($getTimezoneParam);
-        isset($timezoneConfig['value']) && $timezone = $timezoneConfig['value'];
+        // $timezoneConfig = UserConfig::getInstance()->getUserConfigByKey($getTimezoneParam);
+        // isset($timezoneConfig['value']) && $timezone = $timezoneConfig['value'];
 
         date_default_timezone_set($timezone);
 
-
         $this->view->headTitle()->setSeparator(' - ');
-        $this->view->isAdmin = $isAdmin;
-        $title = empty($this->title) ? 'Portal' : $this->title;
+        // $this->view->isAdmin = $isAdmin;
+        $title = empty($this->title) ? 'ThiThien' : $this->title;
         $this->view->headTitle()->append($title);
-        $this->view->arrLogin = $arrLogin;
+        // $this->view->arrLogin = $arrLogin;
 //        if($this->_request->isXmlHttpRequest()){
 //            echo 'ajax';
 //        }
+       
         if(!$this->_request->isXmlHttpRequest()){
-
-
-
-
             global $globalConfig;
 
-
-
-//            $arrListAllowMenu = array();
-
-            $arrLogin = Admin::getInstance()->getLogin();
+            // $arrLogin = Admin::getInstance()->getLogin();
             /**tr
              * Deny call by inner action make by action helper.
              * action helper have param in request is inner
@@ -68,11 +60,11 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
             if ($this->_request->getParam("inner", "") != "")
                 return;
 
-            if (!isset($arrLogin['accountID']) || empty($arrLogin['accountID'])) {
+/*            if (!isset($arrLogin['accountID']) || empty($arrLogin['accountID'])) {
 
                 $this->_redirect("/login");
                 exit();
-            }
+            }*/
 
             /* Check Login
 
@@ -141,15 +133,16 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
 
 
             //Add title
-            $arrListAllowMenu = array(1, 2, 4, 6, 8, 16, 32, 64, 128, 256, 512, 1024, 2048);
-            $this->view->arrMenu = $arrListAllowMenu;
-
+            // $arrListAllowMenu = array(1, 2, 4, 6, 8, 16, 32, 64, 128, 256, 512, 1024, 2048);
+            // $this->view->arrMenu = $arrListAllowMenu;
+// echo "44544";
 //            $this->view->arrGroupTeam = $arrGroupTeam;
 //            $this->view->arrGroupProject = $arrGroupProject;
             $this->view->controllerName = $this->_request->getControllerName();
             $this->view->acctionName = $this->_request->getActionName();
 //            $this->view->arrGroupMember = $arrGroupMember;
 //            $this->view->groupTypes = array_flip($globalConfig['group_type']);
+           // echo "54656";
         }
 
 
