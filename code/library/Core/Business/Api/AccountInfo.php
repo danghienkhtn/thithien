@@ -44,19 +44,17 @@ class Core_Business_Api_AccountInfo
      */
     public function insertAccountInfo($arrData)
     {
-        
-   
          //init return result
         $result = 0;
         $arrData = Validate::encodeValues($arrData);
         try {
             
             $iCreateDate = time();
-            
             // Get Data Master Global
             $storage = Core_Global::getDbGlobalMaster();
             $sql = "INSERT INTO `account_info` ( 
                 `username`,
+                `password`,
                 `name`,
                 `email`,
                 `phone`,
@@ -65,9 +63,11 @@ class Core_Business_Api_AccountInfo
                 `is_admin`,
                 `avatar`,
                 `active`,
+                `status`,
                 `create_date`,
                 `update_date` ) VALUES (
                 :p_username ,
+                :p_password ,
                 :p_name,
                 :p_email,
                 :p_phone,
@@ -76,14 +76,17 @@ class Core_Business_Api_AccountInfo
                 :p_is_admin,
                 :p_avatar,
                 :p_active,
+                :p_status,
                 :p_create_date,
                 :p_update_date
                 )";
-                    
+// error_log($sql);                    
+// error_log(Zend_Json::encode($arrData));
             // Prepare store procude
             $stmt = $storage->prepare($sql);
             
             $stmt->bindParam(':p_username', $arrData['username'], PDO::PARAM_STR);
+            $stmt->bindParam(':p_password', $arrData['password'], PDO::PARAM_STR);
             $stmt->bindParam(':p_name', $arrData['name'], PDO::PARAM_STR);
             $stmt->bindParam(':p_email', $arrData['email'], PDO::PARAM_STR);
             $stmt->bindParam(':p_phone', $arrData['phone'], PDO::PARAM_STR);
@@ -99,14 +102,14 @@ class Core_Business_Api_AccountInfo
             $stmt->execute();
 
             // Fetch Result            
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-
+            // $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $storage->lastInsertId(); 
             // Free cursor
             $stmt->closeCursor();
         } catch (Exception $ex) {
             Core_Common::var_dump($ex);
             // ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),'',$arrData['name']);
+            error_log("error_exception");            
             $result = 0;
         }
 
@@ -583,7 +586,7 @@ class Core_Business_Api_AccountInfo
     /*
      * 
      */
-     public function getAccountInfoByEmail($sEmail, $iActive) {
+     public function getAccountInfoByEmail($sEmail, $iActive = 1) {
          
          $arrResult = array();
          

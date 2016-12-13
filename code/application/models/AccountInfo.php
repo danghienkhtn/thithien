@@ -44,20 +44,12 @@ class AccountInfo
         return self::$_instance;
     }
 
-    public function checkUserTest($username){
-        $matches = null;
-        $iMatch = preg_match('/^qa-tester-/',$username, $matches);
-        return ($iMatch > 0) ? true : false;
-    }
-
-
     public function insertAccountInfo($arrData)
     {
         $arrData['avatar'] = Core_Common::fixAvatarName($arrData['avatar']);
         $arrData['picture'] = Core_Common::fixAvatarName($arrData['picture']);
         //Get data
         $iResult = $this->_modeParent->insertAccountInfo($arrData);
-
         //Return result data
         return $iResult;
     }

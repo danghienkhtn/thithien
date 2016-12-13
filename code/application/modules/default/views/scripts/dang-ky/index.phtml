@@ -1,5 +1,6 @@
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-left-login">
-      <form class="form" method="post" action="" >        
+    <script src="<?= $this->static->frontend->js ;?>/dkCtrl.js"></script>
+    <div ng-controller="dkCtrl" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-left-login">
+      <form class="form regist-form" method="post" action="" >        
         <input id="sid" name="sid" type="hidden" value="<?= $this->token ?>" />        
         <input id="returnUrl" name="returnUrl" type="hidden" value="<?= $this->redirectPage ?>" />
         <input id="callbackUrl" name="callbackUrl" type="hidden" value="https://muaban.net/trang-ca-nhan/SignInCallback" />
@@ -26,14 +27,9 @@
             <div class="field-validation-error">
               <?= $this->message; ?>
             </div>
-          <?php endif; ?>
+          <?php endif; ?>          
           <div class="form-group">
-              <input ng-model="username" class="form-control" id="UserName" maxlength="256" name="username" placeholder="Ten đăng nhập *" type="text" value="<?= $this->username ?>" />
-              <span class="field-validation-valid"></span>
-              <span class="field-validation-error hide">Bạn vui lòng nhập tên đăng nhập</span>
-          </div>
-          <div class="form-group">
-              <input ng-model="email" class="form-control" id="Email" maxlength="256" name="email" placeholder="Email *" type="text" value="<?= $this->email ?>" />
+              <input ng-model="email" class="form-control" id="Email" maxlength="256" name="email" placeholder="Email *" type="text" value="<?= $this->email; ?>" />
               <span class="field-validation-valid"></span>
               <span class="field-validation-error hide">Bạn vui lòng nhập tên đăng nhập</span>
           </div>
@@ -48,7 +44,7 @@
               <span class="field-validation-error hide" id="Error_Repassword">Không trùng khớp, bạn vui lòng nhập Mật khẩu</span>
           </div>          
           <div class="form-group">
-                <input ng-model="fullname" class="form-control" id="FullName" maxlength="80" name="fullname" placeholder="Họ và tên" type="text" value="<?= $this->fullname ?>">
+                <input ng-model="fullname" class="form-control" id="FullName" maxlength="80" name="fullname" placeholder="Họ và tên" type="text" value="<?= $this->fullname; ?>">
                 <span class="field-validation-valid"></span>
                 <span class="field-validation-error hide" id="Error_FullName">Bạn vui lòng nhập Họ và tên</span>
           </div>
@@ -67,7 +63,7 @@
               <label for="RememberMe" style="color: #555555; font-weight: normal;">Lưu đăng nhập trên máy này</label>
           </div>
         </div>
-      </form>
+      </form>      
     </div>
     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 col-right-login">
       <h4>Thithien.com - Tạo tài khoản</h4>
@@ -89,4 +85,15 @@
           <span>Quảng cáo liên tục và dài hạn</span>
         </li>
       </ul>
+    </div>
+    <div class="col-right-tbao hide" style="padding-left:100px;">
+      <h4>Cảm ơn <?= $this->fullname ?> đã đăng ký tài khoản</h4>
+
+      <p>Bạn đã đăng ký tài khoản tại ThiThien Salom <br />
+        Để sử dụng được bạn cần phải kích hoạt tài khoản theo cách sau:
+      </p>
+      <p>
+        Chúng tôi đã gửi thông tin xác nhận đăng ký đến địa chỉ email <span class="highlight"><?= $this->email ?></span> của bạn.<br /> 
+        Hãy làm theo hướng dẫn trong thư xác nhận. Thư xác nhận có thể không có trong phần inbox, bạn nên kiểm tra thêm phần Spam/Bulk
+      </p>        
     </div>

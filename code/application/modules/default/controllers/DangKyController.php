@@ -68,14 +68,16 @@ class DangKyController extends Core_Controller_Action {
             $username = trim($params["username"]);
             $password = trim($params["password"]);
             $confirmpassword = trim($params["confirmpassword"]);
-            $params["isremember"] = isset($params["isremember"]) ? $params["isremember"]: 'off';
-            $isRemember = ($params["isremember"] == 'on') ? true : false;
+            $fullname = trim($params["fullname"]);
+            $email = trim($params["email"]);
+            // $params["isremember"] = isset($params["isremember"]) ? $params["isremember"]: 'off';
+            // $isRemember = ($params["isremember"] == 'on') ? true : false;
             $arrAccount = array();
             //validate password and username
-            if(!Core_Validate::checkUsername($username)){
+            /*if(!Core_Validate::checkUsername($username)){
                 $message .= "<br />Nhập lại tên đăng nhập";
                 $bCaptcha = false;
-            }
+            }*/
 
             if(!Core_Validate::checkEmail($email)){
                 $message .= "<br />Nhập lại email";
@@ -89,6 +91,11 @@ class DangKyController extends Core_Controller_Action {
 
             if(!Core_Validate::checkPassword($confirmpassword) || $password !== $confirmpassword){
                 $message .= " <br />Nhập lại xác nhận mật khẩu";
+                $bCaptcha = false;
+            }
+
+            if(!Core_Validate::checkNormalText($fullname)){
+                $message .= " <br />Nhập lại ten";
                 $bCaptcha = false;
             }
 
@@ -115,68 +122,37 @@ class DangKyController extends Core_Controller_Action {
             }
 
             if($bCaptcha) {
-                if (!empty($username) && !empty($password)) {
-
-                    $isLoginM = AccountInfo::getInstance()->checkUserLogin($username, $password, &$arrAccount);
-
-                    $iAccountID = 0;
-
-                    //Is Login Success
-                    if ($isLoginM) {
-
-                        //get AccountInfo
-                        // $arrAccount = AccountInfo::getInstance()->getAccountInfoByUserName($username);
-
-                        //check empty account
-                        if (!empty($arrAccount)) {
-                            $iAccountID = $arrAccount['account_id'];
-                            $sName = $arrAccount['name'];
-                            $sEmail = $arrAccount['email'];
-
-                            //Set cookie expired
-                            $iExpired = 0;
-
-                            if ($isRemember) {
-//                                    $iExpired = DOMAIN_COOKIE_EXPIRED; // 20 days
-                                $iExpired = time()+(60*60*24*120);
-                                Zend_Session::RememberMe($iExpired);
-                            } else {
-                                Zend_Session::ForgetMe();
-                            }
-
-                            // $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "InternalProject", Core_Utility::getAltIp());
-                            $sToken = Token::getInstance()->generateToken($iType="user", $arrAccount['account_id'], $arrAccount['username'], $arrAccount['avatar'], $arrAccount['password'], $iIPOwner=$_SERVER["REMOTE_ADDR"], $iIPClient=$_SERVER["REMOTE_ADDR"], $iExpired); 
-
-//                                $domain = $this->getRequest()->getHttpHost();
-                            //Set Auth Cookie
-                            Core_Cookie::setCookie(AUTH_USER_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
-
-                            //set session
-                            // $accountInfo['lang'] = is_null($accountInfo['lang']) ? 'en' : $accountInfo['lang'];
-                            AccountInfo::getInstance()->setLogin($sToken, $iAccountID);
-
-                            $this->_redirect($redirectPage);
-                            exit();
-
-                        }
-                        else {
-                            $message .= "Vui long thu lai!";
-                        } 
-
-                    } else {
-                        $message .= 'Wrong UserName Or Password. Pls check your information again!';
-                    }
-
-                } else {
-                    $message .= 'Pls input UserName Or Password!';
+                $arrAcc = AccountInfo::getInstance()->getAccountInfoByEmail($email);
+                if($arrAcc || (is_array($arrAcc) && sizeof($arrAcc) > 0)){
+// error_log("here_".Zend_Json::encode($arrAcc));                    
+                    $message .= "Tai khoan da ton tai, vui long dang nhap voi mat khau.";
                 }
+                else{
+                    $arrAcc = array();
+                    $arrAcc["username"]=$email;
+                    $arrAcc["password"]=md5($password);
+                    $arrAcc["name"]=$fullname;
+                    $arrAcc["email"]=$email;
+                    $arrAcc["phone"]="";
+                    $arrAcc["avatar"]="";
+                    $arrAcc["address"]="";
+                    $arrAcc["level"]=0;
+                    $arrAcc["is_admin"]=0;
+                    $arrAcc["active"]=1;
+                    $arrAcc["status"]=1;                    
+                    $inserted = AccountInfo::getInstance()->insertAccountInfo($arrAcc);
+                    error_log("new user:".$inserted);
+                    if($inserted > 0)
+                        $this->view->registOK = $inserted;
+                }                
             }
 
         }
 // error_log("here_");
         $this->view->abc=$redirectPage;
         $this->view->iSubmitTime = $iSubmitTime->time;
-        $this->view->email = $username;
+        $this->view->email = $email;
+        $this->view->fullname = $fullname;
         $this->view->message  = $message;
         $this->view->redirectPage  = $redirectPage;
 

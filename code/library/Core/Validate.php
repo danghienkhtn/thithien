@@ -118,4 +118,18 @@ class Core_Validate
 		return preg_match('/^.{5,30}$/', $password) ? TRUE : FALSE;
 	}
 
+	/**
+	 * This function checks if a username in a valid format
+	 *
+	 * @access private
+	 *
+	 * @param string $string The string to check
+	 *
+	 * return bool
+	 */
+	
+	public static function checkNormalText($strText){
+		return preg_match('/^[a-zA-Z0-9_ \.\-]+$/', $strText) ? TRUE : FALSE;
+	}
+
 }
