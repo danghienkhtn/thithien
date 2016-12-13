@@ -767,7 +767,7 @@ class Core_Business_Api_AccountInfo
     /*
      * 
      */
-     public function userLogin($sUserName, $sPassword, $arrAccInfo) {
+     public function userLogin($sUserName, $sPassword, &$arrAccInfo) {
          
          $result = 0;         
         try {

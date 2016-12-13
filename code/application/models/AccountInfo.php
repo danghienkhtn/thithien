@@ -271,9 +271,9 @@ class AccountInfo
         return $this->_modeParent->countUserActive();
     }
 
-    public function userLogin($username, $password, $arrAccInfo)
+    public function userLogin($username, $password, &$arrAccInfo)
     {
-        return $this->_modeParent->userLogin($username, $password, &$arrAccInfo);
+        return $this->_modeParent->userLogin($username, $password, $arrAccInfo);
     }    
 
     public function checkUserLogin($sAuthToken = '')

@@ -58,6 +58,10 @@ class DangKyController extends Core_Controller_Action {
         $message = '';
         $sName ='';
         $sPicture ='';
+        $email = "";
+        $fullname = "";
+        $password= "";
+        $confirmpassword= "";
         $bCaptcha = true;
         //user login
 
@@ -65,7 +69,7 @@ class DangKyController extends Core_Controller_Action {
         {            
             $params = $this->_request->getPost();
 
-            $username = trim($params["username"]);
+            $username = trim($params["email"]);
             $password = trim($params["password"]);
             $confirmpassword = trim($params["confirmpassword"]);
             $fullname = trim($params["fullname"]);
@@ -135,6 +139,7 @@ class DangKyController extends Core_Controller_Action {
                     $arrAcc["email"]=$email;
                     $arrAcc["phone"]="";
                     $arrAcc["avatar"]="";
+                    $arrAcc["picture"]="";
                     $arrAcc["address"]="";
                     $arrAcc["level"]=0;
                     $arrAcc["is_admin"]=0;

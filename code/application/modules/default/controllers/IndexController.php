@@ -9,7 +9,7 @@
 class IndexController extends Core_Controller_Action
 {
      //var arr login
-     private $arrLogin;
+     // private $arrLogin;
      
      public function init() {
         parent::init();

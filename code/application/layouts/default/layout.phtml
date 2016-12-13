@@ -4,11 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta http-equiv="X-Frame-Options" content="allow"> 
-    <title>Thi Thien a <?php echo $this->abc; ?> <?= $this->redirectPage; ?> </title>
-    <link href="<?= $this->static->frontend->css ;?>/font-awesome.min.css" rel="stylesheet" type='text/css'>
+    <title>Thi Thien a <?php echo $this->abc; ?> <?= $this->redirectPage; ?> </title>    
     <link href="<?= $this->static->frontend->css ;?>/bootstrap.min.css" rel="stylesheet" type='text/css'>
     <link href="<?= $this->static->frontend->css ;?>/thithien.css" rel="stylesheet" type='text/css'>
-    
+    <link href="<?= $this->static->frontend->css ;?>/font-awesome.min.css" rel="stylesheet" type='text/css'>
     <script src="<?= $this->static->frontend->js ;?>/jquery.min.js"></script>
     <script src="<?= $this->static->frontend->js ;?>/bootstrap.min.js"></script>    
     <script src="<?= $this->static->frontend->js ;?>/thithien.js"></script>
@@ -143,7 +142,7 @@ function closeNav() {
     document.getElementById("slidemenumobile").style.width = "0";
 }
 </script>
-<?php if($this->controllerName == "dang-ky"){ ?>
+<?php if($this->controllerName == "dang-ky" && $this->iSubmitTime >= 3){ ?>
 <script type="text/javascript">
     var onloadCallback = function() {
         grecaptcha.render('html_element', {

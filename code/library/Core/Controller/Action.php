@@ -17,6 +17,10 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
     //Product
     protected $_product = null;
 
+    // public $isLogin;
+    // public $isAdmin;
+    // public $arrlogin;
+
     /*function __construct() {
         //error_log("construction");
     }*/
@@ -106,9 +110,9 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
 //            $this->view->arrGroupProject = $arrGroupProject;
             $this->view->controllerName = $this->_request->getControllerName();
             $this->view->acctionName = $this->_request->getActionName();
-            $this->view->isLogin = $isLogin;
-            $this->view->isAdmin = $isAdmin;
-            $this->view->arrLogin = $arrLogin;
+            $this->view->isLogin = $this->isLogin;
+            $this->view->isAdmin = $this->isAdmin;
+            $this->view->arrLogin = $this->arrLogin;
         }
 
     }
