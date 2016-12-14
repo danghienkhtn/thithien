@@ -51,6 +51,16 @@ define('DETAIL', 'detail');
 
 //folder cache
 define('FOLDER_USER', 'user');
+
+//Facebook API
+define('FB_APP_ID','1243244549097286');
+define('FB_APP_SECRET','b5fb564db22753f04dfca58eaa85948c');
+// define('','');
+// define('','');
+
+
+
+
 // define('FOLDER_GROUP_MEMBER', 'group-member');
 
 //----------------START define key REDIS---------------------------------------//

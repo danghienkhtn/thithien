@@ -1,6 +1,8 @@
-    <script src="<?= $this->static->frontend->js ;?>/dkCtrl.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/registService.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/dkCtrl.js"></script>    
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <div ng-controller="dkCtrl" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-left-login">
-      <form class="form regist-form" method="post" action="" >        
+      <form name="registFrm" class="form regist-form" method="post" action="" >        
         <input id="sid" name="sid" type="hidden" value="<?= $this->token ?>" />        
         <input id="returnUrl" name="returnUrl" type="hidden" value="<?= $this->redirectPage ?>" />
         <input id="callbackUrl" name="callbackUrl" type="hidden" value="https://muaban.net/trang-ca-nhan/SignInCallback" />
@@ -12,7 +14,8 @@
           <div class="button-space"></div>
           <div class="button-social button-facebook" onclick="javascript: goSocial('facebook')">
               <span class="icon-facebook fa fa-facebook-official fa-2x"></span>
-              Đăng ký bằng Facebook
+              <a href="https://www.facebook.com/dialog/oauth?client_id=1243244549097286&redirect_uri=http://thithien.com/user/fblogin&scope=public_profile">Đăng ký bằng Facebook
+              </a>
           </div>
           <div class="button-space"></div>
           <div class="button-social button-yahoo" onclick="javascript: goSocial('yahoo')">
@@ -22,44 +25,42 @@
           <div class="button-space"></div>
           <div class="divider">
               <hr class="left" />Hoặc Đăng ký bằng Email <hr class="right" />
-          </div>
-          <?php if(isset($this->message) && $this->message != ''): ?>
-            <div class="field-validation-error">
-              <?= $this->message; ?>
-            </div>
-          <?php endif; ?>          
+          </div>          
+          <div class="field-validation-error hide">
+            {{message}}            
+          </div>          
           <div class="form-group">
-              <input ng-model="email" class="form-control" id="Email" maxlength="256" name="email" placeholder="Email *" type="text" value="<?= $this->email; ?>" />
+              <input ng-model="email" class="form-control" id="Email" maxlength="256" name="email" placeholder="Email *" type="email" value="<?= $this->email; ?>"  ng-required="required" />
               <span class="field-validation-valid"></span>
-              <span class="field-validation-error hide">Bạn vui lòng nhập tên đăng nhập</span>
+              <span class="field-validation-error" ng-show="registFrm.email.$dirty && registFrm.email.$invalid">Bạn vui lòng nhập tên đăng nhập</span>
           </div>
           <div class="form-group">
               <input ng-model="password" class="form-control" id="Password" maxlength="51" name="password" placeholder="Mật khẩu *" type="password" />
               <span class="field-validation-valid"></span>
-              <span class="field-validation-error hide" id="Error_password" >Bạn vui lòng nhập Mật khẩu</span>
+              <span class="field-validation-error-pass hide" id="Error_password" >Bạn vui lòng nhập Mật khẩu</span>
           </div>
           <div class="form-group">
               <input ng-model="confirmpassword" class="form-control" id="ConfirmPassword" maxlength="51" name="confirmpassword" placeholder="Xac nhan mật khẩu *" type="password" />
               <span class="field-validation-valid"></span>
-              <span class="field-validation-error hide" id="Error_Repassword">Không trùng khớp, bạn vui lòng nhập Mật khẩu</span>
+              <span class="field-validation-error-repass hide" id="Error_Repassword">Không trùng khớp, bạn vui lòng nhập Mật khẩu</span>
           </div>          
           <div class="form-group">
                 <input ng-model="fullname" class="form-control" id="FullName" maxlength="80" name="fullname" placeholder="Họ và tên" type="text" value="<?= $this->fullname; ?>">
                 <span class="field-validation-valid"></span>
-                <span class="field-validation-error hide" id="Error_FullName">Bạn vui lòng nhập Họ và tên</span>
-          </div>
-          <?php if($this->iSubmitTime >= 3){ ?>
-            <div id="html_element"></div>
-          <?php } ?>          
+                <span class="field-validation-error-fullname hide" id="Error_FullName">Bạn vui lòng nhập Họ và tên</span>
+          </div>          
+          <div id="html_element" class="hide"></div>
+          <div class="g-recaptcha" data-sitekey="6Lc8Ww4UAAAAADex6QFz4YTmWdUW9nB6a6AQTY8z"></div>          
           <div class="form-group">
               <div class="btn-submit">
                   <div id="errorSummary">                
                   </div>
-                  <input type="submit" value="Đăng ký" class="button" />&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:goForgot();">Quên mật khẩu</a>?
+                  <input type="button" value="Đăng ký" class="button" ng-click="RegistUser()" ng-disabled="registFrm.email.$dirty && registFrm.email.$invalid || registFrm.password.$dirty && registFrm.password.$invalid" />&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:goForgot();">Quên mật khẩu</a>?
               </div>
           </div>          
         </div>
-      </form>      
+      </form>
+      <div class="loadingPage" ng-if="loading"><img src="<?= $this->static->frontend->images ?>/loading.svg" alt=""></div>      
     </div>
     <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 col-right-login">
       <h4>Thithien.com - Tạo tài khoản</h4>
@@ -83,13 +84,13 @@
       </ul>
     </div>
     <div class="col-right-tbao hide" style="padding-left:100px;">
-      <h4>Cảm ơn <?= $this->fullname ?> đã đăng ký tài khoản</h4>
+      <h4>Cảm ơn {{fullname}} đã đăng ký tài khoản</h4>
 
       <p>Bạn đã đăng ký tài khoản tại ThiThien Salom <br />
         Để sử dụng được bạn cần phải kích hoạt tài khoản theo cách sau:
       </p>
       <p>
-        Chúng tôi đã gửi thông tin xác nhận đăng ký đến địa chỉ email <span class="highlight"><?= $this->email ?></span> của bạn.<br /> 
+        Chúng tôi đã gửi thông tin xác nhận đăng ký đến địa chỉ email <span class="highlight">{{email}}</span> của bạn.<br /> 
         Hãy làm theo hướng dẫn trong thư xác nhận. Thư xác nhận có thể không có trong phần inbox, bạn nên kiểm tra thêm phần Spam/Bulk
       </p>        
     </div>

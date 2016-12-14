@@ -11,8 +11,8 @@
     <script src="<?= $this->static->frontend->js ;?>/jquery.min.js"></script>
     <script src="<?= $this->static->frontend->js ;?>/bootstrap.min.js"></script>    
     <script src="<?= $this->static->frontend->js ;?>/thithien.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/angular.min.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/angular-route.min.js"></script>
     <script src="<?= $this->static->frontend->js ;?>/banners.js"></script>
     <script src="<?= $this->static->frontend->js ;?>/category.js"></script>
     <script src="<?= $this->static->frontend->js ;?>/app.js"></script>
@@ -142,7 +142,7 @@ function closeNav() {
     document.getElementById("slidemenumobile").style.width = "0";
 }
 </script>
-<?php if($this->controllerName == "dang-ky" && $this->iSubmitTime >= 3){ ?>
+<?php if($this->controllerName == "dang-kyyy" && $this->iSubmitTime >= 3){ ?>
 <script type="text/javascript">
     var onloadCallback = function() {
         grecaptcha.render('html_element', {

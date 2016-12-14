@@ -75,6 +75,7 @@ class Core_Validate
 	 */
 	
 	public static function checkEmail($email){
+		error_log($email."___");
 		return preg_match('/^\S+@[\w\d.-]{2,}\.[\w]{2,6}$/iU', $email) ? TRUE : FALSE;
 	}
 	
