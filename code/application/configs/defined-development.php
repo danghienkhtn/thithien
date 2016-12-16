@@ -60,8 +60,8 @@ define('GG_RECAPTCHA_SECRET','6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN');
 
 define('GG_CREDENTIALS_KEY','668835253562-h1ceu9fp00vq0tb04b1cv5pvf4oqv6bf.apps.googleusercontent.com');
 define('GG_CREDENTIALS_SECRET','dOQNZ3PyQeS5NANYBEqDMyXC');
-
-// define('','');
+define('GG_API_KEY','thithien-150805');
+define('GG_APP_NAME','Login thithien.com');
 
 
 

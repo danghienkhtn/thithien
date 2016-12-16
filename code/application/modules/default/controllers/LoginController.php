@@ -163,6 +163,144 @@ class LoginController extends Core_Controller_Action {
         $this->view->message  = $message;
         $this->view->redirectPage  = $redirectPage;
     }
+    
+    public function ggloginAction()
+    {
+        $this->_helper->layout()->disableLayout();
+
+        $reCode = $this->_getParam('code', '');
+        $redirect_url = urlencode("http://thithien.com/login/gglogin");
+
+        require_once 'Google/Google_Client.php';
+        require_once 'Google/contrib/Google_Oauth2Service.php';
+         
+        $gClient = new Google_Client();
+        $gClient->setApplicationName(GG_APP_NAME);
+        $gClient->setClientId(GG_CREDENTIALS_KEY);
+        $gClient->setClientSecret(GG_CREDENTIALS_SECRET);
+        $gClient->setRedirectUri($redirect_url);
+        $gClient->setDeveloperKey(GG_API_KEY);
+         
+        $google_oauthV2 = new Google_Oauth2Service($gClient);
+
+        if(!empty($reCode)){
+            $gClient->authenticate($reCode);
+            $_SESSION['ggtoken'] = $gClient->getAccessToken();
+            $this->_redirect('/login/gglogin');
+            exit;
+            // header('Location: ' . filter_var($google_redirect_url, FILTER_SANITIZE_URL));
+            // return;
+        }
+        if (isset($_SESSION['ggtoken'])) 
+        { 
+            $gClient->setAccessToken($_SESSION['ggtoken']);
+        }
+
+
+        if ($gClient->getAccessToken()) 
+        {
+            //For logged in user, get details from google using access token
+            $arrUser                 = $google_oauthV2->userinfo->get();
+            /*$user_id              = $userInfo['id'];
+            $user_name            = filter_var($userInfo['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $email                = filter_var($userInfo['email'], FILTER_SANITIZE_EMAIL);
+            $profile_url          = filter_var($userInfo['link'], FILTER_VALIDATE_URL);
+            $profile_image_url    = filter_var($userInfo['picture'], FILTER_VALIDATE_URL);
+            $personMarkup         = "$email<div><img src='$profile_image_url?sz=50'></div>";*/
+            $_SESSION['ggtoken']    = $gClient->getAccessToken();
+
+            /////////////////////////////
+            if(isset($arrUser["email"])){
+                $userDetail = AccountInfo::getInstance()->getAccountInfoByEmail(filter_var($arrUser['email'], FILTER_SANITIZE_EMAIL));
+                // add new user
+                if(!is_array($userDetail)){ 
+                    $arrAcc = array();
+                    $arrAcc["username"]=filter_var($arrUser['email'], FILTER_SANITIZE_EMAIL);
+                    $arrAcc["password"]=md5(filter_var($arrUser['email'], FILTER_SANITIZE_EMAIL));
+                    $arrAcc["name"]=filter_var($arrUser['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+                    $arrAcc["email"]=filter_var($arrUser['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+                    $arrAcc["phone"]="";
+                    $arrAcc["avatar"]=filter_var($arrUser['picture'], FILTER_VALIDATE_URL);
+                    $arrAcc["picture"]="";
+                    $arrAcc["address"]="";
+                    $arrAcc["level"]=0;
+                    $arrAcc["is_admin"]=0;
+                    $arrAcc["active"]=1;
+                    $arrAcc["status"]=1;                    
+                    $inserted = AccountInfo::getInstance()->insertAccountInfo($arrAcc);                        
+                    if($inserted > 0){
+                        $iAccountID = $inserted;
+                        $sName = $arrAcc['name'];
+                        $sEmail = $arrAcc['email'];
+                        $sAvatar = $arrAcc["avatar"];
+                        $sPs = $arrAcc["password"];
+
+                        $iExpired = 3600;
+                        //Set cookie expired
+                        Zend_Session::RememberMe($iExpired);
+
+                        // $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "InternalProject", Core_Utility::getAltIp());
+                        $sToken = Token::getInstance()->generateToken($iType="user", $iAccountID, $sEmail, $sAvatar, $sPs, $iIPOwner=$_SERVER["REMOTE_ADDR"], $iIPClient=$_SERVER["REMOTE_ADDR"], $iExpired); 
+
+            //                                $domain = $this->getRequest()->getHttpHost();
+                        //Set Auth Cookie
+                        Core_Cookie::setCookie(AUTH_USER_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
+
+                        //set session                                
+                        AccountInfo::getInstance()->setUserLogin($sToken, $iAccountID);
+
+                        $this->_redirect('/');
+                        exit();                
+                    }
+                    else{
+                        // echo Zend_Json::encode(Core_Server::setOutputData(true, 'Co loi xay ra', array()));
+                        $this->_redirect('/dang-ky');
+                        exit;   
+                    }
+                }
+                else// existed user
+                {
+            // error_log(Zend_Json::encode($userDetail));   
+                    if(isset($userDetail["account_id"])){                         
+                        $iAccountID = $userDetail["account_id"];
+                        $sName = $userDetail['name'];
+                        $sEmail = $userDetail['email'];
+                        $sAvatar = $userDetail["avatar"];
+                        $sPs = $userDetail["password"];
+                        $iExpired = 3600;
+                        //Set cookie expired
+                        Zend_Session::RememberMe($iExpired);
+                        $sToken = Token::getInstance()->generateToken($iType="user", $iAccountID, $sEmail, $sAvatar, $sPs, $iIPOwner=$_SERVER["REMOTE_ADDR"], $iIPClient=$_SERVER["REMOTE_ADDR"], $iExpired); 
+            // error_log("login token:".$sToken);
+            //                                $domain = $this->getRequest()->getHttpHost();
+                        //Set Auth Cookie
+                        Core_Cookie::setCookie(AUTH_USER_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
+
+                        //set session                                
+                        AccountInfo::getInstance()->setUserLogin($sToken, $iAccountID);
+
+                        $this->_redirect('/index');
+                        exit();
+                    }
+                    else{
+                        $this->_redirect('/dang-ky');
+                        exit();
+                    }    
+                }    
+            }
+            ///////////////////////////////
+
+            $this->_redirect('/');
+            exit;
+        }
+        else {
+            //For Guest user, get google login url
+            $authUrl = $gClient->createAuthUrl();
+            // header("Location: ".$authUrl);
+            header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
+            exit;
+        }
+    }
 
     public function fbloginAction()
     {
