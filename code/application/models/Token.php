@@ -29,7 +29,7 @@ class Token
      */
     protected function __construct() {
         // Int Parent Model
-        $this->_modeParent = Core_Business_Api_Token::getInstance();        
+        $this->_modeParent = Core_Business_Api_Token::getInstance();      
     }
  
 
@@ -52,17 +52,17 @@ class Token
     /**
      * insert token
      */
-    public function insert($sKey, $iType, $iAccountID, $iUsername, $sAvatar, $iPs, $iIPOwner, $iIPClient, $iExpired = 3600)
+    public function insert($sKey, $iType, $iAccountID, $sEmail, $sAvatar, $iPs, $iIPOwner, $iIPClient, $iExpired = 3600)
     {
         //Get data
-        $iResult = $this->_modeParent->insert($sKey, $iType, $iAccountID, $iUsername, $sAvatar, $iPs, $iIPOwner, $iIPClient, $iExpired);
+        $iResult = $this->_modeParent->insert($sKey, $iType, $iAccountID, $sEmail, $sAvatar, $iPs, $iIPOwner, $iIPClient, $iExpired);
         //Return result data
         return $iResult;  
     }
 
-    public function update($iAccountID,$username,$key)
+    public function update($iAccountID,$sEmail,$key)
     {        
-        return $this->_modeParent->update($iAccountID,$username,$key);
+        return $this->_modeParent->update($iAccountID,$sEmail,$key);
     }
     
     /**
@@ -73,10 +73,10 @@ class Token
      * @param array $arrFileIds
      * return  array('total' => $iTotal, 'data' => $cursor);
      */
-    public function getToken($skey = "", $iType = "", $iAccountID = "", $sUsername = "", $sPs = "", $sIpClient = "")
+    public function getToken($skey = "", $sType = "", $iAccountID = "", $sEmail = "", $sPs = "", $sIpClient = "")
     {
         //Get data
-        $iResult = $this->_modeParent->select($iType, $iAccountID, $sUsername, $sPs, $sIpClient, $skey);
+        $iResult = $this->_modeParent->select($sType, $iAccountID, $sEmail, $sPs, $sIpClient, $skey);
 // echo Zend_Json::encode($iResult);
         //Return result data
         return $iResult;
@@ -88,22 +88,29 @@ class Token
      * @param array $arrFileIds
      * return  array('total' => $iTotal, 'data' => $cursor);
      */
-    public function generateToken($iType="user", $iAccountID, $iUsername="", $sAvatar = "", $iPs="", $iIPOwner="", $iIPClient="", $iExpired = 3600)
-    {                        
-        $arrToken = $this->_modeParent->select($iType, $iAccountID, $sUsername, $iPs, $sIPClient, $sKey = "");
-        if(sizeof($arrToken) > 0){
+    public function generateToken($sType="user", $iAccountID, $sEmail="", $sAvatar = "", $iPs="", $sIPOwner="", $sIPClient="", $iExpired = 3600)
+    {       
+        $arrToken = $this->_modeParent->select($sType, $iAccountID, $sEmail, $iPs, $sIPClient, $sKey = "");
+/*if(!is_array($arrToken)){
+    error_log("errroooooo_".$arrToken);
+}        
+else{
+    error_log(Zend_Json::encode($arrToken));
+}*/
+        if(is_array($arrToken)){
             $currTime = time();
             if($currTime < $arrToken['expired'] + $arrToken['update_date'] ){//token is not expired                
-                $this->update($iAccountID, $iUsername, $arrToken["key"]);
-                return $arrToken["key"];
+// error_log("loi64 ha_");
+                $this->update($iAccountID, $sEmail, $arrToken["key"]);                
             }
-            else{
-                $this->delete($arrToken['key']);
-            }                
+// error_log("here_".$arrToken["key"]);                            
+            return $arrToken["key"];                        
         }
         else{
+// error_log("here_1_");            
             $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "user", Core_Utility::getAltIp());
-            $inserted = $this -> insert($sToken, $iType, $iAccountID, $iUsername, $sAvatar, $iPs, $iIPOwner, $iIPClient, $iExpired);
+// error_log("gen new token: ". $sToken);            
+            $inserted = $this -> insert($sToken, $sType, $iAccountID, $sEmail, $sAvatar, $iPs, $sIPOwner, $sIPClient, $iExpired);                                        
             if($inserted)
                 return $sToken;
             else

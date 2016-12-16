@@ -38,7 +38,7 @@ class Core_Business_Api_Token
    /**
      * @return <int>
      */
-    public function insert($sKey, $iType, $iAccountID, $sUsername, $sAvatar, $sPs, $sIPOwner, $sIPClient, $iExpired) 
+    public function insert($sKey, $sType, $iAccountID, $sEmail, $sAvatar, $sPs, $sIPOwner, $sIPClient, $iExpired) 
     {
         $result = 0;
         try {
@@ -51,33 +51,33 @@ class Core_Business_Api_Token
                         `key`,
                         `type`,
                         `account_id`,
-                        `username`,
+                        `email`,
                         `avatar`,
                         `ps`,
                         `IPOwner`,
                         `IPClient`,
                         `expired`,
                         `create_date`,
-                        `update_date`,
+                        `update_date`
                     )
-                    VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";                
+                    VALUES( :p_key, :p_type, :p_account_id, :p_email, :p_avatar, :p_ps, :p_ipOwner, :p_ipClient, :p_expired, :p_create_date, :p_update_date )";                
             # Prepare store procude
             $stmt = $storage->prepare($sql);
 
-            $stmt->bindParam($sKey, PDO::PARAM_STR);
-            $stmt->bindParam($iType, PDO::PARAM_INT);
-            $stmt->bindParam($iAccountID, PDO::PARAM_INT);
-            $stmt->bindParam($sUsername, PDO::PARAM_STR);
-            $stmt->bindParam($sAvatar, PDO::PARAM_STR);
-            $stmt->bindParam($sPs, PDO::PARAM_STR);
-            $stmt->bindParam($sIPOwner, PDO::PARAM_STR);
-            $stmt->bindParam($sIPClient, PDO::PARAM_STR);
-            $stmt->bindParam($iExpired, PDO::PARAM_INT);    
-            $stmt->bindParam($iUpdateDate, PDO::PARAM_INT);
-            $stmt->bindParam($iUpdateDate, PDO::PARAM_INT);
+            $stmt->bindParam(':p_key', $sKey, PDO::PARAM_STR);
+            $stmt->bindParam(':p_type', $sType, PDO::PARAM_STR);
+            $stmt->bindParam(':p_account_id', $iAccountID, PDO::PARAM_INT);
+            $stmt->bindParam(':p_email', $sEmail, PDO::PARAM_STR);
+            $stmt->bindParam(':p_avatar', $sAvatar, PDO::PARAM_STR);
+            $stmt->bindParam(':p_ps', $sPs, PDO::PARAM_STR);
+            $stmt->bindParam(':p_ipOwner', $sIPOwner, PDO::PARAM_STR);
+            $stmt->bindParam(':p_ipClient', $sIPClient, PDO::PARAM_STR);
+            $stmt->bindParam(':p_expired', $iExpired, PDO::PARAM_INT);    
+            $stmt->bindParam(':p_create_date', $iUpdateDate, PDO::PARAM_INT);
+            $stmt->bindParam(':p_update_date', $iUpdateDate, PDO::PARAM_INT);
             $stmt->execute();
             
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $storage->lastInsertId();
 
             # Free cursor
             $stmt->closeCursor();
@@ -86,6 +86,7 @@ class Core_Business_Api_Token
             // ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),'','');
             return $result;
         }
+// error_log($sKey."_insert token:".$sql);
 
         // return data
         return $result;
@@ -97,7 +98,7 @@ class Core_Business_Api_Token
      * @param array $update
      * @return boolean
      */
-    public function update($iAccountID, $sUsername, $sKey)
+    public function update($iAccountID, $sEmail, $sKey)
     {
     	$result = FALSE;
     	try {
@@ -108,23 +109,23 @@ class Core_Business_Api_Token
             $storage = Core_Global::getDbGlobalMaster();
 
             $sql = "UPDATE `token` SET                        
-                        `update_date` = ?
-                    WHERE `key` = ?
-                    AND `account_id` = ?
-                    AND `username` = ?
+                        `update_date` = :p_update_date
+                    WHERE `key` = :p_key
+                    AND `account_id` = :p_account_id
+                    AND `email` = :p_email                    
                     LIMIT 1";                
             # Prepare store procude
             $stmt = $storage->prepare($sql);
 
-            $stmt->bindParam($iUpdateDate, PDO::PARAM_INT);
-            $stmt->bindParam($sKey, PDO::PARAM_STR);
-            $stmt->bindParam($iAccountID, PDO::PARAM_INT);
-            $stmt->bindParam($sUsername, PDO::PARAM_STR);
+            $stmt->bindParam(':p_update_date', $iUpdateDate, PDO::PARAM_INT);
+            $stmt->bindParam(':p_key', $sKey, PDO::PARAM_STR);
+            $stmt->bindParam(':p_account_id', $iAccountID, PDO::PARAM_INT);
+            $stmt->bindParam(':p_email', $sEmail, PDO::PARAM_STR);
             
             $stmt->execute();
 
             # Fetch All Result        
-            $result = $stmt->fetchColumn();
+            $result = $stmt->rowCount();
 
             # Free cursor
             $stmt->closeCursor();
@@ -152,11 +153,11 @@ class Core_Business_Api_Token
             $storage = Core_Global::getDbGlobalMaster();
 
             $sql = "DELETE FROM `token` 
-                    WHERE `key` = ?
+                    WHERE `key` = :p_key
                     LIMIT 1";
             # Prepare store procude
             $stmt = $storage->prepare($sql);
-            $stmt->bindParam($iKey, PDO::PARAM_INT);
+            $stmt->bindParam(':p_key', $iKey, PDO::PARAM_INT);
             $stmt->execute();
 
             # Fetch All Result
@@ -173,26 +174,26 @@ class Core_Business_Api_Token
         return $result;    	    	
     }        
     
-    public function select($iType = "", $iAccountID = "", $sUsername = "", $iPs = "", $sIPClient = "", $sKey = "")
+    public function select($sType = "", $iAccountID = "", $sEmail = "", $iPs = "", $sIPClient = "", $sKey = "")
     {
         $queryWhere = " WHERE 1=1 ";        
         $arrParamsWhere = array();
         //search type
-        if(!empty($iType)){
-            $queryWhere .= " AND `type` = :iType";
-            $arrParamsWhere[":iType"] = $iType;
+        if(!empty($sType)){
+            $queryWhere .= " AND `type` = :sType";
+            $arrParamsWhere[":sType"] = $sType;
         }
         
         //search accountId
         if(!empty($iAccountID)){
             $queryWhere .= " AND `account_id` = :iAccountID";
             $arrParamsWhere[":iAccountID"] = $iAccountID;
-        }
+        }        
 
-        //search username
-        if(!empty($sUsername)){
-            $queryWhere .= " AND `username` = :sUsername";
-            $arrParamsWhere[":sUsername"] = $sUsername;
+        //search email
+        if(!empty($sEmail)){
+            $queryWhere .= " AND `email` = :sEmail";
+            $arrParamsWhere[":sEmail"] = $sEmail;
         }
 
         //search ps
@@ -219,11 +220,10 @@ class Core_Business_Api_Token
         try {
             # Get Data Master Global
             $storage = Core_Global::getDbGlobalSlave();
-            $sql = "SELECT *
+            $sql = "SELECT * 
                     FROM `token`";
             $sql .= $queryWhere . " LIMIT 1 ";        
-// echo $sql;
-// echo Zend_Json::encode($arrParamsWhere);
+
             # Prepare store procude
             $stmt = $storage->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
@@ -241,12 +241,14 @@ class Core_Business_Api_Token
             error_log("error here $ex");
             return array();
         }
-
+// error_log("get token : ".$sql);
+// error_log(Zend_Json::encode($arrParamsWhere));
+// error_log("----return----".Zend_Json::encode($arrResult));
         // return data
         return $arrResult;
     }
     
-    public function getToken($iAccountID, $sUsername, $sPs, $sIpClient)
+    public function getToken($iAccountID, $sEmail, $sPs, $sIpClient)
     {
     
         $arrResult = array();
@@ -258,20 +260,20 @@ class Core_Business_Api_Token
 
             $sql = "SELECT `key`
                     FROM `token`
-                    WHERE `account_id` = ?
-                    AND `username` = ?
-                    AND `ps` = ?
-                    AND (`IPClient` = ? OR `IPOwner` = ?)
+                    WHERE `account_id` = :p_account_id
+                    AND `email` = :p_email
+                    AND `ps` = :p_ps
+                    AND (`IPClient` = :p_ipClient OR `IPOwner` = :p_ipOwner)
                     AND NOW() <= `update_date` + `expired`
                     LIMIT 1";
             # Prepare store procude
             $stmt = $storage->prepare($sql);
 
-            $stmt->bindParam($iAccountID, PDO::PARAM_INT);
-            $stmt->bindParam($sUsername, PDO::PARAM_STR);
-            $stmt->bindParam($sPs, PDO::PARAM_STR);
-            $stmt->bindParam($sIPClient, PDO::PARAM_STR);
-            $stmt->bindParam($sIPClient, PDO::PARAM_STR);
+            $stmt->bindParam(':p_account_id', $iAccountID, PDO::PARAM_INT);
+            $stmt->bindParam(':p_email', $sEmail, PDO::PARAM_STR);
+            $stmt->bindParam(':p_ps', $sPs, PDO::PARAM_STR);
+            $stmt->bindParam(':p_ipClient', $sIPClient, PDO::PARAM_STR);
+            $stmt->bindParam(':p_ipOwner', $sIPClient, PDO::PARAM_STR);
             $stmt->execute();
 
             # Fetch All Result

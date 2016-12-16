@@ -30,6 +30,7 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
     public function init() {        
         // $this->_helper->layout->disableLayout();
         // $this->_helper->viewRenderer('login/login', null, true);
+// exit("sdasd");        
         $this->isLogin = FALSE;
         $this->isAdmin = FALSE;
         $this->arrLogin = array();

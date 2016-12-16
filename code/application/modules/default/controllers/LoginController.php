@@ -131,7 +131,6 @@ class LoginController extends Core_Controller_Action {
                             // $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "InternalProject", Core_Utility::getAltIp());
                             $sToken = Token::getInstance()->generateToken($iType="user", $arrAccount['account_id'], $arrAccount['username'], $arrAccount['avatar'], $arrAccount['password'], $iIPOwner=$_SERVER["REMOTE_ADDR"], $iIPClient=$_SERVER["REMOTE_ADDR"], $iExpired); 
 
-//                                $domain = $this->getRequest()->getHttpHost();
                             //Set Auth Cookie
                             Core_Cookie::setCookie(AUTH_USER_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
 
@@ -163,6 +162,108 @@ class LoginController extends Core_Controller_Action {
         $this->view->email = $username;
         $this->view->message  = $message;
         $this->view->redirectPage  = $redirectPage;
+    }
+
+    public function fbloginAction()
+    {
+        $this->_helper->layout()->disableLayout();
+
+        $reCode = $this->_getParam('code', '');
+        $redirect_uri = urlencode("http://thithien.com/login/fblogin");
+        if(!empty($reCode)){
+            $url_send = "https://graph.facebook.com/v2.8/oauth/access_token?client_id=". FB_APP_ID ."&redirect_uri=$redirect_uri&client_secret=". FB_APP_SECRET ."&code=". $reCode;
+            $response = Core_Common::sendGetData($url_send);
+// error_log($url_send);
+// error_log("))))))___".$response);
+            $fbResponse = Zend_Json::decode($response);
+            $fbToken = $fbResponse["access_token"];
+// error_log("fbToken:".$fbToken);            
+            if(!empty($fbToken)){
+                $strUser = Core_Common::sendGetData("https://graph.facebook.com/me?fields=name,email,link,gender,picture&access_token=".$fbToken);
+                if(!empty($strUser)){
+// error_log("strUser=".$strUser);                    
+                    $arrUser = Zend_Json::decode($strUser);                    
+                    if(isset($arrUser["email"])){
+                        $userDetail = AccountInfo::getInstance()->getAccountInfoByEmail($arrUser["email"]);
+                        // add new user
+                        if(!is_array($userDetail)){ 
+                            $arrAcc = array();
+                            $arrAcc["username"]=$arrUser["email"];
+                            $arrAcc["password"]=md5($arrUser["email"]);
+                            $arrAcc["name"]=$arrUser["name"];
+                            $arrAcc["email"]=$arrUser["email"];
+                            $arrAcc["phone"]="";
+                            $arrAcc["avatar"]=$arrUser["picture"]["data"]["url"];
+                            $arrAcc["picture"]="";
+                            $arrAcc["address"]="";
+                            $arrAcc["level"]=0;
+                            $arrAcc["is_admin"]=0;
+                            $arrAcc["active"]=1;
+                            $arrAcc["status"]=1;                    
+                            $inserted = AccountInfo::getInstance()->insertAccountInfo($arrAcc);                        
+                            if($inserted > 0){
+                                $iAccountID = $inserted;
+                                $sName = $arrAcc['name'];
+                                $sEmail = $arrAcc['email'];
+                                $sAvatar = $arrAcc["avatar"];
+                                $sPs = $arrAcc["password"];
+
+                                $iExpired = 3600;
+                                //Set cookie expired
+                                Zend_Session::RememberMe($iExpired);
+
+                                // $sToken = Core_Guuid::generateNoSpace(Core_Guuid::UUID_TIME, Core_Guuid::FMT_STRING, "InternalProject", Core_Utility::getAltIp());
+                                $sToken = Token::getInstance()->generateToken($iType="user", $iAccountID, $sEmail, $sAvatar, $sPs, $iIPOwner=$_SERVER["REMOTE_ADDR"], $iIPClient=$_SERVER["REMOTE_ADDR"], $iExpired); 
+
+    //                                $domain = $this->getRequest()->getHttpHost();
+                                //Set Auth Cookie
+                                Core_Cookie::setCookie(AUTH_USER_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
+
+                                //set session                                
+                                AccountInfo::getInstance()->setUserLogin($sToken, $iAccountID);
+
+                                $this->_redirect('/index');
+                                exit();                
+                            }
+                            else{
+                                // echo Zend_Json::encode(Core_Server::setOutputData(true, 'Co loi xay ra', array()));
+                                $this->_redirect('/dang-ky');
+                                exit;   
+                            }
+                        }
+                        else// existed user
+                        {
+// error_log(Zend_Json::encode($userDetail));   
+                            if(isset($userDetail["account_id"])){                         
+                                $iAccountID = $userDetail["account_id"];
+                                $sName = $userDetail['name'];
+                                $sEmail = $userDetail['email'];
+                                $sAvatar = $userDetail["avatar"];
+                                $sPs = $userDetail["password"];
+                                $iExpired = 3600;
+                                //Set cookie expired
+                                Zend_Session::RememberMe($iExpired);
+                                $sToken = Token::getInstance()->generateToken($iType="user", $iAccountID, $sEmail, $sAvatar, $sPs, $iIPOwner=$_SERVER["REMOTE_ADDR"], $iIPClient=$_SERVER["REMOTE_ADDR"], $iExpired); 
+// error_log("login token:".$sToken);
+    //                                $domain = $this->getRequest()->getHttpHost();
+                                //Set Auth Cookie
+                                Core_Cookie::setCookie(AUTH_USER_LOGIN_TOKEN, $sToken, $iExpired, '/', DOMAIN, false, true);
+
+                                //set session                                
+                                AccountInfo::getInstance()->setUserLogin($sToken, $iAccountID);
+
+                                $this->_redirect('/index');
+                                exit();
+                            }
+                            else{
+                                $this->_redirect('/dang-ky');
+                                exit();
+                            }    
+                        }    
+                    }
+                }
+            }
+        }
     }
 
     public function loginAction()

@@ -8,7 +8,7 @@ app.factory('registService', function($http, $log, $q){
 				'sPassword': password,
 				'sConfirmpassword': confirmpassword,
 				'sFullname': fullname || email,
-				'sRecaptcha': $("g-recaptcha-response").val()
+				'sRecaptcha': $("#g-recaptcha-response").val()
 			};			
 			var defer = $q.defer();
 			$http.post('/api/user/regist', $.param(params))

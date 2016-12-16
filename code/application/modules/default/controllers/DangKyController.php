@@ -82,7 +82,7 @@ class DangKyController extends Core_Controller_Action {
                 $message .= "<br />Nhập lại tên đăng nhập";
                 $bCaptcha = false;
             }*/
-
+error_log("here_");
             if(!Core_Validate::checkEmail($email)){
                 $message .= "<br />Nhập lại email";
                 $bCaptcha = false;
@@ -105,7 +105,7 @@ class DangKyController extends Core_Controller_Action {
 
             $reCaptcha = $this->_getParam('g-recaptcha-response');
             //Get params
-            if($iSubmitTime->time >= 4){
+            /*if($iSubmitTime->time >= 4){
 
                 $data = array(
                     "secret" => "6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN",
@@ -123,6 +123,23 @@ class DangKyController extends Core_Controller_Action {
                 else{
                     error_log("Chung thuc ok");
                 }
+            }*/
+
+            $data = array(
+                "secret" => "6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN",
+                "response" => $reCaptcha
+            );
+            $url_send ="https://www.google.com/recaptcha/api/siteverify?secret=6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN&response=".$reCaptcha;
+            $str_data = json_encode($data);
+            $responseCaptcha = $this->sendPostData($url_send, $str_data);
+            $responseCaptcha = json_decode($responseCaptcha,true);
+            $bCaptcha = $responseCaptcha['success'];
+            if(!$bCaptcha){
+                error_log("chung thuc ko dc");
+                $message .= " <br />Sai chứng thức, vui lòng thử lại!";
+            }
+            else{
+                error_log("Chung thuc ok");
             }
 
             if($bCaptcha) {

@@ -76,6 +76,8 @@ class Api_UserController extends Zend_Controller_Action
         $sPassword = $this->_getParam('sPassword', '');
         $sConfirmpassword = $this->_getParam('sConfirmpassword', '');
         $sRecaptcha = $this->_getParam('sRecaptcha', '');
+// exit($sRecaptcha);
+
         $arrReturn = array();
         $bCaptcha = true;        
         if($this->_request->isXmlHttpRequest()){
@@ -114,7 +116,7 @@ class Api_UserController extends Zend_Controller_Action
 
         $iSubmitTime->time = isset($iSubmitTime->time) ? $iSubmitTime->time : 0;
 
-        if($iSubmitTime->time >= 4){
+        /*if($iSubmitTime->time >= 4){
             $data = array(
                 "secret" => "6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN",
                 "response" => $sRecaptcha
@@ -132,7 +134,30 @@ class Api_UserController extends Zend_Controller_Action
             else{
                 error_log("Chung thuc ok");
             }
+        }*/
+        /*$data = array(
+            "secret" => "6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN",
+            "response" => $sRecaptcha
+        );*/
+
+        //?secret=6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN&response=".$reCaptcha;
+        $url_send ="https://www.google.com/recaptcha/api/siteverify";
+        // $str_data = Zend_Json::encode($data);
+        $str_data = "secret=6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN&response=".$sRecaptcha;       
+// error_log("here_         ".$str_data);
+        $responseCaptcha = Core_Common::sendPostDataNew($url_send, $str_data);
+// error_log("response_capcha: ".$responseCaptcha);        
+        $responseCaptcha = Zend_Json::decode($responseCaptcha);
+        $bCaptcha = $responseCaptcha['success'];
+        if(!$bCaptcha){
+            error_log("Sai chứng thức, vui lòng thử lại!");
+            echo Zend_Json::encode(Core_Server::setOutputData(true, 'Sai chứng thức, vui lòng thử lại!', array()));
+            exit;
         }
+        else{
+            error_log("Chung thuc ok");
+        }
+
         $arrAcc = AccountInfo::getInstance()->getAccountInfoByEmail($sEmail);
         if($arrAcc || (is_array($arrAcc) && sizeof($arrAcc) > 0)){
 // error_log("here_".Zend_Json::encode($arrAcc));                    
