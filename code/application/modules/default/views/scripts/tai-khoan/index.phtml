@@ -1,7 +1,7 @@
     <script src="<?= $this->static->frontend->js ;?>/registService.js"></script>
-    <script src="<?= $this->static->frontend->js ;?>/loginCtrl.js"></script>    
+    <script src="<?= $this->static->frontend->js ;?>/dkCtrl.js"></script>    
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <div ng-controller="registCtrl" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-left-login">
+    <div ng-controller="dkCtrl" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-left-login">
       <form name="registFrm" class="form regist-form" method="post" action="" >        
         <input id="sid" name="sid" type="hidden" value="<?= $this->token ?>" />        
         <input id="returnUrl" name="returnUrl" type="hidden" value="<?= $this->redirectPage ?>" />        

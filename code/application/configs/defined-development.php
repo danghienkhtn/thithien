@@ -56,6 +56,7 @@ define('FOLDER_USER', 'user');
 define('FB_APP_ID','1243244549097286');
 define('FB_APP_SECRET','b5fb564db22753f04dfca58eaa85948c');
 
+define('GG_RECAPTCHA_SITE_KEY','6Lc8Ww4UAAAAADex6QFz4YTmWdUW9nB6a6AQTY8z');
 define('GG_RECAPTCHA_SECRET','6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN');
 
 define('GG_CREDENTIALS_KEY','668835253562-h1ceu9fp00vq0tb04b1cv5pvf4oqv6bf.apps.googleusercontent.com');

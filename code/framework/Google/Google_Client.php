@@ -151,7 +151,7 @@ class Google_Client {
         unset($val['scope']);
         $service = array_merge($service, $val);
       }
-    }
+    }            
     $service['scope'] = implode(' ', $scopes);
     return $service;
   }

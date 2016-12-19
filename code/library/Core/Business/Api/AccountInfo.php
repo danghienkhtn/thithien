@@ -769,35 +769,38 @@ class Core_Business_Api_AccountInfo
      */
      public function userLogin($sUserName, $sPassword, &$arrAccInfo) {
          
-         $result = 0;         
+         $result = false;         
         try {
 
             // Get Data Master Global
             $storage = Core_Global::getDbGlobalSlave();
             $sql = "SELECT * 
                     FROM `account_info` 
-                    WHERE ( `username` = :p_username OR `email` = :p_username )
+                    WHERE ( `username` = :p_username OR `email` = :p_email )
                     AND `password` = :p_password
                     AND `active` = 1
                     LIMIT 1";
             // Prepare store procude
             $stmt = $storage->prepare($sql);
             $stmt->bindParam(':p_username', $sUserName, PDO::PARAM_STR);
+            $stmt->bindParam(':p_email', $sUserName, PDO::PARAM_STR);
             $stmt->bindParam(':p_password', md5($sPassword), PDO::PARAM_STR);
             $stmt->execute();
 
             // Fetch All Result
             $arrAccInfo = $stmt->fetch();
-
+error_log(Zend_Json::encode($arrAccInfo));            
+            if(is_array($arrAccInfo))
+                $result = true;
             // Free cursor
             $stmt->closeCursor();
 
-            $result = 1;
+            // $result = true;
         } catch (Exception $ex) {
             Core_Common::var_dump($ex->getMessage());
             // ErrorLog::getInstance()->insert(__CLASS__,__FUNCTION__,$ex->getMessage(),0,$sUserName);
             $arrAccInfo = array();
-            $result = 0;
+            $result = false;
         }
 
         // return data

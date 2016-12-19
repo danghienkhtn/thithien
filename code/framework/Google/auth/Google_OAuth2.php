@@ -97,12 +97,13 @@ class Google_OAuth2 extends Google_Auth {
       $request = Google_Client::$io->makeRequest(new Google_HttpRequest(self::OAUTH2_TOKEN_URI, 'POST', array(), array(
           'code' => $code,
           'grant_type' => 'authorization_code',
-          'redirect_uri' => $this->redirectUri,
+          'redirect_uri' => urldecode($this->redirectUri),
           'client_id' => $this->clientId,
           'client_secret' => $this->clientSecret
       )));
-
+// error_log("2.6".$this->redirectUri."+key:".$this->clientId."+sr:".$this->clientSecret."+code:".$code);
       if ($request->getResponseHttpCode() == 200) {
+// error_log("2.6.1======".$request->getResponseBody()."===========");        
         $this->setAccessToken($request->getResponseBody());
         $this->token['created'] = time();
         return $this->getAccessToken();
@@ -115,7 +116,6 @@ class Google_OAuth2 extends Google_Auth {
         throw new Google_AuthException("Error fetching OAuth2 access token, message: '$response'", $request->getResponseHttpCode());
       }
     }
-
     $authUrl = $this->createAuthUrl($service['scope']);
     header('Location: ' . $authUrl);
     return true;

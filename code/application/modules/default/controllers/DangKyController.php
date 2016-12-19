@@ -36,6 +36,7 @@ class DangKyController extends Core_Controller_Action {
     private function chkgglogin()
     {       
         $authUrl = ""; 
+        // unset($_SESSION['ggtoken']);
         if (isset($_SESSION['ggtoken'])) 
         { 
             $gClient->setAccessToken($_SESSION['ggtoken']);
@@ -68,14 +69,15 @@ class DangKyController extends Core_Controller_Action {
     {        
         $redirectPage = $this->_getParam('returnUrl',BASE_URL);
         // error_log($this->_getParam("returnUrl")); 
+
         //check login
         // $login = AccountInfo::getInstance()->getUserLogin();
         if(isset($this->isLogin) && $this->isLogin === TRUE)
             $this->_redirect($redirectPage);
-
+// error_log("aadsdsd");
         $urlGGLogin = $this->chkgglogin();
         if(empty($urlGGLogin)){
-error_log("some thing error");           
+// error_log("some thing error");           
             $this->_redirect($redirectPage);
         }
 error_log('url gglogin: '.$urlGGLogin);
@@ -110,7 +112,6 @@ error_log('url gglogin: '.$urlGGLogin);
             // $params["isremember"] = isset($params["isremember"]) ? $params["isremember"]: 'off';
             // $isRemember = ($params["isremember"] == 'on') ? true : false;
             $arrAccount = array();            
-error_log("here_");
             if(!Core_Validate::checkEmail($email)){
                 $message .= "<br />Nhập lại email";
                 $bCaptcha = false;
@@ -134,7 +135,7 @@ error_log("here_");
             $reCaptcha = $this->_getParam('g-recaptcha-response');
             //Get params            
             $data = array(
-                "secret" => "6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN",
+                "secret" => GG_RECAPTCHA_SECRET,
                 "response" => $reCaptcha
             );
             $url_send ="https://www.google.com/recaptcha/api/siteverify?secret=6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN&response=".$reCaptcha;

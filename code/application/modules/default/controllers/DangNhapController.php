@@ -6,7 +6,7 @@
  * @version     :   20161207
  * @copyright   :   Dahi
  */
-class LoginController extends Core_Controller_Action {
+class DangNhapController extends Core_Controller_Action {
 
     protected $title = 'Login Action';
     /**
@@ -14,10 +14,11 @@ class LoginController extends Core_Controller_Action {
      */
     public function init()
     {
+        parent::init();
         $remoteIp =  $this->_request->getServer('REMOTE_ADDR'); 
         // echo $remoteIp;       
         //Disable layout
-        $this->_helper->layout()->disableLayout();
+        // $this->_helper->layout()->disableLayout();
     }
 
     private function sendPostData($url, $post){
@@ -37,24 +38,22 @@ class LoginController extends Core_Controller_Action {
      */
     public function indexAction()
     {
-
         $redirectPage = $this->_getParam('redirect',BASE_URL);
+        if(isset($this->isLogin) && $this->isLogin){
+            $this->_redirect($redirectPage);
+        }        
 
-        $iLoginTime = new Zend_Session_Namespace('loginTime');
-        if(isset($iLoginTime->time) && $this->_request->isPost())
-            $iLoginTime->time++;
-
+        $iLoginTime = new Zend_Session_Namespace('loginTime');        
         $iLoginTime->time = isset($iLoginTime->time) ? $iLoginTime->time : 0;
 //        (isset($iLoginTime->time)&& !empty($iLoginTime->time))  ? $iLoginTime->time : 1;
-        global $globalConfig;
+        // global $globalConfig;
         //check login
-        $login = AccountInfo::getInstance()->getUserLogin();
-        // echo "dddd";
+        // $login = AccountInfo::getInstance()->getUserLogin();
         // $arrLog = require_once APPLICATION_PATH.'/configs/accounts-block.php';
 //        Core_Common::var_dump($arrLog);
-        if(isset($login['accountID']) && isset($login['email']))
-            $this->_redirect($redirectPage);
-        $username ='';
+        /*if(isset($login['accountID']) && isset($login['email']))
+            $this->_redirect($redirectPage);*/
+        /*$username ='';
         $message = '';
         $sName ='';
         $sPicture ='';
@@ -84,18 +83,19 @@ class LoginController extends Core_Controller_Action {
             //Get params
             if($iLoginTime->time >= 4){
                 $reCaptcha = $this->_getParam('g-recaptcha-response');
+
                 $data = array(
                     "secret" => GG_RECAPTCHA_SECRET,
                     "response" => $reCaptcha
                 );
                 $url_send ="https://www.google.com/recaptcha/api/siteverify";
-                //?secret=6LdYFh0TAAAAAAL_RVrbhr83qFapwIZrQaOE8jC0&response=".$reCaptcha;
+                //secret=6LdYFh0TAAAAAAL_RVrbhr83qFapwIZrQaOE8jC0&response=".$reCaptcha;
                 $str_data = json_encode($data);
                 $responseCaptcha = Core_Common::sendPostData($url_send, $str_data);
                 $responseCaptcha = json_decode($responseCaptcha,true);
                 $bCaptcha = $responseCaptcha['success'];
                 if(!$bCaptcha);
-                    $message = 'Sai chứng thức, vui lòng thử lại!';
+                $message = 'Sai chứng thức, vui lòng thử lại!';
             }
 
             if($bCaptcha) {
@@ -107,7 +107,6 @@ class LoginController extends Core_Controller_Action {
 
                     //Is Login Success
                     if ($isLoginM) {
-
                         //get AccountInfo
                         // $arrAccount = AccountInfo::getInstance()->getAccountInfoByUserName($username);
 
@@ -156,14 +155,48 @@ class LoginController extends Core_Controller_Action {
             }
 
             //Check login mobion
-        }
-
-        $this->view->iLoginTime = $iLoginTime->time;
-        $this->view->email = $username;
-        $this->view->message  = $message;
+        }*/
+        if($iLoginTime->time >= 4)
+            $this->view->recaptchaDis = "none";
+        else
+            $this->view->recaptchaDis = "hide";    
+        $this->view->ggSiteKey = GG_RECAPTCHA_SITE_KEY;
+        // $this->view->message  = $message;
         $this->view->redirectPage  = $redirectPage;
+        $this->view->urlGGLogin = $this->chkgglogin();
+        $this->view->urlFBLogin = "https://www.facebook.com/dialog/oauth?client_id=".FB_APP_ID."&redirect_uri=".BASE_URL."/login/fblogin&scope=email";
     }
     
+    private function chkgglogin()
+    {       
+        $authUrl = ""; 
+        // unset($_SESSION['ggtoken']);
+        if (isset($_SESSION['ggtoken'])) 
+        { 
+            $gClient->setAccessToken($_SESSION['ggtoken']);
+            $authUrl = "";
+        }
+        else{
+            require_once 'Google/Google_Client.php';
+            require_once 'Google/contrib/Google_Oauth2Service.php';
+             
+            $gClient = new Google_Client();
+            $redirect_url = BASE_URL."/login/gglogin";
+            $gClient->setApplicationName(GG_APP_NAME);
+            $gClient->setClientId(GG_CREDENTIALS_KEY);
+            $gClient->setClientSecret(GG_CREDENTIALS_SECRET);
+            $gClient->setRedirectUri($redirect_url);
+            $gClient->setDeveloperKey(GG_API_KEY);
+            $gClient->setScopes("https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email");            
+            // $gClient->setIncludeGrantedScopes(true);
+            $gClient->setAccessType("online");
+            //For Guest user, get google login url
+            $authUrl = $gClient->createAuthUrl();
+            // error_log("here gg.".$authUrl."--");
+        }
+        return $authUrl;
+    }
+
     public function ggloginAction()
     {
         $this->_helper->layout()->disableLayout();
@@ -203,6 +236,12 @@ class LoginController extends Core_Controller_Action {
             //For logged in user, get details from google using access token
             $arrUser                 = $google_oauthV2->userinfo->get();
 // error_log("detail existed: ".json_encode($arrUser));            
+            /*$user_id              = $userInfo['id'];
+            $user_name            = filter_var($userInfo['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $email                = filter_var($userInfo['email'], FILTER_SANITIZE_EMAIL);
+            $profile_url          = filter_var($userInfo['link'], FILTER_VALIDATE_URL);
+            $profile_image_url    = filter_var($userInfo['picture'], FILTER_VALIDATE_URL);
+            $personMarkup         = "$email<div><img src='$profile_image_url?sz=50'></div>";*/
             $_SESSION['ggtoken']    = $gClient->getAccessToken();
 
             /////////////////////////////
@@ -276,7 +315,7 @@ class LoginController extends Core_Controller_Action {
                         //set session                                
                         AccountInfo::getInstance()->setUserLogin($sToken, $iAccountID);
 
-                        $this->_redirect(BASE_URL);
+                        $this->_redirect('/index');
                         exit();
                     }
                     else{
@@ -357,7 +396,7 @@ class LoginController extends Core_Controller_Action {
                                 //set session                                
                                 AccountInfo::getInstance()->setUserLogin($sToken, $iAccountID);
 
-                                $this->_redirect(BASE_URL);
+                                $this->_redirect('/index');
                                 exit();                
                             }
                             else{
@@ -387,7 +426,7 @@ class LoginController extends Core_Controller_Action {
                                 //set session                                
                                 AccountInfo::getInstance()->setUserLogin($sToken, $iAccountID);
 
-                                $this->_redirect(BASE_URL);
+                                $this->_redirect('/index');
                                 exit();
                             }
                             else{

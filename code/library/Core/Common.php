@@ -2332,7 +2332,6 @@ class Core_Common
     }
 
     public static function sendPostDataNew($url, $post){
-error_log("construction_".$url);        
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -2342,7 +2341,6 @@ error_log("construction_".$url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         $result = curl_exec($ch);
         curl_close($ch);  // Seems like good practice
-error_log("end cons...".$post);        
         return $result;
     }
 

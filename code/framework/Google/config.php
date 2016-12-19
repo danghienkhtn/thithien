@@ -23,17 +23,23 @@ $apiConfig = array(
   
     // The application_name is included in the User-Agent HTTP header.
     'application_name' => '',
+    // 'application_name' => 'Login thithien.com',
 
     // OAuth2 Settings, you can get these keys at https://code.google.com/apis/console
     'oauth2_client_id' => '',
     'oauth2_client_secret' => '',
     'oauth2_redirect_uri' => '',
+    // 'oauth2_client_id' => '668835253562-h1ceu9fp00vq0tb04b1cv5pvf4oqv6bf.apps.googleusercontent.com',
+    // 'oauth2_client_secret' => 'dOQNZ3PyQeS5NANYBEqDMyXC',
+    // 'oauth2_redirect_uri' => 'http://thithien.com/login/gglogin',
 
     // The developer key, you get this at https://code.google.com/apis/console
     'developer_key' => '',
+    // 'developer_key' => 'thithien-150805',
   
     // Site name to show in the Google's OAuth 1 authentication screen.
-    'site_name' => 'www.example.org',
+    // 'site_name' => 'thithien.com',
+    'site_name' => '',
 
     // Which Authentication, Storage and HTTP IO classes to use.
     'authClass'    => 'Google_OAuth2',

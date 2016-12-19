@@ -283,12 +283,12 @@ class AccountInfo
         if(empty($sAuthToken)) {
             $sAuthToken = Core_Cookie::getCookie(AUTH_USER_LOGIN_TOKEN);
         }
-
+error_log("yes cookies");
         //Check token
         if (empty($sAuthToken)) {
             return false;
         }
-
+error_log("no cookies");
         /* Session expired*/
         if(!isset($_SESSION[$sAuthToken]))
         {

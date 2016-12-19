@@ -1,24 +1,24 @@
-    <script src="<?= $this->static->frontend->js ;?>/registService.js"></script>
+    <script src="<?= $this->static->frontend->js ;?>/loginService.js"></script>
     <script src="<?= $this->static->frontend->js ;?>/loginCtrl.js"></script>    
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <div ng-controller="registCtrl" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-left-login">
-      <form name="registFrm" class="form regist-form" method="post" action="" >        
+    <div ng-controller="loginCtrl" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-left-login">
+      <form name="loginFrm" class="form login-form" method="post" action="" >        
         <input id="sid" name="sid" type="hidden" value="<?= $this->token ?>" />        
         <input id="returnUrl" name="returnUrl" type="hidden" value="<?= $this->redirectPage ?>" />        
         <div class="col-md-12 content">
           <div class="button-social button-google">
               <span class="icon-google-plus fa fa-google-plus fa-2x"></span>
-              <a href="<?= $this->urlGGLogin; ?>">Đăng ký bằng Google</a>
+              <a href="<?= $this->urlGGLogin; ?>">Đăng nhập bằng Google</a>
           </div>
           <div class="button-space"></div>
           <div class="button-social button-facebook">
               <span class="icon-facebook fa fa-facebook-official fa-2x"></span>
-              <a href="<?= $this->urlFBLogin; ?>">Đăng ký bằng Facebook
+              <a href="<?= $this->urlFBLogin; ?>">Đăng nhập bằng Facebook
               </a>
           </div>          
           <div class="button-space"></div>
           <div class="divider">
-              <hr class="left" />Hoặc Đăng ký bằng Email <hr class="right" />
+              <hr class="left" />Hoặc Đăng nhập bằng Email <hr class="right" />
           </div>          
           <div class="field-validation-error hide">
             {{message}}            
@@ -26,30 +26,19 @@
           <div class="form-group">
               <input ng-model="email" class="form-control" id="Email" maxlength="256" name="email" placeholder="Email *" type="email" value="<?= $this->email; ?>"  ng-required="required" />
               <span class="field-validation-valid"></span>
-              <span class="field-validation-error" ng-show="registFrm.email.$dirty && registFrm.email.$invalid">Bạn vui lòng nhập tên đăng nhập</span>
+              <span class="field-validation-error" ng-show="loginFrm.email.$dirty && loginFrm.email.$invalid">Bạn vui lòng nhập tên đăng nhập</span>
           </div>
           <div class="form-group">
               <input ng-model="password" class="form-control" id="Password" maxlength="51" name="password" placeholder="Mật khẩu *" type="password" />
               <span class="field-validation-valid"></span>
               <span class="field-validation-error-pass hide" id="Error_password" >Bạn vui lòng nhập Mật khẩu</span>
-          </div>
-          <div class="form-group">
-              <input ng-model="confirmpassword" class="form-control" id="ConfirmPassword" maxlength="51" name="confirmpassword" placeholder="Xac nhan mật khẩu *" type="password" />
-              <span class="field-validation-valid"></span>
-              <span class="field-validation-error-repass hide" id="Error_Repassword">Không trùng khớp, bạn vui lòng nhập Mật khẩu</span>
-          </div>          
-          <div class="form-group">
-                <input ng-model="fullname" class="form-control" id="FullName" maxlength="80" name="fullname" placeholder="Họ và tên" type="text" value="<?= $this->fullname; ?>">
-                <span class="field-validation-valid"></span>
-                <span class="field-validation-error-fullname hide" id="Error_FullName">Bạn vui lòng nhập Họ và tên</span>
-          </div>          
-          <div id="html_element" class="hide"></div>
-          <div class="g-recaptcha" data-sitekey="6Lc8Ww4UAAAAADex6QFz4YTmWdUW9nB6a6AQTY8z"></div>          
+          </div>                              
+          <div class="g-recaptcha <?= $this->recaptchaDis; ?>" data-sitekey="<?= $this->ggSiteKey; ?>"></div>          
           <div class="form-group">
               <div class="btn-submit">
                   <div id="errorSummary">                
                   </div>
-                  <input type="button" value="Đăng ký" class="button" ng-click="RegistUser()" ng-disabled="registFrm.email.$dirty && registFrm.email.$invalid || registFrm.password.$dirty && registFrm.password.$invalid" />&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:goForgot();">Quên mật khẩu</a>?
+                  <input type="button" value="Đăng nhập" class="button" ng-click="Login()" ng-disabled="loginFrm.email.$dirty && loginFrm.email.$invalid || loginFrm.password.$dirty && loginFrm.password.$invalid" />&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:goForgot();">Quên mật khẩu</a>?
               </div>
           </div>          
         </div>

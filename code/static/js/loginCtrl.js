@@ -1,11 +1,10 @@
-app.controller('dkCtrl', function($scope, registService, $http, $q) {
-	$scope.email= $("Email").val();
-	$scope.fullname= $("Fullname").val();
+app.controller('loginCtrl', function($scope, loginService, $http, $q) {
+	$scope.email= $("Email").val();	
 	$scope.loading = false;
 
-	$scope.RegistUser = function(){
+	$scope.Login = function(){
 		$scope.loading = true;		
-		registService.regist($scope.email, $scope.password, $scope.confirmpassword, $scope.fullname).then(function successCallback(data){
+		loginService.login($scope.email, $scope.password).then(function successCallback(data){
 			if(data){
 				// console.log(data.error);
 				$scope.loading = false;
