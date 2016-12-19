@@ -33,19 +33,52 @@ class DangKyController extends Core_Controller_Action {
         return $result;
     }
 
-
+    private function chkgglogin()
+    {       
+        $authUrl = ""; 
+        if (isset($_SESSION['ggtoken'])) 
+        { 
+            $gClient->setAccessToken($_SESSION['ggtoken']);
+            $authUrl = "";
+        }
+        else{
+            require_once 'Google/Google_Client.php';
+            require_once 'Google/contrib/Google_Oauth2Service.php';
+             
+            $gClient = new Google_Client();
+            $redirect_url = BASE_URL."/login/gglogin";
+            $gClient->setApplicationName(GG_APP_NAME);
+            $gClient->setClientId(GG_CREDENTIALS_KEY);
+            $gClient->setClientSecret(GG_CREDENTIALS_SECRET);
+            $gClient->setRedirectUri($redirect_url);
+            $gClient->setDeveloperKey(GG_API_KEY);
+            $gClient->setScopes("https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email");            
+            // $gClient->setIncludeGrantedScopes(true);
+            $gClient->setAccessType("online");
+            //For Guest user, get google login url
+            $authUrl = $gClient->createAuthUrl();
+            // error_log("here gg.".$authUrl."--");
+        }
+        return $authUrl;
+    }
     /**
      * Default action
      */
     public function indexAction()
-    {
-
+    {        
         $redirectPage = $this->_getParam('returnUrl',BASE_URL);
         // error_log($this->_getParam("returnUrl")); 
         //check login
         // $login = AccountInfo::getInstance()->getUserLogin();
         if(isset($this->isLogin) && $this->isLogin === TRUE)
             $this->_redirect($redirectPage);
+
+        $urlGGLogin = $this->chkgglogin();
+        if(empty($urlGGLogin)){
+error_log("some thing error");           
+            $this->_redirect($redirectPage);
+        }
+error_log('url gglogin: '.$urlGGLogin);
 
         $iSubmitTime = new Zend_Session_Namespace('RegistTime');
         if(isset($iSubmitTime->time) && $this->_request->isPost())
@@ -76,12 +109,7 @@ class DangKyController extends Core_Controller_Action {
             $email = trim($params["email"]);
             // $params["isremember"] = isset($params["isremember"]) ? $params["isremember"]: 'off';
             // $isRemember = ($params["isremember"] == 'on') ? true : false;
-            $arrAccount = array();
-            //validate password and username
-            /*if(!Core_Validate::checkUsername($username)){
-                $message .= "<br />Nhập lại tên đăng nhập";
-                $bCaptcha = false;
-            }*/
+            $arrAccount = array();            
 error_log("here_");
             if(!Core_Validate::checkEmail($email)){
                 $message .= "<br />Nhập lại email";
@@ -104,27 +132,7 @@ error_log("here_");
             }
 
             $reCaptcha = $this->_getParam('g-recaptcha-response');
-            //Get params
-            /*if($iSubmitTime->time >= 4){
-
-                $data = array(
-                    "secret" => "6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN",
-                    "response" => $reCaptcha
-                );
-                $url_send ="https://www.google.com/recaptcha/api/siteverify?secret=6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN&response=".$reCaptcha;
-                $str_data = json_encode($data);
-                $responseCaptcha = $this->sendPostData($url_send, $str_data);
-                $responseCaptcha = json_decode($responseCaptcha,true);
-                $bCaptcha = $responseCaptcha['success'];
-                if(!$bCaptcha){
-                    error_log("chung thuc ko dc");
-                    $message .= " <br />Sai chứng thức, vui lòng thử lại!";
-                }
-                else{
-                    error_log("Chung thuc ok");
-                }
-            }*/
-
+            //Get params            
             $data = array(
                 "secret" => "6Lc8Ww4UAAAAAKLadWT-J3Rfwwea-_4vE-CIOorN",
                 "response" => $reCaptcha
@@ -177,7 +185,8 @@ error_log("here_");
         $this->view->fullname = $fullname;
         $this->view->message  = $message;
         $this->view->redirectPage  = $redirectPage;
-
+        $this->view->urlGGLogin = $urlGGLogin;
+        $this->view->urlFBLogin = "https://www.facebook.com/dialog/oauth?client_id=".FB_APP_ID."&redirect_uri=http://thithien.com/login/fblogin&scope=email";
 
         // error_log("3. ". Zend_Json::encode($this->view));
     }
