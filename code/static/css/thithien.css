@@ -765,7 +765,8 @@ body {
     border: 0;
     background: #F57301;
     color: #fff;
-    cursor: pointer
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .mbn-search .container-top-seach .btn-search:hover {

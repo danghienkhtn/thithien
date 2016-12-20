@@ -1,1 +1,77 @@
-Index Page
+<script src="<?= $this->static->frontend->js ;?>/indexCtrl.js"></script>
+<!--Khu vực tìm kiếm-->
+    <div ng-controller="searchCtrl" class="container clearfix">
+      <div class="mbn-search clearfix hidden-xs" id="topSearch">
+        <div class="container-top-seach row">
+          <div class="col-md-3 col-sm-3 col-xs-3 top-search-location">
+            <i id="mbn-top-search-city-icon" class="fa fa-map-marker fa-2x marker"></i>
+            <input ng-model="cbTinhThanh" value="{{cbTinhThanh}}" class="hide" />                              
+            <div class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-container-active" style="width: 100%;" title="">
+              <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-city-dropdown" class="chosen-single" tabindex="-1">
+                <span class="drop-cat">                    
+                  <span class="cat-name-tt">Toan quoc</span>
+                </span>
+                <div><span class="caret"></span></div>
+              </a>
+              <!-- chosen drop -->  
+              <div class="chosen-drop">
+                <div class="chosen-search">
+                  <input type="text" autocomplete="off" readonly="">
+                </div>
+                <ul class="chosen-results">                    
+                  <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenTT(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in tinhthanh" >{{x.name}}</li>                   
+                </ul>
+              </div>
+              <!-- END chosen drop -->
+            </div>      
+          </div>
+          <!-- col giua -->
+          <div class="col-md-4 col-sm-4 col-xs-4 top-search-category">
+            <input ng-model="cbDanhMuc" value="{{cbDanhMuc}}" class="hide" />
+            <div class="chosen-container chosen-container-single chosen-container-single-nosearch" style="width: 100%;" title="">
+              <a data-gtm-event="mbn-event-link" data-gtm-category="mbn-search" data-gtm-action="mbn-category-dropdown" class="chosen-single" tabindex="-1">
+                <span class="drop-cat">
+                    <span class="cat-icon"><i class="fa fa-th-large fa-2x" style="color:#ccc"></i></span>
+                    <span class="cat-name cat-name-dm">Tất cả chuyên mục<span></span></span>
+                  </span>
+                <div><span class="caret"></span></div>
+              </a>
+              <!-- chosen drop -->  
+              <div class="chosen-drop">
+                <div class="chosen-search">
+                  <input type="text" autocomplete="off" readonly="">
+                </div>
+                <ul class="chosen-results">                    
+                  <li ng-mouseenter="changeColor($event)" ng-mouseleave="changeColor($event)" ng-click="chosenDM(x)" class="active-result" style="font-weight: bold;" ng-repeat="x in danhmuc" >{{x.name}}</li>                   
+                </ul>
+              </div>
+              <!-- END chosen drop -->
+            </div>      
+          </div>
+          <!-- col phai -->
+          <div class="col-md-5 col-sm-5 col-xs-5 top-search-keyword">
+            <div class="input-group">
+              <input ng-model="txtSearch" name="txtSearch" id="txtSearch" type="text" class="form-control input-keyword" maxlength="50">
+              <a class="input-group-addon btn-search" ng-click="search()" href="javascript:void();"> <i class="fa fa-search"></i> &nbsp;Tìm</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--End Khu vực tìm kiếm-->
+
+<!-- Banner top -->
+    <div ng-controller="bannerCtrl" id="bannerTop" class="panel panel-banner container clearfix">
+      <div class="panel-heading text-right">          
+        <button id="closeBannerTop" type="button" class="close">&times;</button>
+      </div>
+      <div class="panel-body bodyBannerTop">
+        <ul>
+          <li ng-repeat="qc in bannertop">
+            <a href="{{qc.url}}"><img class="img-thumbnail" src="{{qc.src}}" /></a>
+          </li>            
+        </ul>  
+      </div>
+    </div>
+<!-- Banner top -->
+

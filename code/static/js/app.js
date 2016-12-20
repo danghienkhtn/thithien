@@ -1,8 +1,12 @@
 var app = angular.module('TTApp',[]);
-app.controller('TTCtrl', function($scope) {
+app.controller('DMCtrl', function($scope) {
 	$scope.danhmuc = DanhMuc;
-	$scope.tinhthanh = TinhThanh;
 	$scope.bannertop = BannerTop;
+});	
+app.controller('TTCtrl', function($scope) {
+	/*$scope.danhmuc = DanhMuc;
+	$scope.bannertop = BannerTop;*/
+	$scope.tinhthanh = TinhThanh;	
 	$scope.quanhuyen = {};	
 	$scope.changeColor = function(e){
 		$(e.currentTarget).toggleClass("highlighted");

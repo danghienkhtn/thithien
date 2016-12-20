@@ -1,4 +1,8 @@
-app.controller('loginCtrl', function($scope, loginService, $http, $q) {
+require("/static/js/searchService.js");
+require("/static/js/bannerService.js");
+require("/static/js/searchCtrl.js");
+require("/static/js/bannerCtrl.js");
+/*app.controller('indexCtrl', function($scope, searchService, bannerService, $http, $q) {
 	$scope.email= $("Email").val();	
 	$scope.loading = false;
 	$scope.redirectURL = $("#returnUrl").val();
@@ -29,4 +33,4 @@ app.controller('loginCtrl', function($scope, loginService, $http, $q) {
 		}, function errorCallback(data){console.log("error_new" + data);});	
 	};	
 
-});
+});*/

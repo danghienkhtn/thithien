@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function(){    
     $("#closeBannerTop").click(function(){
         $("#bannerTop").hide();
     });
@@ -42,7 +42,7 @@ $(document).ready(function(){
         $("#colMenu").width(wcolmenu - 40);
         $("#colContent").width(wcolcontent + 40);
         console.log($("#colContent").width());
-    });*/
+    });*/    
 });
 
 function gooSocial(social, appName, returnUrl, sid, mode, callbackUrl, services) {
@@ -75,4 +75,17 @@ String.format = function () {
     }
 
     return theString;
+}
+function require(script) {
+    $.ajax({
+        url: script,
+        dataType: "script",
+        async: false,           // <-- This is the key
+        success: function () {
+            // all good...
+        },
+        error: function () {
+            throw new Error("Could not load script " + script);
+        }
+    });
 }

@@ -1,4 +1,4 @@
-app.controller('loginCtrl', function($scope, loginService, $http, $q) {
+app.controller('bannerCtrl', function($scope, bannerService, $http, $q) {
 	$scope.email= $("Email").val();	
 	$scope.loading = false;
 	$scope.redirectURL = $("#returnUrl").val();

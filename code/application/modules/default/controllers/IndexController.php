@@ -12,17 +12,11 @@ class IndexController extends Core_Controller_Action
      // private $arrLogin;
      
      public function init() {
-        parent::init();
-        
-        //Asign login
-        // $this->arrLogin = $this->view->arrLogin;
+        parent::init();                
         
         //Get Controller
         $controller = $this->_request->getParam('controller');
-        $this->view->controller = $controller;
-
-        // $this->_helper->layout()->disableLayout();
-       
+        $this->view->controller = $controller;       
     }
 
     public function comingSoonAction()
@@ -35,7 +29,8 @@ class IndexController extends Core_Controller_Action
     public function indexAction()
     {
        // $this->_redirect('/feed');
-       // exit();   
+       // exit();
+          
     }
     
 

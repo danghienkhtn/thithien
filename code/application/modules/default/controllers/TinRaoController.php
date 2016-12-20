@@ -23,10 +23,6 @@ class TinRaoController extends Core_Controller_Action
        
     }
 
-    public function comingSoonAction()
-    {
-
-    }
     /**
      * Default action
      */

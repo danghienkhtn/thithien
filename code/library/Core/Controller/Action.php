@@ -39,6 +39,13 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
         if($this->isLogin){
             $this->arrLogin = AccountInfo::getInstance()->getUserLogin();
             $this->isAdmin = ((is_array($this->arrLogin)) && (sizeof($this->arrLogin) > 0) && $this->arrLogin["is_admin"] == 1) ?  TRUE : FALSE;
+            // view 
+            $this->view->logInOutURL=BASE_URL."/tai-khoan/logout";
+            $this->view->logInOutText="thoát";
+        }
+        else{
+            $this->view->logInOutURL=BASE_URL."/dang-nhap";
+            $this->view->logInOutText="Đăng Nhập";
         }     
         $timezone = DEFAULT_TIMEZONE;
         // $timezoneConfig = UserConfig::getInstance()->getUserConfigByKey($getTimezoneParam);
