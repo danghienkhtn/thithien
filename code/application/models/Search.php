@@ -1,9 +1,9 @@
 <?php
 /**
- * @author      :   HoaiTN
+ * @author      :   Hiennd
  * @name        :   Model Search
- * @version     :   20130502
- * @copyright   :   My company
+ * @version     :   20161221
+ * @copyright   :   Dahi
  * @todo        :   Search model
  */
 class Search

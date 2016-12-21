@@ -4,12 +4,12 @@ app.factory('searchService', function($http, $log, $q){
 	return {
 		search : function(ttId, catId, txtSearch){			
 			var params = {
-				'ttId': ttId,
+				'cityId': ttId,
 				'catId': catId,
 				'txtSearch': txtSearch
 			};			
 			var defer = $q.defer();
-			$http.post('/api/search/news', $.param(params))
+			$http.post('/api/search', $.param(params))
 				.success(function (data){
 					defer.resolve(data);
 				})

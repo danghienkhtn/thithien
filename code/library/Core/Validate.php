@@ -57,11 +57,13 @@ class Core_Validate
 	 *
 	 * return bool
 	 */
-	public static function checkNumber($num, $length){
-		if($num > 0 && strlen($num) == $length)
-		{
+	public static function checkNumber($num, $length=0){
+		if($num > 0){
+			if($length != 0)
+				return (strlen($num) == $length)?TRUE:FALSE;	
 			return TRUE;
-		}
+		} 
+		return FALSE;
 	}
 	
 	/**
