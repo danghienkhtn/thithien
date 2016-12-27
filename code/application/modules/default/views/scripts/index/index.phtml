@@ -68,10 +68,93 @@
       <div class="panel-body bodyBannerTop">
         <ul>
           <li ng-repeat="qc in bannertop">
-            <a href="{{qc.url}}"><img class="img-thumbnail" src="{{qc.src}}" /></a>
+            <a href="{{qc.url}}"><img class="img-thumbnail" src="<?= $this->static->frontend->banner; ?>{{qc.src}}" /></a>
           </li>            
         </ul>  
       </div>
     </div>
 <!-- Banner top -->
 
+<!-- tin VIP -->
+      <div ng-controller="homeCtrl" ng-init="userId='<?= $this->arrLogin[account_id]; ?>'; upperTotals='<?= $this->arrLogin[upper_times]; ?>'" id="NewsVIP" class="panel panel-default">
+        <div class="panel-heading text-center">
+          <span>TIN ĐĂNG VIP</span>
+        </div>
+        <div class="panel-body bodyPanelVip">
+          <div class="row rowNewsVip">
+            <!-- start col left -->            
+            <div class="col-md-6 col-sm-6 col-xs-12 vip-news-cell">
+              <!-- start row 1 col left -->
+              <div ng-repeat="item in leftItem" class="row vip-bottom">
+                <!-- news col 1 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 vip-news-col-1">
+                  <div class="vip-news-thumbs-image"> 
+                    <div class="vip-news-thumbs-image-extra">                 
+                      <a href="{{item.detailURL}}">
+                        <img class="thumbnail" src="{{item.src}}" border="0" alt="{{item.tittle}}" title="{{item.tittle}}">
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <!-- end news col 1 -->
+                <!-- news col 2 -->
+                <div class="col-md-8 col-sm-6 col-xs-6 vip-news-col-2">
+                  <div nowrap="nowrap" class="vip-thumbs-subject">
+                    <h5><a itemprop="name" title="{{item.tittle}}" href="{{item.detailURL}}" class="ad-subject"> {{item.tittle}} </a><span class="fa fa-check-square"></span></h5>
+                                        
+                    <span class="vip-news-address">{{item.location}}</span>                    
+                    <span class="vip-news-price">{{item.price}}</span>                    
+                  </div>
+                </div>  
+                <!-- end col 2 -->
+                <!-- news col 3 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 text-center">
+                  <span class="vip-news-date">{{item.create_date}}</span>                  
+                  <p ng-if="item.isOwner === 1 && upperTotals > 0">&nbsp; <span class="vip-news-number-up">({{upperTotals}})</span></p>
+                  <span ng-if="item.isOwner === 1 && (item.upperToday === 0 || upperTotals > 0)"><a href="javascript:void" ng-click="upperNews(item)"><img src="<?= $this->static->frontend->images ?>/up_sm.png" /></a></span>
+                </div>
+              </div>
+              <!-- End row 1 col left -->              
+            </div>
+            <!-- end col left -->
+
+            <!-- start col right -->
+            <div class="col-md-6 col-sm-6 col-xs-12 vip-news-cell">
+              <!-- Start row 1 col right -->
+              <div ng-repeat="item in rightItem" class="row vip-bottom">
+                <!-- news col 1 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 vip-news-col-1">
+                  <div class="vip-news-thumbs-image"> 
+                    <div class="vip-news-thumbs-image-extra">                 
+                      <a href="{{item.detailURL}}">
+                        <img class="thumbnail" src="{{item.src}}" border="0" alt="{{item.tittle}}" title="{{item.tittle}}">
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <!-- end news col 1 -->
+                <!-- news col 2 -->
+                <div class="col-md-8 col-sm-6 col-xs-6 vip-news-col-2">
+                  <div nowrap="nowrap" class="vip-thumbs-subject">
+                    <h5><a itemprop="name" title="{{item.tittle}}" href="{{item.detailURL}}" class="ad-subject"> {{item.tittle}} </a><span class="fa fa-check-square"></span></h5>
+                                        
+                    <span class="vip-news-address">{{item.district + ", " + item.city}}</span>                    
+                    <span class="vip-news-price">{{item.price}}</span>                    
+                  </div>
+                </div>  
+                <!-- end col 2 -->
+                <!-- news col 3 -->
+                <div class="col-md-2 col-sm-3 col-xs-3 text-center">
+                  <span class="vip-news-date">{{item.create_date}}</span>
+                  <p ng-if="item.isOwner === 1 && upperTotals > 0">&nbsp; <span class="vip-news-number-up">({{upperTotals}})</span></p>
+                  <span ng-if="item.isOwner === 1 && (item.upperToday === 0 || upperTotals > 0)"><a href="javascript:void" ng-click="upperNews(item)"><img src="<?= $this->static->frontend->images ?>/up_sm.png" /></a></span>
+                </div>
+              </div>
+              <!-- End row 1 col right -->              
+            </div>
+            <!-- end col right -->            
+          </div>
+          <!-- end row 1 news vip -->
+        </div>
+      </div>  
+<!-- End Tin VIP -->

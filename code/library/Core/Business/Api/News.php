@@ -956,7 +956,7 @@ class Core_Business_Api_News
         return $result;
     }
 
-    public function countNewsList($catId="", $subCatId="", $cityId="", $districtId="", $priceFrom="", $priceTo="", $active="", $txtSearch="", $accountId="") {
+    public function countNewsList($isVip="", $catId="", $subCatId="", $cityId="", $districtId="", $priceFrom="", $priceTo="", $active="", $txtSearch="", $accountId="") {
        
         $arrResult = array();
         $queryWhere = " WHERE 1=1 ";
@@ -970,7 +970,11 @@ class Core_Business_Api_News
             $sql = "SELECT COUNT(`news_id`) as totals 
                     FROM `post_news`                    
                     ";
-
+            //search by vip news
+            if(!empty($isVip)){
+                $queryWhere .= " AND `news_is_vip` = :p_is_vip ";
+                $arrParams[":p_is_vip"] = $isVip;
+            }
             //search by accountId
             if(!empty($accountId)){
                 $queryWhere .= " AND `news_account_id` LIKE :p_accountID ";
@@ -1055,7 +1059,7 @@ error_log("sql = ".$sql);
         return $totals;
     }
 
-    public function getNewsList($catId="", $subCatId="", $cityId="", $districtId="", $priceFrom="", $priceTo="", $active="", $txtSearch="", $accountId="",  $sSortField="", $sSortType="", $iOffset=0, $iLimit=20) {
+    public function getNewsList($isVip="", $catId="", $subCatId="", $cityId="", $districtId="", $priceFrom="", $priceTo="", $active="", $txtSearch="", $accountId="",  $sSortField="", $sSortType="", $iOffset=0, $iLimit=20) {
        
         $arrResult = array();
         $queryWhere = " WHERE 1=1 ";
@@ -1068,7 +1072,11 @@ error_log("sql = ".$sql);
             $sql = "SELECT *
                     FROM `post_news`                    
                     ";
-
+            //search by vip news
+            if(!empty($isVip)){
+                $queryWhere .= " AND `news_is_vip` = :p_is_vip ";
+                $arrParams[":p_is_vip"] = $isVip;
+            }
             //search by accountId
             if(!empty($accountId)){
                 $queryWhere .= " AND `news_account_id` LIKE :p_accountID ";
@@ -1139,8 +1147,8 @@ error_log("sql = ".$sql);
             }            
             $sql .= " LIMIT ". (int)$iOffset . ", ". (int)$iLimit;
             
-// error_log("sql=".$sql);            
-// error_log("params=".json_encode($arrParams));
+error_log("sql=".$sql);            
+error_log("params=".json_encode($arrParams));
             // Prepare store procude
             // $stmt = $storage->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
             $txtSearch = "%".$txtSearch."%";
@@ -1187,7 +1195,6 @@ error_log("sql = ".$sql);
                     WHERE `news_id` = :p_news_id
                     AND `news_status` = :p_active
                     LIMIT 1";
-
             // Prepare store procude
             $stmt = $storage->prepare($sql);
             $stmt->bindParam(':p_news_id', $newsID, PDO::PARAM_INT);

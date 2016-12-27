@@ -141,10 +141,10 @@ class News
      * @todo Get all Give Away
      * @return <array>
      */
-    public function getNewsList($catId="", $subCatId="", $cityId="", $districtId="", $priceFrom="", $priceTo="", $active="", $txtSearch="", $accountId="",  $sSortField="", $sSortType="", $iOffset=0, $iLimit=MAX_QUERY_LIMIT)
+    public function getNewsList($isVip="", $catId="", $subCatId="", $cityId="", $districtId="", $priceFrom="", $priceTo="", $active="", $txtSearch="", $accountId="",  $sSortField="", $sSortType="", $iOffset=0, $iLimit=MAX_QUERY_LIMIT)
     {
         //Get data
-        $arrResult = $this->_modeParent->getNewsList($catId, $subCatId, $cityId, $districtId, $priceFrom, $priceTo, $active, $txtSearch, $accountId,  $sSortField, $sSortType, $iOffset, $iLimit);
+        $arrResult = $this->_modeParent->getNewsList($isVip, $catId, $subCatId, $cityId, $districtId, $priceFrom, $priceTo, $active, $txtSearch, $accountId,  $sSortField, $sSortType, $iOffset, $iLimit);
         //Return result data
         return $arrResult;
     }
@@ -153,9 +153,9 @@ class News
      * @todo count all Give Away
      * @return <array>
      */
-    public function countNewsList($catId="", $subCatId="", $cityId="", $districtId="", $priceFrom="", $priceTo="", $active="", $txtSearch="", $accountId="")
+    public function countNewsList($isVip="", $catId="", $subCatId="", $cityId="", $districtId="", $priceFrom="", $priceTo="", $active="", $txtSearch="", $accountId="")
     {    
-        $totals = $this->_modeParent->countNewsList($catId, $subCatId, $cityId, $districtId, $priceFrom, $priceTo, $active, $txtSearch, $accountId);
+        $totals = $this->_modeParent->countNewsList($isVip, $catId, $subCatId, $cityId, $districtId, $priceFrom, $priceTo, $active, $txtSearch, $accountId);
         return $totals;
 
     }

@@ -332,6 +332,7 @@ error_log("no cookies");
             'avatar'         => Core_Common::avatarProcess($accountInfo['avatar']),
             'token'          => $sAuthToken,
             'is_admin'     => $accountInfo['is_admin'],
+            'upper_times'     => $accountInfo['upper_times'],
             'email'          => $accountInfo['email'],
             'email1'   => $accountInfo['email1'],
             'username'   => $accountInfo['username'],

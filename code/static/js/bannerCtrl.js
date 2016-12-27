@@ -1,8 +1,8 @@
 app.controller('bannerCtrl', function($scope, bannerService, $http, $q) {
-	$scope.email= $("Email").val();	
+	$scope.bannertop= BannerTop;	
 	$scope.loading = false;
 	$scope.redirectURL = $("#returnUrl").val();
-	$scope.Login = function(){
+	/*$scope.Login = function(){
 		$scope.loading = true;		
 		loginService.login($scope.email, $scope.password).then(function successCallback(data){
 			if(data){
@@ -27,6 +27,6 @@ app.controller('bannerCtrl', function($scope, bannerService, $http, $q) {
 				}	
 			}
 		}, function errorCallback(data){console.log("error_new" + data);});	
-	};	
+	};*/	
 
 });

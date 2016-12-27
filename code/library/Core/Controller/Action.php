@@ -117,7 +117,7 @@ abstract class Core_Controller_Action extends Zend_Controller_Action {
 //            $this->view->arrGroupTeam = $arrGroupTeam;
 //            $this->view->arrGroupProject = $arrGroupProject;
             $this->view->controllerName = $this->_request->getControllerName();
-            $this->view->acctionName = $this->_request->getActionName();
+            $this->view->accionName = $this->_request->getActionName();
             $this->view->isLogin = $this->isLogin;
             $this->view->isAdmin = $this->isAdmin;
             $this->view->arrLogin = $this->arrLogin;

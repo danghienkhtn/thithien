@@ -1,28 +1,25 @@
-app.factory('searchService', ['$http','$log','$q', function($http, $log, $q){
+app.factory('detailService', ['$http','$log','$q', function($http, $log, $q){
 	// Use x-www-form-urlencoded Content-Type
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 	return {
-		search: function(ttId, catId, txtSearch){		
+		getOther: function(nid, catId){		
 			var params = {
-				'cityId': ttId,
-				'catId': catId,
-				'txtSearch': txtSearch
+				'nid': nid,
+				'catId': catId
 			};			
 			var defer = $q.defer();
 			var paramater = $.param(params);
-			$http.post('/api/search', paramater).success(function(data){
+			$http.post('/api/search/getOther', paramater).success(function(data){
 					defer.resolve(data);
 				});
 			return defer.promise;	
 		},
-		getNews: function(isVip, iOffset, iLimit){
+		getDetail: function(nid){
 			var params = {
-				'isVip': isVip,
-				'iOffset': iOffset,
-				'iLimit': iLimit
+				'nid': nid
 			};
 			var defer = $q.defer();
-			$http.post('/api/search/get-news', $.param(params))
+			$http.post('/api/search/get-detail-news', $.param(params))
 				.success(function (data){
 					defer.resolve(data);
 				})

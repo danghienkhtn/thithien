@@ -1,0 +1,51 @@
+<div class="news-detail-technic clearfix">
+  <div class="technic-title clearfix">Thông tin nhà tuyển dụng</div>
+  <div class="clearfix" style="margin-top:15px;">                 
+    <div class="col-md-12 col-sm-12 col-xs-12 item-value technic-title" style="padding:0px"></div>
+  </div>
+  <ul class="clearfix">     
+    <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+      <div>
+        <div class="col-md-5 col-sm-5 col-xs-5 item-name">Ngành nghề:</div>
+        <div class="col-md-7 col-sm-7 col-xs-7 item-value">{{newsDetail.jobCatName}}</div>
+      </div>
+    </li>  
+    <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+      <div>
+        <div class="col-md-5 col-sm-5 col-xs-5 item-name">Loại hình công việc:</div>
+        <div class="col-md-7 col-sm-7 col-xs-7 item-value">{{newsDetail.jobTypeName}}</div>
+      </div>
+    </li>
+    <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+      <div>
+        <div class="col-md-5 col-sm-5 col-xs-5 item-name">Tuổi:</div>
+        <div class="col-md-7 col-sm-7 col-xs-7 item-value">{{newsDetail.jobAge}}</div>
+      </div>
+    </li>
+    <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+      <div>
+        <div class="col-md-5 col-sm-5 col-xs-5 item-name">Giới tính:</div>
+        <div class="col-md-7 col-sm-7 col-xs-7 item-value">{{newsDetail.jobGenderName}}</div>
+      </div>
+    </li>
+    
+    <li class="col-md-6 col-sm-12 col-xs-12 technic-item">
+      <div>
+        <div class="col-md-5 col-sm-5 col-xs-5 item-name">Kinh nghiệm:</div>
+        <div class="col-md-7 col-sm-7 col-xs-7 item-value">{{newsDetail.jobExperience}}</div>
+      </div>
+    </li>    
+    <li class="col-md-6 col-sm-12 col-xs-12 technic-item" ng-if="newsDetail.job_birth_year !== null">
+      <div>
+        <div class="col-md-5 col-sm-5 col-xs-5 item-name">Năm sinh:</div>
+        <div class="col-md-7 col-sm-7 col-xs-7 item-value">{{newsDetail.job_birth_year}}</div>
+      </div>
+    </li>
+    <li class="col-md-6 col-sm-12 col-xs-12 technic-item" style="display:none">
+      <div>
+        <div class="col-md-5 col-sm-5 col-xs-5 item-name">Mức lương:</div>
+        <div class="col-md-7 col-sm-7 col-xs-7 item-value">{{newsDetail.jobSalary}}</div>
+      </div>
+    </li>
+  </ul>
+</div>              

@@ -239,7 +239,7 @@ $arrGlobalBusinessApplication = array(
     'TEXTAREA_ATTRIBUTE_TYPE' => 2,
     'DEBUG_SOLR' => 0,
     'MAX_QUERY_LIMIT' => 10000,
-
+    'MAX_PAGE_LIMIT' => 30,
     'PHOTO_LIMIT' => 10, //10GB
     'FILE_LIMIT' => 10, //10GB
 
